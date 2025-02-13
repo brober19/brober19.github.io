@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Gallery Slideshow with Lightbox</title>
+    <title>Image Gallery Grid with Lightbox</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
             min-height: 100vh;
             background-color: #f0f0f0;
         }
@@ -18,15 +17,13 @@
         .container {
             width: 100%;
             max-width: 1400px;
-            padding: 0 40px;
+            padding: 40px;
             box-sizing: border-box;
         }
 
         .gallery {
-            display: flex;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             width: 100%;
             padding: 20px 0;
@@ -34,10 +31,8 @@
 
         .image-container {
             position: relative;
-            width: 300px;
             height: 400px;
             cursor: pointer;
-            flex-shrink: 0;
         }
 
         .thumbnail {
@@ -98,8 +93,6 @@
             flex: 1;
             color: white;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
             max-width: 300px;
             max-height: 75vh;
             overflow-y: auto;
@@ -123,13 +116,13 @@
             z-index: 102;
         }
 
-        .arrow {
-            position: absolute;
+        .lightbox-arrow {
+            position: fixed;
             top: 50%;
             transform: translateY(-50%);
             width: 50px;
             height: 50px;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(255, 255, 255, 0.2);
             color: white;
             display: flex;
             align-items: center;
@@ -138,20 +131,24 @@
             z-index: 101;
             border-radius: 50%;
             font-size: 24px;
-            user-select: none;
+            transition: background-color 0.3s;
         }
 
-        .prev {
-            left: 10px;
+        .lightbox-arrow:hover {
+            background-color: rgba(255, 255, 255, 0.3);
         }
 
-        .next {
-            right: 10px;
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 0 20px;
+                padding: 20px;
             }
 
             .lightbox-content {
@@ -173,14 +170,13 @@
 <body>
     <div class="container">
         <div class="gallery">
-            <div class="arrow prev" onclick="scroll(-300)">&#8249;</div>
             <div class="image-container" onclick="openLightbox(this)">
                 <img src="bellyfeel.gif"Image 1" class="thumbnail">
                 <div class="lightbox-overlay">
                     <div class="close-button" onclick="closeLightbox(event)">×</div>
                     <div class="lightbox-content">
                         <div class="lightbox-image-container">
-                            <img src="bellyfeel.gif"alt="Image 1" class="lightbox-image">
+                            <img src="bellyfeel.gif"Image 1" class="lightbox-image">
                             <div class="caption">Image 1 Caption</div>
                         </div>
                         <div class="lightbox-text">
@@ -188,9 +184,10 @@
                             <p>This animated GIF blends surrealism and Dada influences with digital and Pop Art elements, creating a chaotic and dream-like composition. The juxtaposition of human and animal features, along with digital symbols like emojis, reflects a commentary on the blending of human identity with digital personas. The grid background symbolizes the structured nature of digital networks, while the exaggerated expressions and vibrant colors critique the intensity of online interactions. Overall, it serves as a playful yet critical exploration of identity, technology, and culture in the digital age.</p>
                         </div>
                     </div>
+                    <div class="lightbox-arrow lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next" onclick="navigateLightbox(1)">&#8250;</div>
                 </div>
             </div>
-            <!-- Repeat for other images -->
             <div class="image-container" onclick="openLightbox(this)">
                 <img src="https://placehold.co/800x1200/2" alt="Image 2" class="thumbnail">
                 <div class="lightbox-overlay">
@@ -205,6 +202,8 @@
                             <p>Different text for image 2. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                         </div>
                     </div>
+                    <div class="lightbox-arrow lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next" onclick="navigateLightbox(1)">&#8250;</div>
                 </div>
             </div>
             <div class="image-container" onclick="openLightbox(this)">
@@ -221,25 +220,21 @@
                             <p>Text for image 3. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         </div>
                     </div>
+                    <div class="lightbox-arrow lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next" onclick="navigateLightbox(1)">&#8250;</div>
                 </div>
             </div>
-            <div class="arrow next" onclick="scroll(300)">&#8250;</div>
         </div>
     </div>
 
     <script>
-        function scroll(amount) {
-            const gallery = document.querySelector('.gallery');
-            gallery.scrollBy({
-                left: amount,
-                behavior: 'smooth'
-            });
-        }
+        let currentLightbox = null;
 
         function openLightbox(container) {
             const overlay = container.querySelector('.lightbox-overlay');
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
+            currentLightbox = container;
         }
 
         function closeLightbox(event) {
@@ -247,6 +242,20 @@
             const overlay = event.target.closest('.lightbox-overlay');
             overlay.classList.remove('active');
             document.body.style.overflow = 'auto';
+            currentLightbox = null;
+        }
+
+        function navigateLightbox(direction) {
+            event.stopPropagation();
+            if (!currentLightbox) return;
+
+            const containers = Array.from(document.querySelectorAll('.image-container'));
+            const currentIndex = containers.indexOf(currentLightbox);
+            const nextIndex = (currentIndex + direction + containers.length) % containers.length;
+
+            currentLightbox.querySelector('.lightbox-overlay').classList.remove('active');
+            currentLightbox = containers[nextIndex];
+            currentLightbox.querySelector('.lightbox-overlay').classList.add('active');
         }
 
         document.addEventListener('click', function(event) {
@@ -256,12 +265,19 @@
         });
 
         document.addEventListener('keydown', function(event) {
+            if (!currentLightbox) return;
+
             if (event.key === 'Escape') {
                 const activeOverlay = document.querySelector('.lightbox-overlay.active');
                 if (activeOverlay) {
                     activeOverlay.classList.remove('active');
                     document.body.style.overflow = 'auto';
+                    currentLightbox = null;
                 }
+            } else if (event.key === 'ArrowLeft') {
+                navigateLightbox(-1);
+            } else if (event.key === 'ArrowRight') {
+                navigateLightbox(1);
             }
         });
     </script>
