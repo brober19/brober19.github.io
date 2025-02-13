@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery Slideshow with Lightbox</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .gallery {
+            display: flex;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .image-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            cursor: pointer;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 75vw;
+            max-height: 75vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-image {
+            max-width: 75vw;
+            max-height: 75vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            z-index: 100;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .caption {
+            margin-top: 15px;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            z-index: 101;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 102;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 101;
+            border-radius: 50%;
+            font-size: 24px;
+            user-select: none;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }http://127.0.0.1:3000/Black_White.jpg
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <div class="arrow prev" onclick="scroll(-300)">&#8249;</div>
+        <div class="image-container" onclick="openLightbox(this)">
+            <img src="/Black_White.jpg" alt="Image 1" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button" onclick="closeLightbox(event)">×</div>
+                <div class="lightbox-content">
+                    <img src="/Black_White.jpg" alt="Image 1" class="lightbox-image">
+                    <div class="caption">Image 1 Caption</div>
+                </div>
+            </div>
+        </div>
+        <div class="image-container" onclick="openLightbox(this)">
+            <img src="/bellyfeel.gif" alt="Image 2" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button" onclick="closeLightbox(event)">×</div>
+                <div class="lightbox-content">
+                    <img src="/bellyfeel.gif" alt="Image 2" class="lightbox-image">
+                    <div class="caption">Image 2 Caption</div>
+                </div>
+            </div>
+        </div>
+        <div class="image-container" onclick="openLightbox(this)">
+            <img src="https://placehold.co/1600x900/3" alt="Image 3" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button" onclick="closeLightbox(event)">×</div>
+                <div class="lightbox-content">
+                    <img src="https://placehold.co/1600x900/3" alt="Image 3" class="lightbox-image">
+                    <div class="caption">Image 3 Caption</div>
+                </div>
+            </div>
+        </div>
+        <div class="arrow next" onclick="scroll(300)">&#8250;</div>
+    </div>
+
+    <script>
+        function scroll(amount) {
+            const gallery = document.querySelector('.gallery');
+            gallery.scrollBy({
+                left: amount,
+                behavior: 'smooth'
+            });
+        }
+
+        function openLightbox(container) {
+            const overlay = container.querySelector('.lightbox-overlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(event) {
+            event.stopPropagation();
+            const overlay = event.target.closest('.lightbox-overlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('lightbox-overlay')) {
+                closeLightbox(event);
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const activeOverlay = document.querySelector('.lightbox-overlay.active');
+                if (activeOverlay) {
+                    activeOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
