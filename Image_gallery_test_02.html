@@ -15,6 +15,13 @@
             background-color: #f0f0f0;
         }
 
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+
         .gallery {
             display: flex;
             align-items: center;
@@ -22,6 +29,7 @@
             position: relative;
             gap: 20px;
             width: 100%;
+            padding: 20px 0;
         }
 
         .image-container {
@@ -29,6 +37,7 @@
             width: 300px;
             height: 400px;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .thumbnail {
@@ -61,22 +70,39 @@
 
         .lightbox-content {
             position: relative;
-            max-width: 75vw;
-            max-height: 75vh;
+            display: flex;
+            gap: 30px;
+            max-width: 90vw;
+            max-height: 90vh;
+            padding: 20px;
+        }
+
+        .lightbox-image-container {
+            flex: 2;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
         }
 
         .lightbox-image {
-            max-width: 75vw;
+            max-width: 60vw;
             max-height: 75vh;
             width: auto;
             height: auto;
             object-fit: contain;
             z-index: 100;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-text {
+            flex: 1;
+            color: white;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            max-width: 300px;
+            max-height: 75vh;
+            overflow-y: auto;
         }
 
         .caption {
@@ -121,43 +147,85 @@
 
         .next {
             right: 10px;
-        }http://127.0.0.1:3000/Black_White.jpg
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .lightbox-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .lightbox-image {
+                max-width: 85vw;
+            }
+
+            .lightbox-text {
+                max-width: 85vw;
+                max-height: 30vh;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="gallery">
-        <div class="arrow prev" onclick="scroll(-300)">&#8249;</div>
-        <div class="image-container" onclick="openLightbox(this)">
-            <img src="/Black_White.jpg" alt="Image 1" class="thumbnail">
-            <div class="lightbox-overlay">
-                <div class="close-button" onclick="closeLightbox(event)">×</div>
-                <div class="lightbox-content">
-                    <img src="/Black_White.jpg" alt="Image 1" class="lightbox-image">
-                    <div class="caption">Image 1 Caption</div>
+    <div class="container">
+        <div class="gallery">
+            <div class="arrow prev" onclick="scroll(-300)">&#8249;</div>
+            <div class="image-container" onclick="openLightbox(this)">
+                <img src="https://placehold.co/1200x800/1" alt="Image 1" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button" onclick="closeLightbox(event)">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="https://placehold.co/1200x800/1" alt="Image 1" class="lightbox-image">
+                            <div class="caption">Image 1 Caption</div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Image Details</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="image-container" onclick="openLightbox(this)">
-            <img src="/bellyfeel.gif" alt="Image 2" class="thumbnail">
-            <div class="lightbox-overlay">
-                <div class="close-button" onclick="closeLightbox(event)">×</div>
-                <div class="lightbox-content">
-                    <img src="/bellyfeel.gif" alt="Image 2" class="lightbox-image">
-                    <div class="caption">Image 2 Caption</div>
+            <!-- Repeat for other images -->
+            <div class="image-container" onclick="openLightbox(this)">
+                <img src="https://placehold.co/800x1200/2" alt="Image 2" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button" onclick="closeLightbox(event)">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="https://placehold.co/800x1200/2" alt="Image 2" class="lightbox-image">
+                            <div class="caption">Image 2 Caption</div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Image Details</h3>
+                            <p>Different text for image 2. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="image-container" onclick="openLightbox(this)">
-            <img src="https://placehold.co/1600x900/3" alt="Image 3" class="thumbnail">
-            <div class="lightbox-overlay">
-                <div class="close-button" onclick="closeLightbox(event)">×</div>
-                <div class="lightbox-content">
-                    <img src="https://placehold.co/1600x900/3" alt="Image 3" class="lightbox-image">
-                    <div class="caption">Image 3 Caption</div>
+            <div class="image-container" onclick="openLightbox(this)">
+                <img src="https://placehold.co/1600x900/3" alt="Image 3" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button" onclick="closeLightbox(event)">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="https://placehold.co/1600x900/3" alt="Image 3" class="lightbox-image">
+                            <div class="caption">Image 3 Caption</div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Image Details</h3>
+                            <p>Text for image 3. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="arrow next" onclick="scroll(300)">&#8250;</div>
         </div>
-        <div class="arrow next" onclick="scroll(300)">&#8250;</div>
     </div>
 
     <script>
