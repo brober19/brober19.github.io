@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Website</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 5fr 1fr;
+            gap: 2rem;
+        }
+
+        .main-content {
+            padding-right: 2rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .social-icons a {
+            color: #666;
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        .social-icons a:hover {
+            color: #333;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .section-header:hover {
+            background-color: #f9f9f9;
+        }
+
+        .section-content {
+            padding: 1rem 1rem 1rem 2rem;
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        .section hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin-top: 1rem;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+
+        .arrow {
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header[aria-expanded="true"] .arrow {
+            transform: rotate(180deg);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <h1>Your Name</h1>
+
+            <div class="section">
+                <button class="section-header" aria-expanded="false">
+                    About Me
+                    <i class="arrow far fa-chevron-down"></i>
+                </button>
+                <div class="section-content">
+                    <p>Contemporary artist working across multiple mediums with a focus on experimental techniques and social commentary.</p>
+                </div>
+                <hr>
+            </div>
+
+            <div class="section">
+                <button class="section-header" aria-expanded="false">
+                    Education
+                    <i class="arrow far fa-chevron-down"></i>
+                </button>
+                <div class="section-content">
+                    <ul>
+                        <li>MFA in Fine Arts, Example University, 2020</li>
+                        <li>BFA in Studio Art, Another University, 2018</li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+
+            <!-- Add other sections following the same pattern -->
+            <div class="section">
+                <button class="section-header" aria-expanded="false">
+                    Solo Exhibitions
+                    <i class="arrow far fa-chevron-down"></i>
+                </button>
+                <div class="section-content">
+                    <ul>
+                        <li>2023 - "Title of Exhibition", Gallery Name, City</li>
+                        <li>2022 - "Another Exhibition", Another Gallery, City</li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+
+            <!-- Continue with other sections... -->
+
+        </div>
+
+        <div class="sidebar">
+            <img src="https://placehold.co/150x150" alt="Profile" class="profile-img">
+            <div class="social-icons">
+                <a href="#"><i class="far fa-envelope"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.section-header').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                button.setAttribute('aria-expanded', !isExpanded);
+                content.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
