@@ -3,157 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bryan Robertson - Visual Artist</title>
+    <title>Artist Portfolio</title>
     <style>
-        * {
+        body, html {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            background-color: #f5f5f5;
-        }
-
-        .parallax-section {
-            height: 100vh;
+            height: 100%;
             overflow: hidden;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
-        .floating-image {
+        .container {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .background {
             position: absolute;
-            width: 400px;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            animation: floatRight 20s linear infinite;
+            inset: -20%;
+            transition: transform 100ms ease-out;
+            /* Change this line to use your local image */
+            background-image: url('./Black_White.jpg'); 
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.4);
+            image-rendering: pixelated;
         }
 
-        @keyframes floatRight {
-            from {
-                transform: translateX(-100%);
-            }
-            to {
-                transform: translateX(100vw);
-            }
+        .glitch-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.2);
+            mix-blend-mode: multiply;
         }
 
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.9);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-            text-decoration: none;
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
-        }
-
-        nav {
-            display: flex;
-            gap: 1rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: white;
-            background-color: #20B2AA;
-            padding: 0.8rem 1.2rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-family: 'Helvetica', 'Arial', sans-serif;
-        }
-
-        nav a:hover {
-            background-color: #178F89;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .section-content {
+        .content {
             position: relative;
-            z-index: 1;
-            color: #333;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
             text-align: center;
         }
 
-        .section-content h1 {
-            font-size: 4rem;
+        .title {
+            font-size: 3.75rem;
+            font-weight: bold;
             margin-bottom: 1rem;
-            font-weight: 300;
         }
 
-        .section-content p {
-            font-size: 1.5rem;
-            font-weight: 300;
+        .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
         }
 
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                padding: 1rem;
-            }
+        .button {
+            background-color: white;
+            color: black;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
 
-            nav {
-                margin-top: 1rem;
-            }
+        .button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
 
-            .section-content h1 {
-                font-size: 2.5rem;
-            }
+        @keyframes glitch {
+            0% { opacity: 1; transform: scale(1) skew(0deg); }
+            10% { opacity: 0.8; transform: scale(1.02) skew(2deg); }
+            20% { opacity: 0.9; transform: scale(0.98) skew(-2deg); }
+            30% { opacity: 0.7; transform: scale(1.01) skew(1deg); }
+            40% { opacity: 1; transform: scale(1) skew(0deg); }
+            50% { opacity: 0.6; transform: scale(1.03) skew(-1deg); }
+            60% { opacity: 0.8; transform: scale(0.99) skew(2deg); }
+            70% { opacity: 1; transform: scale(1) skew(0deg); }
+            80% { opacity: 0.7; transform: scale(1.02) skew(-2deg); }
+            90% { opacity: 0.9; transform: scale(0.98) skew(1deg); }
+            100% { opacity: 1; transform: scale(1) skew(0deg); }
+        }
 
-            .section-content p {
-                font-size: 1.2rem;
-            }
-
-            .floating-image {
-                width: 300px;
-                height: 225px;
-            }
+        .animate-glitch {
+            animation: glitch 500ms infinite linear;
         }
     </style>
 </head>
 <body>
-    <header>
-        <a href="#" class="logo">
-            <img src="images/logo.png" alt="Bryan Robertson Logo">
-        </a>
-        <nav>
-            <a href="Image_gallery_test_02.html">Painting and Drawing</a>
-            <a href="#digital">Digital Art</a>
-            <a href="#about">About</a>
-        </nav>
-    </header>
-
-    <section class="parallax-section">
-        <img src="bellyfeel.gif" class="floating-image" style="top: 20%; animation-delay: 0s;" alt="Artwork 1">
-        <img src="images/artwork2.jpg" class="floating-image" style="top: 40%; animation-delay: -5s;" alt="Artwork 2">
-        <img src="images/artwork3.jpg" class="floating-image" style="top: 60%; animation-delay: -10s;" alt="Artwork 3">
-        <div class="section-content">
-            <h1>Bryan Robertson</h1>
-            <p>Visual Artist | Creator | Innovator</p>
+    <div class="container" id="container">
+        <div class="background" id="background">
+            <div class="glitch-overlay animate-glitch" id="glitchOverlay"></div>
         </div>
-    </section>
+        <div class="content">
+            <div>
+                <h1 class="title">Artist Name</h1>
+                <p class="subtitle">Visual Artist & Creator</p>
+                <button class="button">View Portfolio</button>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        const container = document.getElementById('container');
+        const background = document.getElementById('background');
+        const glitchOverlay = document.getElementById('glitchOverlay');
+
+        container.addEventListener('mousemove', (e) => {
+            const xPercentage = e.clientX / window.innerWidth;
+            const yPercentage = e.clientY / window.innerHeight;
+
+            // Calculate the maximum movement range (40% of the container size)
+            const maxX = window.innerWidth * 0.4;
+            const maxY = window.innerHeight * 0.4;
+
+            // Calculate the actual movement, ranging from -20% to 20%
+            const moveX = maxX * (xPercentage - 0.5);
+            const moveY = maxY * (yPercentage - 0.5);
+
+            background.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.4)`;
+        });
+
+        setTimeout(() => {
+            glitchOverlay.classList.remove('animate-glitch');
+        }, 4000);
+    </script>
 </body>
 </html>

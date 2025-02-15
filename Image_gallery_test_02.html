@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    <div id="Navigation"></div>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -348,6 +349,14 @@ nav a:hover {
                 navigateLightbox(1);
             }
         });
+    </script>
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading navbar:', error));
     </script>
 </body>
 </html>

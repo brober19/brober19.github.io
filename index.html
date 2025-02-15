@@ -1,7 +1,211 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bryan Robertson - Visual Artist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .masonry-container {
+            position: relative;
+            width: 200vw;
+            height: 200vh;
+            padding: 20px;
+            margin-top: 80px;
+        }
+
+        .masonry-item {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+        }
+
+        .masonry-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0);
+            transition: background 0.3s ease;
+        }
+
+        .masonry-item:hover::after {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .masonry-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            background-color: #20B2AA;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #178F89;
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <header>
+        <a href="#" class="logo">
+            <img src="https://placehold.co/150x50" alt="Bryan Robertson Logo">
+        </a>
+        <nav>
+            <a href="#painting">Painting and Drawing</a>
+            <a href="#digital">Digital Art</a>
+            <a href="#about">About</a>
+        </nav>
+    </header>
+
+    <div class="masonry-container" id="masonryContainer">
+    </div>
+
+    <script>
+        const container = document.getElementById('masonryContainer');
+        let isMouseMoving = false;
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetScrollX = 0;
+        let targetScrollY = 0;
+        let currentScrollX = 0;
+        let currentScrollY = 0;
+        let velocityX = 0;
+        let velocityY = 0;
+
+        function createIrregularGrid(count) {
+            const positions = [];
+            for (let i = 0; i < count; i++) {
+                const x = (Math.random() * 150) + (i % 5) * 350;
+                const y = (Math.random() * 150) + (Math.floor(i / 5) * 350);
+                positions.push({ x, y });
+            }
+            return positions;
+        }
+
+        const positions = createIrregularGrid(30);
+        positions.forEach((pos, i) => {
+            const link = document.createElement('a');
+            link.href = `#artwork-${i + 1}`;
+            link.style.position = 'absolute';
+            link.style.left = `${pos.x}px`;
+            link.style.top = `${pos.y}px`;
+            link.className = 'masonry-item';
+
+            const img = document.createElement('img');
+            img.src = `https://placehold.co/300x300`;
+            img.alt = `Artwork ${i + 1}`;
+
+            link.appendChild(img);
+            container.appendChild(link);
+        });
+
+        let mouseTimer;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            velocityX = e.clientX - lastMouseX;
+            velocityY = e.clientY - lastMouseY;
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            isMouseMoving = true;
+
+            clearTimeout(mouseTimer);
+            mouseTimer = setTimeout(() => {
+                isMouseMoving = false;
+                velocityX = 0;
+                velocityY = 0;
+            }, 100);
+        });
+
+        function smoothStep(x) {
+            return x * x * (3 - 2 * x);
+        }
+
+        function lerp(start, end, factor) {
+            return start + (end - start) * smoothStep(factor);
+        }
+
+        function animate() {
+            if (isMouseMoving) {
+                const scrollSpeed = 12;
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+
+                const deltaX = (mouseX - centerX) * scrollSpeed / centerX;
+                const deltaY = (mouseY - centerY) * scrollSpeed / centerY;
+
+                targetScrollX += deltaX + velocityX * 0.5;
+                targetScrollY += deltaY + velocityY * 0.5;
+            }
+
+            // Enhanced smooth scrolling with momentum
+            const smoothingFactor = 0.05;
+            currentScrollX = lerp(currentScrollX, targetScrollX, smoothingFactor);
+            currentScrollY = lerp(currentScrollY, targetScrollY, smoothingFactor);
+
+            const items = document.querySelectorAll('.masonry-item');
+            items.forEach((item, index) => {
+                const speed = 1 - (index % 3) * 0.2;
+                const x = -currentScrollX * speed;
+                const y = -currentScrollY * speed;
+                item.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
 </body>
 </html>
