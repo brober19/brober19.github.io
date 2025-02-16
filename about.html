@@ -4,8 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Website</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        @keyframes bounce {
+            0% {
+                transform: translateY(0) rotate(180deg);
+            }
+            50% {
+                transform: translateY(-5px) rotate(0deg);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        @keyframes bounceUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(5px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(180deg);
+            }
+        }
+
         body {
             font-family: Helvetica, Arial, sans-serif;
             margin: 0;
@@ -75,8 +99,24 @@
             font-family: Helvetica, Arial, sans-serif;
         }
 
-        .section-header:hover {
-            background-color: #f9f9f9;
+        .section-header i {
+            transform: rotate(180deg);
+        }
+
+        .section-header[aria-expanded="true"] i {
+            transform: rotate(0deg);
+            color: #ff4757;
+            text-shadow: 0 0 10px #ff4757,
+                         0 0 20px #ff4757,
+                         0 0 30px #ff4757;
+        }
+
+        .bounce-down {
+            animation: bounce 0.6s ease forwards;
+        }
+
+        .bounce-up {
+            animation: bounceUp 0.6s ease forwards;
         }
 
         .section-content {
@@ -99,15 +139,6 @@
             padding-left: 1.5rem;
         }
 
-        .arrow {
-            font-size: 0.75rem;
-            transition: transform 0.3s ease;
-        }
-
-        .section-header[aria-expanded="true"] .arrow {
-            transform: rotate(180deg);
-        }
-
         h1 {
             font-size: 2rem;
             margin-bottom: 2rem;
@@ -122,7 +153,7 @@
             <div class="section">
                 <button class="section-header" aria-expanded="false">
                     About Me
-                    <i class="arrow far fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="section-content">
                     <p>Contemporary artist working across multiple mediums with a focus on experimental techniques and social commentary.</p>
@@ -133,7 +164,7 @@
             <div class="section">
                 <button class="section-header" aria-expanded="false">
                     Education
-                    <i class="arrow far fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="section-content">
                     <ul>
@@ -144,11 +175,10 @@
                 <hr>
             </div>
 
-            <!-- Add other sections following the same pattern -->
             <div class="section">
                 <button class="section-header" aria-expanded="false">
                     Solo Exhibitions
-                    <i class="arrow far fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="section-content">
                     <ul>
@@ -158,9 +188,6 @@
                 </div>
                 <hr>
             </div>
-
-            <!-- Continue with other sections... -->
-
         </div>
 
         <div class="sidebar">
@@ -179,9 +206,25 @@
             button.addEventListener('click', () => {
                 const content = button.nextElementSibling;
                 const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                const icon = button.querySelector('i');
+
+                // Remove any existing animation classes
+                icon.classList.remove('bounce-down', 'bounce-up');
+
+                // Add the appropriate animation class
+                if (!isExpanded) {
+                    icon.classList.add('bounce-down');
+                } else {
+                    icon.classList.add('bounce-up');
+                }
 
                 button.setAttribute('aria-expanded', !isExpanded);
                 content.classList.toggle('active');
+
+                // Remove the animation class after it completes
+                icon.addEventListener('animationend', () => {
+                    icon.classList.remove('bounce-down', 'bounce-up');
+                }, { once: true });
             });
         });
     </script>
