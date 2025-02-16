@@ -13,7 +13,7 @@
 
         nav {
             background: rgba(255, 255, 255, 0.95);
-            padding: 2rem 4rem; /* Increased padding: top/bottom 2rem, left/right 4rem */
+            padding: 2rem 4rem;
             position: fixed;
             width: 100%;
             top: 0;
@@ -60,9 +60,10 @@
 
         .logo:hover .logo-hover {
             opacity: 1;
-            filter: drop-shadow(0 0 5px #FF7F50)
-                   drop-shadow(0 0 10px #FF7F50)
-                   drop-shadow(0 0 15px #FF7F50);
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4))
+                   drop-shadow(0 0 20px rgba(255, 127, 80, 0.3));
         }
 
         .nav-links {
@@ -80,14 +81,33 @@
             transition: all 0.3s ease;
             font-family: Helvetica, Arial, sans-serif;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
         }
 
         .nav-links a:hover {
             color: #FF7F50;
-            text-shadow: 0 0 10px #FF7F50,
-                         0 0 20px #FF7F50,
-                         0 0 30px #FF7F50,
-                         0 0 40px #FF7F50;
+            text-shadow: 0 0 10px rgba(255, 127, 80, 0.8),
+                        0 0 20px rgba(255, 127, 80, 0.6),
+                        0 0 30px rgba(255, 127, 80, 0.4),
+                        0 0 40px rgba(255, 127, 80, 0.2);
+        }
+
+        .disintegrate {
+            animation: disintegrate 1s forwards;
+        }
+
+        @keyframes disintegrate {
+            0% {
+                opacity: 1;
+                filter: blur(0px);
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                filter: blur(10px);
+                transform: translateY(20px) rotate(10deg);
+                letter-spacing: 10px;
+            }
         }
 
         .hamburger {
@@ -97,7 +117,7 @@
 
         @media (max-width: 768px) {
             nav {
-                padding: 1.5rem 2rem; /* Adjusted padding for mobile */
+                padding: 1.5rem 2rem;
             }
 
             .hamburger {
@@ -128,7 +148,7 @@
         <div class="nav-container">
             <a href="index.html" class="logo">
                 <img src="signature.png" alt="Logo" class="logo-default">
-                <img src="signature_red.png" alt="Logo Hover" class="logo-hover">
+                <img src="signature_red_v2.png" alt="Logo Hover" class="logo-hover">
             </a>
             <div class="hamburger">☰</div>
             <ul class="nav-links">
@@ -143,9 +163,22 @@
     <script>
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
+        const links = document.querySelectorAll('.nav-links a');
 
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!link.classList.contains('disintegrate')) {
+                    link.classList.add('disintegrate');
+                    setTimeout(() => {
+                        link.classList.remove('disintegrate');
+                    }, 1000);
+                }
+            });
         });
     </script>
 </body>
