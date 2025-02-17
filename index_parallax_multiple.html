@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bryan Robertson - Visual Artist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            overflow: hidden;
+            transition: background-color 1s ease;
+        }
+
+        .masonry-container {
+            position: relative;
+            width: 200vw;
+            height: 200vh;
+            padding: 20px;
+            margin-top: 80px;
+        }
+
+        .masonry-item {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+        }
+
+        .masonry-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .masonry-item:hover img {
+            transform: scale(1.2);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: background-color 1s ease;
+        }
+
+        .color-info {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        #canvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <a href="#" class="logo">
+            <img src="https://placehold.co/150x50" alt="Bryan Robertson Logo">
+        </a>
+    </header>
+
+    <div class="color-info" id="colorInfo">Click an artwork to change the background and toggle parallax</div>
+    <div class="masonry-container" id="masonryContainer"></div>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const container = document.getElementById('masonryContainer');
+        const header = document.getElementById('header');
+        const colorInfo = document.getElementById('colorInfo');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let isParallaxEnabled = true;
+
+        function getDominantColor(img) {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+
+            let colorCounts = {};
+            let maxCount = 0;
+            let dominantColor = '#000000';
+
+            for (let i = 0; i < data.length; i += 4) {
+                const r = Math.floor(data[i] / 16) * 16;
+                const g = Math.floor(data[i + 1] / 16) * 16;
+                const b = Math.floor(data[i + 2] / 16) * 16;
+
+                const color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+
+                colorCounts[color] = (colorCounts[color] || 0) + 1;
+
+                if (colorCounts[color] > maxCount) {
+                    maxCount = colorCounts[color];
+                    dominantColor = color;
+                }
+            }
+
+            return dominantColor;
+        }
+
+        const artworkUrls = Array(15).fill().map((_, i) => `images/artwork${i + 1}.jpg`);
+
+        function createIrregularGrid(count) {
+            const positions = [];
+            for (let i = 0; i < count; i++) {
+                const x = (Math.random() * 150) + (i % 5) * 350;
+                const y = (Math.random() * 150) + (Math.floor(i / 5) * 350);
+                positions.push({ x, y });
+            }
+            return positions;
+        }
+
+        function getContrastColor(hexcolor) {
+            const r = parseInt(hexcolor.slice(1,3),16);
+            const g = parseInt(hexcolor.slice(3,5),16);
+            const b = parseInt(hexcolor.slice(5,7),16);
+            const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            return luminance > 0.5 ? '#000000' : '#ffffff';
+        }
+
+        function updateBackground(color) {
+            document.body.style.backgroundColor = color;
+            const headerBgColor = `rgba(${hexToRgb(color).join(', ')}, 0.9)`;
+            header.style.backgroundColor = headerBgColor;
+            const contrastColor = getContrastColor(color);
+            colorInfo.style.color = contrastColor;
+            colorInfo.textContent = `Current Background Color: ${color} | Parallax ${isParallaxEnabled ? 'Enabled' : 'Disabled'}`;
+        }
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? [
+                parseInt(result[1], 16),
+                parseInt(result[2], 16),
+                parseInt(result[3], 16)
+            ] : null;
+        }
+
+        const positions = createIrregularGrid(15);
+        positions.forEach((pos, i) => {
+            const link = document.createElement('a');
+            link.href = '#';
+            link.style.position = 'absolute';
+            link.style.left = `${pos.x}px`;
+            link.style.top = `${pos.y}px`;
+            link.className = 'masonry-item';
+
+            const img = document.createElement('img');
+            img.crossOrigin = "Anonymous";
+            img.src = artworkUrls[i];
+            img.alt = `Artwork ${i + 1}`;
+
+            img.onload = function() {
+                const dominantColor = getDominantColor(img);
+                link.setAttribute('data-color', dominantColor);
+            };
+
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const color = link.getAttribute('data-color');
+                updateBackground(color);
+                isParallaxEnabled = !isParallaxEnabled;
+                colorInfo.textContent = `Current Background Color: ${color} | Parallax ${isParallaxEnabled ? 'Enabled' : 'Disabled'}`;
+            });
+
+            link.appendChild(img);
+            container.appendChild(link);
+        });
+
+        let isMouseMoving = false;
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetScrollX = 0;
+        let targetScrollY = 0;
+        let currentScrollX = 0;
+        let currentScrollY = 0;
+        let velocityX = 0;
+        let velocityY = 0;
+
+        let mouseTimer;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            velocityX = e.clientX - lastMouseX;
+            velocityY = e.clientY - lastMouseY;
+            lastMouseX = e.clientX;
+            lastMouseY = e.clientY;
+
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            isMouseMoving = true;
+
+            clearTimeout(mouseTimer);
+            mouseTimer = setTimeout(() => {
+                isMouseMoving = false;
+                velocityX = 0;
+                velocityY = 0;
+            }, 100);
+        });
+
+        function smoothStep(x) {
+            return x * x * (3 - 2 * x);
+        }
+
+        function lerp(start, end, factor) {
+            return start + (end - start) * smoothStep(factor);
+        }
+
+        function animate() {
+            if (isParallaxEnabled) {
+                if (isMouseMoving) {
+                    const scrollSpeed = 12;
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
+
+                    const deltaX = (mouseX - centerX) * scrollSpeed / centerX;
+                    const deltaY = (mouseY - centerY) * scrollSpeed / centerY;
+
+                    targetScrollX += deltaX + velocityX * 0.5;
+                    targetScrollY += deltaY + velocityY * 0.5;
+                }
+
+                const smoothingFactor = 0.05;
+                currentScrollX = lerp(currentScrollX, targetScrollX, smoothingFactor);
+                currentScrollY = lerp(currentScrollY, targetScrollY, smoothingFactor);
+
+                const items = document.querySelectorAll('.masonry-item');
+                items.forEach((item, index) => {
+                    const speed = 1 - (index % 3) * 0.2;
+                    const x = -currentScrollX * speed;
+                    const y = -currentScrollY * speed;
+                    item.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+                });
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>

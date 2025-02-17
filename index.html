@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bryan Robertson - Visual Artist</title>
+    <title>Artist Portfolio</title>
     <style>
         * {
             margin: 0;
@@ -12,264 +12,130 @@
         }
 
         body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            min-height: 100vh;
+            font-family: 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            background: #000;
+            color: #fff;
             overflow: hidden;
-            transition: background-color 1s ease;
+            height: 100vh;
         }
 
-        .masonry-container {
+        .hero-section {
             position: relative;
-            width: 200vw;
-            height: 200vh;
-            padding: 20px;
-            margin-top: 80px;
-        }
-
-        .masonry-item {
-            position: absolute;
-            width: 300px;
-            height: 300px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            cursor: pointer;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-            backface-visibility: hidden;
         }
 
-        .masonry-item img {
+        .hero-image {
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            z-index: -1;
+            transition: transform 0.2s ease-out;
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+            z-index: 1;
+        }
+
+        .hero-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: blur(5px); /* Blur effect */
+        }
+
+        .pixelated-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="10" height="10" fill="white" opacity="0.1"/></svg>');
+            background-size: 20px 20px;
+            opacity: 0.15;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
             transition: transform 0.3s ease;
+            mix-blend-mode: difference;
         }
 
-        .masonry-item:hover img {
-            transform: scale(1.2);
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        header {
+        p {
+            font-size: 1.5rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .noise {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.9);
-            transition: background-color 1s ease;
-        }
-
-        .color-info {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px;
-            border-radius: 5px;
-            z-index: 1000;
-        }
-
-        #canvas {
-            display: none;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.05;
+            z-index: 2;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAPASURBVGiB7ZpNiFVVHMZ/z7kzOjo6OjmORX2BJK2CIhKKIqiwIYisCKGgRYsSIjJaGEEFQS6iD4pW9bFpIVK0KAqCCGrVIiIhrIYKKsXRGT8nHR2d0Zm5v/M8Lebcj3vPOXPv3Nd4J+cHw7nn4/n/n/Oec+4957lKKUVRSJLUAawFbgGWAVcBXUAHMAAMAr8DPwHfAz8Cp1JKZ4uqvxBIktqBh4HHgFsLDPUd8BbwdkrpXBFtmBckqQV4EngeuLzIWBmcAF4EXk8pTTQaZM6QJK0G3gBuaCTxPPEL8GhK6Yd6O7bU01iSJD0FfMPSQQCsAb6R9FS9HWuekSRJ0svAa0Bb3c0rjgngkZTSW7V2qAlSBvE2cF/DzSqWCWBHSum9WhrPCimD+AS4s7CmFcsosD2l9HG1hlVBkrQS+Bq4uvCmFctfwG0ppd+qNZp1sS+fEf/nCABWAh9LWjZbo1khkrYDHxXeouWDW4Eds/7QXaAkXQEcBlYtWrOWHqPAupTSn7M1mG1GPuDiRABcArw/24/TZkSSbgZ+pP5X9YsF21NKn810c6YZeYWLGwHwrqSrZ7o5BVJ+M7+98CYtX6wAXpjp5jQzkrQROAhEsxpVHBPAhpTSL+6NaRBJrwJPL2qzlh8+Syn5G4JpkPJB6jAwY7RFhG0ppS/0/4zcR0AATEoaGBgYeHN0dHQvMF52jAP7hoaGvhgfH38kpXRwaGhoX3d3987Ozs4twCiQysdIZ2fnlp6enh2Dg4P7RkZGPu/r63uzVCodKzp5Pp+fBJ4BvvQX+x3AQWBd0UkXEYdTSjcBSNKzwMvLqF1FYgRYk1IaBpCkNuAPoL2gYIuJnSmlNwEkqQQcCSHsllRKKe0OIeyWVAoh7O7v738vhLBH0p4Qwp7+/v73QghvhhB2SdoVQtjV19f3TgjhHUm7JO3q7e19t1QqvS9pt6TdIYQ9vb297y92wvxMTAJb8xkBuJWLD0E5Yl1K6TCAUkqHgE3LrF1F4pucAUBK6SRwsMBgi4kD+R8ppYPAiWXUriJxwv1wEPh7GbSjaPztfjiVUhoFvl4G7Sgax/IPbkj+BPxVcWuKxSn3gwtJwBfLoB1F40v3gw9JwL6KW1MsDrkffEgCPqm4NcXikPvBhyTgw4pbUyyOuR98SAI+q7g1xeK0+8F/++0Ezi5xa4rEWaBfUo/7wb9r/Q18WnGTisOnKaUhKP/rlVIaB16quEnF4UX3Q/7yK0nLgX3A+opbVQwOp5Q2uh/yM0JKaQx4APitwkYVgVPAg+6F/wAQz5FfeHvTzwAAAABJRU5ErkJggg==');
+            mix-blend-mode: overlay;
         }
     </style>
 </head>
 <body>
-    <header id="header">
-        <a href="#" class="logo">
-            <img src="https://placehold.co/150x50" alt="Bryan Robertson Logo">
-        </a>
-    </header>
-
-    <div class="color-info" id="colorInfo">Click an artwork to change the background and toggle parallax</div>
-    <div class="masonry-container" id="masonryContainer"></div>
-    <canvas id="canvas"></canvas>
+    <section class="hero-section">
+        <div class="hero-image">
+            <img src="G Gallery_1.JPG" alt="Hero Image">
+        </div>
+        <div class="pixelated-overlay"></div>
+        <div class="noise"></div>
+        <div class="content">
+            <h1>Bryan Robertson</h1>
+            <p>visual artist work in paint and pixels</p>
+        </div>
+    </section>
 
     <script>
-        const container = document.getElementById('masonryContainer');
-        const header = document.getElementById('header');
-        const colorInfo = document.getElementById('colorInfo');
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-
-        let isParallaxEnabled = true;
-
-        function getDominantColor(img) {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imageData.data;
-
-            let colorCounts = {};
-            let maxCount = 0;
-            let dominantColor = '#000000';
-
-            for (let i = 0; i < data.length; i += 4) {
-                const r = Math.floor(data[i] / 16) * 16;
-                const g = Math.floor(data[i + 1] / 16) * 16;
-                const b = Math.floor(data[i + 2] / 16) * 16;
-
-                const color = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-
-                colorCounts[color] = (colorCounts[color] || 0) + 1;
-
-                if (colorCounts[color] > maxCount) {
-                    maxCount = colorCounts[color];
-                    dominantColor = color;
-                }
-            }
-
-            return dominantColor;
-        }
-
-        const artworkUrls = Array(15).fill().map((_, i) => `images/artwork${i + 1}.jpg`);
-
-        function createIrregularGrid(count) {
-            const positions = [];
-            for (let i = 0; i < count; i++) {
-                const x = (Math.random() * 150) + (i % 5) * 350;
-                const y = (Math.random() * 150) + (Math.floor(i / 5) * 350);
-                positions.push({ x, y });
-            }
-            return positions;
-        }
-
-        function getContrastColor(hexcolor) {
-            const r = parseInt(hexcolor.slice(1,3),16);
-            const g = parseInt(hexcolor.slice(3,5),16);
-            const b = parseInt(hexcolor.slice(5,7),16);
-            const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-            return luminance > 0.5 ? '#000000' : '#ffffff';
-        }
-
-        function updateBackground(color) {
-            document.body.style.backgroundColor = color;
-            const headerBgColor = `rgba(${hexToRgb(color).join(', ')}, 0.9)`;
-            header.style.backgroundColor = headerBgColor;
-            const contrastColor = getContrastColor(color);
-            colorInfo.style.color = contrastColor;
-            colorInfo.textContent = `Current Background Color: ${color} | Parallax ${isParallaxEnabled ? 'Enabled' : 'Disabled'}`;
-        }
-
-        function hexToRgb(hex) {
-            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? [
-                parseInt(result[1], 16),
-                parseInt(result[2], 16),
-                parseInt(result[3], 16)
-            ] : null;
-        }
-
-        const positions = createIrregularGrid(15);
-        positions.forEach((pos, i) => {
-            const link = document.createElement('a');
-            link.href = '#';
-            link.style.position = 'absolute';
-            link.style.left = `${pos.x}px`;
-            link.style.top = `${pos.y}px`;
-            link.className = 'masonry-item';
-
-            const img = document.createElement('img');
-            img.crossOrigin = "Anonymous";
-            img.src = artworkUrls[i];
-            img.alt = `Artwork ${i + 1}`;
-
-            img.onload = function() {
-                const dominantColor = getDominantColor(img);
-                link.setAttribute('data-color', dominantColor);
-            };
-
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const color = link.getAttribute('data-color');
-                updateBackground(color);
-                isParallaxEnabled = !isParallaxEnabled;
-                colorInfo.textContent = `Current Background Color: ${color} | Parallax ${isParallaxEnabled ? 'Enabled' : 'Disabled'}`;
-            });
-
-            link.appendChild(img);
-            container.appendChild(link);
-        });
-
-        let isMouseMoving = false;
-        let mouseX = 0;
-        let mouseY = 0;
-        let targetScrollX = 0;
-        let targetScrollY = 0;
-        let currentScrollX = 0;
-        let currentScrollY = 0;
-        let velocityX = 0;
-        let velocityY = 0;
-
-        let mouseTimer;
-        let lastMouseX = 0;
-        let lastMouseY = 0;
+        const heroImage = document.querySelector('.hero-image');
+        const content = document.querySelector('.content');
 
         document.addEventListener('mousemove', (e) => {
-            velocityX = e.clientX - lastMouseX;
-            velocityY = e.clientY - lastMouseY;
-            lastMouseX = e.clientX;
-            lastMouseY = e.clientY;
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
 
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            isMouseMoving = true;
+            const moveX = (mouseX - 0.5) * 20;
+            const moveY = (mouseY - 0.5) * 20;
 
-            clearTimeout(mouseTimer);
-            mouseTimer = setTimeout(() => {
-                isMouseMoving = false;
-                velocityX = 0;
-                velocityY = 0;
-            }, 100);
+            heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            content.style.transform = `translate(${-moveX * 0.1}px, ${-moveY * 0.1}px)`;
         });
-
-        function smoothStep(x) {
-            return x * x * (3 - 2 * x);
-        }
-
-        function lerp(start, end, factor) {
-            return start + (end - start) * smoothStep(factor);
-        }
-
-        function animate() {
-            if (isParallaxEnabled) {
-                if (isMouseMoving) {
-                    const scrollSpeed = 12;
-                    const centerX = window.innerWidth / 2;
-                    const centerY = window.innerHeight / 2;
-
-                    const deltaX = (mouseX - centerX) * scrollSpeed / centerX;
-                    const deltaY = (mouseY - centerY) * scrollSpeed / centerY;
-
-                    targetScrollX += deltaX + velocityX * 0.5;
-                    targetScrollY += deltaY + velocityY * 0.5;
-                }
-
-                const smoothingFactor = 0.05;
-                currentScrollX = lerp(currentScrollX, targetScrollX, smoothingFactor);
-                currentScrollY = lerp(currentScrollY, targetScrollY, smoothingFactor);
-
-                const items = document.querySelectorAll('.masonry-item');
-                items.forEach((item, index) => {
-                    const speed = 1 - (index % 3) * 0.2;
-                    const x = -currentScrollX * speed;
-                    const y = -currentScrollY * speed;
-                    item.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-                });
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        animate();
     </script>
 </body>
 </html>
