@@ -12,13 +12,13 @@
         }
 
         nav {
-            background: ;
-            padding: 2rem 4rem;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
+    background: transparent;
+    padding: 2rem 30px; /* Changed from 4rem to 30px */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
         .transition-overlay {
             position: fixed;
             top: 0;
@@ -52,30 +52,32 @@
             }
         }
         .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    max-width: calc(100% - 60px); /* 30px from each side */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
 
-        .logo {
-            display: block;
-            transition: all 0.3s ease;
-            position: relative;
-            width: 150px;
-            height: 75px;
-        }
+.logo {
+    display: block;
+    transition: all 0.3s ease;
+    position: relative;
+    width: 150px;
+    height: 75px;
+    margin-left: 0; /* Reset any margin */
+}
 
-        .logo img {
-            position: absolute;
-            top: 10px;
-            left: 40px;
-            max-height: 75px;
-            width: auto;
-            transition: all 0.3s ease;
-            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
-        }
+.logo img {
+    position: absolute;
+    top: 10px;
+    left: 0; /* Changed from 40px to 0 */
+    max-height: 75px;
+    width: auto;
+    transition: all 0.3s ease;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+}
 
         .logo .logo-default {
             opacity: 1;
@@ -147,9 +149,9 @@
         }
 
         @media (max-width: 768px) {
-            nav {
-                padding: 1.5rem 2rem;
-            }
+    nav {
+        padding: 1.5rem 30px; /* Keep consistent 30px padding */
+    }
 
             .hamburger {
                 display: block;
