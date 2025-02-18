@@ -19,7 +19,38 @@
             top: 0;
             z-index: 1000;
         }
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: black;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
 
+        .transition-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Add page fade in effect */
+        body {
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -240,6 +271,7 @@
     </style>
 </head>
 <body>
+    <div class="transition-overlay"></div>
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">
@@ -268,43 +300,68 @@
     </section>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('.nav-links a');
+            const transitionOverlay = document.querySelector('.transition-overlay');
+
+            links.forEach(link => {
+                link.classList.remove('disintegrate');
+                link.style.opacity = '1';
+                link.style.visibility = 'visible';
+            });
+
+            // Handle back/forward browser buttons
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    transitionOverlay.classList.remove('active');
+                }
+            });
+        });
+        // Reset link states on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => {
+                link.classList.remove('disintegrate');
+                link.style.opacity = '1';
+                link.style.visibility = 'visible';
+            });
+        });
+    
         const heroImage = document.querySelector('.hero-image');
         const content = document.querySelector('.content');
-
+    
         document.addEventListener('mousemove', (e) => {
             const mouseX = e.clientX / window.innerWidth;
             const mouseY = e.clientY / window.innerHeight;
-
+    
             const moveX = (mouseX - 0.5) * 20;
             const moveY = (mouseY - 0.5) * 20;
-
+    
             heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
             content.style.transform = `translate(${-moveX * 0.1}px, ${-moveY * 0.1}px)`;
         });
-
+    
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
         const links = document.querySelectorAll('.nav-links a');
-
+    
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
-
+    
         links.forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault(); // Still prevent default initially
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                const transitionOverlay = document.querySelector('.transition-overlay');
 
-                if (!link.classList.contains('disintegrate')) {
-                    link.classList.add('disintegrate');
+                // Fade out
+                transitionOverlay.classList.add('active');
 
-                    // Get the href value
-                    const href = link.getAttribute('href');
-
-                    // Navigate to the new page after animation completes
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 900); // Set to 900ms to ensure animation is visible before navigation
-                }
+                // Wait for fade out, then navigate
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 500);
             });
         });
     </script>
