@@ -211,14 +211,14 @@
         }
 
         .hero-image {
-            position: absolute;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
-            z-index: -1;
-            transition: transform 0.2s ease-out;
-        }
+    position: absolute;
+    top: -25%;  /* Increased from -5% to -25% */
+    left: -25%;  /* Increased from -5% to -25% */
+    width: 150%;  /* Increased from 110% to 150% */
+    height: 150%;  /* Increased from 110% to 150% */
+    z-index: -1;
+    transition: transform 0.2s ease-out;
+}
 
         .hero-image::after {
             content: '';
@@ -351,15 +351,17 @@
         const content = document.querySelector('.content');
     
         document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-    
-            const moveX = (mouseX - 0.5) * 20;
-            const moveY = (mouseY - 0.5) * 20;
-    
-            heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            content.style.transform = `translate(${-moveX * 0.1}px, ${-moveY * 0.1}px)`;
-        });
+    const mouseX = e.clientX / window.innerWidth;
+    const mouseY = e.clientY / window.innerHeight;
+
+    // Increased movement range from 20 to 40
+    const moveX = (mouseX - 0.5) * 40;
+    const moveY = (mouseY - 0.5) * 40;
+
+    heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    // Adjusted content movement for smoother parallax
+    content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
+});
     
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
