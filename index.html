@@ -19,6 +19,7 @@
     top: 0;
     z-index: 1000;
 }
+
         .transition-overlay {
             position: fixed;
             top: 0;
@@ -144,20 +145,19 @@
         }
 
         .hamburger {
-    display: none;
+    display: none;  /* Hidden by default */
     cursor: pointer;
-    font-size: 2rem; /* Increased from default size */
+    font-size: 2rem;
     padding: 0.5rem;
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
-    /* Optional: Add a touch target area */
     width: 44px;
     height: 44px;
-    display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .hamburger:hover {
     color: #FF7F50;
     text-shadow: 0 0 10px rgba(255, 127, 80, 0.8),
@@ -291,6 +291,7 @@
 </head>
 <body>
     <div class="transition-overlay"></div>
+    
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">
