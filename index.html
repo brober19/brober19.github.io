@@ -5,12 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artist Portfolio</title>
     <style>
+        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+
+        /* Navigation Styles */
         nav {
             background: transparent;
             padding: 2rem 30px;
@@ -20,43 +33,15 @@
             z-index: 1000;
         }
 
-        .transition-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: black;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .transition-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        body {
-            opacity: 0;
-            animation: fadeIn 1s ease-in forwards;
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
         .nav-container {
             max-width: calc(100% - 60px);
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0;
         }
 
+        /* Logo Styles */
         .logo {
             display: block;
             transition: all 0.3s ease;
@@ -78,13 +63,13 @@
 
         .logo .logo-default { opacity: 1; }
         .logo .logo-hover { opacity: 0; }
+
         .logo:hover .logo-default { opacity: 0; }
         .logo:hover .logo-hover {
             opacity: 1;
             filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
                    drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
-                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4))
-                   drop-shadow(0 0 20px rgba(255, 127, 80, 0.3));
+                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
         }
 
         .nav-links {
@@ -97,140 +82,38 @@
             text-decoration: none;
             color: #fff;
             font-size: 1.1rem;
-            position: relative;
             padding: 0.5rem 0;
             transition: all 0.3s ease;
-            font-family: Helvetica, Arial, sans-serif;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
         }
 
         .nav-links a:hover {
             color: #FF7F50;
-            text-shadow: 0 0 10px rgba(255, 127, 80, 0.8),
-                        0 0 20px rgba(255, 127, 80, 0.6),
-                        0 0 30px rgba(255, 127, 80, 0.4),
-                        0 0 40px rgba(255, 127, 80, 0.2);
+            text-shadow:
+                0 0 10px rgba(255, 127, 80, 0.8),
+                0 0 20px rgba(255, 127, 80, 0.6);
         }
 
-        .typing-animation {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 3px solid #FF7F50;
-    width: 0;
-    animation: typing 2s steps(15) 0.5s forwards,  /* Changed from 3s to 2s and 1s to 0.5s */
-               blink-caret 0.75s step-end infinite;
-}
-
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #FF7F50 }
-        }
-
-        .split-text {
-            display: inline-block;
+        /* Transition Overlay */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: black;
+            z-index: 9999;
             opacity: 0;
-            transform: translateY(20px);
+            pointer-events: none;
+            transition: opacity 0.5s ease;
         }
 
-        .split-text.animate {
-            animation: fadeInUp 0.8s forwards;
+        .transition-overlay.active {
+            opacity: 1;
+            pointer-events: all;
         }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .disintegrate {
-            animation: disintegrate 0.8s forwards;
-            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes disintegrate {
-            0% {
-                opacity: 1;
-                filter: blur(0px);
-                transform: translateY(0) rotate(0deg);
-            }
-            30% {
-                opacity: 1;
-                filter: blur(2px);
-                transform: translateY(-5px) rotate(-2deg);
-            }
-            100% {
-                opacity: 0;
-                filter: blur(10px);
-                transform: translateY(20px) rotate(10deg);
-                letter-spacing: 10px;
-            }
-        }
-
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 2rem;
-            padding: 0.5rem;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            width: 44px;
-            height: 44px;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hamburger:hover {
-            color: #FF7F50;
-            text-shadow: 0 0 10px rgba(255, 127, 80, 0.8),
-                         0 0 20px rgba(255, 127, 80, 0.6);
-            transform: scale(1.1);
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                padding: 1.5rem 30px;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-                width: 100%;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                background: ;
-                padding: 1rem;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-        }
-
-        body {
-            font-family: 'Helvetica Neue', sans-serif;
-            line-height: 1.6;
-            background: #000;
-            color: #fff;
-            overflow: hidden;
-            height: 100vh;
-        }
-
+        /* Hero Section */
         .hero-section {
             position: relative;
             height: 100vh;
@@ -253,12 +136,8 @@
         .hero-image::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: rgba(0, 0, 0, 0.4);
-            z-index: 1;
         }
 
         .hero-image img {
@@ -281,6 +160,7 @@
             mix-blend-mode: overlay;
         }
 
+        /* Content Styles */
         .content {
             position: relative;
             z-index: 1;
@@ -298,24 +178,88 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        p {
-            font-size: 1.5rem;
-            opacity: 0.8;
-            max-width: 600px;
-            margin: 0 auto;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        .typing-animation {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #FF7F50;
+            width: 0;
+            animation:
+                typing 2s steps(15) 0.5s forwards,
+                blink-caret 0.75s step-end infinite;
         }
 
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.05;
-            z-index: 2;
-            mix-blend-mode: overlay;
+        .split-text {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .split-text.animate {
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #FF7F50; }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .disintegrate {
+            animation: disintegrate 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes disintegrate {
+            0% {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0) rotate(0);
+            }
+            30% {
+                opacity: 1;
+                filter: blur(2px);
+                transform: translateY(-5px) rotate(-2deg);
+            }
+            100% {
+                opacity: 0;
+                filter: blur(10px);
+                transform: translateY(20px) rotate(10deg);
+                letter-spacing: 10px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav-links.active { display: flex; }
         }
     </style>
 </head>
@@ -328,14 +272,13 @@
                 <img src="signature_light.png" alt="Logo" class="logo-default">
                 <img src="signature_red_v2.png" alt="Logo Hover" class="logo-hover">
             </a>
-            <div class="hamburger">☰</div>
             <ul class="nav-links">
-                <li><a href="painting.html">Painting</a></li>
-                <li><a href="digital.html">Digital</a></li>
+                <li><a href="painting.html">Paint</a></li>
+                <li><a href="digital.html">Pixels</a></li>
                 <li><a href="cv.html">C.V.</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-
+        </div>
     </nav>
 
     <section class="hero-section">
@@ -343,7 +286,6 @@
             <img src="G Gallery_1.JPG" alt="Hero Image">
         </div>
         <div class="pixelated-overlay"></div>
-        <div class="noise"></div>
         <div class="content">
             <h1><span class="typing-animation">Bryan Robertson</span></h1>
             <p class="split-text">a visual artist working in paint and pixels</p>
@@ -351,75 +293,64 @@
     </section>
 
     <script>
-     document.addEventListener('DOMContentLoaded', () => {
-    const links = document.querySelectorAll('.nav-links a');
-    const transitionOverlay = document.querySelector('.transition-overlay');
-    const splitText = document.querySelector('.split-text');
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('.nav-links a');
+            const transitionOverlay = document.querySelector('.transition-overlay');
+            const splitText = document.querySelector('.split-text');
 
-    // Animate the split text after a delay
-    setTimeout(() => {
-        splitText.classList.add('animate');
-    }, 2500); // Adjusted delay
+            // Initialize split text animation
+            setTimeout(() => {
+                splitText.classList.add('animate');
+            }, 2500);
 
-    // Ensure links are visible and reset their state
-    links.forEach(link => {
-        link.classList.remove('disintegrate');
-        link.style.opacity = '1';
-        link.style.visibility = 'visible';
-    });
-
-    // Handle the pageshow event to reset the overlay and links
-    window.addEventListener('pageshow', (event) => {
-        if (event.persisted) {
-            transitionOverlay.classList.remove('active');
+            // Handle page transitions
             links.forEach(link => {
-                link.classList.remove('disintegrate');
-                link.style.opacity = '1';
-                link.style.visibility = 'visible';
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+
+                    // Add disintegration effect to clicked link
+                    link.classList.add('disintegrate');
+
+                    // Fade in overlay
+                    setTimeout(() => {
+                        transitionOverlay.classList.add('active');
+                    }, 400);
+
+                    // Navigate after overlay is visible
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 900);
+                });
             });
-        }
-    });
-});
 
-const heroImage = document.querySelector('.hero-image');
-const content = document.querySelector('.content');
+            // Handle back/forward navigation
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    transitionOverlay.classList.remove('active');
+                }
+            });
 
-document.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
+            // Remove overlay when page loads
+            setTimeout(() => {
+                transitionOverlay.classList.remove('active');
+            }, 100);
 
-    const moveX = (mouseX - 0.5) * 40;
-    const moveY = (mouseY - 0.5) * 40;
+            // Parallax effect
+            const heroImage = document.querySelector('.hero-image');
+            const content = document.querySelector('.content');
 
-    heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
-});
+            document.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
 
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-const links = document.querySelectorAll('.nav-links a');
+                const moveX = (mouseX - 0.5) * 40;
+                const moveY = (mouseY - 0.5) * 40;
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-});
-
-links.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const href = link.getAttribute('href');
-        const transitionOverlay = document.querySelector('.transition-overlay');
-
-        link.classList.add('disintegrate');
-
-        setTimeout(() => {
-            transitionOverlay.classList.add('active');
-        }, 400);
-
-        setTimeout(() => {
-            window.location.href = href;
-        }, 1000);
-    });
-});
+                heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
+            });
+        });
     </script>
 </body>
 </html>
