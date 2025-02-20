@@ -6,6 +6,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Gallery Grid with Lightbox</title>
     <style>
+        /* Navigation Styles */
+nav {
+    background: transparent;
+    padding: 2rem 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: calc(100% - 60px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo Styles */
+.logo {
+    display: block;
+    transition: all 0.3s ease;
+    position: relative;
+    width: 150px;
+    height: 75px;
+    margin-left: 0;
+}
+
+.logo img {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    max-height: 75px;
+    width: auto;
+    transition: all 0.3s ease;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.logo .logo-default { opacity: 1; }
+.logo .logo-hover { opacity: 0; }
+
+.logo:hover .logo-default { opacity: 0; }
+.logo:hover .logo-hover {
+    opacity: 1;
+    filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+           drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+           drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.nav-links a:hover {
+    color: #FF7F50;
+    text-shadow:
+        0 0 10px rgba(255, 127, 80, 0.8),
+        0 0 20px rgba(255, 127, 80, 0.6);
+}
+
+/* Responsive Navigation */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 1rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-links.active { display: flex; }
+}
         header {
     position: fixed;
     top: 0;
@@ -31,43 +118,29 @@
     width: auto;
 }
 
-nav {
-    display: flex;
-    gap: 1rem;
+
+.disintegrate {
+    animation: disintegrate 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-nav a {
-    text-decoration: none;
-    color: white;
-    background-color: #20B2AA;
-    padding: 0.8rem 1.2rem;
-    border-radius: 25px;
-    transition: all 0.3s ease;
+@keyframes disintegrate {
+    0% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0) rotate(0);
+    }
+    30% {
+        opacity: 1;
+        filter: blur(2px);
+        transform: translateY(-5px) rotate(-2deg);
+    }
+    100% {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(20px) rotate(10deg);
+        letter-spacing: 10px;
+    }
 }
-
-nav a:hover {
-    background-color: #178F89;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #f0f0f0;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            padding: 40px;
-            box-sizing: border-box;
-            .container {
-    margin-top: 80px; /* Add this line to your existing container style */
-}
-
 @media (max-width: 768px) {
     header {
         flex-direction: column;
@@ -227,6 +300,20 @@ nav a:hover {
     </style>
 </head>
 <body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="signature_light.png" alt="Logo" class="logo-default">
+                <img src="signature_red_v2.png" alt="Logo Hover" class="logo-hover">
+            </a>
+            <ul class="nav-links">
+                <li><a href="painting.html">Paint</a></li>
+                <li><a href="digital.html">Pixels</a></li>
+                <li><a href="cv.html">C.V.</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="container">
         <div class="gallery">
             <div class="image-container" onclick="openLightbox(this)">
@@ -287,6 +374,24 @@ nav a:hover {
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('.nav-links a');
+    
+    links.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+
+            // Add disintegration effect to clicked link
+            link.classList.add('disintegrate');
+
+            // Navigate after animation
+            setTimeout(() => {
+                window.location.href = href;
+            }, 900);
+        });
+    });
+});
         let currentLightbox = null;
 
         function openLightbox(container) {
