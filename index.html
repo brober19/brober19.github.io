@@ -351,67 +351,75 @@
     </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const links = document.querySelectorAll('.nav-links a');
-            const transitionOverlay = document.querySelector('.transition-overlay');
-            const splitText = document.querySelector('.split-text');
+     document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('.nav-links a');
+    const transitionOverlay = document.querySelector('.transition-overlay');
+    const splitText = document.querySelector('.split-text');
 
-            setTimeout(() => {
-    splitText.classList.add('animate');
-}, 2500);  // Changed from 4000 to 2500 (2s typing + 0.5s delay)
+    // Animate the split text after a delay
+    setTimeout(() => {
+        splitText.classList.add('animate');
+    }, 2500); // Adjusted delay
 
+    // Ensure links are visible and reset their state
+    links.forEach(link => {
+        link.classList.remove('disintegrate');
+        link.style.opacity = '1';
+        link.style.visibility = 'visible';
+    });
+
+    // Handle the pageshow event to reset the overlay and links
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            transitionOverlay.classList.remove('active');
             links.forEach(link => {
                 link.classList.remove('disintegrate');
                 link.style.opacity = '1';
                 link.style.visibility = 'visible';
             });
+        }
+    });
+});
 
-            window.addEventListener('pageshow', (event) => {
-                if (event.persisted) {
-                    transitionOverlay.classList.remove('active');
-                }
-            });
-        });
+const heroImage = document.querySelector('.hero-image');
+const content = document.querySelector('.content');
 
-        const heroImage = document.querySelector('.hero-image');
-        const content = document.querySelector('.content');
+document.addEventListener('mousemove', (e) => {
+    const mouseX = e.clientX / window.innerWidth;
+    const mouseY = e.clientY / window.innerHeight;
 
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
+    const moveX = (mouseX - 0.5) * 40;
+    const moveY = (mouseY - 0.5) * 40;
 
-            const moveX = (mouseX - 0.5) * 40;
-            const moveY = (mouseY - 0.5) * 40;
+    heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
+});
 
-            heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
-        });
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+const links = document.querySelectorAll('.nav-links a');
 
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-        const links = document.querySelectorAll('.nav-links a');
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+});
 
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+links.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        const transitionOverlay = document.querySelector('.transition-overlay');
 
-        links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const href = link.getAttribute('href');
-                const transitionOverlay = document.querySelector('.transition-overlay');
+        link.classList.add('disintegrate');
 
-                link.classList.add('disintegrate');
+        setTimeout(() => {
+            transitionOverlay.classList.add('active');
+        }, 400);
 
-                setTimeout(() => {
-                    transitionOverlay.classList.add('active');
-                }, 400);
-
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 1000);
-            });
-        });
+        setTimeout(() => {
+            window.location.href = href;
+        }, 1000);
+    });
+});
     </script>
 </body>
 </html>
