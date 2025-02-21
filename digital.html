@@ -1,177 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-   
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Gallery Grid with Lightbox</title>
     <style>
-        /* Navigation Styles */
-nav {
-    background: transparent;
-    padding: 2rem 30px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.nav-container {
-    max-width: calc(100% - 60px);
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #fff;
+        }
 
-/* Logo Styles */
-.logo {
-    display: block;
-    transition: all 0.3s ease;
-    position: relative;
-    width: 150px;
-    height: 75px;
-    margin-left: 0;
-}
+        nav {
+            background: transparent;
+            padding: 2rem 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            position: relative;
+        }
 
-.logo img {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    max-height: 75px;
-    width: auto;
-    transition: all 0.3s ease;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
-}
+        nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: -1;
+        }
 
-.logo .logo-default { opacity: 1; }
-.logo .logo-hover { opacity: 0; }
+        .nav-container {
+            max-width: calc(100% - 60px);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.logo:hover .logo-default { opacity: 0; }
-.logo:hover .logo-hover {
-    opacity: 1;
-    filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
-           drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
-           drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
-}
+        .logo {
+            display: block;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 150px;
+            height: 75px;
+            margin-left: 0;
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0));
+            transition: filter 0.3s ease;
+        }
 
-/* Navigation Links */
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-}
+        .logo:hover {
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+        }
 
-.nav-links a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 1.1rem;
-    padding: 0.5rem 0;
-    transition: all 0.3s ease;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
+        .logo img {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            max-height: 75px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
 
-.nav-links a:hover {
-    color: #FF7F50;
-    text-shadow:
-        0 0 10px rgba(255, 127, 80, 0.8),
-        0 0 20px rgba(255, 127, 80, 0.6);
-}
+        .logo .logo-default { opacity: 1; }
+        .logo .logo-hover { opacity: 0; }
+        .logo:hover .logo-default { opacity: 0; }
+        .logo:hover .logo-hover { opacity: 1; }
 
-/* Responsive Navigation */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        padding: 1rem;
-        flex-direction: column;
-        align-items: center;
-    }
-    .nav-links.active { display: flex; }
-}
-        header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.9);
-}
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    text-decoration: none;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
 
-.logo img {
-    height: 50px;
-    width: auto;
-}
+        .nav-links a:hover {
+            color: #FF7F50;
+        }
 
-
-.disintegrate {
-    animation: disintegrate 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes disintegrate {
-    0% {
-        opacity: 1;
-        filter: blur(0);
-        transform: translateY(0) rotate(0);
-    }
-    30% {
-        opacity: 1;
-        filter: blur(2px);
-        transform: translateY(-5px) rotate(-2deg);
-    }
-    100% {
-        opacity: 0;
-        filter: blur(10px);
-        transform: translateY(20px) rotate(10deg);
-        letter-spacing: 10px;
-    }
-}
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        padding: 1rem;
-    }
-
-    nav {
-        margin-top: 1rem;
-    }
-}
+        .container {
+            margin-top: 20px;
+            padding: 20px 30px;
         }
 
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
-            width: 100%;
-            padding: 20px 0;
+            padding: 20px 30px;
         }
 
         .image-container {
             position: relative;
             height: 400px;
             cursor: pointer;
+            overflow: hidden;
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .image-container:hover::before {
+            opacity: 1;
         }
 
         .thumbnail {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: all 0.3s ease;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        .thumbnail[src^="https://picsum.photos"] {
+            min-height: 400px;
+            background-color: #f0f0f0;
+        }
+
+        .image-container:hover .thumbnail {
+            transform: scale(1.05);
         }
 
         .lightbox-overlay {
@@ -180,14 +155,14 @@ nav {
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(255, 255, 255, 0.95);
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 99;
+            z-index: 1001;
         }
 
         .lightbox-overlay.active {
@@ -214,87 +189,100 @@ nav {
         .lightbox-image {
             max-width: 60vw;
             max-height: 75vh;
-            width: auto;
-            height: auto;
             object-fit: contain;
-            z-index: 100;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .lightbox-text {
-            flex: 1;
-            color: white;
-            padding: 20px;
-            max-width: 300px;
-            max-height: 75vh;
-            overflow-y: auto;
-        }
-
-        .caption {
-            margin-top: 15px;
-            color: white;
-            font-size: 16px;
-            text-align: center;
-            z-index: 101;
         }
 
         .close-button {
             position: absolute;
             top: 20px;
             right: 20px;
-            color: white;
-            font-size: 30px;
+            width: 40px;
+            height: 40px;
+            color: #333;
+            font-size: 40px;
+            font-weight: bold;
             cursor: pointer;
-            z-index: 102;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1002;
+        }
+
+        .close-button:hover {
+            color: #FF7F50;
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+        }
+
+        .lightbox-text {
+            flex: 1;
+            color: #333;
+            padding: 20px;
+            max-width: 300px;
+        }
+
+        .caption {
+            margin-top: 15px;
+            color: #333;
+            text-align: center;
         }
 
         .lightbox-arrow {
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
+            color: #333;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 101;
-            border-radius: 50%;
-            font-size: 24px;
-            transition: background-color 0.3s;
+            font-size: 60px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 1002;
+            padding: 20px;
         }
+
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
 
         .lightbox-arrow:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .lightbox-prev {
-            left: 20px;
-        }
-
-        .lightbox-next {
-            right: 20px;
+            color: #FF7F50;
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
             .lightbox-content {
                 flex-direction: column;
-                gap: 15px;
             }
+            .lightbox-image { max-width: 85vw; }
+            .lightbox-text { max-width: 85vw; }
+        }
 
-            .lightbox-image {
-                max-width: 85vw;
+        .disintegrate {
+            animation: disintegrate 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes disintegrate {
+            0% {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0) rotate(0);
             }
-
-            .lightbox-text {
-                max-width: 85vw;
-                max-height: 30vh;
+            30% {
+                opacity: 1;
+                filter: blur(2px);
+                transform: translateY(-5px) rotate(-2deg);
+            }
+            100% {
+                opacity: 0;
+                filter: blur(10px);
+                transform: translateY(20px) rotate(10deg);
+                letter-spacing: 10px;
             }
         }
     </style>
@@ -303,8 +291,8 @@ nav {
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="signature_light.png" alt="Logo" class="logo-default">
-                <img src="signature_red_v2.png" alt="Logo Hover" class="logo-hover">
+                <img src="signature.png" alt="Logo" class="logo-default">
+                <img src="signature_red.png" alt="Logo Hover" class="logo-hover">
             </a>
             <ul class="nav-links">
                 <li><a href="painting.html">Paint</a></li>
@@ -314,85 +302,55 @@ nav {
             </ul>
         </div>
     </nav>
+
     <div class="container">
         <div class="gallery">
-            <div class="image-container" onclick="openLightbox(this)">
-                <img src="bellyfeel.gif"Image 1" class="thumbnail">
+            <div class="image-container">
+                <img src="bellyfeel.gif" alt="Image 1" class="thumbnail">
                 <div class="lightbox-overlay">
-                    <div class="close-button" onclick="closeLightbox(event)">×</div>
+                    <div class="close-button">×</div>
                     <div class="lightbox-content">
                         <div class="lightbox-image-container">
-                            <img src="bellyfeel.gif"Image 1" class="lightbox-image">
-                            <div class="caption">Image 1 Caption</div>
+                            <img src="bellyfeel.gif" alt="Image 1" class="lightbox-image">
+                            <div class="caption">Artwork 1</div>
                         </div>
                         <div class="lightbox-text">
-                            <h3>Image Details</h3>
-                            <p>This animated GIF blends surrealism and Dada influences with digital and Pop Art elements, creating a chaotic and dream-like composition. The juxtaposition of human and animal features, along with digital symbols like emojis, reflects a commentary on the blending of human identity with digital personas. The grid background symbolizes the structured nature of digital networks, while the exaggerated expressions and vibrant colors critique the intensity of online interactions. Overall, it serves as a playful yet critical exploration of identity, technology, and culture in the digital age.</p>
+                            <h3>Artwork Title 1</h3>
+                            <p>Description of artwork 1. Medium, year, and other details.</p>
                         </div>
                     </div>
-                    <div class="lightbox-arrow lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</div>
-                    <div class="lightbox-arrow lightbox-next" onclick="navigateLightbox(1)">&#8250;</div>
+                    <div class="lightbox-arrow lightbox-prev">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next">&#8250;</div>
                 </div>
             </div>
-            <div class="image-container" onclick="openLightbox(this)">
-                <img src="https://placehold.co/800x1200/2" alt="Image 2" class="thumbnail">
+
+            <div class="image-container">
+                <img src="https://picsum.photos/800/1200?random=2" alt="Image 2" class="thumbnail">
                 <div class="lightbox-overlay">
-                    <div class="close-button" onclick="closeLightbox(event)">×</div>
+                    <div class="close-button">×</div>
                     <div class="lightbox-content">
                         <div class="lightbox-image-container">
-                            <img src="https://placehold.co/800x1200/2" alt="Image 2" class="lightbox-image">
-                            <div class="caption">Image 2 Caption</div>
+                            <img src="https://picsum.photos/800/1200?random=2" alt="Image 2" class="lightbox-image">
+                            <div class="caption">Artwork 2</div>
                         </div>
                         <div class="lightbox-text">
-                            <h3>Image Details</h3>
-                            <p>Different text for image 2. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                            <h3>Artwork Title 2</h3>
+                            <p>Description of artwork 2. Medium, year, and other details.</p>
                         </div>
                     </div>
-                    <div class="lightbox-arrow lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</div>
-                    <div class="lightbox-arrow lightbox-next" onclick="navigateLightbox(1)">&#8250;</div>
-                </div>
-            </div>
-            <div class="image-container" onclick="openLightbox(this)">
-                <img src="https://placehold.co/1600x900/3" alt="Image 3" class="thumbnail">
-                <div class="lightbox-overlay">
-                    <div class="close-button" onclick="closeLightbox(event)">×</div>
-                    <div class="lightbox-content">
-                        <div class="lightbox-image-container">
-                            <img src="https://placehold.co/1600x900/3" alt="Image 3" class="lightbox-image">
-                            <div class="caption">Image 3 Caption</div>
-                        </div>
-                        <div class="lightbox-text">
-                            <h3>Image Details</h3>
-                            <p>Text for image 3. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        </div>
-                    </div>
-                    <div class="lightbox-arrow lightbox-prev" onclick="navigateLightbox(-1)">&#8249;</div>
-                    <div class="lightbox-arrow lightbox-next" onclick="navigateLightbox(1)">&#8250;</div>
+                    <div class="lightbox-arrow lightbox-prev">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next">&#8250;</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    const links = document.querySelectorAll('.nav-links a');
-    
-    links.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = link.getAttribute('href');
-
-            // Add disintegration effect to clicked link
-            link.classList.add('disintegrate');
-
-            // Navigate after animation
-            setTimeout(() => {
-                window.location.href = href;
-            }, 900);
-        });
-    });
-});
         let currentLightbox = null;
+
+        document.querySelectorAll('.image-container').forEach(container => {
+            container.addEventListener('click', () => openLightbox(container));
+        });
 
         function openLightbox(container) {
             const overlay = container.querySelector('.lightbox-overlay');
@@ -401,15 +359,27 @@ nav {
             currentLightbox = container;
         }
 
-        function closeLightbox(event) {
-            event.stopPropagation();
-            const overlay = event.target.closest('.lightbox-overlay');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            currentLightbox = null;
-        }
+        document.querySelectorAll('.close-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const overlay = e.target.closest('.lightbox-overlay');
+                if (overlay) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    currentLightbox = null;
+                }
+            });
+        });
 
-        function navigateLightbox(direction) {
+        document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
+            arrow.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const direction = arrow.classList.contains('lightbox-prev') ? -1 : 1;
+                navigateLightbox(direction, e);
+            });
+        });
+
+        function navigateLightbox(direction, event) {
             event.stopPropagation();
             if (!currentLightbox) return;
 
@@ -422,36 +392,45 @@ nav {
             currentLightbox.querySelector('.lightbox-overlay').classList.add('active');
         }
 
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('lightbox-overlay')) {
-                closeLightbox(event);
-            }
-        });
-
         document.addEventListener('keydown', function(event) {
             if (!currentLightbox) return;
 
             if (event.key === 'Escape') {
-                const activeOverlay = document.querySelector('.lightbox-overlay.active');
+                const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
                 if (activeOverlay) {
                     activeOverlay.classList.remove('active');
                     document.body.style.overflow = 'auto';
                     currentLightbox = null;
                 }
             } else if (event.key === 'ArrowLeft') {
-                navigateLightbox(-1);
+                navigateLightbox(-1, event);
             } else if (event.key === 'ArrowRight') {
-                navigateLightbox(1);
+                navigateLightbox(1, event);
             }
         });
-    </script>
-    <script>
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('navbar').innerHTML = data;
-            })
-            .catch(error => console.error('Error loading navbar:', error));
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('lightbox-overlay')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                currentLightbox = null;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('.nav-links a');
+
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
+                    link.classList.add('disintegrate');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 900);
+                });
+            });
+        });
     </script>
 </body>
 </html>
