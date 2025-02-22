@@ -295,98 +295,122 @@
     <!DOCTYPE html>
     <!-- Previous HTML and CSS remains the same until the script tag -->
     
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const links = document.querySelectorAll('.nav-links a');
-            const transitionOverlay = document.querySelector('.transition-overlay');
-            const splitText = document.querySelector('.split-text');
-            const navLinks = document.querySelector('.nav-links');
-    
-            // Ensure nav links are visible
-            navLinks.style.display = 'flex';
-    
-            // Initialize split text animation
-            setTimeout(() => {
-                splitText.classList.add('animate');
-            }, 2500);
-    
-            // Handle page transitions
-            links.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const href = link.getAttribute('href');
-    
-                    // Store the current scroll position
-                    sessionStorage.setItem('scrollPos', window.pageYOffset);
-    
-                    // Add disintegration effect to clicked link
-                    link.classList.add('disintegrate');
-    
-                    // Fade in overlay
-                    setTimeout(() => {
-                        transitionOverlay.classList.add('active');
-                    }, 400);
-    
-                    // Navigate after overlay is visible
-                    setTimeout(() => {
-                        window.location.href = href;
-                    }, 900);
-                });
-            });
-    
-            // Handle back/forward navigation
-            window.addEventListener('pageshow', (event) => {
-                // Ensure nav links are visible on back navigation
-                navLinks.style.display = 'flex';
-    
-                if (event.persisted) {
-                    transitionOverlay.classList.remove('active');
-    
-                    // Restore scroll position if it exists
-                    const scrollPos = sessionStorage.getItem('scrollPos');
-                    if (scrollPos) {
-                        window.scrollTo(0, parseInt(scrollPos));
-                        sessionStorage.removeItem('scrollPos');
-                    }
+   <!-- Previous HTML remains the same until the script tag -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const links = document.querySelectorAll('.nav-links a');
+        const transitionOverlay = document.querySelector('.transition-overlay');
+        const splitText = document.querySelector('.split-text');
+        const navLinks = document.querySelector('.nav-links');
+
+        // Add disintegration effect styles dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            .nav-links a.disintegrate {
+                animation: navDisintegrate 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            @keyframes navDisintegrate {
+                0% {
+                    opacity: 1;
+                    filter: blur(0);
+                    transform: translateY(0) scale(1);
                 }
-            });
-    
-            // Remove overlay when page loads
-            setTimeout(() => {
-                transitionOverlay.classList.remove('active');
-            }, 100);
-    
-            // Parallax effect
-            const heroImage = document.querySelector('.hero-image');
-            const content = document.querySelector('.content');
-    
-            document.addEventListener('mousemove', (e) => {
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
-    
-                const moveX = (mouseX - 0.5) * 40;
-                const moveY = (mouseY - 0.5) * 40;
-    
-                heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
-            });
-    
-            // Handle responsive navigation
-            function handleResponsiveNav() {
-                if (window.innerWidth <= 768) {
-                    navLinks.style.display = 'none';
-                    // Add hamburger menu functionality here if needed
-                } else {
-                    navLinks.style.display = 'flex';
+                30% {
+                    opacity: 0.8;
+                    filter: blur(2px);
+                    transform: translateY(-5px) scale(1.1);
+                }
+                100% {
+                    opacity: 0;
+                    filter: blur(10px);
+                    transform: translateY(20px) scale(0.8);
+                    color: #FF7F50;
+                    text-shadow: 0 0 20px #FF7F50;
                 }
             }
-    
-            // Initial check for responsive navigation
-            handleResponsiveNav();
-    
-            // Update on window resize
-            window.addEventListener('resize', handleResponsiveNav);
+        `;
+        document.head.appendChild(style);
+
+        navLinks.style.display = 'flex';
+
+        setTimeout(() => {
+            splitText.classList.add('animate');
+        }, 2500);
+
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+
+                // Add disintegration effect to all nav links with slight delay between each
+                links.forEach((navLink, index) => {
+                    setTimeout(() => {
+                        navLink.classList.add('disintegrate');
+                    }, index * 100); // 100ms delay between each link
+                });
+
+                sessionStorage.setItem('scrollPos', window.pageYOffset);
+
+                // Wait for disintegration animation before overlay
+                setTimeout(() => {
+                    transitionOverlay.classList.add('active');
+                }, 600);
+
+                // Navigate after overlay is visible
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 1100);
+            });
         });
-    </script>
+
+        // Reset animations when page loads
+        window.addEventListener('pageshow', (event) => {
+            navLinks.style.display = 'flex';
+            links.forEach(link => link.classList.remove('disintegrate'));
+
+            if (event.persisted) {
+                transitionOverlay.classList.remove('active');
+
+                const scrollPos = sessionStorage.getItem('scrollPos');
+                if (scrollPos) {
+                    window.scrollTo(0, parseInt(scrollPos));
+                    sessionStorage.removeItem('scrollPos');
+                }
+            }
+        });
+
+        setTimeout(() => {
+            transitionOverlay.classList.remove('active');
+        }, 100);
+
+        const heroImage = document.querySelector('.hero-image');
+        const content = document.querySelector('.content');
+
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            const moveX = (mouseX - 0.5) * 40;
+            const moveY = (mouseY - 0.5) * 40;
+
+            heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
+        });
+
+        function handleResponsiveNav() {
+            if (window.innerWidth <= 768) {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+            }
+        }
+
+        handleResponsiveNav();
+
+        window.addEventListener('resize', handleResponsiveNav);
+    });
+</script>
 </body>
 </html>
