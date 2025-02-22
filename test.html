@@ -95,6 +95,23 @@
             color: #FF7F50;
         }
 
+        .nav-links a.active {
+            color: #FF7F50;
+            position: relative;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #FF7F50;
+            transform: scaleX(1);
+            transition: transform 0.3s ease;
+        }
+
         .container {
             margin-top: 20px;
             padding: 20px 30px;
@@ -140,7 +157,7 @@
             display: block;
         }
 
-        .thumbnail[src^="https://picsum.photos"] {
+        .thumbnail[src^="https://placehold.co"] {
             min-height: 400px;
             background-color: #f0f0f0;
         }
@@ -255,6 +272,65 @@
                    drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
         }
 
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #fff;
+            z-index: 9999;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .transition-overlay.active {
+            transform: scaleY(1);
+        }
+
+        .transition-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .transition-overlay.active .transition-content {
+            opacity: 1;
+        }
+
+        .loading-dots {
+            display: inline-block;
+        }
+
+        .loading-dots span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #FF7F50;
+            border-radius: 50%;
+            margin: 0 3px;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
         @media (max-width: 768px) {
             .lightbox-content {
                 flex-direction: column;
@@ -262,37 +338,24 @@
             .lightbox-image { max-width: 85vw; }
             .lightbox-text { max-width: 85vw; }
         }
-
-        .disintegrate {
-            animation: disintegrate 0.8s forwards cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes disintegrate {
-            0% {
-                opacity: 1;
-                filter: blur(0);
-                transform: translateY(0) rotate(0);
-            }
-            30% {
-                opacity: 1;
-                filter: blur(2px);
-                transform: translateY(-5px) rotate(-2deg);
-            }
-            100% {
-                opacity: 0;
-                filter: blur(10px);
-                transform: translateY(20px) rotate(10deg);
-                letter-spacing: 10px;
-            }
-        }
     </style>
 </head>
 <body>
+    <div class="transition-overlay">
+        <div class="transition-content">
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="signature.png" alt="Logo" class="logo-default">
-                <img src="signature_red.png" alt="Logo Hover" class="logo-hover">
+                <img src="https://placehold.co/150x75" alt="Logo" class="logo-default">
+                <img src="https://placehold.co/150x75/ff7f50/ffffff" alt="Logo Hover" class="logo-hover">
             </a>
             <ul class="nav-links">
                 <li><a href="painting.html">Paint</a></li>
@@ -306,12 +369,12 @@
     <div class="container">
         <div class="gallery">
             <div class="image-container">
-                <img src="bellyfeel.gif" alt="Image 1" class="thumbnail">
+                <img src="https://placehold.co/800x1200" alt="Image 1" class="thumbnail">
                 <div class="lightbox-overlay">
                     <div class="close-button">×</div>
                     <div class="lightbox-content">
                         <div class="lightbox-image-container">
-                            <img src="bellyfeel.gif" alt="Image 1" class="lightbox-image">
+                            <img src="https://placehold.co/800x1200" alt="Image 1" class="lightbox-image">
                             <div class="caption">Artwork 1</div>
                         </div>
                         <div class="lightbox-text">
@@ -325,12 +388,12 @@
             </div>
 
             <div class="image-container">
-                <img src="https://picsum.photos/800/1200?random=2" alt="Image 2" class="thumbnail">
+                <img src="https://placehold.co/800x1200" alt="Image 2" class="thumbnail">
                 <div class="lightbox-overlay">
                     <div class="close-button">×</div>
                     <div class="lightbox-content">
                         <div class="lightbox-image-container">
-                            <img src="https://picsum.photos/800/1200?random=2" alt="Image 2" class="lightbox-image">
+                            <img src="https://placehold.co/800x1200" alt="Image 2" class="lightbox-image">
                             <div class="caption">Artwork 2</div>
                         </div>
                         <div class="lightbox-text">
@@ -418,52 +481,60 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-        const links = document.querySelectorAll('.nav-links a');
+            const links = document.querySelectorAll('.nav-links a');
+            const transitionOverlay = document.querySelector('.transition-overlay');
 
-        links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const href = link.getAttribute('href');
+            // Handle page load transition
+            transitionOverlay.style.transform = 'scaleY(1)';
+            setTimeout(() => {
+                transitionOverlay.style.transform = 'scaleY(0)';
+            }, 500);
 
-                // Store the current scroll position
-                sessionStorage.setItem('scrollPosition', window.pageYOffset);
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = link.getAttribute('href');
 
-                // Add disintegration effect only to the clicked link
-                link.classList.add('disintegrate');
+                    // Store the current scroll position
+                    sessionStorage.setItem('scrollPosition', window.pageYOffset);
 
-                // Navigate after animation completes
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 900);
+                    // Trigger transition
+                    transitionOverlay.classList.add('active');
+
+                    // Navigate after transition
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 500);
+                });
             });
+
+            // Restore scroll position if available
+            const scrollPosition = sessionStorage.getItem('scrollPosition');
+            if (scrollPosition) {
+                window.scrollTo(0, parseInt(scrollPosition));
+                sessionStorage.removeItem('scrollPosition');
+            }
+
+            // Mark current page as active
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const currentLink = document.querySelector(`.nav-links a[href="${currentPage}"]`);
+            if (currentLink) {
+                currentLink.classList.add('active');
+            }
         });
 
-        // Restore scroll position if available
-        const scrollPosition = sessionStorage.getItem('scrollPosition');
-        if (scrollPosition) {
-            window.scrollTo(0, parseInt(scrollPosition));
-            sessionStorage.removeItem('scrollPosition');
-        }
+        // Handle browser's back button
+        window.addEventListener('popstate', function(event) {
+            if (event.state) {
+                window.scrollTo(0, event.state.scrollPos);
+            }
+        });
 
-        // Add class to mark the current page's nav link as active
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        const currentLink = document.querySelector(`.nav-links a[href="${currentPage}"]`);
-        if (currentLink) {
-            currentLink.classList.add('active');
-        }
-    });
-
-    // Add this to handle browser's back button
-    window.addEventListener('popstate', function(event) {
-        if (event.state) {
-            window.scrollTo(0, event.state.scrollPos);
-        }
-    });
-    window.addEventListener('beforeunload', function() {
-        const scrollPos = window.pageYOffset;
-        history.replaceState({ scrollPos: scrollPos }, '');
-    });
-</script>
+        // Save state before unload
+        window.addEventListener('beforeunload', function() {
+            const scrollPos = window.pageYOffset;
+            history.replaceState({ scrollPos: scrollPos }, '');
+        });
     </script>
 </body>
 </html>

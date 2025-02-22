@@ -292,64 +292,100 @@
         </div>
     </section>
 
+    <!DOCTYPE html>
+    <!-- Previous HTML and CSS remains the same until the script tag -->
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const links = document.querySelectorAll('.nav-links a');
             const transitionOverlay = document.querySelector('.transition-overlay');
             const splitText = document.querySelector('.split-text');
-
+            const navLinks = document.querySelector('.nav-links');
+    
+            // Ensure nav links are visible
+            navLinks.style.display = 'flex';
+    
             // Initialize split text animation
             setTimeout(() => {
                 splitText.classList.add('animate');
             }, 2500);
-
+    
             // Handle page transitions
             links.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     const href = link.getAttribute('href');
-
+    
+                    // Store the current scroll position
+                    sessionStorage.setItem('scrollPos', window.pageYOffset);
+    
                     // Add disintegration effect to clicked link
                     link.classList.add('disintegrate');
-
+    
                     // Fade in overlay
                     setTimeout(() => {
                         transitionOverlay.classList.add('active');
                     }, 400);
-
+    
                     // Navigate after overlay is visible
                     setTimeout(() => {
                         window.location.href = href;
                     }, 900);
                 });
             });
-
+    
             // Handle back/forward navigation
             window.addEventListener('pageshow', (event) => {
+                // Ensure nav links are visible on back navigation
+                navLinks.style.display = 'flex';
+    
                 if (event.persisted) {
                     transitionOverlay.classList.remove('active');
+    
+                    // Restore scroll position if it exists
+                    const scrollPos = sessionStorage.getItem('scrollPos');
+                    if (scrollPos) {
+                        window.scrollTo(0, parseInt(scrollPos));
+                        sessionStorage.removeItem('scrollPos');
+                    }
                 }
             });
-
+    
             // Remove overlay when page loads
             setTimeout(() => {
                 transitionOverlay.classList.remove('active');
             }, 100);
-
+    
             // Parallax effect
             const heroImage = document.querySelector('.hero-image');
             const content = document.querySelector('.content');
-
+    
             document.addEventListener('mousemove', (e) => {
                 const mouseX = e.clientX / window.innerWidth;
                 const mouseY = e.clientY / window.innerHeight;
-
+    
                 const moveX = (mouseX - 0.5) * 40;
                 const moveY = (mouseY - 0.5) * 40;
-
+    
                 heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
                 content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
             });
+    
+            // Handle responsive navigation
+            function handleResponsiveNav() {
+                if (window.innerWidth <= 768) {
+                    navLinks.style.display = 'none';
+                    // Add hamburger menu functionality here if needed
+                } else {
+                    navLinks.style.display = 'flex';
+                }
+            }
+    
+            // Initial check for responsive navigation
+            handleResponsiveNav();
+    
+            // Update on window resize
+            window.addEventListener('resize', handleResponsiveNav);
         });
     </script>
 </body>
