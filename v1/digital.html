@@ -17,175 +17,83 @@
             background-color: #fff;
         }
 
-/* Navigation Styles */
-nav {
-    background: transparent;
-    padding: 2rem 30px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
+        nav {
+            background: transparent;
+            padding: 2rem 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            position: relative;
+        }
 
-.nav-container {
-    max-width: calc(100% - 60px);
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: -1;
+        }
 
-/* Logo Styles */
-.logo {
-    display: block;
-    transition: all 0.3s ease;
-    position: relative;
-    width: 150px;
-    height: 75px;
-    margin-left: 0;
-}
+        .nav-container {
+            max-width: calc(100% - 60px);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-.logo img {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    max-height: 75px;
-    width: auto;
-    transition: all 0.3s ease;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
-}
+        .logo {
+            display: block;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 150px;
+            height: 75px;
+            margin-left: 0;
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0));
+            transition: filter 0.3s ease;
+        }
 
-.logo .logo-default { opacity: 1; }
-.logo .logo-hover { opacity: 0; }
+        .logo:hover {
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+        }
 
-.logo:hover .logo-default { opacity: 0; }
-.logo:hover .logo-hover {
-    opacity: 1;
-    filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
-           drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
-           drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
-}
+        .logo img {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            max-height: 75px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
 
-/* Navigation Links */
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+        .logo .logo-default { opacity: 1; }
+        .logo .logo-hover { opacity: 0; }
+        .logo:hover .logo-default { opacity: 0; }
+        .logo:hover .logo-hover { opacity: 1; }
 
-.nav-links.loaded { opacity: 1; }
-.nav-links.visible { display: flex !important; }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-.nav-links a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 1.1rem;
-    padding: 0.5rem 0;
-    transition: all 0.3s ease;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    position: relative;
-    overflow: hidden;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
 
-.nav-links a:hover {
-    color: #FF7F50;
-    text-shadow:
-        0 0 10px rgba(255, 127, 80, 0.8),
-        0 0 20px rgba(255, 127, 80, 0.6);
-}
-
-/* Navigation Link Effects */
-.nav-links a span {
-    position: relative;
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-
-.nav-links a:hover span { transform: translateY(-2px); }
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: #FF7F50;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease;
-}
-
-.nav-links a:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
-/* Hamburger Menu */
-.hamburger {
-    display: none;
-    cursor: pointer;
-    padding: 10px;
-}
-
-.hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: #fff;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-}
-
-/* Transition Overlay */
-.transition-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #000;
-    z-index: 9999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
-}
-
-.transition-overlay.active {
-    opacity: 1;
-    pointer-events: all;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .hamburger { display: block; }
-
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: #000;
-        padding: 1rem;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .nav-links.active { display: flex !important; }
-
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 6px);
-    }
-
-    .hamburger.active span:nth-child(2) { opacity: 0; }
-
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -6px);
-    }
-}
+        .nav-links a:hover {
+            color: #FF7F50;
+        }
 
         .container {
             margin-top: 20px;
@@ -383,14 +291,9 @@ nav {
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="images/signature_light.png" alt="Logo" class="logo-default">
-                <img src="images/signature_red_v2.png" alt="Logo Hover" class="logo-hover">
+                <img src="signature.png" alt="Logo" class="logo-default">
+                <img src="signature_red.png" alt="Logo Hover" class="logo-hover">
             </a>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
             <ul class="nav-links">
                 <li><a href="painting.html">Paint</a></li>
                 <li><a href="digital.html">Pixels</a></li>
@@ -399,7 +302,6 @@ nav {
             </ul>
         </div>
     </nav>
-    <div class="transition-overlay"></div>
 
     <div class="container">
         <div class="gallery">
@@ -516,61 +418,51 @@ nav {
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-    const links = document.querySelectorAll('.nav-links a');
-    const transitionOverlay = document.querySelector('.transition-overlay');
-    const navLinks = document.querySelector('.nav-links');
-    const hamburger = document.querySelector('.hamburger');
+        const links = document.querySelectorAll('.nav-links a');
 
-    // Wrap link text in spans
-    links.forEach(link => {
-        const text = link.textContent;
-        link.innerHTML = `<span>${text}</span>`;
-    });
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = link.getAttribute('href');
 
-    // Initialize nav links
-    setTimeout(() => {
-        navLinks.classList.add('loaded');
-        handleNavVisibility();
-    }, 100);
+                // Store the current scroll position
+                sessionStorage.setItem('scrollPosition', window.pageYOffset);
 
-    // Hamburger menu toggle
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navLinks.classList.toggle('active');
-        navLinks.style.display = navLinks.classList.contains('active') ? 'flex' : 'none';
-    });
+                // Add disintegration effect only to the clicked link
+                link.classList.add('disintegrate');
 
-    // Handle nav visibility
-    function handleNavVisibility() {
-        if (window.innerWidth > 768) {
-            navLinks.style.display = 'flex';
-            navLinks.classList.add('visible');
-        } else {
-            if (!navLinks.classList.contains('active')) {
-                navLinks.style.display = 'none';
-                navLinks.classList.remove('visible');
-            }
-        }
-    }
-
-    // Page transitions
-    links.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = link.getAttribute('href');
-            
-            transitionOverlay.classList.add('active');
-            
-            setTimeout(() => {
-                window.location.href = href;
-            }, 500);
+                // Navigate after animation completes
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 900);
+            });
         });
+
+        // Restore scroll position if available
+        const scrollPosition = sessionStorage.getItem('scrollPosition');
+        if (scrollPosition) {
+            window.scrollTo(0, parseInt(scrollPosition));
+            sessionStorage.removeItem('scrollPosition');
+        }
+
+        // Add class to mark the current page's nav link as active
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const currentLink = document.querySelector(`.nav-links a[href="${currentPage}"]`);
+        if (currentLink) {
+            currentLink.classList.add('active');
+        }
     });
 
-    // Handle window resize
-    window.addEventListener('resize', handleNavVisibility);
-});
-
+    // Add this to handle browser's back button
+    window.addEventListener('popstate', function(event) {
+        if (event.state) {
+            window.scrollTo(0, event.state.scrollPos);
+        }
+    });
+    window.addEventListener('beforeunload', function() {
+        const scrollPos = window.pageYOffset;
+        history.replaceState({ scrollPos: scrollPos }, '');
+    });
 </script>
     </script>
 </body>
