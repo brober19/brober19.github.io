@@ -48,7 +48,7 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 1.5rem 0; /* Increased padding to move logo down */
             transition: background 0.3s ease;
         }
 
@@ -68,6 +68,7 @@
             position: relative;
             width: 120px;
             height: 60px;
+            margin-left: -15px; /* Added negative margin to move logo left */
         }
 
         .logo img {
@@ -226,6 +227,7 @@
             .logo {
                 width: 100px;
                 height: 50px;
+                margin-left: -10px; /* Adjusted for mobile */
             }
         }
 
@@ -243,6 +245,18 @@
             100% { transform: translateY(0) rotate(180deg); }
         }
 
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 var(--accent-glow);
+            }
+            70% {
+                box-shadow: 0 0 10px 10px rgba(255, 127, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 127, 80, 0);
+            }
+        }
+
         body {
             font-family: Helvetica, Arial, sans-serif;
             margin: 0;
@@ -255,7 +269,7 @@
         .container {
             max-width: 1200px;
             width: 90%;
-            padding-top: 120px;
+            padding-top: 140px; /* Increased to account for taller nav */
             margin: 0 auto;
             display: grid;
             grid-template-columns: 5fr 1fr;
@@ -274,13 +288,51 @@
             align-items: center;
         }
 
-        .profile-img {
+        .profile-container {
+            position: relative;
             width: 150px;
             height: 150px;
-            border-radius: 50%;
             margin-bottom: 1.5rem;
-            border: 3px solid var(--accent-color);
-            transition: border-color 0.3s ease;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+            border: none;
+            padding: 3px;
+            background-clip: content-box;
+        }
+
+        .profile-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .profile-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            padding: 3px;
+            background: var(--accent-color);
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            box-shadow:
+                0 0 10px var(--accent-glow),
+                0 0 20px var(--accent-glow-secondary);
+            animation: pulse-glow 2s infinite;
         }
 
         .social-icons {
@@ -390,7 +442,7 @@
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
-                padding-top: 100px;
+                padding-top: 120px;
             }
 
             .sidebar {
@@ -474,7 +526,10 @@
         </div>
 
         <div class="sidebar">
-            <img src="https://placehold.co/150x150" alt="Profile" class="profile-img">
+            <div class="profile-container">
+                <div class="profile-border"></div>
+                <img src="https://placehold.co/150x150" alt="Profile" class="profile-img">
+            </div>
             <div class="social-icons">
                 <a href="#"><i class="far fa-envelope"></i></a>
                 <a href="#"><i class="fab fa-instagram"></i></a>
