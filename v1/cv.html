@@ -6,138 +6,6 @@
     <title>CV Website</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        nav {
-    background: transparent;
-    padding: 2rem 30px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
-
-.nav-container {
-    max-width: calc(100% - 60px);
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: block;
-    transition: all 0.3s ease;
-    position: relative;
-    width: 150px;
-    height: 75px;
-    margin-left: 0;
-}
-
-.logo img {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    max-height: 75px;
-    width: auto;
-    transition: all 0.3s ease;
-    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-.logo .logo-default { opacity: 1; }
-.logo .logo-hover { opacity: 0; }
-
-.logo:hover .logo-default { opacity: 0; }
-.logo:hover .logo-hover {
-    opacity: 1;
-    filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
-           drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
-           drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.nav-links.loaded { opacity: 1; }
-.nav-links.visible { display: flex !important; }
-
-.nav-links a {
-    text-decoration: none;
-    color: #333;
-    font-size: 1.1rem;
-    padding: 0.5rem 0;
-    transition: all 0.3s ease;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-.nav-links a:hover {
-    color: #FF7F50;
-    text-shadow:
-        0 0 10px rgba(255, 127, 80, 0.8),
-        0 0 20px rgba(255, 127, 80, 0.6);
-}
-
-.nav-links a span {
-    position: relative;
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-
-.nav-links a:hover span { transform: translateY(-2px); }
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: #FF7F50;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 0.3s ease;
-}
-
-.nav-links a:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
-.hamburger {
-    display: none;
-    cursor: pointer;
-    padding: 10px;
-}
-
-.hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: #333;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-}
-
-@media (max-width: 768px) {
-    .hamburger { display: block; }
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: #fff;
-        padding: 1rem;
-        flex-direction: column;
-        align-items: center;
-    }
-    .nav-links.active { display: flex !important; }
-}
         @keyframes bounce {
             0% {
                 transform: translateY(0) rotate(180deg);
@@ -171,7 +39,6 @@
 
         .container {
             max-width: 1200px;
-            padding-top: 120px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 5fr 1fr;
@@ -279,25 +146,6 @@
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo">
-                <img src="images/signature.png" alt="Logo" class="logo-default">
-                <img src="images/signature_red.png" alt="Logo Hover" class="logo-hover">
-            </a>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#"><span>Paint</span></a></li>
-                <li><a href="#"><span>Pixels</span></a></li>
-                <li><a href="#"><span>C.V.</span></a></li>
-                <li><a href="#"><span>Contact</span></a></li>
-            </ul>
-        </div>
-    </nav>
     <div class="container">
         <div class="main-content">
             <h1>Your Name</h1>
@@ -354,19 +202,6 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.querySelector('.nav-links');
-    const hamburger = document.querySelector('.hamburger');
-
-    setTimeout(() => {
-        navLinks.classList.add('loaded');
-    }, 100);
-
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navLinks.classList.toggle('active');
-    });
-});
         document.querySelectorAll('.section-header').forEach(button => {
             button.addEventListener('click', () => {
                 const content = button.nextElementSibling;
