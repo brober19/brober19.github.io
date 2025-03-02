@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Gallery Grid with Lightbox</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #fff;
+            --text-color: #333;
+            --accent-color: #FF7F50;
+            --accent-glow: rgba(255, 127, 80, 0.8);
+            --accent-glow-secondary: rgba(255, 127, 80, 0.6);
+            --border-color: #eee;
+            --lightbox-bg: rgba(255, 255, 255, 0.95);
+            --nav-bg: #fff;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --accent-color: #FF7F50;
+            --accent-glow: rgba(255, 127, 80, 0.8);
+            --accent-glow-secondary: rgba(255, 127, 80, 0.6);
+            --border-color: #333;
+            --lightbox-bg: rgba(18, 18, 18, 0.95);
+            --nav-bg: #1e1e1e;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +39,9 @@
         body {
             font-family: Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            background-color: #fff;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         nav {
@@ -77,20 +104,20 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: var(--text-color);
             font-size: 1.1rem;
             padding: 0.5rem 0;
             transition: all 0.3s ease;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px var(--shadow-color);
             position: relative;
             overflow: hidden;
         }
 
         .nav-links a:hover {
-            color: #FF7F50;
+            color: var(--accent-color);
             text-shadow:
-                0 0 10px rgba(255, 127, 80, 0.8),
-                0 0 20px rgba(255, 127, 80, 0.6);
+                0 0 10px var(--accent-glow),
+                0 0 20px var(--accent-glow-secondary);
         }
 
         .nav-links a span {
@@ -108,7 +135,7 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: #FF7F50;
+            background: var(--accent-color);
             transform: scaleX(0);
             transform-origin: right;
             transition: transform 0.3s ease;
@@ -129,9 +156,41 @@
             display: block;
             width: 25px;
             height: 3px;
-            background: #333;
+            background: var(--text-color);
             margin: 5px 0;
             transition: all 0.3s ease;
+        }
+
+        /* Theme toggle styling */
+        .theme-toggle {
+            cursor: pointer;
+            margin-left: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent-color);
+            text-shadow:
+                0 0 10px var(--accent-glow),
+                0 0 20px var(--accent-glow-secondary);
+        }
+
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+
+        .theme-toggle .fa-moon {
+            display: inline-block;
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-sun {
+            display: inline-block;
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-moon {
+            display: none;
         }
 
         .container {
@@ -151,6 +210,13 @@
             height: 400px;
             cursor: pointer;
             overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .image-container:hover {
+            box-shadow: 0 8px 16px var(--shadow-color);
         }
 
         .image-container::before {
@@ -164,6 +230,10 @@
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: 1;
+        }
+
+        [data-theme="dark"] .image-container::before {
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .image-container:hover::before {
@@ -189,7 +259,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: var(--lightbox-bg);
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -224,6 +294,8 @@
             max-width: 60vw;
             max-height: 75vh;
             object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px var(--shadow-color);
         }
 
         .close-button {
@@ -232,7 +304,7 @@
             right: 20px;
             width: 40px;
             height: 40px;
-            color: #333;
+            color: var(--text-color);
             font-size: 40px;
             font-weight: bold;
             cursor: pointer;
@@ -244,19 +316,19 @@
         }
 
         .close-button:hover {
-            color: #FF7F50;
+            color: var(--accent-color);
         }
 
         .lightbox-text {
             flex: 1;
-            color: #333;
+            color: var(--text-color);
             padding: 20px;
             max-width: 300px;
         }
 
         .caption {
             margin-top: 15px;
-            color: #333;
+            color: var(--text-color);
             text-align: center;
         }
 
@@ -264,7 +336,7 @@
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
-            color: #333;
+            color: var(--text-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -280,7 +352,7 @@
         .lightbox-next { right: 20px; }
 
         .lightbox-arrow:hover {
-            color: #FF7F50;
+            color: var(--accent-color);
         }
 
         @media (max-width: 768px) {
@@ -291,10 +363,11 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: #fff;
+                background: var(--nav-bg);
                 padding: 1rem;
                 flex-direction: column;
                 align-items: center;
+                box-shadow: 0 4px 8px var(--shadow-color);
             }
             .nav-links.active { display: flex !important; }
             .lightbox-content { flex-direction: column; }
@@ -306,7 +379,7 @@
 <body>
     <nav>
         <div class="nav-container">
-            <a href="#" class="logo">
+            <a href="index.html" class="logo">
                 <img src="images/signature.png" alt="Logo" class="logo-default">
                 <img src="images/signature_red.png" alt="Logo Hover" class="logo-hover">
             </a>
@@ -316,10 +389,14 @@
                 <span></span>
             </div>
             <ul class="nav-links">
-                <li><a href="#"><span>Paint</span></a></li>
-                <li><a href="#"><span>Pixels</span></a></li>
-                <li><a href="#"><span>C.V.</span></a></li>
-                <li><a href="#"><span>Contact</span></a></li>
+                <li><a href="painting.html"><span>Paint</span></a></li>
+                <li><a href="digital.html"><span>Pixels</span></a></li>
+                <li><a href="cv.html"><span>C.V.</span></a></li>
+                <li><a href="contact.html"><span>Contact</span></a></li>
+                <li><a href="#" id="theme-toggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </a></li>
             </ul>
         </div>
     </nav>
@@ -357,6 +434,44 @@
                         <div class="lightbox-text">
                             <h3>Artwork Title 2</h3>
                             <p>Description of artwork 2. Medium, year, and other details.</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next">&#8250;</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="https://placehold.co/800x1200" alt="Image 3" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="https://placehold.co/800x1200" alt="Image 3" class="lightbox-image">
+                            <div class="caption">Artwork 3</div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Artwork Title 3</h3>
+                            <p>Description of artwork 3. Medium, year, and other details.</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next">&#8250;</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="https://placehold.co/800x1200" alt="Image 4" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="https://placehold.co/800x1200" alt="Image 4" class="lightbox-image">
+                            <div class="caption">Artwork 4</div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Artwork Title 4</h3>
+                            <p>Description of artwork 4. Medium, year, and other details.</p>
                         </div>
                     </div>
                     <div class="lightbox-arrow lightbox-prev">&#8249;</div>
@@ -441,6 +556,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
 
             setTimeout(() => {
                 navLinks.classList.add('loaded');
@@ -450,6 +567,27 @@
                 hamburger.classList.toggle('active');
                 navLinks.classList.toggle('active');
             });
+
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (htmlElement.getAttribute('data-theme') === 'dark') {
+                    htmlElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    htmlElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                htmlElement.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // If no saved preference, use system preference
+                htmlElement.setAttribute('data-theme', 'dark');
+            }
         });
     </script>
 </body>
