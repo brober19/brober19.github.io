@@ -1,18 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bryan Robertson | Artist Newsreel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #3a506b;
-            --secondary-color: #5bc0be;
-            --accent-color: #e27d60;
-            --light-color: #f5f5f5;
-            --dark-color: #1c2541;
-            --font-main: 'Helvetica Neue', Arial, sans-serif;
-            --font-heading: 'Georgia', serif;
+            --bg-color: #fff;
+            --text-color: #333;
+            --accent-color: #FF7F50;
+            --accent-glow: rgba(255, 127, 80, 0.8);
+            --accent-glow-secondary: rgba(255, 127, 80, 0.6);
+            --border-color: #eee;
+            --lightbox-bg: rgba(255, 255, 255, 0.95);
+            --nav-bg: #fff;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --card-bg: #fff;
+            --card-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            --card-hover-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            --date-color: #5bc0be;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --accent-color: #FF7F50;
+            --accent-glow: rgba(255, 127, 80, 0.8);
+            --accent-glow-secondary: rgba(255, 127, 80, 0.6);
+            --border-color: #333;
+            --lightbox-bg: rgba(18, 18, 18, 0.95);
+            --nav-bg: #1e1e1e;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --card-bg: #1e1e1e;
+            --card-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            --card-hover-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            --date-color: #5bc0be;
         }
 
         * {
@@ -22,102 +45,210 @@
         }
 
         body {
-            font-family: var(--font-main);
+            font-family: Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: var(--light-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        nav {
+            background: transparent;
+            padding: 2rem 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: calc(100% - 60px);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: block;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 150px;
+            height: 75px;
+            margin-left: 0;
+        }
+
+        .logo img {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            max-height: 75px;
+            width: auto;
+            transition: all 0.3s ease;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .logo .logo-default { opacity: 1; }
+        .logo .logo-hover { opacity: 0; }
+
+        .logo:hover .logo-default { opacity: 0; }
+        .logo:hover .logo-hover {
+            opacity: 1;
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links.loaded { opacity: 1; }
+        .nav-links.visible { display: flex !important; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+            text-shadow:
+                0 0 10px var(--accent-glow),
+                0 0 20px var(--accent-glow-secondary);
+        }
+
+        .nav-links a span {
+            position: relative;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover span { transform: translateY(-2px); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--text-color);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Theme toggle styling */
+        .theme-toggle {
+            cursor: pointer;
+            margin-left: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent-color);
+            text-shadow:
+                0 0 10px var(--accent-glow),
+                0 0 20px var(--accent-glow-secondary);
+        }
+
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+
+        .theme-toggle .fa-moon {
+            display: inline-block;
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-sun {
+            display: inline-block;
+        }
+
+        [data-theme="dark"] .theme-toggle .fa-moon {
+            display: none;
         }
 
         .container {
+            margin-top: 120px;
+            padding: 20px 30px;
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 40px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .logo h1 {
-            font-family: var(--font-heading);
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .logo span {
-            font-weight: 300;
-            font-size: 1.2rem;
-            display: block;
-        }
-
-        .hero {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 60px 0;
-            text-align: center;
-        }
-
-        .hero h2 {
-            font-family: var(--font-heading);
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 30px;
-        }
-
+        /* Newsreel Specific Styles */
         .section-header {
             text-align: center;
             margin-bottom: 40px;
+            padding-top: 40px;
         }
 
         .section-header h2 {
-            font-family: var(--font-heading);
+            font-family: Georgia, serif;
             font-size: 2.5rem;
-            color: var(--primary-color);
+            color: var(--accent-color);
             margin-bottom: 15px;
+            text-shadow: 2px 2px 4px var(--shadow-color);
         }
 
         .section-header p {
-            color: #666;
+            color: var(--text-color);
             max-width: 700px;
             margin: 0 auto;
-        }
-
-        .news-section {
-            padding: 60px 0;
         }
 
         .news-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
+            margin-top: 40px;
         }
 
         .news-card {
-            background-color: white;
+            background-color: var(--card-bg);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--card-shadow);
             transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
 
         .news-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: var(--card-hover-shadow);
         }
 
         .card-image {
@@ -132,19 +263,29 @@
         }
 
         .card-content h3 {
-            font-family: var(--font-heading);
+            font-family: Georgia, serif;
             font-size: 1.5rem;
             margin-bottom: 10px;
-            color: var(--dark-color);
+            color: var(--text-color);
         }
 
         .card-content p {
-            color: #666;
+            color: var(--text-color);
             margin-bottom: 15px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            transition: all 0.3s ease;
+        }
+
+        .card-content p.expanded {
+            -webkit-line-clamp: initial;
+            display: block;
         }
 
         .card-content .date {
-            color: var(--secondary-color);
+            color: var(--date-color);
             font-weight: 500;
             margin-bottom: 10px;
             display: block;
@@ -156,9 +297,39 @@
             font-weight: 500;
             display: inline-block;
             margin-top: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card-content .read-more:hover {
+            text-shadow:
+                0 0 5px var(--accent-glow),
+                0 0 10px var(--accent-glow-secondary);
+        }
+
+        .card-content .read-more .fa-arrow-right {
+            transition: transform 0.3s ease;
+        }
+
+        .card-content .read-more.expanded .fa-arrow-right {
+            transform: rotate(90deg);
         }
 
         @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--nav-bg);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+                box-shadow: 0 4px 8px var(--shadow-color);
+            }
+            .nav-links.active { display: flex !important; }
             .news-grid {
                 grid-template-columns: 1fr;
             }
@@ -166,121 +337,199 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <h1>Bryan Robertson</h1>
-                <span>Artist & Educator</span>
-                <span>Dean of Visual and Performing Arts, Yavapai College</span>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="https://placehold.co/150x75?text=BR" alt="Logo" class="logo-default">
+                <img src="https://placehold.co/150x75/FF7F50/FFFFFF?text=BR" alt="Logo Hover" class="logo-hover">
+            </a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
+            <ul class="nav-links">
+                <li><a href="painting.html"><span>Paint</span></a></li>
+                <li><a href="digital.html"><span>Pixels</span></a></li>
+                <li><a href="newsreel.html"><span>Newsreel</span></a></li>
+                <li><a href="cv.html"><span>C.V.</span></a></li>
+                <li><a href="contact.html"><span>Contact</span></a></li>
+                <li><a href="#" id="theme-toggle" class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </a></li>
+            </ul>
         </div>
-    </header>
+    </nav>
 
-    <section class="news-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Newsreel</h2>
-                <p>Highlights from Bryan Robertson's artistic career, exhibitions, publications, and professional achievements.</p>
+    <div class="container">
+        <div class="section-header">
+            <h2>Newsreel</h2>
+            <p>Highlights from Bryan Robertson's artistic career, exhibitions, publications, and professional achievements.</p>
+        </div>
+
+        <div class="news-grid">
+            <div class="news-card">
+                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=CAA+Conference')"></div>
+                <div class="card-content">
+                    <span class="date">February 2024</span>
+                    <h3>Session Chair at CAA Conference</h3>
+                    <p>Bryan Robertson chaired the session "AI In the Studio Art Classroom" at the College Art Association Annual Conference in Chicago, continuing his exploration of AI's role in art education. The session featured presentations from leading educators and artists working at the intersection of artificial intelligence and studio art pedagogy.</p>
+                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+                </div>
             </div>
-            <div class="news-grid">
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=CAA+Conference')"></div>
-                    <div class="card-content">
-                        <span class="date">February 2024</span>
-                        <h3>Session Chair at CAA Conference</h3>
-                        <p>Bryan Robertson chaired the session "AI In the Studio Art Classroom" at the College Art Association Annual Conference in Chicago, continuing his exploration of AI's role in art education.</p>
-                    </div>
+
+            <div class="news-card">
+                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Chromacosm')"></div>
+                <div class="card-content">
+                    <span class="date">January 2024</span>
+                    <h3>Exhibition: Chromacosm: Our Universe in Color</h3>
+                    <p>Work selected for national juried exhibition at Schack Art Center in Everett, WA, showcasing Robertson's continued exploration of color theory and perception. The exhibition featured artists from across the country whose work investigates the psychological and physiological effects of color in contemporary visual culture.</p>
+                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Chromacosm')"></div>
-                    <div class="card-content">
-                        <span class="date">January 2024</span>
-                        <h3>Exhibition: Chromacosm: Our Universe in Color</h3>
-                        <p>Work selected for national juried exhibition at Schack Art Center in Everett, WA, showcasing Robertson's continued exploration of color theory and perception.</p>
-                    </div>
+            </div>
+
+            <div class="news-card">
+                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Dean+Appointment')"></div>
+                <div class="card-content">
+                    <span class="date">2024</span>
+                    <h3>Appointed Dean of Visual and Performing Arts</h3>
+                    <p>Bryan Robertson was appointed Dean of Visual and Performing Arts at Yavapai College in Prescott, Arizona, after serving as Visual Art Department Chair from 2021-2024. In this new role, Robertson will oversee programs in visual arts, music, theater, dance, and film, continuing his commitment to innovative arts education and interdisciplinary collaboration.</p>
+                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Dean+Appointment')"></div>
-                    <div class="card-content">
-                        <span class="date">2024</span>
-                        <h3>Appointed Dean of Visual and Performing Arts</h3>
-                        <p>Bryan Robertson was appointed Dean of Visual and Performing Arts at Yavapai College in Prescott, Arizona, after serving as Visual Art Department Chair from 2021-2024.</p>
-                    </div>
+            </div>
+
+            <div class="news-card">
+                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Creative+Convergence')"></div>
+                <div class="card-content">
+                    <span class="date">September 2023</span>
+                    <h3>Publication: Creative Convergence</h3>
+                    <p>Co-authored "Creative Convergence, The AI Renaissance in Art and Design," published by Springer Nature, exploring artificial intelligence's impact on contemporary art practices. The book examines how AI tools are reshaping creative processes across disciplines and includes case studies from Robertson's own studio practice and teaching methodologies.</p>
+                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Creative+Convergence')"></div>
-                    <div class="card-content">
-                        <span class="date">September 2023</span>
-                        <h3>Publication: Creative Convergence</h3>
-                        <p>Co-authored "Creative Convergence, The AI Renaissance in Art and Design," published by Springer Nature, exploring artificial intelligence's impact on contemporary art practices.</p>
-                    </div>
+            </div>
+
+            <div class="news-card">
+                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=AI+in+Drawing')"></div>
+                <div class="card-content">
+                    <span class="date">August 2023</span>
+                    <h3>Research Publication on AI in Drawing Education</h3>
+                    <p>"A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom" published in The International Journal of New Media, Technology and the Arts. This peer-reviewed article documents Robertson's innovative pedagogical approaches to integrating AI tools into traditional drawing curriculum, with quantitative and qualitative assessment of student outcomes.</p>
+                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=AI+in+Drawing')"></div>
-                    <div class="card-content">
-                        <span class="date">August 2023</span>
-                        <h3>Research Publication on AI in Drawing Education</h3>
-                        <p>"A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom" published in The International Journal of New Media, Technology and the Arts.</p>
-                    </div>
+            </div>
+
+            <div class="news-card">
+                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=FATE+Conference')"></div>
+                <div class="card-content">
+                    <span class="date">April 2023</span>
+                    <h3>Presentations at FATE Conference</h3>
+                    <p>Delivered two presentations at the FATE Conference at Rocky Mountain College of Art and Design: "Synesthesia in the Foundations Classroom" and "Time and Space: E-Residencies Offer Flexible Opportunities." Both presentations were well-received by the foundation art education community and sparked ongoing collaborations with educators across the country.</p>
+                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=FATE+Conference')"></div>
-                    <div class="card-content">
-                        <span class="date">April 2023</span>
-                        <h3>Presentations at FATE Conference</h3>
-                        <p>Delivered two presentations at the FATE Conference at Rocky Mountain College of Art and Design: "Synesthesia in the Foundations Classroom" and "Time and Space: E-Residencies Offer Flexible Opportunities."</p>
-                    </div>
+            </div>
+
+            <div class="news-card">
+                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=CICA+Museum')"></div>
+                <div class="card-content">
+                    <span class="date">2022</span>
+                    <h3>Solo Exhibition: Cacophony</h3>
+                    <p>Solo exhibition at the prestigious Czong Institute for Contemporary Art (CICA Museum) in Seoul, South Korea, selected through international juried competition. The exhibition featured Robertson's multimedia work exploring the intersection of sound, color, and visual perception, including interactive installations that invited viewers to experience synesthetic relationships between sensory modalities.</p>
+                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=CICA+Museum')"></div>
-                    <div class="card-content">
-                        <span class="date">2022</span>
-                        <h3>Solo Exhibition: Cacophony</h3>
-                        <p>Solo exhibition at the prestigious Czong Institute for Contemporary Art (CICA Museum) in Seoul, South Korea, selected through international juried competition.</p>
-                    </div>
+            </div>
+
+            <div class="news-card">
+                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=World+of+Co')"></div>
+                <div class="card-content">
+                    <span class="date">2021</span>
+                    <h3>International Artist Residencies</h3>
+                    <p>Completed two international juried residencies: Politics in Collage Residency at Kolaj Institute in New Orleans and World of Co. Artist Residency in Sofia, Bulgaria. These immersive experiences allowed Robertson to develop new bodies of work responding to different cultural contexts and to collaborate with artists from diverse backgrounds, significantly influencing his subsequent creative practice.</p>
+                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=World+of+Co')"></div>
-                    <div class="card-content">
-                        <span class="date">2021</span>
-                        <h3>International Artist Residencies</h3>
-                        <p>Completed two international juried residencies: Politics in Collage Residency at Kolaj Institute in New Orleans and World of Co. Artist Residency in Sofia, Bulgaria.</p>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=RAC+Grant')"></div>
-                    <div class="card-content">
-                        <span class="date">2019</span>
-                        <h3>Regional Arts Commission Grant</h3>
-                        <p>Awarded the Regional Arts Commission Artist Support Grant in St. Louis, MO, supporting Robertson's continued artistic development and exhibition work.</p>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Body+Politic')"></div>
-                    <div class="card-content">
-                        <span class="date">2018</span>
-                        <h3>Solo Exhibition: Body Politic</h3>
-                        <p>Solo exhibition at The Gallery at University City Library in St. Louis, MO, juried by renowned artist and professor Buzz Spector from Washington University.</p>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Altar+of+Commerce')"></div>
-                    <div class="card-content">
-                        <span class="date">2017</span>
-                        <h3>Solo Exhibition: The Altar of Commerce</h3>
-                        <p>Solo exhibition at The Cathy Gregory Gallery in St. Louis, MO, exploring themes of globalization and commercialization in contemporary society.</p>
-                    </div>
-                </div>
-                <div class="news-card">
-                    <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=MFA+Graduation')"></div>
-                    <div class="card-content">
-                        <span class="date">2016</span>
-                        <h3>MFA with Distinction & Multiple Awards</h3>
-                        <p>Graduated with an MFA in Painting and Drawing from the University of Washington, receiving the Parnassus Graduating with Excellence Award and Jacob Lawrence Graduate Recognition.</p>
-                    </div>
+            </div>
+
+            <div class="news-card">
+                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=RAC+Grant')"></div>
+                <div class="card-content">
+                    <span class="date">2019</span>
+                    <h3>Regional Arts Commission Grant</h3>
+                    <p>Awarded the Regional Arts Commission Artist Support Grant in St. Louis, MO, supporting Robertson's continued artistic development and exhibition work. The grant funded the creation of a new series exploring the relationship between digital and analog image-making processes, culminating in a solo exhibition at The Gallery at University City Library.</p>
+                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+            const newsCards = document.querySelectorAll('.news-card');
+
+            setTimeout(() => {
+                navLinks.classList.add('loaded');
+            }, 100);
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (htmlElement.getAttribute('data-theme') === 'dark') {
+                    htmlElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    htmlElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                htmlElement.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                // If no saved preference, use system preference
+                htmlElement.setAttribute('data-theme', 'dark');
+            }
+
+            // Make entire card clickable to expand content
+            newsCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Don't trigger if clicking on the read more button directly
+                    // as it has its own event handler
+                    if (!e.target.closest('.read-more')) {
+                        const readMoreBtn = card.querySelector('.read-more');
+                        readMoreBtn.click();
+                    }
+                });
+            });
+
+            // Read more functionality
+            const readMoreButtons = document.querySelectorAll('.read-more');
+            readMoreButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent card click event from firing
+                    const cardContent = button.closest('.card-content');
+                    const paragraph = cardContent.querySelector('p');
+
+                    paragraph.classList.toggle('expanded');
+                    button.classList.toggle('expanded');
+
+                    if (button.classList.contains('expanded')) {
+                        button.innerHTML = 'Read less <i class="fas fa-arrow-right"></i>';
+                    } else {
+                        button.innerHTML = 'Read more <i class="fas fa-arrow-right"></i>';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
