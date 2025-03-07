@@ -399,6 +399,241 @@ nav.scrolled {
             .lightbox-image { max-width: 85vw; }
             .lightbox-text { max-width: 85vw; }
         }
+                /* Footer Styles */
+footer {
+    background-color: 
+    padding: 2rem 0;
+    width: 100%;
+    margin-top: auto;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-top: px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-info {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 1rem;
+}
+
+.footer-info h3 {
+    color: #FF7F50;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.footer-info p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    color: #FF7F50;
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-nav-section {
+    min-width: 150px;
+}
+
+.footer-nav-section h4 {
+    color: #FF7F50;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.footer-nav-section ul {
+    list-style: none;
+}
+
+.footer-nav-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-nav-section ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.footer-nav-section ul li a:hover {
+    color: #FF7F50;
+    opacity: 1;
+}
+
+.copyright {
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-nav {
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+}
+    }
+ /* Footer Styles */
+footer {
+    background-color: var(--card-bg);
+    padding: 2rem 0;
+    width: 100%;
+    margin-top: auto;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footer-info {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 1rem;
+}
+
+.footer-info h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.footer-info p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    color: var(--accent-color);
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-nav-section {
+    min-width: 150px;
+}
+
+.footer-nav-section h4 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.footer-nav-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.footer-nav-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-nav-section ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.footer-nav-section ul li a:hover {
+    color: var(--accent-color);
+}
+
+.copyright {
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-nav {
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -425,7 +660,8 @@ nav.scrolled {
             </ul>
         </div>
     </nav>
-
+<br>
+<br>
     <div class="container">
         <div class="gallery">
             <div class="image-container">
@@ -505,7 +741,51 @@ nav.scrolled {
             </div>
         </div>
     </div>
-
+    <br>
+    <br>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <h3>Bryan Robertson</h3>
+                <p>Visual Artist based in Phoenix</p>
+                
+                <div class="social-links">
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" title="Email"><i class="far fa-envelope"></i></a>
+                </div>
+            </div>
+    
+            <div class="footer-nav">
+                <div class="footer-nav-section">
+                    <h4>Work</h4>
+                    <ul>
+                        <li><a href="painting.html">Paintings</a></li>
+                        <li><a href="digital.html">Digital Art</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="cv.html">Curriculum Vitae</a></li>
+                        <li><a href="statement.html">Artist Statement</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="news.html">Newsletter</a></li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="copyright">
+                &copy; 2025 Bryan Robertson. All rights reserved.
+            </div>
+        </div>
+    </footer>
     <script>
         let currentLightbox = null;
 
