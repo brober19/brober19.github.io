@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Statement</title>
+    <!-- Standard favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+    <!-- For iOS devices -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+
+    <!-- For Android devices -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+
+    <!-- For modern browsers -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+    <!-- Web manifest for PWA support -->
+    <link rel="manifest" href="/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        :root {
+            --bg-color: #000;
+            --text-color: #fff;
+            --highlight-color: #FF7F50;
+            --container-bg: rgba(0, 0, 0, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --footer-bg: rgba(0, 0, 0, 0.3);
+            --nav-bg: rgba(0, 0, 0, 0.7);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --highlight-color: #FF7F50;
+            --container-bg: rgba(255, 255, 255, 0.8);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --footer-bg: rgba(255, 255, 255, 0.8);
+            --nav-bg: rgba(245, 245, 245, 0.8);
+        }
+
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Navigation Styles */
+        nav {
+            background: var(--nav-bg);
+            padding: 1.5rem 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: calc(100% - 60px);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo Styles */
+        .logo {
+            display: block;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 150px;
+            height: 75px;
+            margin-left: 0;
+        }
+
+        .logo img {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            max-height: 75px;
+            width: auto;
+            transition: all 0.3s ease;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .logo .logo-default { opacity: 1; }
+        .logo .logo-hover { opacity: 0; }
+
+        .logo:hover .logo-default { opacity: 0; }
+        .logo:hover .logo-hover {
+            opacity: 1;
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links.loaded {
+            opacity: 1;
+        }
+
+        .nav-links.visible {
+            display: flex !important;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: var(--highlight-color);
+            text-shadow:
+                0 0 10px rgba(255, 127, 80, 0.8),
+                0 0 20px rgba(255, 127, 80, 0.6);
+        }
+        
+        /* Navigation Link Effects */
+        .nav-links a {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-links a span {
+            position: relative;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover span {
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--highlight-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            cursor: pointer;
+            margin-left: 2rem;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle:hover {
+            color: var(--highlight-color);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--text-color);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* Statement Section */
+        .statement-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 30px 60px;
+        }
+        
+        .statement-container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--container-bg);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+        }
+        
+        .statement-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .statement-header h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        #artist-statement {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        .highlight {
+            color: var(--highlight-color);
+            text-shadow:
+                0 0 5px rgba(255, 127, 80, 0.8),
+                0 0 10px rgba(255, 127, 80, 0.6);
+            padding: 0 3px;
+            transition: all 1s ease;
+            font-weight: 400;
+        }
+        
+        .highlight.fade-out {
+            color: var(--text-color);
+            text-shadow: none;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--highlight-color);
+            margin-left: 2px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            box-shadow:
+                0 0 5px rgba(255, 127, 80, 0.8),
+                0 0 10px rgba(255, 127, 80, 0.6);
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--footer-bg);
+            padding: 2rem 0;
+            width: 100%;
+            margin-top: auto;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-info {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-info h3 {
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1.2rem;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .footer-info p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: var(--highlight-color);
+        }
+
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-nav-section {
+            min-width: 150px;
+        }
+
+        .footer-nav-section h4 {
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1rem;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .footer-nav-section ul {
+            list-style: none;
+        }
+
+        .footer-nav-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-nav-section ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .footer-nav-section ul li a:hover {
+            color: var(--highlight-color);
+            opacity: 1;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            opacity: 0.6;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .statement-container {
+                padding: 2rem;
+            }
+            
+            .statement-header h2 {
+                font-size: 2rem;
+            }
+            
+            #artist-statement {
+                font-size: 1rem;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--container-bg);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links.active {
+                display: flex !important;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -6px);
+            }
+
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-nav {
+                width: 100%;
+                margin-top: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/signature_light.png" alt="Logo" class="logo-default">
+                <img src="images/signature_red_v2.png" alt="Logo Hover" class="logo-hover">
+            </a>
+            <ul class="nav-links">
+                <li><a href="painting.html"><span>Paint</span></a></li>
+                <li><a href="digital.html"><span>Pixels</span></a></li>
+                <li><a href="cv.html"><span>C.V.</span></a></li>
+                <li><a href="news.html"><span>News</span></a></li>
+                <li class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon" id="dark-icon"></i>
+                    <i class="fas fa-sun" id="light-icon" style="display: none;"></i>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+<br>
+<br>
+    <section class="statement-section">
+        <div class="statement-container">
+            <div class="statement-header">
+                <h2>Artist Statement</h2>
+            </div>
+            <div id="artist-statement"></div>
+            <span class="cursor"></span>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <h3>Bryan Robertson</h3>
+                <p>Visual Artist based in Phoenix</p>
+                
+                <div class="social-links">
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" title="Email"><i class="far fa-envelope"></i></a>
+                </div>
+            </div>
+    
+            <div class="footer-nav">
+                <div class="footer-nav-section">
+                    <h4>Work</h4>
+                    <ul>
+                        <li><a href="painting.html">Paintings</a></li>
+                        <li><a href="digital.html">Digital Art</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="cv.html">Curriculum Vitae</a></li>
+                        <li><a href="statement.html">Artist Statement</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="news.html">Newsletter</a></li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="copyright">
+                &copy; 2025 Bryan Robertson. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.nav-links a');
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            const themeToggle = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('dark-icon');
+            const lightIcon = document.getElementById('light-icon');
+            const html = document.documentElement;
+            const nav = document.getElementById('main-nav');
+            
+            // Artist statement typing animation
+            const statement = `My work explores the intersection of traditional painting techniques and digital media. Through this fusion, I seek to create a dialogue between the tactile nature of paint and the infinite possibilities of pixels.
+
+As an artist, I am fascinated by how color, texture, and form can evoke emotional responses. Each piece is a journey of discovery, where I allow the materials to guide me toward unexpected outcomes.
+
+The digital realm offers me tools to experiment with layers, transparency, and manipulation that would be impossible in traditional media alone. Yet I remain deeply connected to the physicality of paint—its viscosity, its unpredictability, its presence.
+
+My recent work has focused on the concept of memory and how our recollections become distorted over time. These pieces invite viewers to question their own perceptions and the reliability of what we believe to be true.
+
+I hope my art creates a space for contemplation and connection, where viewers can find their own meanings within the visual language I've developed.`;
+            
+            const highlightWords = ['traditional', 'digital', 'color', 'texture', 'form', 'journey', 'discovery', 'layers', 'memory', 'contemplation', 'connection'];
+            
+            const statementElement = document.getElementById('artist-statement');
+            const cursor = document.querySelector('.cursor');
+            
+            let i = 0;
+            const typingSpeed = 20; // slightly slower typing speed
+            let highlightElements = []; // Store all highlighted elements
+            let typingComplete = false;
+            
+            function typeWriter() {
+                if (i < statement.length) {
+                    // Check if we're at the start of a word
+                    if (i === 0 || statement[i-1] === ' ' || statement[i-1] === '\n') {
+                        // Get the next word
+                        const remainingText = statement.slice(i);
+                        const nextWordMatch = remainingText.match(/^[a-zA-Z]+/);
+                        
+                        if (nextWordMatch) {
+                            const nextWord = nextWordMatch[0];
+                            
+                            // Check if this word should be highlighted
+                            if (highlightWords.includes(nextWord.toLowerCase())) {
+                                // Add the highlighted word all at once
+                                const span = document.createElement('span');
+                                span.className = 'highlight';
+                                span.textContent = nextWord;
+                                statementElement.appendChild(span);
+                                highlightElements.push(span); // Store for later color change
+                                
+                                // Add a space after the word if needed
+                                if (i + nextWord.length < statement.length && statement[i + nextWord.length] === ' ') {
+                                    statementElement.appendChild(document.createTextNode(' '));
+                                }
+                                
+                                // Skip ahead
+                                i += nextWord.length;
+                                if (statement[i] === ' ') i++;
+                                setTimeout(typeWriter, typingSpeed);
+                                return;
+                            }
+                        }
+                    }
+                    
+                    // Normal typing for non-highlighted text
+                    if (statement[i] === '\n') {
+                        statementElement.appendChild(document.createElement('br'));
+                        // Single line break for paragraphs
+                    } else {
+                        statementElement.appendChild(document.createTextNode(statement[i]));
+                    }
+                    i++;
+                    setTimeout(typeWriter, typingSpeed);
+                } else {
+                    // Remove cursor when typing is complete
+                    cursor.style.display = 'none';
+                    typingComplete = true;
+                    
+                    // Set timeout to change highlighted words back to white after 10 seconds
+                    setTimeout(fadeOutHighlights, 10000);
+                }
+            }
+            
+            // Function to change highlighted words back to white
+            function fadeOutHighlights() {
+                if (typingComplete && highlightElements.length > 0) {
+                    highlightElements.forEach(element => {
+                        element.classList.add('fade-out');
+                    });
+                }
+            }
+            
+            // Scroll event for navbar
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+            
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', () => {
+                if (html.getAttribute('data-theme') === 'dark') {
+                    html.setAttribute('data-theme', 'light');
+                    darkIcon.style.display = 'none';
+                    lightIcon.style.display = 'inline-block';
+                } else {
+                    html.setAttribute('data-theme', 'dark');
+                    darkIcon.style.display = 'inline-block';
+                    lightIcon.style.display = 'none';
+                }
+            });
+            
+            // Function to handle nav visibility based on screen size
+            function handleNavVisibility() {
+                if (window.innerWidth > 768) {
+                    navLinks.style.display = 'flex';
+                    navLinks.classList.add('visible');
+                } else {
+                    if (!navLinks.classList.contains('active')) {
+                        navLinks.style.display = 'none';
+                        navLinks.classList.remove('visible');
+                    }
+                }
+            }
+
+            // Initialize nav links
+            setTimeout(() => {
+                navLinks.classList.add('loaded');
+                handleNavVisibility();
+            }, 100);
+
+            // Hamburger menu toggle
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                navLinks.style.display = navLinks.classList.contains('active') ? 'flex' : 'none';
+            });
+            
+            // Start the typing animation
+            setTimeout(typeWriter, 1000);
+            
+            // Update on window resize
+            window.addEventListener('resize', handleNavVisibility);
+        });
+    </script>
+</body>
+</html>
