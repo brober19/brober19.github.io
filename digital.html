@@ -24,6 +24,7 @@
     <style>
         :root {
             --bg-color: #fff;
+            --bg-color-rgb: 255, 255, 255;
             --text-color: #333;
             --accent-color: #FF7F50;
             --accent-glow: rgba(255, 127, 80, 0.8);
@@ -36,6 +37,7 @@
 
         [data-theme="dark"] {
             --bg-color: #121212;
+            --bg-color-rgb: 18, 18, 18;
             --text-color: #e0e0e0;
             --accent-color: #FF7F50;
             --accent-glow: rgba(255, 127, 80, 0.8);
@@ -61,13 +63,20 @@
         }
 
         nav {
-            background: transparent;
-            padding: 2rem 30px;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
+    background-color: var(--bg-color);
+    padding: 2rem 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+nav.scrolled {
+    background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px var(--nav-shadow);
+}
 
         .nav-container {
             max-width: calc(100% - 60px);

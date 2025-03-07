@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Gallery Grid with Lightbox</title>
-      <!-- Standard favicon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Standard favicon -->
 <link rel="icon" type="image/x-icon" href="/images/favicon.png">
 
 <!-- For iOS devices -->
@@ -20,10 +21,10 @@
 
 <!-- Web manifest for PWA support -->
 <link rel="manifest" href="/images/favicon.png">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --bg-color: #fff;
+            --bg-color-rgb: 255, 255, 255;
             --text-color: #333;
             --accent-color: #FF7F50;
             --accent-glow: rgba(255, 127, 80, 0.8);
@@ -36,6 +37,7 @@
 
         [data-theme="dark"] {
             --bg-color: #121212;
+            --bg-color-rgb: 18, 18, 18;
             --text-color: #e0e0e0;
             --accent-color: #FF7F50;
             --accent-glow: rgba(255, 127, 80, 0.8);
@@ -61,13 +63,20 @@
         }
 
         nav {
-            background: transparent;
-            padding: 2rem 30px;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
+    background-color: var(--bg-color);
+    padding: 2rem 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+nav.scrolled {
+    background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px var(--nav-shadow);
+}
 
         .nav-container {
             max-width: calc(100% - 60px);
@@ -408,7 +417,7 @@
                 <li><a href="painting.html"><span>Paint</span></a></li>
                 <li><a href="digital.html"><span>Pixels</span></a></li>
                 <li><a href="cv.html"><span>C.V.</span></a></li>
-                <li><a href="news.html"><span>News</span></a></li>
+                <li><a href="news.html"><span>Newss</span></a></li>
                 <li><a href="#" id="theme-toggle" class="theme-toggle">
                     <i class="fas fa-moon"></i>
                     <i class="fas fa-sun"></i>

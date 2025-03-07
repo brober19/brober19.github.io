@@ -41,9 +41,11 @@
         --card-bg: #ffff;
         --shadow-color: rgba(0, 0, 0, 0.1);
         --nav-shadow: rgba(0, 0, 0, 0.2);
+        --bg-color-rgb: 255, 255, 255;
     }
 
     [data-theme="dark"] {
+        --bg-color-rgb: 18, 18, 18;
         --bg-color: #121212;
         --text-color: #e0e0e0; /* Kept light for dark mode */
         --accent-color: #FF7F50;
@@ -66,14 +68,20 @@
 
     /* Navigation Styles from Image Gallery */
     nav {
-        background: transparent;
-        padding: 2rem 30px;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-    }
-
+    background-color: var(--bg-color);
+    padding: 2rem 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+nav.scrolled {
+    background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px var(--nav-shadow);
+}
     .nav-container {
         max-width: calc(100% - 60px);
         margin: 0 auto;
@@ -1136,6 +1144,15 @@ body {
         </div>
     </footer>
     <script>
+        // Add this to your existing script
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+    } else {
+        nav.classList.remove('scrolled');
+    }
+});
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
