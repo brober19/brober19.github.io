@@ -69,13 +69,20 @@
         }
 
         nav {
-            background: transparent;
-            padding: 2rem 30px;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
+    background-color: var(--bg-color);
+    padding: 2rem 30px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+nav.scrolled {
+    background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px var(--nav-shadow);
+}
 
         .nav-container {
             max-width: calc(100% - 60px);
@@ -185,22 +192,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Theme toggle styling */
-        .theme-toggle {
-            cursor: pointer;
-            margin-left: 1.5rem;
-            font-size: 1.2rem;
-            color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            color: var(--accent-color);
-            text-shadow:
-                0 0 10px var(--accent-glow),
-                0 0 20px var(--accent-glow-secondary);
-        }
-
         .theme-toggle .fa-sun {
             display: none;
         }
@@ -233,7 +224,7 @@
         }
 
         .section-header h2 {
-            font-family: Georgia, serif;
+            font-family: Helvetica, Arial, sans-serif;
             font-size: 2.5rem;
             color: var(--accent-color);
             margin-bottom: 15px;
@@ -279,7 +270,7 @@
         }
 
         .card-content h3 {
-            font-family: Georgia, serif;
+            font-family: Helvetica, Arial, sans-serif;
             font-size: 1.5rem;
             margin-bottom: 10px;
             color: var(--text-color);
@@ -356,8 +347,8 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="https://placehold.co/150x75?text=BR" alt="Logo" class="logo-default">
-                <img src="https://placehold.co/150x75/FF7F50/FFFFFF?text=BR" alt="Logo Hover" class="logo-hover">
+                <img src="images/signature.png" alt="Logo" class="logo-default">
+                <img src="images/signature_red_v2.png" alt="Logo Hover" class="logo-hover">
             </a>
             <div class="hamburger">
                 <span></span>
@@ -367,7 +358,6 @@
             <ul class="nav-links">
                 <li><a href="painting.html"><span>Paint</span></a></li>
                 <li><a href="digital.html"><span>Pixels</span></a></li>
-                <li><a href="newsreel.html"><span>Newsreel</span></a></li>
                 <li><a href="cv.html"><span>C.V.</span></a></li>
                 <li><a href="news.html"><span>News</span></a></li>
                 <li><a href="#" id="theme-toggle" class="theme-toggle">
@@ -384,98 +374,217 @@
             <p>Highlights from Bryan Robertson's artistic career, exhibitions, publications, and professional achievements.</p>
         </div>
 
-        <div class="news-grid">
-            <div class="news-card">
-                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=CAA+Conferenc')"></div>
-                <div class="card-content">
-                    <span class="date">February 2024</span>
-                    <h3>Session Chair at CAA Conference</h3>
-                    <p>Bryan Robertson chaired the session "AI In the Studio Art Classroom" at the College Art Association Annual Conference in Chicago, continuing his exploration of AI's role in art education. The session featured presentations from leading educators and artists working at the intersection of artificial intelligence and studio art pedagogy.</p>
-                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Chromacosm')"></div>
-                <div class="card-content">
-                    <span class="date">January 2024</span>
-                    <h3>Exhibition: Chromacosm: Our Universe in Color</h3>
-                    <p>Work selected for national juried exhibition at Schack Art Center in Everett, WA, showcasing Robertson's continued exploration of color theory and perception. The exhibition featured artists from across the country whose work investigates the psychological and physiological effects of color in contemporary visual culture.</p>
-                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Dean+Appointment')"></div>
-                <div class="card-content">
-                    <span class="date">2024</span>
-                    <h3>Appointed Dean of Visual and Performing Arts</h3>
-                    <p>Bryan Robertson was appointed Dean of Visual and Performing Arts at Yavapai College in Prescott, Arizona, after serving as Visual Art Department Chair from 2021-2024. In this new role, Robertson will oversee programs in visual arts, music, theater, dance, and film, continuing his commitment to innovative arts education and interdisciplinary collaboration.</p>
-                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Creative+Convergence')"></div>
-                <div class="card-content">
-                    <span class="date">September 2023</span>
-                    <h3>Publication: Creative Convergence</h3>
-                    <p>Co-authored "Creative Convergence, The AI Renaissance in Art and Design," published by Springer Nature, exploring artificial intelligence's impact on contemporary art practices. The book examines how AI tools are reshaping creative processes across disciplines and includes case studies from Robertson's own studio practice and teaching methodologies.</p>
-                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=AI+in+Drawing')"></div>
-                <div class="card-content">
-                    <span class="date">August 2023</span>
-                    <h3>Research Publication on AI in Drawing Education</h3>
-                    <p>"A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom" published in The International Journal of New Media, Technology and the Arts. This peer-reviewed article documents Robertson's innovative pedagogical approaches to integrating AI tools into traditional drawing curriculum, with quantitative and qualitative assessment of student outcomes.</p>
-                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=FATE+Conference')"></div>
-                <div class="card-content">
-                    <span class="date">April 2023</span>
-                    <h3>Presentations at FATE Conference</h3>
-                    <p>Delivered two presentations at the FATE Conference at Rocky Mountain College of Art and Design: "Synesthesia in the Foundations Classroom" and "Time and Space: E-Residencies Offer Flexible Opportunities." Both presentations were well-received by the foundation art education community and sparked ongoing collaborations with educators across the country.</p>
-                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=CICA+Museum')"></div>
-                <div class="card-content">
-                    <span class="date">2022</span>
-                    <h3>Solo Exhibition: Cacophony</h3>
-                    <p>Solo exhibition at the prestigious Czong Institute for Contemporary Art (CICA Museum) in Seoul, South Korea, selected through international juried competition. The exhibition featured Robertson's multimedia work exploring the intersection of sound, color, and visual perception, including interactive installations that invited viewers to experience synesthetic relationships between sensory modalities.</p>
-                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=World+of+Co')"></div>
-                <div class="card-content">
-                    <span class="date">2021</span>
-                    <h3>International Artist Residencies</h3>
-                    <p>Completed two international juried residencies: Politics in Collage Residency at Kolaj Institute in New Orleans and World of Co. Artist Residency in Sofia, Bulgaria. These immersive experiences allowed Robertson to develop new bodies of work responding to different cultural contexts and to collaborate with artists from diverse backgrounds, significantly influencing his subsequent creative practice.</p>
-                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <div class="news-card">
-                <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=RAC+Grant')"></div>
-                <div class="card-content">
-                    <span class="date">2019</span>
-                    <h3>Regional Arts Commission Grant</h3>
-                    <p>Awarded the Regional Arts Commission Artist Support Grant in St. Louis, MO, supporting Robertson's continued artistic development and exhibition work. The grant funded the creation of a new series exploring the relationship between digital and analog image-making processes, culminating in a solo exhibition at The Gallery at University City Library.</p>
-                    <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
+<div class="news-grid">
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=CAA+Conferenc')"></div>
+        <div class="card-content">
+            <span class="date">February 2024</span>
+            <h3>Session Chair at CAA Conference</h3>
+            <p>Bryan Robertson chaired the session "AI In the Studio Art Classroom" at the College Art Association Annual Conference in Chicago, continuing his exploration of AI's role in art education. The session featured presentations from leading educators and artists working at the intersection of artificial intelligence and studio art pedagogy.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Chromacosm')"></div>
+        <div class="card-content">
+            <span class="date">January 2024</span>
+            <h3>Exhibition: Chromacosm: Our Universe in Color</h3>
+            <p>Work selected for national juried exhibition at Schack Art Center in Everett, WA, showcasing Robertson's continued exploration of color theory and perception. The exhibition featured artists from across the country whose work investigates the psychological and physiological effects of color in contemporary visual culture.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Dean+Appointment')"></div>
+        <div class="card-content">
+            <span class="date">2024</span>
+            <h3>Appointed Dean of Visual and Performing Arts</h3>
+            <p>Bryan Robertson was appointed Dean of Visual and Performing Arts at Yavapai College in Prescott, Arizona, after serving as Visual Art Department Chair from 2021-2024. In this new role, Robertson will oversee programs in visual arts, music, theater, dance, and film, continuing his commitment to innovative arts education and interdisciplinary collaboration.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Creative+Convergence')"></div>
+        <div class="card-content">
+            <span class="date">September 2023</span>
+            <h3>Publication: Creative Convergence</h3>
+            <p>Co-authored "Creative Convergence, The AI Renaissance in Art and Design," published by Springer Nature, exploring artificial intelligence's impact on contemporary art practices. The book examines how AI tools are reshaping creative processes across disciplines and includes case studies from Robertson's own studio practice and teaching methodologies.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=AI+in+Drawing')"></div>
+        <div class="card-content">
+            <span class="date">August 2023</span>
+            <h3>Research Publication on AI in Drawing Education</h3>
+            <p>"A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom" published in The International Journal of New Media, Technology and the Arts. This peer-reviewed article documents Robertson's innovative pedagogical approaches to integrating AI tools into traditional drawing curriculum, with quantitative and qualitative assessment of student outcomes.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=FATE+Conference')"></div>
+        <div class="card-content">
+            <span class="date">April 2023</span>
+            <h3>Presentations at FATE Conference</h3>
+            <p>Delivered two presentations at the FATE Conference at Rocky Mountain College of Art and Design: "Synesthesia in the Foundations Classroom" and "Time and Space: E-Residencies Offer Flexible Opportunities." Both presentations were well-received by the foundation art education community and sparked ongoing collaborations with educators across the country.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Elastic+Mind')"></div>
+        <div class="card-content">
+            <span class="date">2022</span>
+            <h3>Exhibition: The Elastic Mind</h3>
+            <p>Work featured in the international juried exhibition "The Elastic Mind" at Broward College South Campus Art Gallery in Fort Lauderdale, FL. This exhibition, curated by Kohl King, explored contemporary approaches to cognitive flexibility and adaptive thinking in visual art.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=STOP+Motion')"></div>
+        <div class="card-content">
+            <span class="date">2022</span>
+            <h3>Exhibition: STOP! Motion RE:moved</h3>
+            <p>Participated in "STOP! Motion RE:moved" at FOUND:RE Contemporary in Phoenix, AZ, a curated exhibition by Jordan Zurn that examined the intersection of still and moving images in contemporary art practice.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Our+Neighborhood')"></div>
+        <div class="card-content">
+            <span class="date">2022</span>
+            <h3>Exhibition: Our Neighborhood</h3>
+            <p>Work selected for the international juried exhibition "Our Neighborhood" at A.D. Gallery, University of North Carolina Pembroke. The exhibition, juried by Hartmut Austen, professor at Boston College, explored themes of community and place in contemporary art.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=CICA+Museum')"></div>
+        <div class="card-content">
+            <span class="date">2022</span>
+            <h3>Solo Exhibition: Cacophony</h3>
+            <p>Solo exhibition at the prestigious Czong Institute for Contemporary Art (CICA Museum) in Seoul, South Korea, selected through international juried competition. The exhibition featured Robertson's multimedia work exploring the intersection of sound, color, and visual perception, including interactive installations that invited viewers to experience synesthetic relationships between sensory modalities.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=MoCA+LIghts')"></div>
+        <div class="card-content">
+            <span class="date">2021</span>
+            <h3>Exhibition: MoCA L.I.ghts</h3>
+            <p>Invited to participate in the pop-up exhibition "MoCA L.I.ghts" at the Museum of Contemporary Art Long Island in Patchogue, NY. This innovative exhibition, organized by Wavelength Projects, featured light-based installations and projections.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Absolute+Abstraction')"></div>
+        <div class="card-content">
+            <span class="date">2021</span>
+            <h3>Exhibition: Absolute Abstraction</h3>
+            <p>Work featured in the national juried exhibition "Absolute Abstraction" at Studio Montclair in Montclair, NJ. The exhibition was juried by Onnie Strother, Nette Thomas, Bisa Washington, and Warren Murray, curators of Studio Montclair.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Pandemic+Projections')"></div>
+        <div class="card-content">
+            <span class="date">2021</span>
+            <h3>Exhibition: Pandemic Projections</h3>
+            <p>Selected for the international juried exhibition "Pandemic Projections" at Gardenship Art hosted by Wavelength in Kearny, NJ. The exhibition, juried by Gianluca Bianchino and Jeanne Brasile, explored artistic responses to the global pandemic.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=World+of+Co')"></div>
+        <div class="card-content">
+            <span class="date">2021</span>
+            <h3>International Artist Residencies</h3>
+            <p>Completed two international juried residencies: Politics in Collage Residency at Kolaj Institute in New Orleans and World of Co. Artist Residency in Sofia, Bulgaria. These immersive experiences allowed Robertson to develop new bodies of work responding to different cultural contexts and to collaborate with artists from diverse backgrounds, significantly influencing his subsequent creative practice.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=State+of+the+Union')"></div>
+        <div class="card-content">
+            <span class="date">2019</span>
+            <h3>Exhibition: State of the Union</h3>
+            <p>Work selected for the national juried exhibition "State of the Union" at Pool Arts Center, Drury University in Springfield, MO. The exhibition was juried by Jonathan Thomas, Manager of National and International Advancement at the John F. Kennedy Center for the Performing Arts in Washington D.C.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=RAC+Grant')"></div>
+        <div class="card-content">
+            <span class="date">2019</span>
+            <h3>Regional Arts Commission Grant</h3>
+            <p>Awarded the Regional Arts Commission Artist Support Grant in St. Louis, MO, supporting Robertson's continued artistic development and exhibition work. The grant funded the creation of a new series exploring the relationship between digital and analog image-making processes, culminating in a solo exhibition at The Gallery at University City Library.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Body+Politic')"></div>
+        <div class="card-content">
+            <span class="date">2018</span>
+            <h3>Solo Exhibition: Body Politic</h3>
+            <p>Presented a solo exhibition titled "Body Politic" at The Gallery at University City Library in St. Louis, MO. The exhibition, juried by Buzz Spector, professor at Washington University, explored themes of embodiment and political identity through mixed media works.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Altar+of+Commerce')"></div>
+        <div class="card-content">
+            <span class="date">2017</span>
+            <h3>Solo Exhibition: The Altar of Commerce</h3>
+            <p>Solo exhibition "The Altar of Commerce" at The Cathy Gregory Gallery in St. Louis, MO, curated by Gregory Gobberdiel, Executive Director of Shaw Art Fair. The exhibition examined consumerism and commodity fetishism through installation and mixed media works.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Superpower')"></div>
+        <div class="card-content">
+            <span class="date">2017</span>
+            <h3>Solo Exhibition: Superpower</h3>
+            <p>Presented the solo exhibition "Superpower" at The Parish Gallery in St. Louis, MO. This national juried exhibition was selected by Jill McGuire, former Executive Director of RAC St. Louis; Ben Kiel, instructor at Washington University; and Jordan McGirk, artist.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Light+and+Shadow')"></div>
+        <div class="card-content">
+            <span class="date">2017</span>
+            <h3>Exhibition: Light and Shadow</h3>
+            <p>Work featured in the national juried exhibition "Light and Shadow" at Kemper Center for the Arts, William Woods University in Fulton, MO. The exhibition was juried by Thom Whalen, professor at Lincoln Land Community College.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+
+    <div class="news-card">
+        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Luck+of+the+Draw')"></div>
+        <div class="card-content">
+            <span class="date">2017</span>
+            <h3>Exhibition: Luck of the Draw</h3>
+            <p>Selected for the national juried exhibition "Luck of the Draw" at The Foundry Art Centre in St. Charles, MO. The exhibition was juried by Grant Hargate, professor at Lindenwood University.</p>
+            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
