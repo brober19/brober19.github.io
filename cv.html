@@ -415,7 +415,21 @@
         margin-left: .5rem;
         margin-top: 1.5rem;
     }
-
+    ul li {
+        margin-bottom: 15px;
+        position: relative;
+    }
+    
+    .indented-line {
+        display: block;
+        padding-left: 30px;
+        margin-top: 3px;
+    }
+    
+    .section-content ul {
+        padding-left: 20px;
+    }
+    
     @media (max-width: 1024px) {
         .container {
             width: 95%;
@@ -458,7 +472,254 @@
         .main-content {
             padding-right: 0;
         }
+        /* Footer Styles */
+footer {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 2rem 0;
+    width: 100%;
+    margin-top: auto;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-info {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 1rem;
+}
+
+.footer-info h3 {
+    color: #FF7F50;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.footer-info p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    color: #FF7F50;
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-nav-section {
+    min-width: 150px;
+}
+
+.footer-nav-section h4 {
+    color: #FF7F50;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.footer-nav-section ul {
+    list-style: none;
+}
+
+.footer-nav-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-nav-section ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.footer-nav-section ul li a:hover {
+    color: #FF7F50;
+    opacity: 1;
+}
+
+.copyright {
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
     }
+
+    .footer-nav {
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+}
+    }
+    /* Footer Styles */
+footer {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 2rem 0;
+    width: 100%;
+    margin-top: auto;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-info {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 1rem;
+}
+
+.footer-info h3 {
+    color: #FF7F50;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+.footer-info p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    color: #FF7F50;
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-nav-section {
+    min-width: 150px;
+}
+
+.footer-nav-section h4 {
+    color: #FF7F50;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.footer-nav-section ul {
+    list-style: none;
+}
+
+.footer-nav-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-nav-section ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.footer-nav-section ul li a:hover {
+    color: #FF7F50;
+    opacity: 1;
+}
+
+.copyright {
+    width: 100%;
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-nav {
+        width: 100%;
+        margin-top: 1.5rem;
+    }
+}
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
     </style>
 </head>
 <body>
@@ -491,18 +752,18 @@
     <div class="container">
         <div class="main-content">
             <h1>Curriculum Vitae</h1>
-
+    
             <div class="section">
                 <button class="section-header" aria-expanded="false">
                     About Me
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="section-content">
-                    <p>Contemporary artist working across multiple mediums with a focus on experimental techniques and social commentary.</p>
+                    <p>Contemporary artist working across multiple mediums with a focus on experimental techniques and social commentary. Dean of Visual and Performing Arts at Yavapai College with extensive exhibition experience both nationally and internationally.</p>
                 </div>
                 <hr>
             </div>
-
+    
             <div class="section">
                 <button class="section-header" aria-expanded="false">
                     Education
@@ -510,13 +771,14 @@
                 </button>
                 <div class="section-content">
                     <ul>
-                        <li>MFA in Fine Arts, Example University, 2020</li>
-                        <li>BFA in Studio Art, Another University, 2018</li>
+                        <li>2016 - MFA with Distinction, Painting and Drawing, University of Washington, Seattle, WA</li>
+                        <li>2012 - BFA magna cum laude, Painting and Drawing, University of Missouri St. Louis, St. Louis, MO</li>
+                        <li>2011 - AFA, St. Louis Community College/Florissant Valley, Ferguson, MO</li>
                     </ul>
                 </div>
                 <hr>
             </div>
-
+    
             <div class="section">
                 <button class="section-header" aria-expanded="false">
                     Solo Exhibitions
@@ -524,14 +786,299 @@
                 </button>
                 <div class="section-content">
                     <ul>
-                        <li>2023 - "Title of Exhibition", Gallery Name, City</li>
-                        <li>2022 - "Another Exhibition", Another Gallery, City</li>
+                        <li>2022 - "Cacophony", Czong Institute for Contemporary Art (CICA Museum), Seoul, South Korea
+                            <div class="indented-line">(international juried exhibition)(magazine publication)</div>
+                        </li>
+                        <li>2021 - "Cacophony", World of Co. (online), Sofia, Bulgaria
+                            <div class="indented-line">(invited by World of Co. upon completion of residency)</div>
+                        </li>
+                        <li>2018 - "Body Politic", The Gallery at University City Library, St. Louis, MO
+                            <div class="indented-line">(juried by Buzz Spector, professor, Washington University)</div>
+                        </li>
+                        <li>2017 - "The Altar of Commerce", The Cathy Gregory Gallery, St. Louis, MO
+                            <div class="indented-line">(curated by Gregory Gobberdiel, Executive Director, Shaw Art Fair)</div>
+                        </li>
+                        <li>2017 - "Superpower", The Parish Gallery, St. Louis, MO
+                            <div class="indented-line">(national juried exhibition, juried by Jill McGuire, former Executive Director, RAC St. Louis;</div>
+                            <div class="indented-line">Ben Kiel, instructor, Washington University; and Jordan McGirk, artist)</div>
+                        </li>
+                        <li>2016 - "Inverted Utopia", The Parc Condominiums, Seattle, WA
+                            <div class="indented-line">(juried exhibition)</div>
+                        </li>
+                        <li>2016 - Two-Person Exhibition, MFA Thesis Exhibition, Sand Point Gallery, University of Washington, Seattle, WA
+                            <div class="indented-line">(with painter Heather Nibert)</div>
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+    
+            <div class="section">
+                <button class="section-header" aria-expanded="false">
+                    Group Exhibitions
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="section-content">
+                    <ul>
+                        <li>2024 - "Chromacosm: Our Universe in Color", Schack Art Center, Everett, WA
+                            <div class="indented-line">(national juried exhibition)</div>
+                        </li>
+                        <li>2024 - "Abstraction", Gallery Omnibus, Dresden, Germany
+                            <div class="indented-line">(international juried exhibition, online)</div>
+                        </li>
+                        <li>2023 - "Residual Sites", James May Gallery, Milwaukee, WI
+                            <div class="indented-line">(curated by Kendra Bulgrin, Artsy, online)</div>
+                        </li>
+                        <li>2023 - "The Elastic Mind", Broward College South Campus Art Gallery, Fort Lauderdale, FL
+                            <div class="indented-line">(international juried exhibition curated by Kohl King)</div>
+                        </li>
+                        <li>2022 - "STOP! Motion RE:moved", FOUND:RE Contemporary, Phoenix, AZ
+                            <div class="indented-line">(curated by Jordan Zurn)</div>
+                        </li>
+                        <li>2022 - "Politics in Collage", The Domino, New Orleans, LA
+                            <div class="indented-line">(curated by G.E. Vogt)</div>
+                        </li>
+                        <li>2022 - "Our Neighborhood", A.D. Gallery at University North Carolina Pembroke, Pembroke, NC
+                            <div class="indented-line">(international juried exhibition, juried by Hartmut Austen, professor Boston College)</div>
+                        </li>
+                        <li>2022 - "NFT Display", Museumio, Mission Viejo, CA
+                            <div class="indented-line">(international juried collection)</div>
+                        </li>
+                        <li>2022 - "Abstract Mind", Czong Institute for Contemporary Art (CICA Museum), Gimpo, South Korea
+                            <div class="indented-line">(international juried exhibition)</div>
+                        </li>
+                        <li>2021 - "MoCA L.I.ghts", Museum of Contemporary Art Long Island, Patchogue, NY
+                            <div class="indented-line">(pop-up exhibition, invited by Wavelength Projects)</div>
+                        </li>
+                        <li>2021 - "Absolute Abstraction", Studio Montclair, Montclair, NJ
+                            <div class="indented-line">(national juried exhibition, juried by Onnie Strother, Nette Thomas, Bisa Washington,</div>
+                            <div class="indented-line">and Warren Murray curators of Studio Montclair)</div>
+                        </li>
+                        <li>2021 - "Pandemic Projections", Gardenship Art hosted by Wavelength, Kearny, NJ
+                            <div class="indented-line">(international juried exhibition, juried by Gianluca Bianchino and Jeanne Brasile)</div>
+                        </li>
+                        <li>2019 - "Art and Design Faculty Exhibition", Lindenwood University, The Boyle Family Gallery, St. Charles, MO</li>
+                        <li>2019 - "Visual Art Faculty Exhibition", Yavapai College, Yavapai College Performing Arts Center, Prescott, AZ</li>
+                        <li>2019 - "Grand Opening Exhibition", NYA gallery, New York, NY
+                            <div class="indented-line">(national juried exhibition)</div>
+                        </li>
+                        <li>2019 - "State of the Union", Pool Arts Center, Drury University, Springfield, MO
+                            <div class="indented-line">(national juried exhibition, juried by Jonathan Thomas, Manager of National and International</div>
+                            <div class="indented-line">Advancement, John F. Kennedy Center for the Performing Arts, Washington D.C.)</div>
+                        </li>
+                        <li>2019 - "Urban", St. Charles Community College, Cottleville, MO
+                            <div class="indented-line">(curated by Brian D. Smith, professor, St. Charles Community College)</div>
+                        </li>
+                        <li>2018 - "Propaganda Posters", Window Gallery (St. Louis Artists' Guild), St. Louis, MO
+                            <div class="indented-line">(invited by Kathryn Nahorski, Executive Director, St. Louis Artists' Guild)</div>
+                        </li>
+                        <li>2018 - "Open Source", Los Angeles Center for Digital Art (LACDA), Los Angeles, CA
+                            <div class="indented-line">(invited by Rex Bruce, Director, LACDA)</div>
+                        </li>
+                        <li>2018 - "The Hidden", Confluence Gallery and Art Center, Twisp, WA
+                            <div class="indented-line">(national juried exhibition)</div>
+                        </li>
+                        <li>2018 - "People's Choice Salon Show", Greenpoint Gallery, New York, NY
+                            <div class="indented-line">(juried exhibition)</div>
+                        </li>
+                        <li>2017 - "Light and Shadow", Kemper Center for the Arts, William Woods University, Fulton, MO
+                            <div class="indented-line">(national juried exhibition, juried by Thom Whalen, professor, Lincoln Land Community College)</div>
+                        </li>
+                        <li>2017 - "Predictions and Perceptions", The Tri-Lakes Center for the Arts, Palmer Lake, CO
+                            <div class="indented-line">(national juried exhibition, juried by Dr. Michael Maddox, Director, Tri-Lakes Center for the Arts)</div>
+                        </li>
+                        <li>2017 - "Luck of the Draw", The Foundry Art Centre, St. Charles, MO
+                            <div class="indented-line">(national juried exhibition, juried by Grant Hargate, professor, Lindenwood University)</div>
+                        </li>
+                        <li>2017 - "The Chocolate and Art Show", The B Complex Gallery, Atlanta, GA
+                            <div class="indented-line">(juried exhibition)</div>
+                        </li>
+                        <li>2016 - "Serendipity", Soulard Art Gallery, St. Louis, MO
+                            <div class="indented-line">(juried exhibition)</div>
+                        </li>
+                        <li>2016 - "Americana", Tsuga Fine Arts, Bothell, WA
+                            <div class="indented-line">(juried by Kathy Collins, artist) (catalog)</div>
+                        </li>
+                        <li>2016 - "33 July", The Old Orchard Gallery, St. Louis, MO
+                            <div class="indented-line">(juried exhibition)</div>
+                        </li>
+                        <li>2016 - "Inspiración Del Peru", Metropolist, Seattle, WA
+                            <div class="indented-line">(invited by Samantha Zwicker, Executive Director, Hoja Nueva)</div>
+                        </li>
+                        <li>2016 - "MFA + MDes Thesis Exhibition", The Henry Art Gallery, Seattle, WA
+                            <div class="indented-line">(catalog)</div>
+                        </li>
+                        <li>2015 - "Shedding and Shredding Exhibit", The Jacob Lawrence Gallery, Seattle, WA
+                            <div class="indented-line">(curated by Scott Lawrimore, curator, 2019 Honolulu Biennial)</div>
+                        </li>
+                        <li>2012 - "eARThworks Show", The St. Louis Regional Arts Commission, St. Louis, MO
+                            <div class="indented-line">(curated by Margaret Hermes, writer)</div>
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+    
+            <div class="section">
+                <button class="section-header" aria-expanded="false">
+                    Lectures, Presentations, Workshops
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="section-content">
+                    <ul>
+                        <li>2024 - "AI In the Studio Art Classroom," session chair, College Art Association Annual Conference,
+                            <div class="indented-line">Chicago, IL, February 17 (upcoming)</div>
+                        </li>
+                        <li>2023 - "Synesthesia in the Foundations Classroom," What Sound Does This Color Make?, FATE Conference,
+                            <div class="indented-line">Rocky Mountain College of Art and Design, Denver, CO, April 14 (upcoming)</div>
+                        </li>
+                        <li>2023 - "Time and Space: E-Residencies Offer Flexible Opportunities," Rebooting Creative Practice:
+                            <div class="indented-line">Artist Residencies and Cross-Discipline, FATE Conference, Rocky Mountain College of Art and</div>
+                            <div class="indented-line">Design, Denver, CO, April 14 (upcoming)</div>
+                        </li>
+                        <li>2022 - "Cacophony," Studio Art > Cut, Paste, Stitch, and Seam: Exploring Contemporary Collage,
+                            <div class="indented-line">SECAC Conference, Maryland Institute College of Art, Baltimore, MD, October 29</div>
+                        </li>
+                        <li>2022 - "The Internet's Cacophonous Dialectic," New Media Conference, Czong Institute for
+                            <div class="indented-line">Contemporary Art (CICA Museum), Seoul, South Korea, June 11</div>
+                        </li>
+                        <li>2021 - Lecture, "Cacophony," World of Co (Instagram Live), Sofia, Bulgaria, November 18</li>
+                        <li>2019 - "Tempera Emulsions in Early Modern Italian Painting," Alternative Understandings of Works by
+                            <div class="indented-line">Major Artists of the Italian Renaissance, SECAC Annual Conference, Chattanooga, TN, October 18</div>
+                        </li>
+                        <li>2019 - "Superpower," Creative Cartographies, New Media Caucus Symposium, Penny W. Stamps School of Art,
+                            <div class="indented-line">University of Michigan, Ann Arbor, MI, September 21</div>
+                        </li>
+                        <li>2019 - "Egg Tempera, Modern Surfactants, and Painting the Mixed Technique with Water-Soluable Oils,"
+                            <div class="indented-line">Early Modern Craftsmanship and Contemporary Techniques, College Art Association Annual</div>
+                            <div class="indented-line">Conference, New York, NY, February 14</div>
+                        </li>
+                        <li>2019 - Workshop, "How To Make Your Own Water Mixable Oil Paint," Foundations in Art: Theory and
+                            <div class="indented-line">Education Biennial Conference (FATE), Columbus College of Art and Design, Columbus, OH, April 5</div>
+                        </li>
+                        <li>2018 - Lecture, "The Internet and the Surrealist Dialectic," University City Library, University City, MO,
+                            <div class="indented-line">December 7</div>
+                        </li>
+                        <li>2018 - "Superpower: A Transnational Government with a Totalizing Vision," Poster Session, College Art
+                            <div class="indented-line">Association Annual Conference, Los Angeles, CA, February 21-24</div>
+                        </li>
+                        <li>2017 - Lecture/Presentation, Gallery Talk. The Parish Gallery, St. Louis, MO, December 15</li>
+                        <li>2017 - Lecture/Presentation, Gallery Talk. The Cathy Gregory Gallery, St. Louis, MO, August 19</li>
+                        <li>2016 - Lecture/Presentation, Gallery Talk, The Henry Art Gallery, Seattle, WA, June 1</li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+    
+            <div class="section">
+                <button class="section-header" aria-expanded="false">
+                    Awards / Grants / Fellowships
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="section-content">
+                    <ul>
+                        <li>2021 - Politics in Collage Residency (virtual), Kolaj Institute, New Orleans, LA
+                            <div class="indented-line">(international juried residency)</div>
+                        </li>
+                        <li>2021 - World of Co. Artist Residency (virtual), World of Co., Sofia, Bulgaria
+                            <div class="indented-line">(international juried residency)</div>
+                        </li>
+                        <li>2019 - Regional Arts Commission Artist Support Grant, St. Louis, MO</li>
+                        <li>2016 - Parnassus Graduating with Excellence Award, University of Washington, Seattle, WA</li>
+                        <li>2016 - Puget Sound Group Northwest Artists' Scholarship Grant, Kirkland, WA</li>
+                        <li>2016 - Vermont Studio Center Artists' Grant, Johnson, VT</li>
+                        <li>2016 - Jacob Lawrence Graduate Recognition (painting), University of Washington, Seattle, WA</li>
+                        <li>2014-16 - Graduate Fellowship in Painting and Drawing, University of Washington, Seattle, WA</li>
+                        <li>2013 - Project Grant in Research and Development, Missouri University of Science and Technology, Rolla, MO
+                            <div class="indented-line">(Provisional Patent Awarded: December 2013)</div>
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+    
+            <div class="section">
+                <button class="section-header" aria-expanded="false">
+                    Bibliography (Reviews, Articles, Interviews)
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="section-content">
+                    <ul>
+                        <li>2023 - Kim Leejin, "Brave New World, New Media Art 2023," CICA Press, Gimpo, Korea, February 1</li>
+                        <li>2023 - G.E. Vogt, "Politics in Collage", Kolaj Institute and Kasini House, New Orleans, LA, July 8</li>
+                        <li>2022 - "June 2022 Artist Interview," NYC Phoenix Collective, New York, NY, June 1</li>
+                        <li>2021 - Michael Grady, "Seven College Programs Making a Positive Impact on the Community," YC360,
+                            <div class="indented-line">Prescott, AZ, April 1</div>
+                        </li>
+                        <li>2019 - Bryan Hollerbach, "Bryan Robertson: Body Politic," Ladue News, St. Louis, MO, March 1</li>
+                        <li>2018 - Paul Langdon, "Bryan Robertson's Body Politic at The U City Public Library," HEC-TV
+                            <div class="indented-line">(Higher Education Channel), St. Louis, MO, December 7, 2018</div>
+                        </li>
+                        <li>2018 - Danielle Mae Franklin, "U City Library Gallery to Feature local artist Bryan Robertson,"
+                            <div class="indented-line">The Missouri Times, Clayton, MO, November 30, 2018</div>
+                        </li>
+                        <li>2018 - Robin Shivley, "Artful Considerations," Ferguson Times, Ferguson, MO, November 9, 2018. 21</li>
+                        <li>2018 - "The Switch," 3Elements Literary Review, no. 18 Spring 2018, Chicago, IL, April 1, 2018. 64</li>
+                        <li>2018 - Bryan Hollerbach, "Art & Soul: Bryan Robertson," Ladue News, St. Louis, MO, March 1, 2018. 101</li>
+                        <li>2018 - Yael Evan, "Superpower & Altar of Commerce," All the Art (the Visual Arts Quarterly of St. Louis)
+                            <div class="indented-line">Spring 2018, St. Louis, MO, March 1, 2018. 1-2</div>
+                        </li>
+                        <li>2017 - Evie Hemphill, "Altar of Commerce' probes consequences of globalization," UMSL Daily,
+                            <div class="indented-line">St. Louis, MO, July 15, 2017</div>
+                        </li>
+                        <li>2016 - Studio Visit (Volume 34), Steven T. Zevitas, editor. (Korea: The Open Studios Press):166-167
+                            <div class="indented-line">(international juried publication, juried by Mike Lash, former Director of Public Art, Chicago)</div>
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+    
+            <div class="section">
+                <button class="section-header" aria-expanded="false">
+                    Publications as Author
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="section-content">
+                    <ul>
+                        <li>2023 - James Hutson, Jason Lively, Bryan Robertson, Peter Cotroneo, and Martin Lang, "Creative Convergence,
+                            <div class="indented-line">The AI Renaissance in Art and Design," Springer Nature, Berlin Germany, September 1</div>
+                        </li>
+                        <li>2023 - "Exploring the Educational Potential of AI Generative Art in 3D Design Fundamentals," Global Journal
+                            <div class="indented-line">of Human and Social Sciences, Volume 23 Issue 2, Framingham MA, May 1, 2023</div>
+                        </li>
+                        <li>2023 - "A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom,"
+                            <div class="indented-line">The International Journal of New Media, Technology and the Arts, Volume 18 Issue 1, August 4, 2023</div>
+                        </li>
+                        <li>2019 - "Ann Metzger National Biennial Exhibition," All the Art (the Visual Arts Quarterly of St. Louis)
+                            <div class="indented-line">Summer 2019, St. Louis, MO, June 1, 2019. 1-2</div>
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+    
+            <div class="section">
+                <button class="section-header" aria-expanded="false">
+                    Professional Experience
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="section-content">
+                    <ul>
+                        <li>2024-Present - Dean of Visual and Performing Arts, Yavapai College, Prescott, AZ</li>
+                        <li>2022-Present - Professor of Art, Yavapai College, Prescott, AZ</li>
+                        <li>2021-2024 - Visual Art Department Chair, Yavapai College, Prescott, AZ</li>
+                        <li>2019-2021 - Associate Professor of 2-D Visual Art, Yavapai College, Prescott, AZ</li>
+                        <li>2018-Present - Adjunct Faculty, Lindenwood University, St. Charles, MO</li>
+                        <li>2016-2019 - Adjunct Faculty, Jefferson College, Hillsboro, MO</li>
+                        <li>2016-2019 - Painting Instructor, St. Louis Artists' Guild, St. Louis, MO</li>
+                        <li>2015-2016 - Teaching Fellowship, University of Washington, Seattle, WA</li>
                     </ul>
                 </div>
                 <hr>
             </div>
         </div>
-
+    
         <div class="sidebar">
             <div class="profile-container">
                 <div class="profile-border"></div>
@@ -539,14 +1086,64 @@
             </div>
             <div class="social-icons">
                 <a href="#"><i class="far fa-envelope"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
                 <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-substack"></i></a>
+            </div>
+            <div class="contact-info">
+                <p><strong>Bryan Robertson</strong></p>
+                <p>Dean of Visual and Performing Arts</p>
+                <p>Yavapai College, Prescott, AZ</p>
             </div>
         </div>
     </div>
-
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <h3>Bryan Robertson</h3>
+                <p>Visual Artist based in New York</p>
+                <p>studio@bryanrobertson.com</p>
+                <div class="social-links">
+                    <a href="#" title="Instagram">IG</a>
+                    <a href="#" title="Twitter">TW</a>
+                    <a href="#" title="LinkedIn">LI</a>
+                    <a href="#" title="Behance">BE</a>
+                </div>
+            </div>
+    
+            <div class="footer-nav">
+                <div class="footer-nav-section">
+                    <h4>Work</h4>
+                    <ul>
+                        <li><a href="painting.html">Paintings</a></li>
+                        <li><a href="digital.html">Digital Art</a></li>
+                        <li><a href="exhibitions.html">Exhibitions</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="cv.html">Curriculum Vitae</a></li>
+                        <li><a href="statement.html">Artist Statement</a></li>
+                        <li><a href="press.html">Press</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="newsletter.html">Newsletter</a></li>
+                        <li><a href="commissions.html">Commissions</a></li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="copyright">
+                &copy; 2025 Bryan Robertson. All rights reserved.
+            </div>
+        </div>
+    </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelector('.nav-links');
