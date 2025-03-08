@@ -400,14 +400,15 @@ nav.scrolled {
             .lightbox-text { max-width: 85vw; }
         }
                 /* Footer Styles */
-footer {
-    background-color: 
+                footer {
+    background-color: rgba(255, 255, 255, 0.3);
     padding: 2rem 0;
     width: 100%;
     margin-top: auto;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    border-top: px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border-color); /* Added this line */
+    border-bottom: 1px solid var(--border-color); /* Optional: for symmetry */
 }
 
 .footer-container {
@@ -518,14 +519,14 @@ footer {
 }
     }
  /* Footer Styles */
-footer {
-    background-color: var(--card-bg);
+ footer {
+    background-color: rgba(0, 0, 0, 0.3);
     padding: 2rem 0;
     width: 100%;
     margin-top: auto;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-container {
@@ -535,7 +536,7 @@ footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .footer-info {
