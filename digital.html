@@ -748,7 +748,7 @@ nav.scrolled {
         <div class="footer-container">
             <div class="footer-info">
                 <h3>Bryan Robertson</h3>
-                <p>Visual Artist based in Phoenix</p>
+                <p>Visual Artist based in Arizona</p>
                 
                 <div class="social-links">
                     <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
@@ -777,7 +777,7 @@ nav.scrolled {
                     <h4>Connect</h4>
                     <ul>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="news.html">Newsletter</a></li>
+                        <li><a href="news.html">News</a></li>
                     </ul>
                 </div>
             </div>
@@ -822,17 +822,22 @@ nav.scrolled {
         });
 
         function navigateLightbox(direction, event) {
-            event.stopPropagation();
-            if (!currentLightbox) return;
+    event.stopPropagation();
+    if (!currentLightbox) return;
 
-            const containers = Array.from(document.querySelectorAll('.image-container'));
-            const currentIndex = containers.indexOf(currentLightbox);
-            const nextIndex = (currentIndex + direction + containers.length) % containers.length;
-
-            currentLightbox.querySelector('.lightbox-overlay').classList.remove('active');
-            currentLightbox = containers[nextIndex];
-            currentLightbox.querySelector('.lightbox-overlay').classList.add('active');
-        }
+    const containers = Array.from(document.querySelectorAll('.image-container'));
+    const currentIndex = containers.indexOf(currentLightbox);
+    const nextIndex = (currentIndex + direction + containers.length) % containers.length;
+    
+    // Get the next lightbox container before removing active class
+    const nextLightbox = containers[nextIndex];
+    
+    // Add active class to next lightbox before removing from current
+    nextLightbox.querySelector('.lightbox-overlay').classList.add('active');
+    
+    // Set the current lightbox to the next one
+    currentLightbox = nextLightbox;
+}
 
         document.addEventListener('keydown', function(event) {
             if (!currentLightbox) return;

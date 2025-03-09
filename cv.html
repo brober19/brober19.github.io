@@ -25,703 +25,720 @@
 <!-- Web manifest for PWA support -->
 <link rel="manifest" href="/images/favicon.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    Complete CSS with text wrapping fixes integrated:
     <style>
-    :root {
-        --bg-color: #ffff;
-        --text-color: #000000; /* Changed to black */
-        --accent-color: #FF7F50;
-        --accent-glow: rgba(255, 127, 80, 0.8);
-        --accent-glow-secondary: rgba(255, 127, 80, 0.6);
-        --accent-expanded: #ff4757;
-        --border-color: #eeee;
-        --icon-color: #000000; /* Changed to black */
-        --icon-hover: #3333;
-        --card-bg: #ffff;
-        --shadow-color: rgba(0, 0, 0, 0.1);
-        --nav-shadow: rgba(0, 0, 0, 0.2);
-        --bg-color-rgb: 255, 255, 255;
+        :root {
+            --bg-color: #ffff;
+            --text-color: #000000; /* Changed to black */
+            --accent-color: #FF7F50;
+            --accent-glow: rgba(255, 127, 80, 0.8);
+            --accent-glow-secondary: rgba(255, 127, 80, 0.6);
+            --accent-expanded: #ff4757;
+            --border-color: #eeee;
+            --icon-color: #000000; /* Changed to black */
+            --icon-hover: #3333;
+            --card-bg: #ffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --nav-shadow: rgba(0, 0, 0, 0.2);
+            --bg-color-rgb: 255, 255, 255;
+        }
+    
+        [data-theme="dark"] {
+            --bg-color-rgb: 18, 18, 18;
+            --bg-color: #121212;
+            --text-color: #e0e0e0; /* Kept light for dark mode */
+            --accent-color: #FF7F50;
+            --accent-glow: rgba(255, 127, 80, 0.8);
+            --accent-glow-secondary: rgba(255, 127, 80, 0.6);
+            --accent-expanded: #ff4757;
+            --border-color: #3333;
+            --icon-color: #e0e0e0; /* Light color for dark mode */
+            --icon-hover: #ffff;
+            --card-bg: #1e1e1e;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --nav-shadow: rgba(0, 0, 0, 0.4);
+        }
+    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        /* Navigation Styles from Image Gallery */
+        nav {
+        background-color: var(--bg-color);
+        padding: 2rem 30px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
     }
-
-    [data-theme="dark"] {
-        --bg-color-rgb: 18, 18, 18;
-        --bg-color: #121212;
-        --text-color: #e0e0e0; /* Kept light for dark mode */
-        --accent-color: #FF7F50;
-        --accent-glow: rgba(255, 127, 80, 0.8);
-        --accent-glow-secondary: rgba(255, 127, 80, 0.6);
-        --accent-expanded: #ff4757;
-        --border-color: #3333;
-        --icon-color: #e0e0e0; /* Light color for dark mode */
-        --icon-hover: #ffff;
-        --card-bg: #1e1e1e;
-        --shadow-color: rgba(0, 0, 0, 0.5);
-        --nav-shadow: rgba(0, 0, 0, 0.4);
+    nav.scrolled {
+        background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 4px 10px var(--nav-shadow);
     }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    /* Navigation Styles from Image Gallery */
-    nav {
-    background-color: var(--bg-color);
-    padding: 2rem 30px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-nav.scrolled {
-    background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 10px var(--nav-shadow);
-}
-
-        .nav-container {
-            max-width: calc(100% - 60px);
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: block;
-            transition: all 0.3s ease;
-            position: relative;
-            width: 150px;
-            height: 75px;
-            margin-left: 0;
-        }
-
-        .logo img {
-            position: absolute;
-            top: 10px;
-            left: 0;
-            max-height: 75px;
-            width: auto;
-            transition: all 0.3s ease;
-            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
-        }
-
-        .logo .logo-default { opacity: 1; }
-        .logo .logo-hover { opacity: 0; }
-
-        .logo:hover .logo-default { opacity: 0; }
-        .logo:hover .logo-hover {
-            opacity: 1;
-            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
-                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
-                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-links.loaded { opacity: 1; }
-        .nav-links.visible { display: flex !important; }
-
-        .nav-links a {
-            text-decoration: none;
+    
+            .nav-container {
+                max-width: calc(100% - 60px);
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+    
+            .logo {
+                display: block;
+                transition: all 0.3s ease;
+                position: relative;
+                width: 150px;
+                height: 75px;
+                margin-left: 0;
+            }
+    
+            .logo img {
+                position: absolute;
+                top: 10px;
+                left: 0;
+                max-height: 75px;
+                width: auto;
+                transition: all 0.3s ease;
+                filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+            }
+    
+            .logo .logo-default { opacity: 1; }
+            .logo .logo-hover { opacity: 0; }
+    
+            .logo:hover .logo-default { opacity: 0; }
+            .logo:hover .logo-hover {
+                opacity: 1;
+                filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+                       drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+                       drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+            }
+    
+            .nav-links {
+                display: flex;
+                gap: 2rem;
+                list-style: none;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+    
+            .nav-links.loaded { opacity: 1; }
+            .nav-links.visible { display: flex !important; }
+    
+            .nav-links a {
+                text-decoration: none;
+                color: var(--text-color);
+                font-size: 1.1rem;
+                padding: 0.5rem 0;
+                transition: all 0.3s ease;
+                text-shadow: 2px 2px 4px var(--shadow-color);
+                position: relative;
+                overflow: hidden;
+            }
+    
+            .nav-links a:hover {
+                color: var(--accent-color);
+                text-shadow:
+                    0 0 10px var(--accent-glow),
+                    0 0 20px var(--accent-glow-secondary);
+            }
+    
+            .nav-links a span {
+                position: relative;
+                display: inline-block;
+                transition: transform 0.3s ease;
+            }
+    
+            .nav-links a:hover span { transform: translateY(-2px); }
+    
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: var(--accent-color);
+                transform: scaleX(0);
+                transform-origin: right;
+                transition: transform 0.3s ease;
+            }
+    
+            .nav-links a:hover::after {
+                transform: scaleX(1);
+                transform-origin: left;
+            }
+    
+            .hamburger {
+                display: none;
+                cursor: pointer;
+                padding: 10px;
+            }
+    
+            .hamburger span {
+                display: block;
+                width: 25px;
+                height: 3px;
+                background: var(--text-color);
+                margin: 5px 0;
+                transition: all 0.3s ease;
+            }
+    
+        /* Theme toggle styling */
+        .theme-toggle {
+            cursor: pointer;
+            margin-left: 1.5rem;
+            font-size: 1.2rem;
             color: var(--text-color);
-            font-size: 1.1rem;
-            padding: 0.5rem 0;
             transition: all 0.3s ease;
-            text-shadow: 2px 2px 4px var(--shadow-color);
-            position: relative;
-            overflow: hidden;
         }
-
-        .nav-links a:hover {
+    
+        .theme-toggle:hover {
             color: var(--accent-color);
             text-shadow:
                 0 0 10px var(--accent-glow),
                 0 0 20px var(--accent-glow-secondary);
         }
-
-        .nav-links a span {
-            position: relative;
+    
+        .theme-toggle .fa-sun {
+            display: none;
+        }
+    
+        .theme-toggle .fa-moon {
             display: inline-block;
-            transition: transform 0.3s ease;
         }
-
-        .nav-links a:hover span { transform: translateY(-2px); }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--accent-color);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
+    
+        [data-theme="dark"] .theme-toggle .fa-sun {
+            display: inline-block;
         }
-
-        .nav-links a:hover::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-
-        .hamburger {
+    
+        [data-theme="dark"] .theme-toggle .fa-moon {
             display: none;
-            cursor: pointer;
-            padding: 10px;
         }
-
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background: var(--text-color);
-            margin: 5px 0;
-            transition: all 0.3s ease;
-        }
-
-    /* Theme toggle styling */
-    .theme-toggle {
-        cursor: pointer;
-        margin-left: 1.5rem;
-        font-size: 1.2rem;
-        color: var(--text-color);
-        transition: all 0.3s ease;
-    }
-
-    .theme-toggle:hover {
-        color: var(--accent-color);
-        text-shadow:
-            0 0 10px var(--accent-glow),
-            0 0 20px var(--accent-glow-secondary);
-    }
-
-    .theme-toggle .fa-sun {
-        display: none;
-    }
-
-    .theme-toggle .fa-moon {
-        display: inline-block;
-    }
-
-    [data-theme="dark"] .theme-toggle .fa-sun {
-        display: inline-block;
-    }
-
-    [data-theme="dark"] .theme-toggle .fa-moon {
-        display: none;
-    }
-
-    @keyframes bounce {
-        0% { transform: translateY(0) rotate(180deg); }
-        30% { transform: translateY(-5px) rotate(90deg); }
-        60% { transform: translateY(0) rotate(0deg); }
-        100% { transform: translateY(0) rotate(0deg); }
-    }
-
-    @keyframes bounceUp {
-        0% { transform: translateY(0) rotate(0deg); }
-        30% { transform: translateY(5px) rotate(90deg); }
-        60% { transform: translateY(0) rotate(180deg); }
-        100% { transform: translateY(0) rotate(180deg); }
-    }
-
-    @keyframes pulse-glow {
-        0% {
-            box-shadow: 0 0 0 0 var(--accent-glow);
-        }
-        70% {
-            box-shadow: 0 0 10px 10px rgba(255, 127, 80, 0);
-        }
-        100% {
-            box-shadow: 0 0 0 0 rgba(255, 127, 80, 0);
-        }
-    }
-
-    body {
-        font-family: Helvetica, Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: var(--bg-color);
-        color: var(--text-color);
-        transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    .container {
-        max-width: 1200px;
-        width: 90%;
-        padding-top: 140px; /* Increased to account for taller nav */
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 5fr 1fr;
-        gap: 2rem;
-    }
-
-    .main-content {
-        padding-right: 2rem;
-    }
-
-    .sidebar {
-        position: sticky;
-        top: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .profile-container {
-        position: relative;
-        width: 150px;
-        height: 150px;
-        margin-bottom: 1.5rem;
-    }
-
-    .profile-img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        position: relative;
-        z-index: 2;
-        border: none;
-        padding: 3px;
-        background-clip: content-box;
-    }
-
-    .profile-border {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        z-index: 1;
-        overflow: hidden;
-    }
-
-    .profile-border::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        padding: 3px;
-        background: var(--accent-color);
-        -webkit-mask:
-            linear-gradient(#fff 0 0) content-box,
-            linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        box-shadow:
-            0 0 10px var(--accent-glow),
-            0 0 20px var(--accent-glow-secondary);
-        animation: pulse-glow 2s infinite;
-    }
-
-    .social-icons {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .social-icons a {
-        color: var(--icon-color);
-        text-decoration: none;
-        font-size: 1.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .social-icons a:hover {
-        color: var(--accent-color);
-        text-shadow:
-            0 0 10px var(--accent-glow),
-            0 0 20px var(--accent-glow-secondary);
-        transform: translateY(-2px);
-    }
-
-    .section {
-        margin-bottom: 2rem;
-    }
-
-    .section-header {
-        width: 100%;
-        text-align: left;
-        padding: .75rem;
-        background: none;
-        border: none;
-        font-size: 1.25rem;
-        font-weight: 600;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-        font-family: Helvetica, Arial, sans-serif;
-        color: var(--text-color);
-        transition: color 0.3s ease;
-    }
-
-    .section-header i {
-        transition: color 0.3s ease, text-shadow 0.3s ease;
-        transform: rotate(180deg);
-    }
-
-    .section-header:hover i {
-        color: var(--accent-color);
-        text-shadow:
-            0 0 10px var(--accent-glow),
-            0 0 20px var(--accent-glow-secondary);
-    }
-
-    .section-header[aria-expanded="true"] i {
-        transform: rotate(0deg);
-        color: var(--accent-expanded);
-        text-shadow: 0 0 10px var(--accent-expanded),
-            0 0 20px var(--accent-expanded),
-            0 0 30px var(--accent-expanded);
-    }
-
-    .bounce-down {
-        animation: bounce 0.4s ease forwards;
-    }
-
-    .bounce-up {
-        animation: bounceUp 0.4s ease forwards;
-    }
-
-    .section-content {
-        padding: 1rem 1rem 1rem 2rem;
-        display: none;
-    }
-
-    .section-content.active {
-        display: block;
-    }
-
-    .section hr {
-        border: none;
-        border-top: 1px solid var(--border-color);
-        margin-top: 1rem;
-        transition: border-color 0.3s ease;
-    }
-
-    ul {
-        list-style-type: disc;
-        padding-left: 1.5rem;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-        margin-bottom: 1.25rem;
-        margin-left: .5rem;
-        margin-top: 1.5rem;
-    }
-    ul li {
-        margin-bottom: 15px;
-        position: relative;
-    }
     
-    .indented-line {
-        display: block;
-        padding-left: 30px;
-        margin-top: 3px;
-    }
+        @keyframes bounce {
+            0% { transform: translateY(0) rotate(180deg); }
+            30% { transform: translateY(-5px) rotate(90deg); }
+            60% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
     
-    .section-content ul {
-        padding-left: 20px;
-    }
+        @keyframes bounceUp {
+            0% { transform: translateY(0) rotate(0deg); }
+            30% { transform: translateY(5px) rotate(90deg); }
+            60% { transform: translateY(0) rotate(180deg); }
+            100% { transform: translateY(0) rotate(180deg); }
+        }
     
-    @media (max-width: 1024px) {
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 var(--accent-glow);
+            }
+            70% {
+                box-shadow: 0 0 10px 10px rgba(255, 127, 80, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 127, 80, 0);
+            }
+        }
+    
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+    
         .container {
-            width: 95%;
-            grid-template-columns: 4fr 1fr;
+            max-width: 1200px;
+            width: 90%;
+            padding-top: 140px; /* Increased to account for taller nav */
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 5fr 1fr;
+            gap: 2rem;
+            word-wrap: break-word;
         }
-    }
-
-    @media (max-width: 768px) {
-        .hamburger {
-            display: block;
+    
+        .main-content {
+            padding-right: 2rem;
+            max-width: 100%;
+            word-wrap: break-word;
         }
-
-        .nav-links {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: var(--bg-color); /* Updated to use variable */
-            padding: 1rem;
+    
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            display: flex;
             flex-direction: column;
             align-items: center;
         }
-
-        .nav-links.active {
-            display: flex !important;
-        }
-
-        .container {
-            grid-template-columns: 1fr;
-            padding-top: 120px;
-        }
-
-        .sidebar {
+    
+        .profile-container {
             position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 1.5rem;
+        }
+    
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            z-index: 2;
+            border: none;
+            padding: 3px;
+            background-clip: content-box;
+        }
+    
+        .profile-border {
+            position: absolute;
             top: 0;
-            order: -1;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            z-index: 1;
+            overflow: hidden;
         }
-
-        .main-content {
-            padding-right: 0;
+    
+        .profile-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            padding: 3px;
+            background: var(--accent-color);
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            box-shadow:
+                0 0 10px var(--accent-glow),
+                0 0 20px var(--accent-glow-secondary);
+            animation: pulse-glow 2s infinite;
         }
-        /* Footer Styles */
-footer {
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 2rem 0;
-    width: 100%;
-    margin-top: auto;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 30px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.footer-info {
-    flex: 1;
-    min-width: 250px;
-    margin-bottom: 1rem;
-}
-
-.footer-info h3 {
-    color: #FF7F50;
-    margin-bottom: 1rem;
-    font-weight: 400;
-    font-size: 1.2rem;
-}
-
-.footer-info p {
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.social-links a {
-    color: #fff;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-    text-decoration: none;
-}
-
-.social-links a:hover {
-    color: #FF7F50;
-}
-
-.footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.footer-nav-section {
-    min-width: 150px;
-}
-
-.footer-nav-section h4 {
-    color: #FF7F50;
-    margin-bottom: 1rem;
-    font-weight: 400;
-    font-size: 1rem;
-}
-
-.footer-nav-section ul {
-    list-style: none;
-}
-
-.footer-nav-section ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-nav-section ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 0.9rem;
-    opacity: 0.8;
-    transition: all 0.3s ease;
-}
-
-.footer-nav-section ul li a:hover {
-    color: #FF7F50;
-    opacity: 1;
-}
-
-.copyright {
-    width: 100%;
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.8rem;
-    opacity: 0.6;
-}
-
-/* Responsive Footer */
-@media (max-width: 768px) {
+    
+        .social-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+    
+        .social-icons a {
+            color: var(--icon-color);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+    
+        .social-icons a:hover {
+            color: var(--accent-color);
+            text-shadow:
+                0 0 10px var(--accent-glow),
+                0 0 20px var(--accent-glow-secondary);
+            transform: translateY(-2px);
+        }
+    
+        .section {
+            margin-bottom: 2rem;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+    
+        .section-header {
+            width: 100%;
+            text-align: left;
+            padding: .75rem;
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: Helvetica, Arial, sans-serif;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+    
+        .section-header i {
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            transform: rotate(180deg);
+        }
+    
+        .section-header:hover i {
+            color: var(--accent-color);
+            text-shadow:
+                0 0 10px var(--accent-glow),
+                0 0 20px var(--accent-glow-secondary);
+        }
+    
+        .section-header[aria-expanded="true"] i {
+            transform: rotate(0deg);
+            color: var(--accent-expanded);
+            text-shadow: 0 0 10px var(--accent-expanded),
+                0 0 20px var(--accent-expanded),
+                0 0 30px var(--accent-expanded);
+        }
+    
+        .bounce-down {
+            animation: bounce 0.4s ease forwards;
+        }
+    
+        .bounce-up {
+            animation: bounceUp 0.4s ease forwards;
+        }
+    
+        .section-content {
+            padding: 1rem 1rem 1rem 2rem;
+            display: none;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+    
+        .section-content.active {
+            display: block;
+        }
+    
+        .section hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin-top: 1rem;
+            transition: border-color 0.3s ease;
+        }
+    
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+    
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            margin-left: .5rem;
+            margin-top: 1.5rem;
+        }
+        
+        /* Updated styles for proper text wrapping */
+        .section-content ul li {
+            margin-bottom: 15px;
+            line-height: 1.5;
+            position: relative;
+            word-wrap: break-word;
+        }
+        
+        .indented-line {
+            padding-left: 20px;
+            text-indent: -20px;
+            margin-left: 20px;
+            display: inline; /* Make indented lines flow with the text */
+        }
+        
+        .section-content ul {
+            padding-left: 20px;
+        }
+        
+        p {
+            word-wrap: break-word;
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                width: 95%;
+                grid-template-columns: 4fr 1fr;
+            }
+        }
+    
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+    
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--bg-color); /* Updated to use variable */
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+    
+            .nav-links.active {
+                display: flex !important;
+            }
+    
+            .container {
+                grid-template-columns: 1fr;
+                padding-top: 120px;
+            }
+    
+            .sidebar {
+                position: relative;
+                top: 0;
+                order: -1;
+            }
+    
+            .main-content {
+                padding-right: 0;
+            }
+            /* Footer Styles */
+    footer {
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 2rem 0;
+        width: 100%;
+        margin-top: auto;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
     .footer-container {
-        flex-direction: column;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .footer-info {
+        flex: 1;
+        min-width: 250px;
+        margin-bottom: 1rem;
+    }
+    
+    .footer-info h3 {
+        color: #FF7F50;
+        margin-bottom: 1rem;
+        font-weight: 400;
+        font-size: 1.2rem;
+    }
+    
+    .footer-info p {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+    
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .social-links a {
+        color: #fff;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+        text-decoration: none;
+    }
+    
+    .social-links a:hover {
+        color: #FF7F50;
+    }
+    
+    .footer-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+    
+    .footer-nav-section {
+        min-width: 150px;
+    }
+    
+    .footer-nav-section h4 {
+        color: #FF7F50;
+        margin-bottom: 1rem;
+        font-weight: 400;
+        font-size: 1rem;
+    }
+    
+    .footer-nav-section ul {
+        list-style: none;
+    }
+    
+    .footer-nav-section ul li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-nav-section ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+    }
+    
+    .footer-nav-section ul li a:hover {
+        color: #FF7F50;
+        opacity: 1;
+    }
+    
+    .copyright {
+        width: 100%;
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.8rem;
+        opacity: 0.6;
+    }
+    
+    /* Responsive Footer */
+    @media (max-width: 768px) {
+        .footer-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    
+        .footer-nav {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+    }
+        }
+     /* Footer Styles */
+    footer {
+        background-color: var(--card-bg);
+        padding: 2rem 0;
+        width: 100%;
+        margin-top: auto;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border-top: 1px solid var(--border-color);
+    }
+    
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
         align-items: flex-start;
     }
-
+    
+    .footer-info {
+        flex: 1;
+        min-width: 250px;
+        margin-bottom: 1rem;
+    }
+    
+    .footer-info h3 {
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+        font-weight: 400;
+        font-size: 1.2rem;
+    }
+    
+    .footer-info p {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-color);
+    }
+    
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .social-links a {
+        color: var(--text-color);
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+        text-decoration: none;
+    }
+    
+    .social-links a:hover {
+        color: var(--accent-color);
+    }
+    
     .footer-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+    
+    .footer-nav-section {
+        min-width: 150px;
+    }
+    
+    .footer-nav-section h4 {
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+        font-weight: 400;
+        font-size: 1rem;
+    }
+    
+    .footer-nav-section ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    
+    .footer-nav-section ul li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-nav-section ul li a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+    
+    .footer-nav-section ul li a:hover {
+        color: var(--accent-color);
+    }
+    
+    .copyright {
         width: 100%;
-        margin-top: 1.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-color);
+        font-size: 0.8rem;
+        color: var(--text-color);
+        opacity: 0.8;
     }
-}
+    
+    /* Responsive Footer */
+    @media (max-width: 768px) {
+        .footer-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    
+        .footer-nav {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
     }
- /* Footer Styles */
-footer {
-    background-color: var(--card-bg);
-    padding: 2rem 0;
-    width: 100%;
-    margin-top: auto;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-top: 1px solid var(--border-color);
-}
-
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 30px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.footer-info {
-    flex: 1;
-    min-width: 250px;
-    margin-bottom: 1rem;
-}
-
-.footer-info h3 {
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-    font-weight: 400;
-    font-size: 1.2rem;
-}
-
-.footer-info p {
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.social-links a {
-    color: var(--text-color);
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-    text-decoration: none;
-}
-
-.social-links a:hover {
-    color: var(--accent-color);
-}
-
-.footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.footer-nav-section {
-    min-width: 150px;
-}
-
-.footer-nav-section h4 {
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-    font-weight: 400;
-    font-size: 1rem;
-}
-
-.footer-nav-section ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.footer-nav-section ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-nav-section ul li a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.footer-nav-section ul li a:hover {
-    color: var(--accent-color);
-}
-
-.copyright {
-    width: 100%;
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
-    font-size: 0.8rem;
-    color: var(--text-color);
-    opacity: 0.8;
-}
-
-/* Responsive Footer */
-@media (max-width: 768px) {
-    .footer-container {
+    
+    body {
+        font-family: 'Helvetica Neue', sans-serif;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
     }
-
-    .footer-nav {
-        width: 100%;
-        margin-top: 1.5rem;
-    }
-}
-
-body {
-    font-family: 'Helvetica Neue', sans-serif;
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
     </style>
 </head>
 <body>
@@ -754,357 +771,232 @@ body {
     <!-- CV Content -->
     <div class="container">
         <div class="main-content">
-            <h1>Curriculum Vitae</h1>
-    
-            <div class="section">
-                <button class="section-header" aria-expanded="false">
-                    About Me
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="section-content">
-                    <p>Contemporary artist working across multiple mediums with a focus on experimental techniques and social commentary. Dean of Visual and Performing Arts at Yavapai College with extensive exhibition experience both nationally and internationally.</p>
-                </div>
-                <hr>
-            </div>
-    
-            <div class="section">
-                <button class="section-header" aria-expanded="false">
-                    Education
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="section-content">
-                    <ul>
-                        <li>2016 - MFA with Distinction, Painting and Drawing, University of Washington, Seattle, WA</li>
-                        <li>2012 - BFA magna cum laude, Painting and Drawing, University of Missouri St. Louis, St. Louis, MO</li>
-                        <li>2011 - AFA, St. Louis Community College/Florissant Valley, Ferguson, MO</li>
-                    </ul>
-                </div>
-                <hr>
-            </div>
-    
-            <div class="section">
-                <button class="section-header" aria-expanded="false">
-                    Solo Exhibitions
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="section-content">
-                    <ul>
-                        <li>2022 - "Cacophony", Czong Institute for Contemporary Art (CICA Museum), Seoul, South Korea
-                            <div class="indented-line">(international juried exhibition)(magazine publication)</div>
-                        </li>
-                        <li>2021 - "Cacophony", World of Co. (online), Sofia, Bulgaria
-                            <div class="indented-line">(invited by World of Co. upon completion of residency)</div>
-                        </li>
-                        <li>2018 - "Body Politic", The Gallery at University City Library, St. Louis, MO
-                            <div class="indented-line">(juried by Buzz Spector, professor, Washington University)</div>
-                        </li>
-                        <li>2017 - "The Altar of Commerce", The Cathy Gregory Gallery, St. Louis, MO
-                            <div class="indented-line">(curated by Gregory Gobberdiel, Executive Director, Shaw Art Fair)</div>
-                        </li>
-                        <li>2017 - "Superpower", The Parish Gallery, St. Louis, MO
-                            <div class="indented-line">(national juried exhibition, juried by Jill McGuire, former Executive Director, RAC St. Louis;</div>
-                            <div class="indented-line">Ben Kiel, instructor, Washington University; and Jordan McGirk, artist)</div>
-                        </li>
-                        <li>2016 - "Inverted Utopia", The Parc Condominiums, Seattle, WA
-                            <div class="indented-line">(juried exhibition)</div>
-                        </li>
-                        <li>2016 - Two-Person Exhibition, MFA Thesis Exhibition, Sand Point Gallery, University of Washington, Seattle, WA
-                            <div class="indented-line">(with painter Heather Nibert)</div>
-                        </li>
-                    </ul>
-                </div>
-                <hr>
-            </div>
-    
-            <div class="section">
-                <button class="section-header" aria-expanded="false">
-                    Group Exhibitions
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="section-content">
-                    <ul>
-                        <li>2024 - "Chromacosm: Our Universe in Color", Schack Art Center, Everett, WA
-                            <div class="indented-line">(national juried exhibition)</div>
-                        </li>
-                        <li>2024 - "Abstraction", Gallery Omnibus, Dresden, Germany
-                            <div class="indented-line">(international juried exhibition, online)</div>
-                        </li>
-                        <li>2023 - "Residual Sites", James May Gallery, Milwaukee, WI
-                            <div class="indented-line">(curated by Kendra Bulgrin, Artsy, online)</div>
-                        </li>
-                        <li>2023 - "The Elastic Mind", Broward College South Campus Art Gallery, Fort Lauderdale, FL
-                            <div class="indented-line">(international juried exhibition curated by Kohl King)</div>
-                        </li>
-                        <li>2022 - "STOP! Motion RE:moved", FOUND:RE Contemporary, Phoenix, AZ
-                            <div class="indented-line">(curated by Jordan Zurn)</div>
-                        </li>
-                        <li>2022 - "Politics in Collage", The Domino, New Orleans, LA
-                            <div class="indented-line">(curated by G.E. Vogt)</div>
-                        </li>
-                        <li>2022 - "Our Neighborhood", A.D. Gallery at University North Carolina Pembroke, Pembroke, NC
-                            <div class="indented-line">(international juried exhibition, juried by Hartmut Austen, professor Boston College)</div>
-                        </li>
-                        <li>2022 - "NFT Display", Museumio, Mission Viejo, CA
-                            <div class="indented-line">(international juried collection)</div>
-                        </li>
-                        <li>2022 - "Abstract Mind", Czong Institute for Contemporary Art (CICA Museum), Gimpo, South Korea
-                            <div class="indented-line">(international juried exhibition)</div>
-                        </li>
-                        <li>2021 - "MoCA L.I.ghts", Museum of Contemporary Art Long Island, Patchogue, NY
-                            <div class="indented-line">(pop-up exhibition, invited by Wavelength Projects)</div>
-                        </li>
-                        <li>2021 - "Absolute Abstraction", Studio Montclair, Montclair, NJ
-                            <div class="indented-line">(national juried exhibition, juried by Onnie Strother, Nette Thomas, Bisa Washington,</div>
-                            <div class="indented-line">and Warren Murray curators of Studio Montclair)</div>
-                        </li>
-                        <li>2021 - "Pandemic Projections", Gardenship Art hosted by Wavelength, Kearny, NJ
-                            <div class="indented-line">(international juried exhibition, juried by Gianluca Bianchino and Jeanne Brasile)</div>
-                        </li>
-                        <li>2019 - "Art and Design Faculty Exhibition", Lindenwood University, The Boyle Family Gallery, St. Charles, MO</li>
-                        <li>2019 - "Visual Art Faculty Exhibition", Yavapai College, Yavapai College Performing Arts Center, Prescott, AZ</li>
-                        <li>2019 - "Grand Opening Exhibition", NYA gallery, New York, NY
-                            <div class="indented-line">(national juried exhibition)</div>
-                        </li>
-                        <li>2019 - "State of the Union", Pool Arts Center, Drury University, Springfield, MO
-                            <div class="indented-line">(national juried exhibition, juried by Jonathan Thomas, Manager of National and International</div>
-                            <div class="indented-line">Advancement, John F. Kennedy Center for the Performing Arts, Washington D.C.)</div>
-                        </li>
-                        <li>2019 - "Urban", St. Charles Community College, Cottleville, MO
-                            <div class="indented-line">(curated by Brian D. Smith, professor, St. Charles Community College)</div>
-                        </li>
-                        <li>2018 - "Propaganda Posters", Window Gallery (St. Louis Artists' Guild), St. Louis, MO
-                            <div class="indented-line">(invited by Kathryn Nahorski, Executive Director, St. Louis Artists' Guild)</div>
-                        </li>
-                        <li>2018 - "Open Source", Los Angeles Center for Digital Art (LACDA), Los Angeles, CA
-                            <div class="indented-line">(invited by Rex Bruce, Director, LACDA)</div>
-                        </li>
-                        <li>2018 - "The Hidden", Confluence Gallery and Art Center, Twisp, WA
-                            <div class="indented-line">(national juried exhibition)</div>
-                        </li>
-                        <li>2018 - "People's Choice Salon Show", Greenpoint Gallery, New York, NY
-                            <div class="indented-line">(juried exhibition)</div>
-                        </li>
-                        <li>2017 - "Light and Shadow", Kemper Center for the Arts, William Woods University, Fulton, MO
-                            <div class="indented-line">(national juried exhibition, juried by Thom Whalen, professor, Lincoln Land Community College)</div>
-                        </li>
-                        <li>2017 - "Predictions and Perceptions", The Tri-Lakes Center for the Arts, Palmer Lake, CO
-                            <div class="indented-line">(national juried exhibition, juried by Dr. Michael Maddox, Director, Tri-Lakes Center for the Arts)</div>
-                        </li>
-                        <li>2017 - "Luck of the Draw", The Foundry Art Centre, St. Charles, MO
-                            <div class="indented-line">(national juried exhibition, juried by Grant Hargate, professor, Lindenwood University)</div>
-                        </li>
-                        <li>2017 - "The Chocolate and Art Show", The B Complex Gallery, Atlanta, GA
-                            <div class="indented-line">(juried exhibition)</div>
-                        </li>
-                        <li>2016 - "Serendipity", Soulard Art Gallery, St. Louis, MO
-                            <div class="indented-line">(juried exhibition)</div>
-                        </li>
-                        <li>2016 - "Americana", Tsuga Fine Arts, Bothell, WA
-                            <div class="indented-line">(juried by Kathy Collins, artist) (catalog)</div>
-                        </li>
-                        <li>2016 - "33 July", The Old Orchard Gallery, St. Louis, MO
-                            <div class="indented-line">(juried exhibition)</div>
-                        </li>
-                        <li>2016 - "Inspiración Del Peru", Metropolist, Seattle, WA
-                            <div class="indented-line">(invited by Samantha Zwicker, Executive Director, Hoja Nueva)</div>
-                        </li>
-                        <li>2016 - "MFA + MDes Thesis Exhibition", The Henry Art Gallery, Seattle, WA
-                            <div class="indented-line">(catalog)</div>
-                        </li>
-                        <li>2015 - "Shedding and Shredding Exhibit", The Jacob Lawrence Gallery, Seattle, WA
-                            <div class="indented-line">(curated by Scott Lawrimore, curator, 2019 Honolulu Biennial)</div>
-                        </li>
-                        <li>2012 - "eARThworks Show", The St. Louis Regional Arts Commission, St. Louis, MO
-                            <div class="indented-line">(curated by Margaret Hermes, writer)</div>
-                        </li>
-                    </ul>
-                </div>
-                <hr>
-            </div>
-    
-            <div class="section">
-                <button class="section-header" aria-expanded="false">
-                    Lectures, Presentations, Workshops
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="section-content">
-                    <ul>
-                        <li>2024 - "AI In the Studio Art Classroom," session chair, College Art Association Annual Conference,
-                            <div class="indented-line">Chicago, IL, February 17 (upcoming)</div>
-                        </li>
-                        <li>2023 - "Synesthesia in the Foundations Classroom," What Sound Does This Color Make?, FATE Conference,
-                            <div class="indented-line">Rocky Mountain College of Art and Design, Denver, CO, April 14 (upcoming)</div>
-                        </li>
-                        <li>2023 - "Time and Space: E-Residencies Offer Flexible Opportunities," Rebooting Creative Practice:
-                            <div class="indented-line">Artist Residencies and Cross-Discipline, FATE Conference, Rocky Mountain College of Art and</div>
-                            <div class="indented-line">Design, Denver, CO, April 14 (upcoming)</div>
-                        </li>
-                        <li>2022 - "Cacophony," Studio Art > Cut, Paste, Stitch, and Seam: Exploring Contemporary Collage,
-                            <div class="indented-line">SECAC Conference, Maryland Institute College of Art, Baltimore, MD, October 29</div>
-                        </li>
-                        <li>2022 - "The Internet's Cacophonous Dialectic," New Media Conference, Czong Institute for
-                            <div class="indented-line">Contemporary Art (CICA Museum), Seoul, South Korea, June 11</div>
-                        </li>
-                        <li>2021 - Lecture, "Cacophony," World of Co (Instagram Live), Sofia, Bulgaria, November 18</li>
-                        <li>2019 - "Tempera Emulsions in Early Modern Italian Painting," Alternative Understandings of Works by
-                            <div class="indented-line">Major Artists of the Italian Renaissance, SECAC Annual Conference, Chattanooga, TN, October 18</div>
-                        </li>
-                        <li>2019 - "Superpower," Creative Cartographies, New Media Caucus Symposium, Penny W. Stamps School of Art,
-                            <div class="indented-line">University of Michigan, Ann Arbor, MI, September 21</div>
-                        </li>
-                        <li>2019 - "Egg Tempera, Modern Surfactants, and Painting the Mixed Technique with Water-Soluable Oils,"
-                            <div class="indented-line">Early Modern Craftsmanship and Contemporary Techniques, College Art Association Annual</div>
-                            <div class="indented-line">Conference, New York, NY, February 14</div>
-                        </li>
-                        <li>2019 - Workshop, "How To Make Your Own Water Mixable Oil Paint," Foundations in Art: Theory and
-                            <div class="indented-line">Education Biennial Conference (FATE), Columbus College of Art and Design, Columbus, OH, April 5</div>
-                        </li>
-                        <li>2018 - Lecture, "The Internet and the Surrealist Dialectic," University City Library, University City, MO,
-                            <div class="indented-line">December 7</div>
-                        </li>
-                        <li>2018 - "Superpower: A Transnational Government with a Totalizing Vision," Poster Session, College Art
-                            <div class="indented-line">Association Annual Conference, Los Angeles, CA, February 21-24</div>
-                        </li>
-                        <li>2017 - Lecture/Presentation, Gallery Talk. The Parish Gallery, St. Louis, MO, December 15</li>
-                        <li>2017 - Lecture/Presentation, Gallery Talk. The Cathy Gregory Gallery, St. Louis, MO, August 19</li>
-                        <li>2016 - Lecture/Presentation, Gallery Talk, The Henry Art Gallery, Seattle, WA, June 1</li>
-                    </ul>
-                </div>
-                <hr>
-            </div>
-    
-            <div class="section">
-                <button class="section-header" aria-expanded="false">
-                    Awards / Grants / Fellowships
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="section-content">
-                    <ul>
-                        <li>2021 - Politics in Collage Residency (virtual), Kolaj Institute, New Orleans, LA
-                            <div class="indented-line">(international juried residency)</div>
-                        </li>
-                        <li>2021 - World of Co. Artist Residency (virtual), World of Co., Sofia, Bulgaria
-                            <div class="indented-line">(international juried residency)</div>
-                        </li>
-                        <li>2019 - Regional Arts Commission Artist Support Grant, St. Louis, MO</li>
-                        <li>2016 - Parnassus Graduating with Excellence Award, University of Washington, Seattle, WA</li>
-                        <li>2016 - Puget Sound Group Northwest Artists' Scholarship Grant, Kirkland, WA</li>
-                        <li>2016 - Vermont Studio Center Artists' Grant, Johnson, VT</li>
-                        <li>2016 - Jacob Lawrence Graduate Recognition (painting), University of Washington, Seattle, WA</li>
-                        <li>2014-16 - Graduate Fellowship in Painting and Drawing, University of Washington, Seattle, WA</li>
-                        <li>2013 - Project Grant in Research and Development, Missouri University of Science and Technology, Rolla, MO
-                            <div class="indented-line">(Provisional Patent Awarded: December 2013)</div>
-                        </li>
-                    </ul>
-                </div>
-                <hr>
-            </div>
-    
-            <div class="section">
-                <button class="section-header" aria-expanded="false">
-                    Bibliography (Reviews, Articles, Interviews)
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="section-content">
-                    <ul>
-                        <li>2023 - Kim Leejin, "Brave New World, New Media Art 2023," CICA Press, Gimpo, Korea, February 1</li>
-                        <li>2023 - G.E. Vogt, "Politics in Collage", Kolaj Institute and Kasini House, New Orleans, LA, July 8</li>
-                        <li>2022 - "June 2022 Artist Interview," NYC Phoenix Collective, New York, NY, June 1</li>
-                        <li>2021 - Michael Grady, "Seven College Programs Making a Positive Impact on the Community," YC360,
-                            <div class="indented-line">Prescott, AZ, April 1</div>
-                        </li>
-                        <li>2019 - Bryan Hollerbach, "Bryan Robertson: Body Politic," Ladue News, St. Louis, MO, March 1</li>
-                        <li>2018 - Paul Langdon, "Bryan Robertson's Body Politic at The U City Public Library," HEC-TV
-                            <div class="indented-line">(Higher Education Channel), St. Louis, MO, December 7, 2018</div>
-                        </li>
-                        <li>2018 - Danielle Mae Franklin, "U City Library Gallery to Feature local artist Bryan Robertson,"
-                            <div class="indented-line">The Missouri Times, Clayton, MO, November 30, 2018</div>
-                        </li>
-                        <li>2018 - Robin Shivley, "Artful Considerations," Ferguson Times, Ferguson, MO, November 9, 2018. 21</li>
-                        <li>2018 - "The Switch," 3Elements Literary Review, no. 18 Spring 2018, Chicago, IL, April 1, 2018. 64</li>
-                        <li>2018 - Bryan Hollerbach, "Art & Soul: Bryan Robertson," Ladue News, St. Louis, MO, March 1, 2018. 101</li>
-                        <li>2018 - Yael Evan, "Superpower & Altar of Commerce," All the Art (the Visual Arts Quarterly of St. Louis)
-                            <div class="indented-line">Spring 2018, St. Louis, MO, March 1, 2018. 1-2</div>
-                        </li>
-                        <li>2017 - Evie Hemphill, "Altar of Commerce' probes consequences of globalization," UMSL Daily,
-                            <div class="indented-line">St. Louis, MO, July 15, 2017</div>
-                        </li>
-                        <li>2016 - Studio Visit (Volume 34), Steven T. Zevitas, editor. (Korea: The Open Studios Press):166-167
-                            <div class="indented-line">(international juried publication, juried by Mike Lash, former Director of Public Art, Chicago)</div>
-                        </li>
-                    </ul>
-                </div>
-                <hr>
-            </div>
-    
-            <div class="section">
-                <button class="section-header" aria-expanded="false">
-                    Publications as Author
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="section-content">
-                    <ul>
-                        <li>2023 - James Hutson, Jason Lively, Bryan Robertson, Peter Cotroneo, and Martin Lang, "Creative Convergence,
-                            <div class="indented-line">The AI Renaissance in Art and Design," Springer Nature, Berlin Germany, September 1</div>
-                        </li>
-                        <li>2023 - "Exploring the Educational Potential of AI Generative Art in 3D Design Fundamentals," Global Journal
-                            <div class="indented-line">of Human and Social Sciences, Volume 23 Issue 2, Framingham MA, May 1, 2023</div>
-                        </li>
-                        <li>2023 - "A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom,"
-                            <div class="indented-line">The International Journal of New Media, Technology and the Arts, Volume 18 Issue 1, August 4, 2023</div>
-                        </li>
-                        <li>2019 - "Ann Metzger National Biennial Exhibition," All the Art (the Visual Arts Quarterly of St. Louis)
-                            <div class="indented-line">Summer 2019, St. Louis, MO, June 1, 2019. 1-2</div>
-                        </li>
-                    </ul>
-                </div>
-                <hr>
-            </div>
-    
-            <div class="section">
-                <button class="section-header" aria-expanded="false">
-                    Professional Experience
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="section-content">
-                    <ul>
-                        <li>2024-Present - Dean of Visual and Performing Arts, Yavapai College, Prescott, AZ</li>
-                        <li>2022-Present - Professor of Art, Yavapai College, Prescott, AZ</li>
-                        <li>2021-2024 - Visual Art Department Chair, Yavapai College, Prescott, AZ</li>
-                        <li>2019-2021 - Associate Professor of 2-D Visual Art, Yavapai College, Prescott, AZ</li>
-                        <li>2018-Present - Adjunct Faculty, Lindenwood University, St. Charles, MO</li>
-                        <li>2016-2019 - Adjunct Faculty, Jefferson College, Hillsboro, MO</li>
-                        <li>2016-2019 - Painting Instructor, St. Louis Artists' Guild, St. Louis, MO</li>
-                        <li>2015-2016 - Teaching Fellowship, University of Washington, Seattle, WA</li>
-                    </ul>
-                </div>
-                <hr>
-            </div>
+        <h1>Curriculum Vitae</h1>
+        <br>
+        <br>
+        <div class="section">
+        <button class="section-header" aria-expanded="false">
+        About Me
+        <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="section-content">
+        <p>Contemporary artist working across multiple mediums with a focus on experimental techniques and social commentary. Dean of Visual and Performing Arts at Yavapai College with extensive exhibition experience both nationally and internationally.</p>
         </div>
-    
+        <hr>
+        </div>
+        
+        <div class="section">
+        <button class="section-header" aria-expanded="false">
+        Education
+        <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="section-content">
+        <ul>
+        <li>2016 - MFA with Distinction, Painting and Drawing, University of Washington, Seattle, WA</li>
+        <li>2012 - BFA magna cum laude, Painting and Drawing, University of Missouri St. Louis, St. Louis, MO</li>
+        <li>2011 - AFA, St. Louis Community College/Florissant Valley, Ferguson, MO</li>
+        </ul>
+        </div>
+        <hr>
+        </div>
+        
+        <div class="section">
+        <button class="section-header" aria-expanded="false">
+        Solo Exhibitions
+        <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="section-content">
+        <ul>
+        <li>2022 - "Cacophony", Czong Institute for Contemporary Art (CICA Museum), Seoul, South Korea</li>
+        <li>2021 - "Cacophony", World of Co. (online), Sofia, Bulgaria</li>
+        <li>2018 - "Body Politic", The Gallery at University City Library, St. Louis, MO</li>
+        <li>2017 - "The Altar of Commerce", The Cathy Gregory Gallery, St. Louis, MO</li>
+        <li>2017 - "Superpower", The Parish Gallery, St. Louis, MO</li>
+        <li>2016 - "Inverted Utopia", The Parc Condominiums, Seattle, WA</li>
+        <li>2016 - Two-Person Exhibition, MFA Thesis Exhibition, Sand Point Gallery, University of Washington, Seattle, WA</li>
+        </ul>
+        </div>
+        <hr>
+        </div>
+        
+        <div class="section">
+        <button class="section-header" aria-expanded="false">
+        Group Exhibitions
+        <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="section-content">
+        <ul>
+        <li>2024 - "Chromacosm: Our Universe in Color", Schack Art Center, Everett, WA</li>
+        <li>2024 - "Abstraction", Gallery Omnibus, Dresden, Germany</li>
+        <li>2023 - "Residual Sites", James May Gallery, Milwaukee, WI</li>
+        <li>2023 - "The Elastic Mind", Broward College South Campus Art Gallery, Fort Lauderdale, FL</li>
+        <li>2022 - "STOP! Motion RE:moved", FOUND:RE Contemporary, Phoenix, AZ</li>
+        <li>2022 - "Politics in Collage", The Domino, New Orleans, LA</li>
+        <li>2022 - "Our Neighborhood", A.D. Gallery at University North Carolina Pembroke, Pembroke, NC</li>
+        <li>2022 - "NFT Display", Museumio, Mission Viejo, CA</li>
+        <li>2022 - "Abstract Mind", Czong Institute for Contemporary Art (CICA Museum), Gimpo, South Korea</li>
+        <li>2021 - "MoCA L.I.ghts", Museum of Contemporary Art Long Island, Patchogue, NY</li>
+        <li>2021 - "Absolute Abstraction", Studio Montclair, Montclair, NJ</li>
+        <li>2021 - "Pandemic Projections", Gardenship Art hosted by Wavelength, Kearny, NJ</li>
+        <li>2019 - "Art and Design Faculty Exhibition", Lindenwood University, The Boyle Family Gallery, St. Charles, MO</li>
+        <li>2019 - "Visual Art Faculty Exhibition", Yavapai College, Yavapai College Performing Arts Center, Prescott, AZ</li>
+        <li>2019 - "Grand Opening Exhibition", NYA gallery, New York, NY</li>
+        <li>2019 - "State of the Union", Pool Arts Center, Drury University, Springfield, MO</li>
+        <li>2019 - "Urban", St. Charles Community College, Cottleville, MO</li>
+        <li>2018 - "Propaganda Posters", Window Gallery (St. Louis Artists' Guild), St. Louis, MO</li>
+        <li>2018 - "Open Source", Los Angeles Center for Digital Art (LACDA), Los Angeles, CA</li>
+        <li>2018 - "The Hidden", Confluence Gallery and Art Center, Twisp, WA</li>
+        <li>2018 - "People's Choice Salon Show", Greenpoint Gallery, New York, NY</li>
+        <li>2017 - "Light and Shadow", Kemper Center for the Arts, William Woods University, Fulton, MO</li>
+        <li>2017 - "Predictions and Perceptions", The Tri-Lakes Center for the Arts, Palmer Lake, CO</li>
+        <li>2017 - "Luck of the Draw", The Foundry Art Centre, St. Charles, MO</li>
+        <li>2017 - "The Chocolate and Art Show", The B Complex Gallery, Atlanta, GA</li>
+        <li>2016 - "Serendipity", Soulard Art Gallery, St. Louis, MO</li>
+        <li>2016 - "Americana", Tsuga Fine Arts, Bothell, WA</li>
+        <li>2016 - "33 July", The Old Orchard Gallery, St. Louis, MO</li>
+        <li>2016 - "Inspiración Del Peru", Metropolist, Seattle, WA</li>
+        <li>2016 - "MFA + MDes Thesis Exhibition", The Henry Art Gallery, Seattle, WA</li>
+        <li>2015 - "Shedding and Shredding Exhibit", The Jacob Lawrence Gallery, Seattle, WA</li>
+        <li>2012 - "eARThworks Show", The St. Louis Regional Arts Commission, St. Louis, MO</li>
+        </ul>
+        </div>
+        <hr>
+        </div>
+        
+        <div class="section">
+        <button class="section-header" aria-expanded="false">
+        Lectures, Presentations, Workshops
+        <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="section-content">
+        <ul>
+        <li>2025 - "AI in Foundational Art and Design Courses," workshop chair, FATE Conference, George Mason University, Fairfax, VA, April 11 (upcoming)</li>
+        <li>2024 - "AI in the Studio Art Classroom," session chair, College Art Association Annual Conference, Chicago, IL, February 17 </li>
+        <li>2023 - "Synesthesia in the Foundations Classroom," What Sound Does This Color Make?, FATE Conference, Rocky Mountain College of Art and Design, Denver, CO, April 14</li>
+        <li>2023 - "Time and Space: E-Residencies Offer Flexible Opportunities," Rebooting Creative Practice: Artist Residencies and Cross-Discipline, FATE Conference, Rocky Mountain College of Art and Design, Denver, CO, April 14 </li>
+        <li>2022 - "Cacophony," Studio Art > Cut, Paste, Stitch, and Seam: Exploring Contemporary Collage, SECAC Conference, Maryland Institute College of Art, Baltimore, MD, October 29</li>
+        <li>2022 - "The Internet's Cacophonous Dialectic," New Media Conference, Czong Institute for Contemporary Art (CICA Museum), Seoul, South Korea, June 11</li>
+        <li>2021 - Lecture, "Cacophony," World of Co (Instagram Live), Sofia, Bulgaria, November 18</li>
+        <li>2019 - "Tempera Emulsions in Early Modern Italian Painting," Alternative Understandings of Works by Major Artists of the Italian Renaissance, SECAC Annual Conference, Chattanooga, TN, October 18</li>
+        <li>2019 - "Superpower," Creative Cartographies, New Media Caucus Symposium, Penny W. Stamps School of Art, University of Michigan, Ann Arbor, MI, September 21</li>
+        <li>2019 - "Egg Tempera, Modern Surfactants, and Painting the Mixed Technique with Water-Soluable Oils," Early Modern Craftsmanship and Contemporary Techniques, College Art Association Annual Conference, New York, NY, February 14</li>
+        <li>2019 - Workshop, "How To Make Your Own Water Mixable Oil Paint," Foundations in Art: Theory and Education Biennial Conference (FATE), Columbus College of Art and Design, Columbus, OH, April 5</li>
+        <li>2018 - Lecture, "The Internet and the Surrealist Dialectic," University City Library, University City, MO, December 7</li>
+        <li>2018 - "Superpower: A Transnational Government with a Totalizing Vision," Poster Session, College Art Association Annual Conference, Los Angeles, CA, February 21-24</li>
+        <li>2017 - Lecture/Presentation, Gallery Talk. The Parish Gallery, St. Louis, MO, December 15</li>
+        <li>2017 - Lecture/Presentation, Gallery Talk. The Cathy Gregory Gallery, St. Louis, MO, August 19</li>
+        <li>2016 - Lecture/Presentation, Gallery Talk, The Henry Art Gallery, Seattle, WA, June 1</li>
+        </ul>
+        </div>
+        <hr>
+        </div>
+        
+        <div class="section">
+        <button class="section-header" aria-expanded="false">
+        Awards / Grants / Fellowships
+        <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="section-content">
+        <ul>
+        <li>2021 - Politics in Collage Residency (virtual), Kolaj Institute, New Orleans, LA</li>
+        <li>2021 - World of Co. Artist Residency (virtual), World of Co., Sofia, Bulgaria</li>
+        <li>2019 - Regional Arts Commission Artist Support Grant, St. Louis, MO</li>
+        <li>2016 - Parnassus Graduating with Excellence Award, University of Washington, Seattle, WA</li>
+        <li>2016 - Puget Sound Group Northwest Artists' Scholarship Grant, Kirkland, WA</li>
+        <li>2016 - Vermont Studio Center Artists' Grant, Johnson, VT</li>
+        <li>2016 - Jacob Lawrence Graduate Recognition (painting), University of Washington, Seattle, WA</li>
+        <li>2014-16 - Graduate Fellowship in Painting and Drawing, University of Washington, Seattle, WA</li>
+        <li>2013 - Project Grant in Research and Development, Missouri University of Science and Technology, Rolla, MO</li>
+        </ul>
+        </div>
+        <hr>
+        </div>
+        
+        <div class="section">
+        <button class="section-header" aria-expanded="false">
+        Bibliography (Reviews, Articles, Interviews)
+        <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="section-content">
+        <ul>
+        <li>2023 - Kim Leejin, "Brave New World, New Media Art 2023," CICA Press, Gimpo, Korea, February 1</li>
+        <li>2023 - G.E. Vogt, "Politics in Collage", Kolaj Institute and Kasini House, New Orleans, LA, July 8</li>
+        <li>2022 - "June 2022 Artist Interview," NYC Phoenix Collective, New York, NY, June 1</li>
+        <li>2021 - Michael Grady, "Seven College Programs Making a Positive Impact on the Community," YC360, Prescott, AZ, April 1</li>
+        <li>2019 - Bryan Hollerbach, "Bryan Robertson: Body Politic," Ladue News, St. Louis, MO, March 1</li>
+        <li>2018 - Paul Langdon, "Bryan Robertson's Body Politic at The U City Public Library," HEC-TV (Higher Education Channel), St. Louis, MO, December 7, 2018</li>
+        <li>2018 - Danielle Mae Franklin, "U City Library Gallery to Feature local artist Bryan Robertson," The Missouri Times, Clayton, MO, November 30, 2018</li>
+        <li>2018 - Robin Shivley, "Artful Considerations," Ferguson Times, Ferguson, MO, November 9, 2018. 21</li>
+        <li>2018 - "The Switch," 3Elements Literary Review, no. 18 Spring 2018, Chicago, IL, April 1, 2018. 64</li>
+        <li>2018 - Bryan Hollerbach, "Art & Soul: Bryan Robertson," Ladue News, St. Louis, MO, March 1, 2018. 101</li>
+        <li>2018 - Yael Evan, "Superpower & Altar of Commerce," All the Art (the Visual Arts Quarterly of St. Louis) Spring 2018, St. Louis, MO, March 1, 2018. 1-2</li>
+        <li>2017 - Evie Hemphill, "Altar of Commerce' probes consequences of globalization," UMSL Daily, St. Louis, MO, July 15, 2017</li>
+        <li>2016 - Studio Visit (Volume 34), Steven T. Zevitas, editor. (Korea: The Open Studios Press):166-167</li>
+        </ul>
+        </div>
+        <hr>
+        </div>
+        
+        <div class="section">
+        <button class="section-header" aria-expanded="false">
+        Publications as Author
+        <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="section-content">
+        <ul>
+        <li>2023 - James Hutson, Jason Lively, Bryan Robertson, Peter Cotroneo, and Martin Lang, "Creative Convergence, The AI Renaissance in Art and Design," Springer Nature, Berlin Germany, September 1</li>
+        <li>2023 - "Exploring the Educational Potential of AI Generative Art in 3D Design Fundamentals," Global Journal of Human and Social Sciences, Volume 23 Issue 2, Framingham MA, May 1, 2023</li>
+        <li>2023 - "A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom," The International Journal of New Media, Technology and the Arts, Volume 18 Issue 1, August 4, 2023</li>
+        <li>2019 - "Ann Metzger National Biennial Exhibition," All the Art (the Visual Arts Quarterly of St. Louis) Summer 2019, St. Louis, MO, June 1, 2019. 1-2</li>
+        </ul>
+        </div>
+        <hr>
+        </div>
+        
+        <div class="section">
+        <button class="section-header" aria-expanded="false">
+        Professional Experience
+        <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="section-content">
+        <ul>
+        <li>2024-Present - Dean of Visual and Performing Arts, Yavapai College, Prescott, AZ</li>
+        <li>2022-Present - Professor of Art, Yavapai College, Prescott, AZ</li>
+        <li>2021-2024 - Visual Art Department Chair, Yavapai College, Prescott, AZ</li>
+        <li>2019-2021 - Associate Professor of 2-D Visual Art, Yavapai College, Prescott, AZ</li>
+        <li>2018-Present - Adjunct Faculty, Lindenwood University, St. Charles, MO</li>
+        <li>2016-2019 - Adjunct Faculty, Jefferson College, Hillsboro, MO</li>
+        <li>2016-2019 - Painting Instructor, St. Louis Artists' Guild, St. Louis, MO</li>
+        <li>2015-2016 - Teaching Fellowship, University of Washington, Seattle, WA</li>
+        </ul>
+        </div>
+        <hr>
+        </div>
+        </div>
+        
         <div class="sidebar">
-            <div class="profile-container">
-                <div class="profile-border"></div>
-                <img src="https://placehold.co/150x150" alt="Profile" class="profile-img">
-            </div>
-            <div class="social-icons">
-                <a href="#"><i class="far fa-envelope"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-            </div>
-            <div class="contact-info">
-                <p><strong>Bryan Robertson</strong></p>
-                <p>Dean of Visual and Performing Arts</p>
-                <p>Yavapai College, Prescott, AZ</p>
-            </div>
+        <div class="profile-container">
+        <div class="profile-border"></div>
+        <img src="https://placehold.co/150x150" alt="Profile" class="profile-img">
         </div>
-    </div>
-    <br>
-    <br>
+        <div class="social-icons">
+        <a href="#"><i class="far fa-envelope"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <div class="contact-info">
+        <p><strong>Bryan Robertson</strong></p>
+        <p>Dean of Visual and Performing Arts</p>
+        <p>Yavapai College, Prescott, AZ</p>
+        </div>
+        </div>
+        </div>
+        <br>
+        <br>
     <footer>
         <div class="footer-container">
             <div class="footer-info">
                 <h3>Bryan Robertson</h3>
-                <p>Visual Artist based in Phoenix</p>
+                <p>Visual Artist based in Arizona</p>
                 
                 <div class="social-links">
                     <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
@@ -1133,7 +1025,7 @@ body {
                     <h4>Connect</h4>
                     <ul>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="news.html">Newsletter</a></li>
+                        <li><a href="news.html">News</a></li>
                     </ul>
                 </div>
             </div>

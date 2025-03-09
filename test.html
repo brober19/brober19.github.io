@@ -32,15 +32,17 @@
         body {
             font-family: 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            background: #000;
-            color: #fff;
+            background: #fff;
+            color: #000; /* Changed text color to black */
             overflow-x: hidden;
             min-height: 100vh;
             opacity: 0;
             animation: fadeIn 1s ease-in forwards;
             display: flex;
             flex-direction: column;
+            cursor: none; /* Hide default cursor */
         }
+        
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -49,6 +51,21 @@
                 opacity: 1;
             }
         }
+        
+        /* Custom Cursor */
+        .brush-cursor {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: transparent;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: destination-out;
+            transform: translate(-50%, -50%);
+            transition: transform 0.05s ease-out;
+        }
+        
         /* Navigation Styles */
         nav {
             background: transparent;
@@ -117,11 +134,11 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #fff;
+            color: #000; /* Changed to black */
             font-size: 1.1rem;
             padding: 0.5rem 0;
             transition: all 0.3s ease;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
         }
 
         .nav-links a:hover {
@@ -130,11 +147,13 @@
                 0 0 10px rgba(255, 127, 80, 0.8),
                 0 0 20px rgba(255, 127, 80, 0.6);
         }
+        
         /* Navigation Link Effects */
         .nav-links a {
             position: relative;
             overflow: hidden;
         }
+        
         .nav-links a span {
             position: relative;
             display: inline-block;
@@ -174,7 +193,7 @@
             display: block;
             width: 25px;
             height: 3px;
-            background: #fff;
+            background: #000; /* Changed to black */
             margin: 5px 0;
             transition: all 0.3s ease;
         }
@@ -203,16 +222,25 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.85); /* White opaque overlay */
         }
 
         .hero-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: blur(5px);
         }
         
+        /* Image reveal canvas */
+        .reveal-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
 
         /* Content Styles */
         .content {
@@ -220,16 +248,32 @@
             z-index: 1;
             text-align: center;
             transition: transform 0.3s ease;
-            mix-blend-mode: difference;
         }
 
         h1 {
             font-size: 4rem;
             margin-bottom: 1rem;
             font-weight: 300;
-            letter-spacing: 0.2em;
+            letter-spacing: -0.02em; /* Further reduced to bring letters much closer together */
             text-transform: uppercase;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            color: #000; /* Changed to black */
+        }
+        
+        /* Individual letter glow effect */
+        .glow-letter {
+            display: inline-block;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            cursor: none;
+            letter-spacing: -0.05em; /* Changed from positive to negative spacing for tighter letters */
+        }
+
+        .glow-letter:hover {
+            color: #FF7F50;
+            text-shadow:
+                0 0 10px rgba(255, 127, 80, 0.8),
+                0 0 20px rgba(255, 127, 80, 0.6),
+                0 0 30px rgba(255, 127, 80, 0.4);
         }
 
         /* Animations */
@@ -256,13 +300,13 @@
 
         /* Footer Styles */
         footer {
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 2rem 0;
             width: 100%;
             margin-top: auto;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .footer-container {
@@ -292,6 +336,7 @@
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
             opacity: 0.8;
+            color: #000; /* Changed to black */
         }
 
         .social-links {
@@ -301,7 +346,7 @@
         }
 
         .social-links a {
-            color: #fff;
+            color: #000; /* Changed to black */
             font-size: 1.2rem;
             transition: color 0.3s ease;
             text-decoration: none;
@@ -337,7 +382,7 @@
         }
 
         .footer-nav-section ul li a {
-            color: #fff;
+            color: #000; /* Changed to black */
             text-decoration: none;
             font-size: 0.9rem;
             opacity: 0.8;
@@ -354,14 +399,23 @@
             text-align: center;
             margin-top: 2rem;
             padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             font-size: 0.8rem;
             opacity: 0.6;
+            color: #000; /* Changed to black */
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
+            h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: -0.02em; /* Further reduced to bring letters much closer together */
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            color: #000; /* Changed to black */
+        }
 
             .hamburger {
                 display: block;
@@ -373,7 +427,7 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: rgba(0, 0, 0, 0.8);
+                background: rgba(255, 255, 255, 0.9); /* Changed to white */
                 padding: 1rem;
                 flex-direction: column;
                 align-items: center;
@@ -408,6 +462,8 @@
     </style>
 </head>
 <body>
+    <div class="brush-cursor"></div>
+    
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">
@@ -432,8 +488,27 @@
         <div class="hero-image">
             <img src="images/G Gallery_1.JPG" alt="Hero Image">
         </div>
+        <canvas class="reveal-canvas"></canvas>
         <div class="content">
-            <h1><span class="typing-animation">Bryan Robertson</span></h1>
+            <h1>
+                <span class="typing-animation">
+                    <span class="glow-letter">B</span>
+                    <span class="glow-letter">r</span>
+                    <span class="glow-letter">y</span>
+                    <span class="glow-letter">a</span>
+                    <span class="glow-letter">n</span>
+                    <span class="glow-letter">&nbsp;</span>
+                    <span class="glow-letter">R</span>
+                    <span class="glow-letter">o</span>
+                    <span class="glow-letter">b</span>
+                    <span class="glow-letter">e</span>
+                    <span class="glow-letter">r</span>
+                    <span class="glow-letter">t</span>
+                    <span class="glow-letter">s</span>
+                    <span class="glow-letter">o</span>
+                    <span class="glow-letter">n</span>
+                </span>
+            </h1>
             <p class="split-text">a visual artist working in paint and pixels</p>
         </div>
     </section>
@@ -489,6 +564,187 @@
             const hamburger = document.querySelector('.hamburger');
             const heroImage = document.querySelector('.hero-image');
             const content = document.querySelector('.content');
+            const brushCursor = document.querySelector('.brush-cursor');
+            
+            // Canvas setup for image reveal
+            const canvas = document.querySelector('.reveal-canvas');
+            const ctx = canvas.getContext('2d');
+            const heroSection = document.querySelector('.hero-section');
+            const originalImage = document.querySelector('.hero-image img');
+            
+            // Set canvas dimensions
+            function resizeCanvas() {
+                canvas.width = heroSection.offsetWidth;
+                canvas.height = heroSection.offsetHeight;
+                
+                // Clear the canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // Initialize canvas
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Load brush image
+            const brushImage = new Image();
+            brushImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNDAgMEM2Mi4wOTE0IDAgODAgMTcuOTA4NiA4MCA0MEM4MCA2Mi4wOTE0IDYyLjA5MTQgODAgNDAgODBDMTcuOTA4NiA4MCAwIDYyLjA5MTQgMCA0MEMwIDE3LjkwODYgMTcuOTA4NiAwIDQwIDBaIiBmaWxsPSIjMDAwIi8+PC9zdmc+';
+            
+            // Store brush strokes and previous positions for trail effect
+            const brushStrokes = [];
+            const maxBrushStrokes = 45; // Increased to 45 (3x longer trail) // Increased from 5 to 15 for longer trail
+            let prevX = 0;
+            let prevY = 0;
+            let isFirstMove = true;
+            
+            // Custom cursor movement
+            document.addEventListener('mousemove', (e) => {
+                // Update brush cursor position
+                brushCursor.style.left = `${e.clientX}px`;
+                brushCursor.style.top = `${e.clientY}px`;
+                
+                // Draw on canvas when mouse is over hero section
+                const heroRect = heroSection.getBoundingClientRect();
+                if (
+                    e.clientX >= heroRect.left && 
+                    e.clientX <= heroRect.right && 
+                    e.clientY >= heroRect.top && 
+                    e.clientY <= heroRect.bottom
+                ) {
+                    const x = e.clientX - heroRect.left;
+                    const y = e.clientY - heroRect.top;
+                    
+                    // For trail effect, add intermediate points between current and previous position
+                    if (!isFirstMove) {
+                        // Calculate distance between current and previous position
+                        const dx = x - prevX;
+                        const dy = y - prevY;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        // If distance is significant, add intermediate points for smoother trail
+                        if (distance > 10) {
+                            const steps = Math.floor(distance / 5);
+                            for (let i = 1; i <= steps; i++) {
+                                const ratio = i / (steps + 1);
+                                const intermediateX = prevX + dx * ratio;
+                                const intermediateY = prevY + dy * ratio;
+                                
+                                // Add intermediate brush stroke with reduced size
+                                brushStrokes.push({
+                                    x: intermediateX,
+                                    y: intermediateY,
+                                    opacity: 0.7,
+                                    size: 60 + (i * 2) // Gradually increase size
+                                });
+                            }
+                        }
+                    }
+                    
+                    // Add new brush stroke at current position
+                    brushStrokes.push({
+                        x: x,
+                        y: y,
+                        opacity: 1,
+                        size: 240 // Increased from 80 to 240 (3x larger) for more dramatic reveal
+                    });
+                    
+                    // Remove old brush strokes if we exceed the maximum
+                    while (brushStrokes.length > maxBrushStrokes) {
+                        brushStrokes.shift();
+                    }
+                    
+                    // Clear the canvas
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Draw all brush strokes with their current opacity and size
+                    brushStrokes.forEach((stroke, index) => {
+                        // Decrease opacity of older strokes for fade-out effect
+                        stroke.opacity = 0.3 + ((index + 1) / brushStrokes.length) * 0.7;
+                        
+                        ctx.globalAlpha = stroke.opacity;
+                        ctx.globalCompositeOperation = 'source-over';
+                        ctx.drawImage(
+                            brushImage, 
+                            stroke.x - (stroke.size / 2), 
+                            stroke.y - (stroke.size / 2), 
+                            stroke.size, 
+                            stroke.size
+                        );
+                        
+                        // Reveal the original image through the brush stroke
+                        ctx.globalCompositeOperation = 'source-in';
+                        
+                        // Calculate the position of the original image relative to the canvas
+                        const imgX = (originalImage.offsetWidth - canvas.width) / -2;
+                        const imgY = (originalImage.offsetHeight - canvas.height) / -2;
+                        
+                        ctx.drawImage(originalImage, imgX, imgY, originalImage.offsetWidth, originalImage.offsetHeight);
+                    });
+                    
+                    // Reset global alpha
+                    ctx.globalAlpha = 1;
+                    
+                    // Update previous position for next move
+                    prevX = x;
+                    prevY = y;
+                    isFirstMove = false;
+                }
+
+                // Parallax effect
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+
+                const moveX = (mouseX - 0.5) * 40;
+                const moveY = (mouseY - 0.5) * 40;
+
+                heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
+            });
+
+            // Function to gradually fade out brush strokes
+            function fadeOutBrushStrokes() {
+                if (brushStrokes.length > 0) {
+                    // Clear the canvas
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Draw and update all brush strokes
+                    brushStrokes.forEach((stroke, index) => {
+                        // Decrease opacity more slowly for trail effect
+                        stroke.opacity -= 0.005;
+                        
+                        if (stroke.opacity > 0) {
+                            ctx.globalAlpha = stroke.opacity;
+                            ctx.globalCompositeOperation = 'source-over';
+                            ctx.drawImage(
+                                brushImage, 
+                                stroke.x - (stroke.size / 2), 
+                                stroke.y - (stroke.size / 2), 
+                                stroke.size, 
+                                stroke.size
+                            );
+                            
+                            ctx.globalCompositeOperation = 'source-in';
+                            
+                            const imgX = (originalImage.offsetWidth - canvas.width) / -2;
+                            const imgY = (originalImage.offsetHeight - canvas.height) / -2;
+                            
+                            ctx.drawImage(originalImage, imgX, imgY, originalImage.offsetWidth, originalImage.offsetHeight);
+                        }
+                    });
+                    
+                    // Remove fully faded strokes
+                    while (brushStrokes.length > 0 && brushStrokes[0].opacity <= 0) {
+                        brushStrokes.shift();
+                    }
+                    
+                    // Reset global alpha
+                    ctx.globalAlpha = 1;
+                }
+                
+                requestAnimationFrame(fadeOutBrushStrokes);
+            }
+
+            // Start the fade out animation
+            fadeOutBrushStrokes();
 
             // Function to handle nav visibility based on screen size
             function handleNavVisibility() {
@@ -514,18 +770,6 @@
                 hamburger.classList.toggle('active');
                 navLinks.classList.toggle('active');
                 navLinks.style.display = navLinks.classList.contains('active') ? 'flex' : 'none';
-            });
-
-            // Parallax effect
-            document.addEventListener('mousemove', (e) => {
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
-
-                const moveX = (mouseX - 0.5) * 40;
-                const moveY = (mouseY - 0.5) * 40;
-
-                heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
             });
 
             // Update on window resize
