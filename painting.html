@@ -379,6 +379,13 @@ nav.scrolled {
         .lightbox-arrow:hover {
             color: var(--accent-color);
         }
+        .lightbox-image-container {
+    pointer-events: none;
+}
+
+.lightbox-arrow, .close-button {
+    pointer-events: auto;
+}
 
         @media (max-width: 768px) {
             .hamburger { display: block; }
@@ -788,40 +795,40 @@ nav.scrolled {
         </div>
     </footer>
     <script>
-        let currentLightbox = null;
+   let currentLightbox = null;
 
-        document.querySelectorAll('.image-container').forEach(container => {
-            container.addEventListener('click', () => openLightbox(container));
-        });
+document.querySelectorAll('.image-container').forEach(container => {
+    container.addEventListener('click', () => openLightbox(container));
+});
 
-        function openLightbox(container) {
-            const overlay = container.querySelector('.lightbox-overlay');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            currentLightbox = container;
+function openLightbox(container) {
+    const overlay = container.querySelector('.lightbox-overlay');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    currentLightbox = container;
+}
+
+document.querySelectorAll('.close-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const overlay = e.target.closest('.lightbox-overlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentLightbox = null;
         }
+    });
+});
 
-        document.querySelectorAll('.close-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const overlay = e.target.closest('.lightbox-overlay');
-                if (overlay) {
-                    overlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                    currentLightbox = null;
-                }
-            });
-        });
+document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
+    arrow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const direction = arrow.classList.contains('lightbox-prev') ? -1 : 1;
+        navigateLightbox(direction, e);
+    });
+});
 
-        document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
-            arrow.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const direction = arrow.classList.contains('lightbox-prev') ? -1 : 1;
-                navigateLightbox(direction, e);
-            });
-        });
-
-        function navigateLightbox(direction, event) {
+function navigateLightbox(direction, event) {
     event.stopPropagation();
     if (!currentLightbox) return;
 
@@ -829,40 +836,60 @@ nav.scrolled {
     const currentIndex = containers.indexOf(currentLightbox);
     const nextIndex = (currentIndex + direction + containers.length) % containers.length;
     
-    // Get the next lightbox container before removing active class
+    // Get next lightbox
     const nextLightbox = containers[nextIndex];
     
-    // Add active class to next lightbox before removing from current
-    nextLightbox.querySelector('.lightbox-overlay').classList.add('active');
+    // Get current and next overlay elements
+    const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
+    const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
     
-    // Set the current lightbox to the next one
+    // Get current and next content elements
+    const currentContent = currentLightbox.querySelector('.lightbox-content');
+    const nextContent = nextLightbox.querySelector('.lightbox-content');
+    
+    // Show next overlay without animation
+    nextOverlay.style.transition = 'none';
+    nextOverlay.classList.add('active');
+    
+    // Force reflow to apply the style changes
+    void nextOverlay.offsetWidth;
+    
+    // Restore transition
+    nextOverlay.style.transition = '';
+    
+    // Update current lightbox reference
     currentLightbox = nextLightbox;
+    
+    // Hide previous overlay after a small delay
+    setTimeout(() => {
+        currentOverlay.classList.remove('active');
+    }, 50);
 }
 
-        document.addEventListener('keydown', function(event) {
-            if (!currentLightbox) return;
+document.addEventListener('keydown', function(event) {
+    if (!currentLightbox) return;
 
-            if (event.key === 'Escape') {
-                const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
-                if (activeOverlay) {
-                    activeOverlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                    currentLightbox = null;
-                }
-            } else if (event.key === 'ArrowLeft') {
-                navigateLightbox(-1, event);
-            } else if (event.key === 'ArrowRight') {
-                navigateLightbox(1, event);
-            }
-        });
+    if (event.key === 'Escape') {
+        const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
+        if (activeOverlay) {
+            activeOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentLightbox = null;
+        }
+    } else if (event.key === 'ArrowLeft') {
+        navigateLightbox(-1, event);
+    } else if (event.key === 'ArrowRight') {
+        navigateLightbox(1, event);
+    }
+});
 
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('lightbox-overlay')) {
-                event.target.classList.remove('active');
-                document.body.style.overflow = 'auto';
-                currentLightbox = null;
-            }
-        });
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('lightbox-overlay')) {
+        event.target.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        currentLightbox = null;
+    }
+});
 
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelector('.nav-links');
