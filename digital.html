@@ -406,16 +406,13 @@ nav.scrolled {
             .lightbox-image { max-width: 85vw; }
             .lightbox-text { max-width: 85vw; }
         }
-                /* Footer Styles */
-                footer {
-    background-color: rgba(255, 255, 255, 0.3);
+              /* Footer Styles - consolidated and fixed */
+footer {
+    background-color: var(--bg-color);
     padding: 2rem 0;
     width: 100%;
     margin-top: auto;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-top: 1px solid var(--border-color); /* Added this line */
-    border-bottom: 1px solid var(--border-color); /* Optional: for symmetry */
+    border-top: 1px solid var(--border-color);
 }
 
 .footer-container {
@@ -425,125 +422,6 @@ nav.scrolled {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
-}
-
-.footer-info {
-    flex: 1;
-    min-width: 250px;
-    margin-bottom: 1rem;
-}
-
-.footer-info h3 {
-    color: #FF7F50;
-    margin-bottom: 1rem;
-    font-weight: 400;
-    font-size: 1.2rem;
-}
-
-.footer-info p {
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-.social-links {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.social-links a {
-    color: #fff;
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-    text-decoration: none;
-}
-
-.social-links a:hover {
-    color: #FF7F50;
-}
-
-.footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.footer-nav-section {
-    min-width: 150px;
-}
-
-.footer-nav-section h4 {
-    color: #FF7F50;
-    margin-bottom: 1rem;
-    font-weight: 400;
-    font-size: 1rem;
-}
-
-.footer-nav-section ul {
-    list-style: none;
-}
-
-.footer-nav-section ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-nav-section ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 0.9rem;
-    opacity: 0.8;
-    transition: all 0.3s ease;
-}
-
-.footer-nav-section ul li a:hover {
-    color: #FF7F50;
-    opacity: 1;
-}
-
-.copyright {
-    width: 100%;
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.8rem;
-    opacity: 0.6;
-}
-
-/* Responsive Footer */
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .footer-nav {
-        width: 100%;
-        margin-top: 1.5rem;
-    }
-}
-    }
- /* Footer Styles */
- footer {
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 2rem 0;
-    width: 100%;
-    margin-top: auto;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 30px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .footer-info {
@@ -629,10 +507,10 @@ nav.scrolled {
     color: var(--text-color);
     opacity: 0.8;
 }
+
+/* Dark theme adjustments */
 [data-theme="dark"] footer {
-    background-color: var(--bg-color); /* Use the dark theme background color */
-    backdrop-filter: none; /* Remove the blur effect in dark mode */
-    -webkit-backdrop-filter: none;
+    background-color: var(--bg-color);
 }
 
 /* Responsive Footer */
@@ -675,20 +553,22 @@ nav.scrolled {
     </nav>
 <br>
 <br>
+<br>
+
     <div class="container">
         <div class="gallery">
             <div class="image-container">
-                <img src="https://placehold.co/800x1200" alt="Image 1" class="thumbnail">
+                <img src="images/digital/Recdep.gif" alt="Image 1" class="thumbnail">
                 <div class="lightbox-overlay">
                     <div class="close-button">×</div>
                     <div class="lightbox-content">
                         <div class="lightbox-image-container">
-                            <img src="https://placehold.co/800x1200" alt="Image 1" class="lightbox-image">
-                            <div class="caption">Artwork 1</div>
+                            <img src="images/digital/Recdep.gif"alt="Image 1" class="lightbox-image">
+                            <div class="caption">2022, digital looping GIF, size variable</div>
                         </div>
                         <div class="lightbox-text">
-                            <h3>Artwork Title 1</h3>
-                            <p>Description of artwork 1. Medium, year, and other details.</p>
+                            <h3>Recdep</h3>
+                            <p>This animated GIF explores themes of surveillance, information overload, and fragmented identity in the digital age. It centers a smartphone with a chaotic array of human eyes, ears, and text snippets, suggesting technology’s pervasive role. Reminiscent of Foucault’s panopticon it evokes a sense of constant observation and listening, as fragmented body parts symbolize dispersed personal identity in a hyper-connected world. Text fragments from news headlines, social media, and documents create information saturation. The red and black color scheme, with jagged shapes, adds urgency and disruption, aligning with postmodern or post-digital art.</p>
                         </div>
                     </div>
                     <div class="lightbox-arrow lightbox-prev">&#8249;</div>
@@ -696,18 +576,20 @@ nav.scrolled {
                 </div>
             </div>
 
+
             <div class="image-container">
-                <img src="https://placehold.co/800x1200" alt="Image 2" class="thumbnail">
+                <img src="images/digital/crimestop.gif" alt="Image 2" class="thumbnail">
                 <div class="lightbox-overlay">
                     <div class="close-button">×</div>
                     <div class="lightbox-content">
                         <div class="lightbox-image-container">
-                            <img src="https://placehold.co/800x1200" alt="Image 2" class="lightbox-image">
-                            <div class="caption">Artwork 2</div>
+                            <img src="images/digital/crimestop.gif"alt="Image 2" class="lightbox-image">
+                            <div class="caption">2022, digital looping GIF, size variable</div>
                         </div>
                         <div class="lightbox-text">
-                            <h3>Artwork Title 2</h3>
-                            <p>Description of artwork 2. Medium, year, and other details.</p>
+                            <h3>crimestop</h3>
+                            <p>This animated GIF can be interpreted as a provocative exploration of contemporary anxieties surrounding technology, language, and medical intervention. The visual juxtaposition of syringes, a human brain, and phonetic spellings of words like "chaos" and "panic" evokes a sense of unease, reflecting societal fears about control, manipulation, and the fragility of the human mind. The syringes, often associated with medical advancements or invasive procedures, point toward themes of bioethics, vaccination debates, and the tension between progress and coercion. The fragmented text and phonetic pronunciations recall conceptual art's engagement with language, particularly the works of artists like Jenny Holzer, where words are used to provoke thought and emotional response. The sterile, clinical aesthetic contrasts with the visceral imagery of the brain, emphasizing the disconnection between scientific rationality and human vulnerability. Overall, the GIF serves as a layered critique of modernity, addressing themes of control, fear, and the intersection of science and humanity.
+                            </p>
                         </div>
                     </div>
                     <div class="lightbox-arrow lightbox-prev">&#8249;</div>
