@@ -261,8 +261,20 @@ nav.scrolled {
         .card-image {
             height: 200px;
             background-color: #ddd;
-            background-size: cover;
-            background-position: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover .card-image img {
+            transform: scale(1.05);
         }
 
         .card-content {
@@ -376,7 +388,9 @@ nav.scrolled {
 
 <div class="news-grid">
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=CAA+Conferenc')"></div>
+        <div class="card-image">
+            <img src="images/news/caa-2024.png" alt="CAA Conference">
+        </div>
         <div class="card-content">
             <span class="date">February 2024</span>
             <h3>Session Chair at CAA Conference</h3>
@@ -386,7 +400,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Chromacosm')"></div>
+        <div class="card-image">
+            <img src="images/news/Chromacosm.png" alt="Chromacosm Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">January 2024</span>
             <h3>Exhibition: Chromacosm: Our Universe in Color</h3>
@@ -396,9 +412,11 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Dean+Appointment')"></div>
+        <div class="card-image">
+            <img src="images/news/yc-logo-black.png" alt="Dean Appointment">
+        </div>
         <div class="card-content">
-            <span class="date">2024</span>
+            <span class="date">August 2024</span>
             <h3>Appointed Dean of Visual and Performing Arts</h3>
             <p>Bryan Robertson was appointed Dean of Visual and Performing Arts at Yavapai College in Prescott, Arizona, after serving as Visual Art Department Chair from 2021-2024. In this new role, Robertson will oversee programs in visual arts, music, theater, dance, and film, continuing his commitment to innovative arts education and interdisciplinary collaboration.</p>
             <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
@@ -406,7 +424,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Creative+Convergence')"></div>
+        <div class="card-image">
+            <img src="images/news/creative_convergence.png" alt="Creative Convergence Publication">
+        </div>
         <div class="card-content">
             <span class="date">September 2023</span>
             <h3>Publication: Creative Convergence</h3>
@@ -416,7 +436,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=AI+in+Drawing')"></div>
+        <div class="card-image">
+            <img src="images/news/ai-drawing.jpg" alt="AI in Drawing Education">
+        </div>
         <div class="card-content">
             <span class="date">August 2023</span>
             <h3>Research Publication on AI in Drawing Education</h3>
@@ -426,7 +448,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=FATE+Conference')"></div>
+        <div class="card-image">
+            <img src="images/news/fate-conference.jpg" alt="FATE Conference">
+        </div>
         <div class="card-content">
             <span class="date">April 2023</span>
             <h3>Presentations at FATE Conference</h3>
@@ -436,7 +460,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Elastic+Mind')"></div>
+        <div class="card-image">
+            <img src="images/news/elastic-mind.jpg" alt="The Elastic Mind Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2022</span>
             <h3>Exhibition: The Elastic Mind</h3>
@@ -446,7 +472,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=STOP+Motion')"></div>
+        <div class="card-image">
+            <img src="images/news/stop-motion.jpg" alt="STOP Motion Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2022</span>
             <h3>Exhibition: STOP! Motion RE:moved</h3>
@@ -456,7 +484,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Our+Neighborhood')"></div>
+        <div class="card-image">
+            <img src="images/news/our-neighborhood.jpg" alt="Our Neighborhood Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2022</span>
             <h3>Exhibition: Our Neighborhood</h3>
@@ -466,7 +496,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=CICA+Museum')"></div>
+        <div class="card-image">
+            <img src="images/news/cica-museum.jpg" alt="CICA Museum Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2022</span>
             <h3>Solo Exhibition: Cacophony</h3>
@@ -476,7 +508,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=MoCA+LIghts')"></div>
+        <div class="card-image">
+            <img src="images/news/moca-lights.jpg" alt="MoCA L.I.ghts Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2021</span>
             <h3>Exhibition: MoCA L.I.ghts</h3>
@@ -486,7 +520,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Absolute+Abstraction')"></div>
+        <div class="card-image">
+            <img src="images/news/absolute-abstraction.jpg" alt="Absolute Abstraction Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2021</span>
             <h3>Exhibition: Absolute Abstraction</h3>
@@ -496,7 +532,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Pandemic+Projections')"></div>
+        <div class="card-image">
+            <img src="images/news/pandemic-projections.jpg" alt="Pandemic Projections Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2021</span>
             <h3>Exhibition: Pandemic Projections</h3>
@@ -506,7 +544,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=World+of+Co')"></div>
+        <div class="card-image">
+            <img src="images/news/world-of-co.jpg" alt="World of Co Artist Residency">
+        </div>
         <div class="card-content">
             <span class="date">2021</span>
             <h3>International Artist Residencies</h3>
@@ -516,7 +556,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=State+of+the+Union')"></div>
+        <div class="card-image">
+            <img src="images/news/state-of-the-union.jpg" alt="State of the Union Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2019</span>
             <h3>Exhibition: State of the Union</h3>
@@ -526,7 +568,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=RAC+Grant')"></div>
+        <div class="card-image">
+            <img src="images/news/rac-grant.jpg" alt="Regional Arts Commission Grant">
+        </div>
         <div class="card-content">
             <span class="date">2019</span>
             <h3>Regional Arts Commission Grant</h3>
@@ -536,7 +580,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Body+Politic')"></div>
+        <div class="card-image">
+            <img src="images/news/body-politic.jpg" alt="Body Politic Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2018</span>
             <h3>Solo Exhibition: Body Politic</h3>
@@ -546,7 +592,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Altar+of+Commerce')"></div>
+        <div class="card-image">
+            <img src="images/news/altar-of-commerce.jpg" alt="The Altar of Commerce Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2017</span>
             <h3>Solo Exhibition: The Altar of Commerce</h3>
@@ -556,7 +604,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Superpower')"></div>
+        <div class="card-image">
+            <img src="images/news/superpower.jpg" alt="Superpower Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2017</span>
             <h3>Solo Exhibition: Superpower</h3>
@@ -566,7 +616,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Light+and+Shadow')"></div>
+        <div class="card-image">
+            <img src="images/news/light-and-shadow.jpg" alt="Light and Shadow Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2017</span>
             <h3>Exhibition: Light and Shadow</h3>
@@ -576,7 +628,9 @@ nav.scrolled {
     </div>
 
     <div class="news-card">
-        <div class="card-image" style="background-image: url('https://placehold.co/600x400?text=Luck+of+the+Draw')"></div>
+        <div class="card-image">
+            <img src="images/news/luck-of-the-draw.jpg" alt="Luck of the Draw Exhibition">
+        </div>
         <div class="card-content">
             <span class="date">2017</span>
             <h3>Exhibition: Luck of the Draw</h3>
@@ -584,6 +638,7 @@ nav.scrolled {
             <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
+</div>
 </div>
 
     <script>
