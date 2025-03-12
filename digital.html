@@ -223,21 +223,24 @@ nav.scrolled {
             padding: 20px 30px;
         }
 
+        /* Updated Gallery/Masonry Grid Styles */
         .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            column-count: 3;
+            column-gap: 30px; /* Increased spacing between columns */
             padding: 20px 30px;
         }
 
         .image-container {
             position: relative;
-            height: 400px;
+            break-inside: avoid; /* Prevents images from breaking across columns */
+            margin-bottom: 30px; /* Increased spacing between rows */
             cursor: pointer;
             overflow: hidden;
             border-radius: 4px;
             box-shadow: 0 4px 8px var(--shadow-color);
             transition: box-shadow 0.3s ease;
+            display: inline-block; /* Important for masonry layout */
+            width: 100%;
         }
 
         .image-container:hover {
@@ -267,8 +270,8 @@ nav.scrolled {
 
         .thumbnail {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto; /* Changed from 100% to auto to respect native resolution */
+            object-fit: contain; /* Changed from cover to contain */
             transform: scale(1);
             transition: transform 0.3s ease;
             display: block;
@@ -276,6 +279,25 @@ nav.scrolled {
 
         .image-container:hover .thumbnail {
             transform: scale(1.05);
+        }
+
+        /* Responsive adjustments for the masonry grid */
+        @media (max-width: 1200px) {
+            .gallery {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .gallery {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery {
+                column-count: 1;
+            }
         }
 
         .lightbox-overlay {
@@ -380,12 +402,12 @@ nav.scrolled {
             color: var(--accent-color);
         }
         .lightbox-image-container {
-    pointer-events: none;
-}
+            pointer-events: none;
+        }
 
-.lightbox-arrow, .close-button {
-    pointer-events: auto;
-}
+        .lightbox-arrow, .close-button {
+            pointer-events: auto;
+        }
 
         @media (max-width: 768px) {
             .hamburger { display: block; }
@@ -406,125 +428,126 @@ nav.scrolled {
             .lightbox-image { max-width: 85vw; }
             .lightbox-text { max-width: 85vw; }
         }
-              /* Footer Styles - consolidated and fixed */
-footer {
-    background-color: var(--bg-color);
-    padding: 2rem 0;
-    width: 100%;
-    margin-top: auto;
-    border-top: 1px solid var(--border-color);
-}
 
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 30px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
+        /* Footer Styles - consolidated and fixed */
+        footer {
+            background-color: var(--bg-color);
+            padding: 2rem 0;
+            width: 100%;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+        }
 
-.footer-info {
-    flex: 1;
-    min-width: 250px;
-    margin-bottom: 1rem;
-}
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
 
-.footer-info h3 {
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-    font-weight: 400;
-    font-size: 1.2rem;
-}
+        .footer-info {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1rem;
+        }
 
-.footer-info p {
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--text-color);
-}
+        .footer-info h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1.2rem;
+        }
 
-.social-links {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
+        .footer-info p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
 
-.social-links a {
-    color: var(--text-color);
-    font-size: 1.2rem;
-    transition: color 0.3s ease;
-    text-decoration: none;
-}
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
 
-.social-links a:hover {
-    color: var(--accent-color);
-}
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
 
-.footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
 
-.footer-nav-section {
-    min-width: 150px;
-}
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
 
-.footer-nav-section h4 {
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-    font-weight: 400;
-    font-size: 1rem;
-}
+        .footer-nav-section {
+            min-width: 150px;
+        }
 
-.footer-nav-section ul {
-    list-style: none;
-    padding-left: 0;
-}
+        .footer-nav-section h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1rem;
+        }
 
-.footer-nav-section ul li {
-    margin-bottom: 0.5rem;
-}
+        .footer-nav-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
 
-.footer-nav-section ul li a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
+        .footer-nav-section ul li {
+            margin-bottom: 0.5rem;
+        }
 
-.footer-nav-section ul li a:hover {
-    color: var(--accent-color);
-}
+        .footer-nav-section ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
 
-.copyright {
-    width: 100%;
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
-    font-size: 0.8rem;
-    color: var(--text-color);
-    opacity: 0.8;
-}
+        .footer-nav-section ul li a:hover {
+            color: var(--accent-color);
+        }
 
-/* Dark theme adjustments */
-[data-theme="dark"] footer {
-    background-color: var(--bg-color);
-}
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
 
-/* Responsive Footer */
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+        /* Dark theme adjustments */
+        [data-theme="dark"] footer {
+            background-color: var(--bg-color);
+        }
 
-    .footer-nav {
-        width: 100%;
-        margin-top: 1.5rem;
-    }
-}
+        /* Responsive Footer */
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-nav {
+                width: 100%;
+                margin-top: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -568,7 +591,7 @@ footer {
                         </div>
                         <div class="lightbox-text">
                             <h3>Recdep</h3>
-                            <p>This animated GIF explores themes of surveillance, information overload, and fragmented identity in the digital age. It centers a smartphone with a chaotic array of human eyes, ears, and text snippets, suggesting technology’s pervasive role. Reminiscent of Foucault’s panopticon it evokes a sense of constant observation and listening, as fragmented body parts symbolize dispersed personal identity in a hyper-connected world. Text fragments from news headlines, social media, and documents create information saturation. The red and black color scheme, with jagged shapes, adds urgency and disruption, aligning with postmodern or post-digital art.</p>
+                            <p>This animated GIF explores themes of surveillance, information overload, and fragmented identity in the digital age. It centers a smartphone with a chaotic array of human eyes, ears, and text snippets, suggesting technology's pervasive role. Reminiscent of Foucault's panopticon it evokes a sense of constant observation and listening, as fragmented body parts symbolize dispersed personal identity in a hyper-connected world. Text fragments from news headlines, social media, and documents create information saturation. The red and black color scheme, with jagged shapes, adds urgency and disruption, aligning with postmodern or post-digital art.</p>
                         </div>
                     </div>
                     <div class="lightbox-arrow lightbox-prev">&#8249;</div>
@@ -576,7 +599,7 @@ footer {
                 </div>
             </div>
 
-
+            
             <div class="image-container">
                 <img src="images/digital/crimestop.gif" alt="Image 2" class="thumbnail">
                 <div class="lightbox-overlay">
@@ -598,16 +621,16 @@ footer {
             </div>
 
             <div class="image-container">
-                <img src="https://placehold.co/800x1200" alt="Image 3" class="thumbnail">
+                <img src="images/digital/malreported.gif" alt="Image 3" class="thumbnail">
                 <div class="lightbox-overlay">
                     <div class="close-button">×</div>
                     <div class="lightbox-content">
                         <div class="lightbox-image-container">
-                            <img src="https://placehold.co/800x1200" alt="Image 3" class="lightbox-image">
-                            <div class="caption">Artwork 3</div>
+                            <img src="images/digital/malreported.gif" alt="Image 3" class="lightbox-image">
+                            <div class="caption">2022, digital looping GIF, size variable</div>
                         </div>
                         <div class="lightbox-text">
-                            <h3>Artwork Title 3</h3>
+                            <h3>malreported</h3>
                             <p>Description of artwork 3. Medium, year, and other details.</p>
                         </div>
                     </div>
@@ -617,16 +640,113 @@ footer {
             </div>
 
             <div class="image-container">
-                <img src="https://placehold.co/800x1200" alt="Image 4" class="thumbnail">
+                <img src="images/digital/joycamp.gif" alt="Image 3" class="thumbnail">
                 <div class="lightbox-overlay">
                     <div class="close-button">×</div>
                     <div class="lightbox-content">
                         <div class="lightbox-image-container">
-                            <img src="https://placehold.co/800x1200" alt="Image 4" class="lightbox-image">
-                            <div class="caption">Artwork 4</div>
+                            <img src="images/digital/joycamp.gif" alt="Image 3" class="lightbox-image">
+                            <div class="caption">2025, digital looping GIF, size variable</div>
                         </div>
                         <div class="lightbox-text">
-                            <h3>Artwork Title 4</h3>
+                            <h3>joycamp</h3>
+                            <p>Description of artwork 3. Medium, year, and other details.</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next">&#8250;</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/digital/bellyfeel.gif" alt="Image 3" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/digital/bellyfeel.gif" alt="Image 3" class="lightbox-image">
+                            <div class="caption">2025, digital looping GIF, size variable</div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>bellyfeel</h3>
+                            <p>Description of artwork 3. Medium, year, and other details.</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next">&#8250;</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/digital/bb.gif" alt="Image 3" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/digital/bb.gif" alt="Image 3" class="lightbox-image">
+                            <div class="caption">2025, digital looping GIF, size variable</div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>bb</h3>
+                            <p>Description of artwork 3. Medium, year, and other details.</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next">&#8250;</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/digital/prolefeed.gif" alt="Image 3" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/digital/prolefeed.gif" alt="Image 3" class="lightbox-image">
+                            <div class="caption">2025, digital looping GIF, size variable</div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>prolefeed</h3>
+                            <p>Description of artwork 3. Medium, year, and other details.</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next">&#8250;</div>
+                </div>
+            </div>
+
+
+            <div class="image-container">
+                <img src="images/digital/blackwhite.gif" alt="Image 3" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/digital/blackwhite.gif" alt="Image 3" class="lightbox-image">
+                            <div class="caption">2025, digital looping GIF, size variable</div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>blackwhite</h3>
+                            <p>Description of artwork 3. Medium, year, and other details.</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">&#8249;</div>
+                    <div class="lightbox-arrow lightbox-next">&#8250;</div>
+                </div>
+            </div>
+
+
+            <div class="image-container">
+                <img src="images/digital/goodthink.gif" alt="Image 4" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/digital/goodthink.gif" alt="Image 4" class="lightbox-image">
+                            <div class="caption">2025, digital looping GIF, size variable</div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>goodthink</h3>
                             <p>Description of artwork 4. Medium, year, and other details.</p>
                         </div>
                     </div>
@@ -636,6 +756,9 @@ footer {
             </div>
         </div>
     </div>
+
+
+    
     <br>
     <br>
     <footer>
