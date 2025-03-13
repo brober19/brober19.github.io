@@ -242,6 +242,9 @@ nav.scrolled {
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
             margin-top: 40px;
+            margin-left: 75px;
+            margin-right: 75px;
+     
         }
 
         .news-card {
@@ -353,6 +356,125 @@ nav.scrolled {
                 grid-template-columns: 1fr;
             }
         }
+          /* Footer Styles - consolidated and fixed */
+          footer {
+            background-color: var(--bg-color);
+            padding: 2rem 0;
+            width: 100%;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-info {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-info h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1.2rem;
+        }
+
+        .footer-info p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-nav-section {
+            min-width: 150px;
+        }
+
+        .footer-nav-section h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1rem;
+        }
+
+        .footer-nav-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-nav-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-nav-section ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-nav-section ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Dark theme adjustments */
+        [data-theme="dark"] footer {
+            background-color: var(--bg-color);
+        }
+
+        /* Responsive Footer */
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-nav {
+                width: 100%;
+                margin-top: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -385,21 +507,33 @@ nav.scrolled {
             <h2>Newsreel</h2>
             <p>Highlights from Bryan Robertson's artistic career, exhibitions, publications, and professional achievements.</p>
         </div>
-
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/yc-logo-black.png" alt="Dean Appointment">
-        </div>
-        <div class="card-content">
-            <span class="date">August 2024</span>
-            <h3>Appointed Dean of Visual and Performing Arts</h3>
-            <p>Bryan Robertson was appointed Dean of Visual and Performing Arts at Yavapai College in Prescott, Arizona, after serving as Visual Art Department Chair from 2021-2024. In this new role, Robertson will oversee programs in visual arts, music, theater, dance, and film, continuing his commitment to innovative arts education and interdisciplinary collaboration.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
     </div>
-
+    
     <div class="news-grid">
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/yc-logo-black.png" alt="Dean Appointment">
+            </div>
+            <div class="card-content">
+                <span class="date">August 2024</span>
+                <h3>Appointed Dean of Visual and Performing Arts</h3>
+                <p>Bryan Robertson was appointed Dean of Visual and Performing Arts at Yavapai College in Prescott, Arizona, after serving as Visual Art Department Chair from 2021-2024. In this new role, Robertson will oversee programs in visual arts, music, theater, dance, and film, continuing his commitment to innovative arts education and interdisciplinary collaboration.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/abstraction-dresden.jpg" alt="Abstraction Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">2024</span>
+                <h3>Exhibition: Abstraction</h3>
+                <p>Work selected for international juried exhibition "Abstraction" at Gallery Omnibus in Dresden, Germany. The online exhibition showcased contemporary approaches to abstraction from artists around the world, highlighting Robertson's continued exploration of form, color, and composition in his recent work.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
         <div class="news-card">
             <div class="card-image">
                 <img src="images/news/caa-2024.png" alt="CAA Conference">
@@ -411,7 +545,7 @@ nav.scrolled {
                 <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
-    
+        
         <div class="news-card">
             <div class="card-image">
                 <img src="images/news/Chromacosm.png" alt="Chromacosm Exhibition">
@@ -424,226 +558,534 @@ nav.scrolled {
             </div>
         </div>
     
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/creative_convergence.png" alt="Creative Convergence Publication">
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/cica-press.jpg" alt="CICA Press Publication">
+            </div>
+            <div class="card-content">
+                <span class="date">February 2023</span>
+                <h3>Publication: "Brave New World, New Media Art 2023"</h3>
+                <p>Featured in Kim Leejin's "Brave New World, New Media Art 2023," published by CICA Press in Gimpo, Korea. The publication highlights innovative approaches to new media art, including Robertson's work exploring the intersection of digital technology and traditional artistic practices.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
         </div>
-        <div class="card-content">
-            <span class="date">September 2023</span>
-            <h3>Publication: Creative Convergence</h3>
-            <p>Co-authored "Creative Convergence, The AI Renaissance in Art and Design," published by Springer Nature, exploring artificial intelligence's impact on contemporary art practices. The book examines how AI tools are reshaping creative processes across disciplines and includes case studies from Robertson's own studio practice and teaching methodologies.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/residual-sites.jpg" alt="Residual Sites Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">2023</span>
+                <h3>Exhibition: Residual Sites</h3>
+                <p>Work featured in "Residual Sites" at James May Gallery in Milwaukee, WI. This online exhibition, curated by Kendra Bulgrin and presented on Artsy, explored themes of memory, place, and the traces left behind in contemporary artistic practice.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/politics-in-collage.jpg" alt="Politics in Collage Publication">
+            </div>
+            <div class="card-content">
+                <span class="date">July 2023</span>
+                <h3>Publication: "Politics in Collage"</h3>
+                <p>Featured in G.E. Vogt's "Politics in Collage," published by Kolaj Institute and Kasini House in New Orleans, LA. The publication examines the intersection of political discourse and collage art, highlighting Robertson's innovative approaches to addressing social and political themes through mixed media work.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/creative_convergence.png" alt="Creative Convergence Publication">
+            </div>
+            <div class="card-content">
+                <span class="date">September 2023</span>
+                <h3>Publication: Creative Convergence</h3>
+                <p>Co-authored "Creative Convergence, The AI Renaissance in Art and Design," published by Springer Nature, exploring artificial intelligence's impact on contemporary art practices. The book examines how AI tools are reshaping creative processes across disciplines and includes case studies from Robertson's own studio practice and teaching methodologies.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/ai-drawing.jpg" alt="AI in Drawing Education">
+            </div>
+            <div class="card-content">
+                <span class="date">August 2023</span>
+                <h3>Research Publication on AI in Drawing Education</h3>
+                <p>"A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom" published in The International Journal of New Media, Technology and the Arts. This peer-reviewed article documents Robertson's innovative pedagogical approaches to integrating AI tools into traditional drawing curriculum, with quantitative and qualitative assessment of student outcomes.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/fate.jpeg" alt="FATE Conference">
+            </div>
+            <div class="card-content">
+                <span class="date">April 2023</span>
+                <h3>Presentations at FATE Conference</h3>
+                <p>Delivered two presentations at the FATE Conference at Rocky Mountain College of Art and Design: "Synesthesia in the Foundations Classroom" and "Time and Space: E-Residencies Offer Flexible Opportunities." Both presentations were well-received by the foundation art education community and sparked ongoing collaborations with educators across the country.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/nyc-phoenix-collective.jpg" alt="NYC Phoenix Collective Interview">
+            </div>
+            <div class="card-content">
+                <span class="date">June 2022</span>
+                <h3>Interview: NYC Phoenix Collective</h3>
+                <p>Featured in "June 2022 Artist Interview" by NYC Phoenix Collective in New York, NY. The interview explored Robertson's artistic practice, influences, and recent work, providing insights into his creative process and conceptual frameworks.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/secac-collage.jpg" alt="SECAC Conference Presentation">
+            </div>
+            <div class="card-content">
+                <span class="date">October 2022</span>
+                <h3>Presentation: "Cacophony" at SECAC Conference</h3>
+                <p>Presented "Cacophony" at the Studio Art > Cut, Paste, Stitch, and Seam: Exploring Contemporary Collage session during the SECAC Conference at Maryland Institute College of Art in Baltimore, MD. The presentation explored Robertson's innovative approaches to collage in his recent body of work, examining the intersection of digital and analog techniques.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/stop-motion.jpeg" alt="STOP Motion Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">August 2022</span>
+                <h3>Exhibition: STOP! Motion RE:moved</h3>
+                <p>Participated in "STOP! Motion RE:moved" at FOUND:RE Contemporary in Phoenix, AZ, a curated exhibition by Jordan Zurn that examined the intersection of still and moving images in contemporary art practice.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/cica-lecture.jpg" alt="CICA New Media Conference">
+            </div>
+            <div class="card-content">
+                <span class="date">June 2022</span>
+                <h3>Lecture: "The Internet's Cacophonous Dialectic"</h3>
+                <p>Presented "The Internet's Cacophonous Dialectic" at the New Media Conference hosted by the Czong Institute for Contemporary Art (CICA Museum) in Seoul, South Korea. The lecture explored the relationship between internet culture, information overload, and contemporary artistic responses to digital cacophony.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/cica.jpeg" alt="CICA Museum Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">June 2022</span>
+                <h3>Solo Exhibition: Cacophony</h3>
+                <p>Solo exhibition at the prestigious Czong Institute for Contemporary Art (CICA Museum) in Seoul, South Korea, selected through international juried competition. The exhibition featured Robertson's multimedia work exploring the intersection of sound, color, and visual perception, including interactive installations that invited viewers to experience synesthetic relationships between sensory modalities.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/elastic-mind.png" alt="The Elastic Mind Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">April 2022</span>
+                <h3>Exhibition: The Elastic Mind</h3>
+                <p>Work featured in the international juried exhibition "The Elastic Mind" at Broward College South Campus Art Gallery in Fort Lauderdale, FL. This exhibition, curated by Kohl King, explored contemporary approaches to cognitive flexibility and adaptive thinking in visual art.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/our-neighborhood.jpg" alt="Our Neighborhood Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">January 2022</span>
+                <h3>Exhibition: Our Neighborhood</h3>
+                <p>Work selected for the international juried exhibition "Our Neighborhood" at A.D. Gallery, University of North Carolina Pembroke. The exhibition, juried by Hartmut Austen, professor at Boston College, explored themes of community and place in contemporary art.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/yc360-article.jpg" alt="YC360 Article">
+            </div>
+            <div class="card-content">
+                <span class="date">April 2021</span>
+                <h3>Featured in YC360: "Seven College Programs Making a Positive Impact"</h3>
+                <p>Highlighted in Michael Grady's article "Seven College Programs Making a Positive Impact on the Community" in YC360, Prescott, AZ. The article recognized Robertson's leadership in developing innovative art programs that engage with and benefit the local community.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/world-of-co-lecture.jpg" alt="World of Co Lecture">
+            </div>
+            <div class="card-content">
+                <span class="date">November 2021</span>
+                <h3>Lecture: "Cacophony" at World of Co</h3>
+                <p>Delivered a lecture titled "Cacophony" via Instagram Live for World of Co in Sofia, Bulgaria. The presentation explored Robertson's artistic practice and research into sensory overload in contemporary digital culture, sharing insights from his residency experience and recent body of work.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/moca-lights.png" alt="MoCA L.I.ghts Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">October 2021</span>
+                <h3>Exhibition: MoCA L.I.ghts</h3>
+                <p>Invited to participate in the pop-up exhibition "MoCA L.I.ghts" at the Museum of Contemporary Art Long Island in Patchogue, NY. This innovative exhibition, organized by Wavelength Projects, featured light-based installations and projections.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/absolute-abstraction.jpeg" alt="Absolute Abstraction Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">September 2021</span>
+                <h3>Exhibition: Absolute Abstraction</h3>
+                <p>Work featured in the national juried exhibition "Absolute Abstraction" at Studio Montclair in Montclair, NJ. The exhibition was juried by Onnie Strother, Nette Thomas, Bisa Washington, and Warren Murray, curators of Studio Montclair.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/pandemic-projections.jpg" alt="Pandemic Projections Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">2021</span>
+                <h3>Exhibition: Pandemic Projections</h3>
+                <p>Selected for the international juried exhibition "Pandemic Projections" at Gardenship Art hosted by Wavelength in Kearny, NJ. The exhibition, juried by Gianluca Bianchino and Jeanne Brasile, explored artistic responses to the global pandemic.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/world-of-co.jpg" alt="World of Co Artist Residency">
+            </div>
+            <div class="card-content">
+                <span class="date">2021</span>
+                <h3>International Artist Residencies</h3>
+                <p>Completed two international juried residencies: Politics in Collage Residency at Kolaj Institute in New Orleans and World of Co. Artist Residency in Sofia, Bulgaria. These immersive experiences allowed Robertson to develop new bodies of work responding to different cultural contexts and to collaborate with artists from diverse backgrounds, significantly influencing his subsequent creative practice.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/ladue-news-2019.jpg" alt="Ladue News Article 2019">
+            </div>
+            <div class="card-content">
+                <span class="date">March 2019</span>
+                <h3>Press: "Bryan Robertson: Body Politic" in Ladue News</h3>
+                <p>Featured in Bryan Hollerbach's article "Bryan Robertson: Body Politic" in Ladue News, St. Louis, MO. The article provided critical analysis of Robertson's solo exhibition, examining the intersection of physical embodiment and political identity in his mixed media works.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/secac-tempera.jpg" alt="SECAC Conference Presentation">
+            </div>
+            <div class="card-content">
+                <span class="date">October 2019</span>
+                <h3>Presentation: "Tempera Emulsions in Early Modern Italian Painting"</h3>
+                <p>Presented "Tempera Emulsions in Early Modern Italian Painting" at the Alternative Understandings of Works by Major Artists of the Italian Renaissance session during the SECAC Annual Conference in Chattanooga, TN. The presentation explored historical painting techniques and their relevance to contemporary practice.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/creative-cartographies.jpg" alt="New Media Caucus Symposium">
+            </div>
+            <div class="card-content">
+                <span class="date">September 2019</span>
+                <h3>Presentation: "Superpower" at New Media Caucus Symposium</h3>
+                <p>Presented "Superpower" at the Creative Cartographies session during the New Media Caucus Symposium at Penny W. Stamps School of Art, University of Michigan in Ann Arbor. The presentation examined the intersection of digital media, political power, and artistic resistance in contemporary practice.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/state-of-the-union.jpg" alt="State of the Union Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">2019</span>
+                <h3>Exhibition: State of the Union</h3>
+                <p>Work selected for the national juried exhibition "State of the Union" at Pool Arts Center, Drury University in Springfield, MO. The exhibition was juried by Jonathan Thomas, Manager of National and International Advancement at the John F. Kennedy Center for the Performing Arts in Washington D.C.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/rac-grant.jpg" alt="Regional Arts Commission Grant">
+            </div>
+            <div class="card-content">
+                <span class="date">2019</span>
+                <h3>Regional Arts Commission Grant</h3>
+                <p>Awarded the Regional Arts Commission Artist Support Grant in St. Louis, MO, supporting Robertson's continued artistic development and exhibition work. The grant funded the creation of a new series exploring the relationship between digital and analog image-making processes, culminating in a solo exhibition at The Gallery at University City Library.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/caa-tempera.jpg" alt="CAA Conference Presentation">
+            </div>
+            <div class="card-content">
+                <span class="date">February 2019</span>
+                <h3>Presentation: "Egg Tempera, Modern Surfactants, and Painting the Mixed Technique"</h3>
+                <p>Presented "Egg Tempera, Modern Surfactants, and Painting the Mixed Technique with Water-Soluable Oils" at the Early Modern Craftsmanship and Contemporary Techniques session during the College Art Association Annual Conference in New York. The presentation shared Robertson's research into historical painting techniques adapted for contemporary materials.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/fate-workshop.jpg" alt="FATE Conference Workshop">
+            </div>
+            <div class="card-content">
+                <span class="date">April 2019</span>
+                <h3>Workshop: "How To Make Your Own Water Mixable Oil Paint"</h3>
+                <p>Led a hands-on workshop titled "How To Make Your Own Water Mixable Oil Paint" at the Foundations in Art: Theory and Education Biennial Conference (FATE) at Columbus College of Art and Design in Columbus, OH. The workshop provided participants with practical techniques for creating custom water-soluble oil paints for studio and classroom use.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/hec-tv.jpg" alt="HEC-TV Feature">
+            </div>
+            <div class="card-content">
+                <span class="date">December 2018</span>
+                <h3>Media Coverage: HEC-TV Feature on "Body Politic"</h3>
+                <p>Featured in Paul Langdon's "Bryan Robertson's Body Politic at The U City Public Library" on HEC-TV (Higher Education Channel) in St. Louis, MO. The television segment provided in-depth coverage of Robertson's solo exhibition, including interviews and analysis of key works.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/missouri-times.jpg" alt="Missouri Times Article">
+            </div>
+            <div class="card-content">
+                <span class="date">November 2018</span>
+                <h3>Press: Featured in The Missouri Times</h3>
+                <p>Featured in Danielle Mae Franklin's article "U City Library Gallery to Feature local artist Bryan Robertson" in The Missouri Times, Clayton, MO. The article previewed Robertson's solo exhibition "Body Politic," highlighting key themes and works in the upcoming show.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/ferguson-times.jpg" alt="Ferguson Times Article">
+            </div>
+            <div class="card-content">
+                <span class="date">November 2018</span>
+                <h3>Press: "Artful Considerations" in Ferguson Times</h3>
+                <p>Featured in Robin Shivley's "Artful Considerations" column in Ferguson Times, Ferguson, MO. The article provided critical analysis of Robertson's recent work and upcoming exhibition, situating it within the context of contemporary socio-political art practices.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/body-politic.jpg" alt="Body Politic Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">2018</span>
+                <h3>Solo Exhibition: Body Politic</h3>
+                <p>Presented a solo exhibition titled "Body Politic" at The Gallery at University City Library in St. Louis, MO. The exhibition, juried by Buzz Spector, professor at Washington University, explored themes of embodiment and political identity through mixed media works.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/surrealist-dialectic.jpg" alt="Internet and Surrealist Dialectic Lecture">
+            </div>
+            <div class="card-content">
+                <span class="date">December 2018</span>
+                <h3>Lecture: "The Internet and the Surrealist Dialectic"</h3>
+                <p>Delivered a public lecture titled "The Internet and the Surrealist Dialectic" at University City Library in University City, MO. The presentation explored connections between surrealist artistic strategies and contemporary internet culture, examining how digital collage and juxtaposition relate to historical avant-garde practices.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/3elements.jpg" alt="3Elements Literary Review">
+            </div>
+            <div class="card-content">
+                <span class="date">April 2018</span>
+                <h3>Publication: 3Elements Literary Review</h3>
+                <p>Work featured in "The Switch," 3Elements Literary Review, no. 18 Spring 2018, Chicago, IL. This interdisciplinary publication showcases visual art alongside literary works, highlighting the dialogue between different creative forms and approaches.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/ladue-news-2018.jpg" alt="Ladue News Article 2018">
+            </div>
+            <div class="card-content">
+                <span class="date">March 2018</span>
+                <h3>Press: "Art & Soul: Bryan Robertson" in Ladue News</h3>
+                <p>Featured in Bryan Hollerbach's article "Art & Soul: Bryan Robertson" in Ladue News, St. Louis, MO. The profile piece explored Robertson's artistic practice, influences, and recent exhibitions, providing readers with insights into his creative process and conceptual frameworks.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/all-the-art.jpg" alt="All the Art Feature">
+            </div>
+            <div class="card-content">
+                <span class="date">March 2018</span>
+                <h3>Press: "Superpower & Altar of Commerce" in All the Art</h3>
+                <p>Featured in Yael Evan's article "Superpower & Altar of Commerce" in All the Art (the Visual Arts Quarterly of St. Louis). The critical review examined the conceptual and formal aspects of Robertson's dual exhibitions, analyzing their engagement with themes of power, commerce, and contemporary visual culture.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/caa-poster.jpg" alt="CAA Conference Poster Session">
+            </div>
+            <div class="card-content">
+                <span class="date">February 2018</span>
+                <h3>Poster Session: "Superpower: A Transnational Government with a Totalizing Vision"</h3>
+                <p>Presented "Superpower: A Transnational Government with a Totalizing Vision" at the Poster Session of the College Art Association Annual Conference in Los Angeles. The presentation visualized Robertson's research into the relationship between political power, visual culture, and artistic resistance in contemporary society.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/altar-of-commerce.jpg" alt="The Altar of Commerce Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">2017</span>
+                <h3>Solo Exhibition: The Altar of Commerce</h3>
+                <p>Solo exhibition "The Altar of Commerce" at The Cathy Gregory Gallery in St. Louis, MO, curated by Gregory Gobberdiel, Executive Director of Shaw Art Fair. The exhibition examined consumerism and commodity fetishism through installation and mixed media works.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+     
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/superpower.jpg" alt="Superpower Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">2017</span>
+                <h3>Solo Exhibition: Superpower</h3>
+                <p>Presented the solo exhibition "Superpower" at The Parish Gallery in St. Louis, MO. This national juried exhibition was selected by Jill McGuire, former Executive Director of RAC St. Louis; Ben Kiel, instructor at Washington University; and Jordan McGirk, artist.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/light-and-shadow.jpg" alt="Light and Shadow Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">2017</span>
+                <h3>Exhibition: Light and Shadow</h3>
+                <p>Work featured in the national juried exhibition "Light and Shadow" at Kemper Center for the Arts, William Woods University in Fulton, MO. The exhibition was juried by Thom Whalen, professor at Lincoln Land Community College.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/luck-of-the-draw.jpg" alt="Luck of the Draw Exhibition">
+            </div>
+            <div class="card-content">
+                <span class="date">2017</span>
+                <h3>Exhibition: Luck of the Draw</h3>
+                <p>Selected for the national juried exhibition "Luck of the Draw" at The Foundry Art Centre in St. Charles, MO. The exhibition was juried by Grant Hargate, professor at Lindenwood University.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    
+        <div class="news-card">
+            <div class="card-image">
+                <img src="images/news/parnassus-award.jpg" alt="Parnassus Graduating with Excellence Award">
+            </div>
+            <div class="card-content">
+                <span class="date">2016</span>
+                <h3>Parnassus Graduating with Excellence Award</h3>
+                <p>Received the prestigious Parnassus Graduating with Excellence Award from the University of Washington in Seattle, WA. This competitive award recognizes outstanding achievement and artistic excellence among graduating art students, highlighting Robertson's exceptional contributions to the university's visual arts program.</p>
+                <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+            </div>
         </div>
     </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/ai-drawing.jpg" alt="AI in Drawing Education">
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <h3>Bryan Robertson</h3>
+                <p>Visual Artist based in Arizona</p>
+                
+                <div class="social-links">
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" title="Email"><i class="far fa-envelope"></i></a>
+                </div>
+            </div>
+    
+            <div class="footer-nav">
+                <div class="footer-nav-section">
+                    <h4>Work</h4>
+                    <ul>
+                        <li><a href="painting.html">Paintings</a></li>
+                        <li><a href="digital.html">Digital Art</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="cv.html">Curriculum Vitae</a></li>
+                        <li><a href="statement.html">Artist Statement</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="news.html">News</a></li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="copyright">
+                &copy; 2025 Bryan Robertson. All rights reserved.
+            </div>
         </div>
-        <div class="card-content">
-            <span class="date">August 2023</span>
-            <h3>Research Publication on AI in Drawing Education</h3>
-            <p>"A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom" published in The International Journal of New Media, Technology and the Arts. This peer-reviewed article documents Robertson's innovative pedagogical approaches to integrating AI tools into traditional drawing curriculum, with quantitative and qualitative assessment of student outcomes.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/fate.jpeg" alt="FATE Conference">
-        </div>
-        <div class="card-content">
-            <span class="date">April 2023</span>
-            <h3>Presentations at FATE Conference</h3>
-            <p>Delivered two presentations at the FATE Conference at Rocky Mountain College of Art and Design: "Synesthesia in the Foundations Classroom" and "Time and Space: E-Residencies Offer Flexible Opportunities." Both presentations were well-received by the foundation art education community and sparked ongoing collaborations with educators across the country.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/stop-motion.jpeg" alt="STOP Motion Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">August 2022</span>
-            <h3>Exhibition: STOP! Motion RE:moved</h3>
-            <p>Participated in "STOP! Motion RE:moved" at FOUND:RE Contemporary in Phoenix, AZ, a curated exhibition by Jordan Zurn that examined the intersection of still and moving images in contemporary art practice.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/cica.jpeg" alt="CICA Museum Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">June 2022</span>
-            <h3>Solo Exhibition: Cacophony</h3>
-            <p>Solo exhibition at the prestigious Czong Institute for Contemporary Art (CICA Museum) in Seoul, South Korea, selected through international juried competition. The exhibition featured Robertson's multimedia work exploring the intersection of sound, color, and visual perception, including interactive installations that invited viewers to experience synesthetic relationships between sensory modalities.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/elastic-mind.png" alt="The Elastic Mind Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">April 2022</span>
-            <h3>Exhibition: The Elastic Mind</h3>
-            <p>Work featured in the international juried exhibition "The Elastic Mind" at Broward College South Campus Art Gallery in Fort Lauderdale, FL. This exhibition, curated by Kohl King, explored contemporary approaches to cognitive flexibility and adaptive thinking in visual art.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/our-neighborhood.jpg" alt="Our Neighborhood Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">January 2022</span>
-            <h3>Exhibition: Our Neighborhood</h3>
-            <p>Work selected for the international juried exhibition "Our Neighborhood" at A.D. Gallery, University of North Carolina Pembroke. The exhibition, juried by Hartmut Austen, professor at Boston College, explored themes of community and place in contemporary art.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/moca-lights.png" alt="MoCA L.I.ghts Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">October 2021</span>
-            <h3>Exhibition: MoCA L.I.ghts</h3>
-            <p>Invited to participate in the pop-up exhibition "MoCA L.I.ghts" at the Museum of Contemporary Art Long Island in Patchogue, NY. This innovative exhibition, organized by Wavelength Projects, featured light-based installations and projections.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/absolute-abstraction.jpeg" alt="Absolute Abstraction Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">September 2021</span>
-            <h3>Exhibition: Absolute Abstraction</h3>
-            <p>Work featured in the national juried exhibition "Absolute Abstraction" at Studio Montclair in Montclair, NJ. The exhibition was juried by Onnie Strother, Nette Thomas, Bisa Washington, and Warren Murray, curators of Studio Montclair.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/pandemic-projections.jpg" alt="Pandemic Projections Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">2021</span>
-            <h3>Exhibition: Pandemic Projections</h3>
-            <p>Selected for the international juried exhibition "Pandemic Projections" at Gardenship Art hosted by Wavelength in Kearny, NJ. The exhibition, juried by Gianluca Bianchino and Jeanne Brasile, explored artistic responses to the global pandemic.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/world-of-co.jpg" alt="World of Co Artist Residency">
-        </div>
-        <div class="card-content">
-            <span class="date">2021</span>
-            <h3>International Artist Residencies</h3>
-            <p>Completed two international juried residencies: Politics in Collage Residency at Kolaj Institute in New Orleans and World of Co. Artist Residency in Sofia, Bulgaria. These immersive experiences allowed Robertson to develop new bodies of work responding to different cultural contexts and to collaborate with artists from diverse backgrounds, significantly influencing his subsequent creative practice.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/state-of-the-union.jpg" alt="State of the Union Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">2019</span>
-            <h3>Exhibition: State of the Union</h3>
-            <p>Work selected for the national juried exhibition "State of the Union" at Pool Arts Center, Drury University in Springfield, MO. The exhibition was juried by Jonathan Thomas, Manager of National and International Advancement at the John F. Kennedy Center for the Performing Arts in Washington D.C.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/rac-grant.jpg" alt="Regional Arts Commission Grant">
-        </div>
-        <div class="card-content">
-            <span class="date">2019</span>
-            <h3>Regional Arts Commission Grant</h3>
-            <p>Awarded the Regional Arts Commission Artist Support Grant in St. Louis, MO, supporting Robertson's continued artistic development and exhibition work. The grant funded the creation of a new series exploring the relationship between digital and analog image-making processes, culminating in a solo exhibition at The Gallery at University City Library.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/body-politic.jpg" alt="Body Politic Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">2018</span>
-            <h3>Solo Exhibition: Body Politic</h3>
-            <p>Presented a solo exhibition titled "Body Politic" at The Gallery at University City Library in St. Louis, MO. The exhibition, juried by Buzz Spector, professor at Washington University, explored themes of embodiment and political identity through mixed media works.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/altar-of-commerce.jpg" alt="The Altar of Commerce Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">2017</span>
-            <h3>Solo Exhibition: The Altar of Commerce</h3>
-            <p>Solo exhibition "The Altar of Commerce" at The Cathy Gregory Gallery in St. Louis, MO, curated by Gregory Gobberdiel, Executive Director of Shaw Art Fair. The exhibition examined consumerism and commodity fetishism through installation and mixed media works.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/superpower.jpg" alt="Superpower Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">2017</span>
-            <h3>Solo Exhibition: Superpower</h3>
-            <p>Presented the solo exhibition "Superpower" at The Parish Gallery in St. Louis, MO. This national juried exhibition was selected by Jill McGuire, former Executive Director of RAC St. Louis; Ben Kiel, instructor at Washington University; and Jordan McGirk, artist.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/light-and-shadow.jpg" alt="Light and Shadow Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">2017</span>
-            <h3>Exhibition: Light and Shadow</h3>
-            <p>Work featured in the national juried exhibition "Light and Shadow" at Kemper Center for the Arts, William Woods University in Fulton, MO. The exhibition was juried by Thom Whalen, professor at Lincoln Land Community College.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-
-    <div class="news-card">
-        <div class="card-image">
-            <img src="images/news/luck-of-the-draw.jpg" alt="Luck of the Draw Exhibition">
-        </div>
-        <div class="card-content">
-            <span class="date">2017</span>
-            <h3>Exhibition: Luck of the Draw</h3>
-            <p>Selected for the national juried exhibition "Luck of the Draw" at The Foundry Art Centre in St. Charles, MO. The exhibition was juried by Grant Hargate, professor at Lindenwood University.</p>
-            <a class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
-</div>
-</div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
