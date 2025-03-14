@@ -260,12 +260,35 @@ nav.scrolled {
             transition: opacity 0.3s ease;
             z-index: 1;
         }
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+    color: var(--text-color);
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid var(--accent-color);
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    text-shadow: 0 0 20px var(--accent-glow-secondary);
+}
 
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--accent-color) }    
+}
         .section-divider {
     height: 1px;
     background-color: var(--border-color);
     margin: 40px auto;
     width: 100%;
+    
 }
 
         [data-theme="dark"] .image-container::before {
@@ -766,7 +789,7 @@ nav.scrolled {
         </div>
         <div class="section-divider"></div>        
         <div class="section-divider"></div>
-        <h2 class="section-title">My Portfolio</h2>
+        <h2 class="section-title">ARCHIVE</h2>
         
         <div class="gallery full-width">
             <!-- Image 01 -->
