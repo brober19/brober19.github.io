@@ -61,6 +61,15 @@
             color: var(--text-color);
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+     
+        body {
+        opacity: 0;
+        transition: opacity 1s ease-in;
+    }
+    
+    body.loaded {
+        opacity: 1;
+    }
 
         nav {
     background-color: var(--bg-color);
@@ -1641,117 +1650,122 @@ img.fade-in.visible {
         </div>
     </footer>
     <script>
-   let currentLightbox = null;
-
-document.querySelectorAll('.image-container').forEach(container => {
-    container.addEventListener('click', () => openLightbox(container));
-});
-
-function openLightbox(container) {
-    const overlay = container.querySelector('.lightbox-overlay');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    currentLightbox = container;
-}
-
-document.querySelectorAll('.close-button').forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const overlay = e.target.closest('.lightbox-overlay');
-        if (overlay) {
+        let currentLightbox = null;
+        
+        document.querySelectorAll('.image-container').forEach(container => {
+        container.addEventListener('click', () => openLightbox(container));
+        });
+        
+        function openLightbox(container) {
+        const overlay = container.querySelector('.lightbox-overlay');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        currentLightbox = container;
+        }
+        
+        document.querySelectorAll('.close-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const overlay = e.target.closest('.lightbox-overlay');
+            if (overlay) {
             overlay.classList.remove('active');
             document.body.style.overflow = 'auto';
             currentLightbox = null;
+            }
+        });
+        });
+        
+        document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
+        arrow.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const direction = arrow.classList.contains('lightbox-prev') ? -1 : 1;
+            navigateLightbox(direction, e);
+        });
+        });
+        
+        function navigateLightbox(direction, event) {
+        event.stopPropagation();
+        if (!currentLightbox) return;
+        
+        const containers = Array.from(document.querySelectorAll('.image-container'));
+        const currentIndex = containers.indexOf(currentLightbox);
+        const nextIndex = (currentIndex + direction + containers.length) % containers.length;
+        
+        // Get next lightbox
+        const nextLightbox = containers[nextIndex];
+        
+        // Get current and next overlay elements
+        const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
+        const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
+        
+        // Get current and next content elements
+        const currentContent = currentLightbox.querySelector('.lightbox-content');
+        const nextContent = nextLightbox.querySelector('.lightbox-content');
+        
+        // Show next overlay without animation
+        nextOverlay.style.transition = 'none';
+        nextOverlay.classList.add('active');
+        
+        // Force reflow to apply the style changes
+        void nextOverlay.offsetWidth;
+        
+        // Restore transition
+        nextOverlay.style.transition = '';
+        
+        // Update current lightbox reference
+        currentLightbox = nextLightbox;
+        
+        // Hide previous overlay after a small delay
+        setTimeout(() => {
+            currentOverlay.classList.remove('active');
+        }, 50);
         }
-    });
-});
-
-document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
-    arrow.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const direction = arrow.classList.contains('lightbox-prev') ? -1 : 1;
-        navigateLightbox(direction, e);
-    });
-});
-
-function navigateLightbox(direction, event) {
-    event.stopPropagation();
-    if (!currentLightbox) return;
-
-    const containers = Array.from(document.querySelectorAll('.image-container'));
-    const currentIndex = containers.indexOf(currentLightbox);
-    const nextIndex = (currentIndex + direction + containers.length) % containers.length;
-    
-    // Get next lightbox
-    const nextLightbox = containers[nextIndex];
-    
-    // Get current and next overlay elements
-    const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
-    const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
-    
-    // Get current and next content elements
-    const currentContent = currentLightbox.querySelector('.lightbox-content');
-    const nextContent = nextLightbox.querySelector('.lightbox-content');
-    
-    // Show next overlay without animation
-    nextOverlay.style.transition = 'none';
-    nextOverlay.classList.add('active');
-    
-    // Force reflow to apply the style changes
-    void nextOverlay.offsetWidth;
-    
-    // Restore transition
-    nextOverlay.style.transition = '';
-    
-    // Update current lightbox reference
-    currentLightbox = nextLightbox;
-    
-    // Hide previous overlay after a small delay
-    setTimeout(() => {
-        currentOverlay.classList.remove('active');
-    }, 50);
-}
-
-document.addEventListener('keydown', function(event) {
-    if (!currentLightbox) return;
-
-    if (event.key === 'Escape') {
-        const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
-        if (activeOverlay) {
+        
+        document.addEventListener('keydown', function(event) {
+        if (!currentLightbox) return;
+        
+        if (event.key === 'Escape') {
+            const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
+            if (activeOverlay) {
             activeOverlay.classList.remove('active');
             document.body.style.overflow = 'auto';
             currentLightbox = null;
+            }
+        } else if (event.key === 'ArrowLeft') {
+            navigateLightbox(-1, event);
+        } else if (event.key === 'ArrowRight') {
+            navigateLightbox(1, event);
         }
-    } else if (event.key === 'ArrowLeft') {
-        navigateLightbox(-1, event);
-    } else if (event.key === 'ArrowRight') {
-        navigateLightbox(1, event);
-    }
-});
-
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('lightbox-overlay')) {
-        event.target.classList.remove('active');
-        document.body.style.overflow = 'auto';
-        currentLightbox = null;
-    }
-});
-
+        });
+        
+        document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('lightbox-overlay')) {
+            event.target.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentLightbox = null;
+        }
+        });
+        
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
             const themeToggle = document.getElementById('theme-toggle');
             const htmlElement = document.documentElement;
-
+        
+            // Add page fade-in effect
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+        
             setTimeout(() => {
                 navLinks.classList.add('loaded');
-            }, 100);
-
+            }, 300);
+        
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 navLinks.classList.toggle('active');
             });
-
+        
             // Theme toggle functionality
             themeToggle.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1763,7 +1777,7 @@ document.addEventListener('click', function(event) {
                     localStorage.setItem('theme', 'dark');
                 }
             });
-
+        
             // Check for saved theme preference
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
@@ -1771,9 +1785,8 @@ document.addEventListener('click', function(event) {
             } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 // If no saved preference, use system preference
                 htmlElement.setAttribute('data-theme', 'dark');
-                
             }
         });
-    </script>
+        </script>
 </body>
 </html>
