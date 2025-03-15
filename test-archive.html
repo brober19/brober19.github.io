@@ -608,39 +608,7 @@ img.fade-in.visible {
                 margin-top: 1.5rem;
             }
         }
-           /* Scroll animation styles */
-    .image-container {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    
-    .image-container.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    /* Optional staggered animation for columns */
-    .gallery .image-container:nth-child(4n+1) { transition-delay: 0.1s; }
-    .gallery .image-container:nth-child(4n+2) { transition-delay: 0.2s; }
-    .gallery .image-container:nth-child(4n+3) { transition-delay: 0.3s; }
-    .gallery .image-container:nth-child(4n+4) { transition-delay: 0.4s; }
-    
-    /* Adjust delays for different screen sizes */
-    @media (max-width: 1200px) {
-        .gallery .image-container:nth-child(3n+1) { transition-delay: 0.1s; }
-        .gallery .image-container:nth-child(3n+2) { transition-delay: 0.2s; }
-        .gallery .image-container:nth-child(3n+3) { transition-delay: 0.3s; }
-    }
-    
-    @media (max-width: 900px) {
-        .gallery .image-container:nth-child(2n+1) { transition-delay: 0.1s; }
-        .gallery .image-container:nth-child(2n+2) { transition-delay: 0.2s; }
-    }
-    
-    @media (max-width: 600px) {
-        .gallery .image-container { transition-delay: 0.1s; }
-    }
+        
     </style>
 </head>
 <body>
@@ -1820,41 +1788,6 @@ img.fade-in.visible {
                 htmlElement.setAttribute('data-theme', 'dark');
             }
         });
-        // Scroll animation for images
-    document.addEventListener('DOMContentLoaded', () => {
-        const images = document.querySelectorAll('.image-container');
-        
-        // Initial check for images in viewport on page load
-        checkImagesInViewport();
-        
-        // Check images on scroll
-        window.addEventListener('scroll', checkImagesInViewport);
-        
-        function checkImagesInViewport() {
-            const triggerBottom = window.innerHeight * 0.9; // 90% of viewport height
-            
-            images.forEach(image => {
-                const imageTop = image.getBoundingClientRect().top;
-                
-                if (imageTop < triggerBottom) {
-                    image.classList.add('visible');
-                }
-            });
-        }
-    });
-    
-    // Add this to the existing DOMContentLoaded event or keep as separate
-    document.addEventListener('DOMContentLoaded', () => {
-        // Existing code...
-        
-        // Scroll animation for section title
-        const sectionTitle = document.querySelector('.section-title');
-        if (sectionTitle) {
-            setTimeout(() => {
-                sectionTitle.style.animation = 'typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite';
-            }, 500);
-        }
-    });
         </script>
 </body>
 </html>
