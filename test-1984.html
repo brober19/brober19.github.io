@@ -61,6 +61,15 @@
             color: var(--text-color);
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+     
+        body {
+        opacity: 0;
+        transition: opacity 1s ease-in;
+    }
+    
+    body.loaded {
+        opacity: 1;
+    }
 
         nav {
     background-color: var(--bg-color);
@@ -226,10 +235,10 @@ nav.scrolled {
 
         /* Updated Gallery/Masonry Grid Styles */
         .gallery {
-            column-count: 4;
-            column-gap: 30px; /* Increased spacing between columns */
-            padding: 20px 30px;
-        }
+        column-count: 4;
+        column-gap: 30px;
+        padding: 20px 75px; /* Changed from 20px 30px to 20px 75px */
+    }
 
         .image-container {
             position: relative;
@@ -260,18 +269,19 @@ nav.scrolled {
             transition: opacity 0.3s ease;
             z-index: 1;
         }
-.section-title {
+        .section-title {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 30px;
-    margin-left: 30px;
+    margin-left: 90px;
     position: relative;
     display: inline-block;
     color: var(--text-color);
     overflow: hidden;
     white-space: nowrap;
-    border-right: 3px solid var(--accent-color);
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    /* Removed border-right from here */
+    animation: typing 3.5s steps(40, end),
+               caret 6.5s step-end forwards; /* Total duration: 3.5s typing + 3s caret */
     text-shadow: 0 0 20px var(--accent-glow-secondary);
 }
 
@@ -280,10 +290,37 @@ nav.scrolled {
     to { width: 100% }
 }
 
-@keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: var(--accent-color) }    
+@keyframes caret {
+    0%, 50% { border-right: 3px solid var(--accent-color); }
+    50.1%, 100% { border-right: none; }
 }
+
+.section-body {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+    margin-left: 90px;
+    position: relative;
+    display: inline-block;
+    color: var(--text-color);
+    overflow: hidden;
+    white-space: nowrap;
+    /* Removed border-right from here */
+    animation: typing 3.5s steps(40, end),
+               caret 6.5s step-end forwards; /* Total: 3.5s typing + 3s caret */
+    text-shadow: 0 0 20px var(--accent-glow-secondary);
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 35% }
+}
+
+@keyframes caret {
+    0%, 50% { border-right: 3px solid var(--accent-color); }
+    50.1%, 100% { border-right: none; }
+}
+
         .section-divider {
     height: 1px;
     background-color: var(--border-color);
@@ -599,6 +636,7 @@ img.fade-in.visible {
                 margin-top: 1.5rem;
             }
         }
+        
     </style>
 </head>
 <body>
@@ -631,108 +669,485 @@ img.fade-in.visible {
     
         </div>      
         <div class="section-divider"></div>
-        <h2 class="section-title">ARCHIVE</h2>
-        
+        <h2 class="section-title">current: 1984</h2>
+        <br>
+        <h1 class="section-body">current: 1984</h1>
         <div class="gallery full-width">
         <!-- Image 01 -->
-<div class="image-container">
-    <img src="images/archive/01.jpg" alt="Image 1" class="thumbnail">
-    <div class="lightbox-overlay">
-        <div class="close-button">×</div>
-        <div class="lightbox-content">
-            <div class="lightbox-image-container">
-                <img src="images/archive/01.jpg" alt="Image 1" class="lightbox-image">
-                <div class="caption">2022, digital looping GIF, size variable</div>
-            </div>
-            <div class="lightbox-text">
-                <h3>Recdep</h3>
-                <p>This animated GIF explores .</p>
-            </div>
-        </div>
-        <div class="lightbox-arrow lightbox-prev">‹</div>
-        <div class="lightbox-arrow lightbox-next">›</div>
-    </div>
-</div>
-
-<!-- Image 02 -->
-<div class="image-container">
-    <img src="images/archive/02.jpg" alt="Image 2" class="thumbnail">
-    <div class="lightbox-overlay">
-        <div class="close-button">×</div>
-        <div class="lightbox-content">
-            <div class="lightbox-image-container">
-                <img src="images/archive/02.jpg" alt="Image 2" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
-            </div>
-            <div class="lightbox-text">
-                <h3>Image 2</h3>
-                <p>Description for image 2.</p>
+        <div class="image-container">
+            <img src="images/current/01.jpg" alt="Image 1" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/01.jpg" alt="Image 1" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
             </div>
         </div>
-        <div class="lightbox-arrow lightbox-prev">‹</div>
-        <div class="lightbox-arrow lightbox-next">›</div>
-    </div>
-</div>
-
-<!-- Image 03 -->
-<div class="image-container">
-    <img src="images/archive/03.jpg" alt="Image 3" class="thumbnail">
-    <div class="lightbox-overlay">
-        <div class="close-button">×</div>
-        <div class="lightbox-content">
-            <div class="lightbox-image-container">
-                <img src="images/archive/03.jpg" alt="Image 3" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
-            </div>
-            <div class="lightbox-text">
-                <h3>Image 3</h3>
-                <p>Description for image 3.</p>
-            </div>
-        </div>
-        <div class="lightbox-arrow lightbox-prev">‹</div>
-        <div class="lightbox-arrow lightbox-next">›</div>
-    </div>
-</div>
-
-<!-- Image 04 -->
-<div class="image-container">
-    <img src="images/archive/04.jpg" alt="Image 4" class="thumbnail">
-    <div class="lightbox-overlay">
-        <div class="close-button">×</div>
-        <div class="lightbox-content">
-            <div class="lightbox-image-container">
-                <img src="images/archive/04.jpg" alt="Image 4" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
-            </div>
-            <div class="lightbox-text">
-                <h3>Image 4</h3>
-                <p>Description for image 4.</p>
+        
+        <div class="image-container">
+            <img src="images/current/02.jpg" alt="Image 2" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/02.jpg" alt="Image 2" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
             </div>
         </div>
-        <div class="lightbox-arrow lightbox-prev">‹</div>
-        <div class="lightbox-arrow lightbox-next">›</div>
-    </div>
-</div>
-
-<!-- Image 05 -->
-<div class="image-container">
-    <img src="images/archive/05.jpg" alt="Image 5" class="thumbnail">
-    <div class="lightbox-overlay">
-        <div class="close-button">×</div>
-        <div class="lightbox-content">
-            <div class="lightbox-image-container">
-                <img src="images/archive/05.jpg" alt="Image 5" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
-            </div>
-            <div class="lightbox-text">
-                <h3>Image 5</h3>
-                <p>Description for image 5.</p>
+        
+        <div class="image-container">
+            <img src="images/current/03.jpg" alt="Image 3" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/03.jpg" alt="Image 3" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
             </div>
         </div>
-        <div class="lightbox-arrow lightbox-prev">‹</div>
-        <div class="lightbox-arrow lightbox-next">›</div>
-    </div>
-</div>
+        
+        <div class="image-container">
+            <img src="images/current/04.jpg" alt="Image 4" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/04.jpg" alt="Image 4" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/05.jpg" alt="Image 5" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/05.jpg" alt="Image 5" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/06.jpg" alt="Image 6" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/06.jpg" alt="Image 6" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/07.jpg" alt="Image 7" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/07.jpg" alt="Image 7" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/08.jpg" alt="Image 8" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/08.jpg" alt="Image 8" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/09.jpg" alt="Image 9" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/09.jpg" alt="Image 9" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/10.jpg" alt="Image 10" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/10.jpg" alt="Image 10" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/11.jpg" alt="Image 11" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/11.jpg" alt="Image 11" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/12.jpg" alt="Image 12" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/12.jpg" alt="Image 12" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/13.jpg" alt="Image 13" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/13.jpg" alt="Image 13" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/14.jpg" alt="Image 14" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/14.jpg" alt="Image 14" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/15.jpg" alt="Image 15" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/15.jpg" alt="Image 15" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/16.jpg" alt="Image 16" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/16.jpg" alt="Image 16" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/17.jpg" alt="Image 17" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/17.jpg" alt="Image 17" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/18.jpg" alt="Image 18" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/18.jpg" alt="Image 18" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/19.jpg" alt="Image 19" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/19.jpg" alt="Image 19" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/20.jpg" alt="Image 20" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/20.jpg" alt="Image 20" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/21.jpg" alt="Image 21" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/21.jpg" alt="Image 21" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/22.jpg" alt="Image 22" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/22.jpg" alt="Image 22" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/23.jpg" alt="Image 23" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/23.jpg" alt="Image 23" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/24.jpg" alt="Image 24" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/24.jpg" alt="Image 24" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
+        
+        <div class="image-container">
+            <img src="images/current/25.jpg" alt="Image 25" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <img src="images/current/25.jpg" alt="Image 25" class="lightbox-image">
+                        <div class="caption">2022, digital looping GIF, size variable</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Recdep</h3>
+                        <p>This animated GIF explores .</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
 </div>
     
  
@@ -780,117 +1195,122 @@ img.fade-in.visible {
     </div>
 </footer>
 <script>
-let currentLightbox = null;
-
-document.querySelectorAll('.image-container').forEach(container => {
-container.addEventListener('click', () => openLightbox(container));
-});
-
-function openLightbox(container) {
-const overlay = container.querySelector('.lightbox-overlay');
-overlay.classList.add('active');
-document.body.style.overflow = 'hidden';
-currentLightbox = container;
-}
-
-document.querySelectorAll('.close-button').forEach(button => {
-button.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const overlay = e.target.closest('.lightbox-overlay');
-    if (overlay) {
+    let currentLightbox = null;
+    
+    document.querySelectorAll('.image-container').forEach(container => {
+    container.addEventListener('click', () => openLightbox(container));
+    });
+    
+    function openLightbox(container) {
+    const overlay = container.querySelector('.lightbox-overlay');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    currentLightbox = container;
+    }
+    
+    document.querySelectorAll('.close-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const overlay = e.target.closest('.lightbox-overlay');
+        if (overlay) {
         overlay.classList.remove('active');
         document.body.style.overflow = 'auto';
         currentLightbox = null;
+        }
+    });
+    });
+    
+    document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
+    arrow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const direction = arrow.classList.contains('lightbox-prev') ? -1 : 1;
+        navigateLightbox(direction, e);
+    });
+    });
+    
+    function navigateLightbox(direction, event) {
+    event.stopPropagation();
+    if (!currentLightbox) return;
+    
+    const containers = Array.from(document.querySelectorAll('.image-container'));
+    const currentIndex = containers.indexOf(currentLightbox);
+    const nextIndex = (currentIndex + direction + containers.length) % containers.length;
+    
+    // Get next lightbox
+    const nextLightbox = containers[nextIndex];
+    
+    // Get current and next overlay elements
+    const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
+    const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
+    
+    // Get current and next content elements
+    const currentContent = currentLightbox.querySelector('.lightbox-content');
+    const nextContent = nextLightbox.querySelector('.lightbox-content');
+    
+    // Show next overlay without animation
+    nextOverlay.style.transition = 'none';
+    nextOverlay.classList.add('active');
+    
+    // Force reflow to apply the style changes
+    void nextOverlay.offsetWidth;
+    
+    // Restore transition
+    nextOverlay.style.transition = '';
+    
+    // Update current lightbox reference
+    currentLightbox = nextLightbox;
+    
+    // Hide previous overlay after a small delay
+    setTimeout(() => {
+        currentOverlay.classList.remove('active');
+    }, 50);
     }
-});
-});
-
-document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
-arrow.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const direction = arrow.classList.contains('lightbox-prev') ? -1 : 1;
-    navigateLightbox(direction, e);
-});
-});
-
-function navigateLightbox(direction, event) {
-event.stopPropagation();
-if (!currentLightbox) return;
-
-const containers = Array.from(document.querySelectorAll('.image-container'));
-const currentIndex = containers.indexOf(currentLightbox);
-const nextIndex = (currentIndex + direction + containers.length) % containers.length;
-
-// Get next lightbox
-const nextLightbox = containers[nextIndex];
-
-// Get current and next overlay elements
-const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
-const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
-
-// Get current and next content elements
-const currentContent = currentLightbox.querySelector('.lightbox-content');
-const nextContent = nextLightbox.querySelector('.lightbox-content');
-
-// Show next overlay without animation
-nextOverlay.style.transition = 'none';
-nextOverlay.classList.add('active');
-
-// Force reflow to apply the style changes
-void nextOverlay.offsetWidth;
-
-// Restore transition
-nextOverlay.style.transition = '';
-
-// Update current lightbox reference
-currentLightbox = nextLightbox;
-
-// Hide previous overlay after a small delay
-setTimeout(() => {
-    currentOverlay.classList.remove('active');
-}, 50);
-}
-
-document.addEventListener('keydown', function(event) {
-if (!currentLightbox) return;
-
-if (event.key === 'Escape') {
-    const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
-    if (activeOverlay) {
+    
+    document.addEventListener('keydown', function(event) {
+    if (!currentLightbox) return;
+    
+    if (event.key === 'Escape') {
+        const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
+        if (activeOverlay) {
         activeOverlay.classList.remove('active');
         document.body.style.overflow = 'auto';
         currentLightbox = null;
+        }
+    } else if (event.key === 'ArrowLeft') {
+        navigateLightbox(-1, event);
+    } else if (event.key === 'ArrowRight') {
+        navigateLightbox(1, event);
     }
-} else if (event.key === 'ArrowLeft') {
-    navigateLightbox(-1, event);
-} else if (event.key === 'ArrowRight') {
-    navigateLightbox(1, event);
-}
-});
-
-document.addEventListener('click', function(event) {
-if (event.target.classList.contains('lightbox-overlay')) {
-    event.target.classList.remove('active');
-    document.body.style.overflow = 'auto';
-    currentLightbox = null;
-}
-});
-
+    });
+    
+    document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('lightbox-overlay')) {
+        event.target.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        currentLightbox = null;
+    }
+    });
+    
     document.addEventListener('DOMContentLoaded', () => {
         const navLinks = document.querySelector('.nav-links');
         const hamburger = document.querySelector('.hamburger');
         const themeToggle = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
-
+    
+        // Add page fade-in effect
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+        }, 100);
+    
         setTimeout(() => {
             navLinks.classList.add('loaded');
-        }, 100);
-
+        }, 300);
+    
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navLinks.classList.toggle('active');
         });
-
+    
         // Theme toggle functionality
         themeToggle.addEventListener('click', (e) => {
             e.preventDefault();
@@ -902,7 +1322,7 @@ if (event.target.classList.contains('lightbox-overlay')) {
                 localStorage.setItem('theme', 'dark');
             }
         });
-
+    
         // Check for saved theme preference
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -910,9 +1330,8 @@ if (event.target.classList.contains('lightbox-overlay')) {
         } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             // If no saved preference, use system preference
             htmlElement.setAttribute('data-theme', 'dark');
-            
         }
     });
-</script>
+    </script>
 </body>
 </html>
