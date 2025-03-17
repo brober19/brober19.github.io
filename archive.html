@@ -5,23 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Archive</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Standard favicon -->
-<link rel="icon" type="image/x-icon" href="/images/favicon.png">
-
-<!-- For iOS devices -->
-<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
-
-<!-- For Android devices -->
-<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
-
-<!-- For modern browsers -->
-<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
-
-<!-- Web manifest for PWA support -->
-<link rel="manifest" href="/images/favicon.png">
+    <!-- Favicon links preserved -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <link rel="manifest" href="/images/favicon.png">
     <style>
+        /* CSS variables and base styles preserved */
         :root {
             --bg-color: #fff;
             --bg-color-rgb: 255, 255, 255;
@@ -60,32 +53,31 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             transition: background-color 0.3s ease, color 0.3s ease;
+            opacity: 0;
+            transition: opacity 1s ease-in;
         }
-     
-        body {
-        opacity: 0;
-        transition: opacity 1s ease-in;
-    }
     
-    body.loaded {
-        opacity: 1;
-    }
+        body.loaded {
+            opacity: 1;
+        }
 
+        /* Navigation styles preserved */
         nav {
-    background-color: var(--bg-color);
-    padding: 2rem 30px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-nav.scrolled {
-    background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 10px var(--nav-shadow);
-}
+            background-color: var(--bg-color);
+            padding: 2rem 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        nav.scrolled {
+            background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px var(--nav-shadow);
+        }
 
         .nav-container {
             max-width: calc(100% - 60px);
@@ -195,7 +187,7 @@ nav.scrolled {
             transition: all 0.3s ease;
         }
 
-        /* Theme toggle styling */
+        /* Theme toggle styling preserved */
         .theme-toggle {
             cursor: pointer;
             margin-left: 1.5rem;
@@ -232,24 +224,23 @@ nav.scrolled {
             padding: 20px 30px;
         }
         
-
-        /* Updated Gallery/Masonry Grid Styles */
+        /* Gallery/Masonry Grid Styles preserved */
         .gallery {
-        column-count: 4;
-        column-gap: 30px;
-        padding: 20px 75px; /* Changed from 20px 30px to 20px 75px */
-    }
+            column-count: 4;
+            column-gap: 30px;
+            padding: 20px 75px;
+        }
 
         .image-container {
             position: relative;
-            break-inside: avoid; /* Prevents images from breaking across columns */
-            margin-bottom: 30px; /* Increased spacing between rows */
+            break-inside: avoid;
+            margin-bottom: 30px;
             cursor: pointer;
             overflow: hidden;
             border-radius: 4px;
             box-shadow: 0 4px 8px var(--shadow-color);
             transition: box-shadow 0.3s ease;
-            display: inline-block; /* Important for masonry layout */
+            display: inline-block;
             width: 100%;
         }
 
@@ -269,84 +260,81 @@ nav.scrolled {
             transition: opacity 0.3s ease;
             z-index: 1;
         }
+        
         .section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    margin-left: 90px;
-    position: relative;
-    display: inline-block;
-    color: var(--text-color);
-    overflow: hidden;
-    white-space: nowrap;
-    /* Removed border-right from here */
-    animation: typing 3.5s steps(40, end),
-               caret 2.5s step-end forwards; /* Total duration: 3.5s typing + 3s caret */
-    text-shadow: 0 0 20px var(--accent-glow-secondary);
-}
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            margin-left: 90px;
+            position: relative;
+            display: inline-block;
+            color: var(--text-color);
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end),
+                      caret 2.5s step-end forwards;
+            text-shadow: 0 0 20px var(--accent-glow-secondary);
+        }
 
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-}
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
 
-@keyframes caret {
-    0%, 50% { border-right: 3px solid var(--accent-color); }
-    50.1%, 100% { border-right: none; }
-}
+        @keyframes caret {
+            0%, 50% { border-right: 3px solid var(--accent-color); }
+            50.1%, 100% { border-right: none; }
+        }
 
-.section-body {
-    font-size: 1.5rem;
-    font-weight: 400;
-    margin-bottom: 30px;
-    margin-left: 90px;
-    position: relative;
-    display: inline-block;
-    color: var(--text-color);
-    overflow: hidden;
-    white-space: nowrap;
-    /* Removed border-right from here */
-    animation: typing 3.5s steps(40, end),
-               caret 10.5s step-end forwards; /* Total: 3.5s typing + 3s caret */
-    text-shadow: 0 0 20px var(--accent-glow-secondary);
-}
+        .section-body {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 30px;
+            margin-left: 90px;
+            position: relative;
+            display: inline-block;
+            color: var(--text-color);
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end),
+                      caret 10.5s step-end forwards;
+            text-shadow: 0 0 20px var(--accent-glow-secondary);
+        }
 
-@keyframes typing {
-    from { width: 0 }
-    to { width: 70% }
-}
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 70% }
+        }
 
-@keyframes caret {
-    0%, 50% { border-right: 3px solid var(--accent-color); }
-    50.1%, 100% { border-right: none; }
-}
+        @keyframes caret {
+            0%, 50% { border-right: 3px solid var(--accent-color); }
+            50.1%, 100% { border-right: none; }
+        }
 
         .section-divider {
-    height: 1px;
-    background-color: var(--border-color);
-    margin: 40px auto;
-    width: 100%;
-    
-}
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 40px auto;
+            width: 100%;
+        }
 
-.fade-in {
-    opacity: 0;
-    transition: opacity 0.8s ease-in;
-}
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
 
-.fade-in.visible {
-    opacity: 1;
-}
+        .fade-in.visible {
+            opacity: 1;
+        }
 
-/* Optional: Add this if you want to fade in images specifically */
-img.fade-in {
-    opacity: 0;
-    transition: opacity 1s ease-in;
-}
+        img.fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
 
-img.fade-in.visible {
-    opacity: 1;
-}
+        img.fade-in.visible {
+            opacity: 1;
+        }
 
         [data-theme="dark"] .image-container::before {
             background: rgba(0, 0, 0, 0.3);
@@ -358,8 +346,8 @@ img.fade-in.visible {
 
         .thumbnail {
             width: 100%;
-            height: auto; /* Changed from 100% to auto to respect native resolution */
-            object-fit: contain; /* Changed from cover to contain */
+            height: auto;
+            object-fit: contain;
             transform: scale(1);
             transition: transform 0.3s ease;
             display: block;
@@ -388,6 +376,7 @@ img.fade-in.visible {
             }
         }
 
+        /* UPDATED LIGHTBOX STYLES */
         .lightbox-overlay {
             position: fixed;
             top: 0;
@@ -402,6 +391,7 @@ img.fade-in.visible {
             justify-content: center;
             align-items: center;
             z-index: 1001;
+            overflow-y: auto; /* Make the overlay scrollable */
         }
 
         .lightbox-overlay.active {
@@ -416,6 +406,7 @@ img.fade-in.visible {
             max-width: 90vw;
             max-height: 90vh;
             padding: 20px;
+            margin: 40px 0; /* Add margin to ensure content isn't cut off */
         }
 
         .lightbox-image-container {
@@ -434,7 +425,7 @@ img.fade-in.visible {
         }
 
         .close-button {
-            position: absolute;
+            position: fixed; /* Changed from absolute to fixed */
             top: 20px;
             right: 20px;
             width: 40px;
@@ -459,6 +450,8 @@ img.fade-in.visible {
             color: var(--text-color);
             padding: 20px;
             max-width: 300px;
+            max-height: 75vh; /* Match image height */
+            overflow-y: auto; /* Make text area scrollable */
         }
 
         .caption {
@@ -467,8 +460,9 @@ img.fade-in.visible {
             text-align: center;
         }
 
+        /* UPDATED ARROW STYLES */
         .lightbox-arrow {
-            position: fixed;
+            position: fixed; /* Changed from fixed to absolute */
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-color);
@@ -481,14 +475,22 @@ img.fade-in.visible {
             transition: all 0.3s ease;
             z-index: 1002;
             padding: 20px;
+            width: 80px; /* Fixed width */
+            height: 80px; /* Fixed height */
         }
 
-        .lightbox-prev { left: 20px; }
-        .lightbox-next { right: 20px; }
+        .lightbox-prev { 
+            left: 20px; 
+        }
+        
+        .lightbox-next { 
+            right: 20px; 
+        }
 
         .lightbox-arrow:hover {
             color: var(--accent-color);
         }
+        
         .lightbox-image-container {
             pointer-events: none;
         }
@@ -497,6 +499,7 @@ img.fade-in.visible {
             pointer-events: auto;
         }
 
+        /* Responsive styles */
         @media (max-width: 768px) {
             .hamburger { display: block; }
             .nav-links {
@@ -512,12 +515,28 @@ img.fade-in.visible {
                 box-shadow: 0 4px 8px var(--shadow-color);
             }
             .nav-links.active { display: flex !important; }
-            .lightbox-content { flex-direction: column; }
+            
+            /* Responsive lightbox */
+            .lightbox-content { 
+                flex-direction: column; 
+                overflow-y: auto;
+                max-height: none; /* Remove max-height constraint */
+            }
             .lightbox-image { max-width: 85vw; }
-            .lightbox-text { max-width: 85vw; }
+            .lightbox-text { 
+                max-width: 85vw;
+                max-height: none; /* Remove max-height constraint */
+            }
+            
+            /* Adjust arrows for mobile */
+            .lightbox-arrow {
+                font-size: 40px;
+                width: 60px;
+                height: 60px;
+            }
         }
 
-        /* Footer Styles - consolidated and fixed */
+        /* Footer Styles preserved */
         footer {
             background-color: var(--bg-color);
             padding: 2rem 0;
@@ -636,7 +655,6 @@ img.fade-in.visible {
                 margin-top: 1.5rem;
             }
         }
-        
     </style>
 </head>
 <body>
@@ -851,7 +869,7 @@ img.fade-in.visible {
             <div class="lightbox-text">
                 <h3>Eurasia (Gall-Peters Projection)</h3>
                 <p>Superpower envisions global disparities shaped by economic, cultural, and political forces. Inequality isn’t just about wealth; it’s embedded in global flows of ideas, media, and capital. These forces aren’t confined to national borders but are part of a global consumer culture that spreads along fault lines of conflict and inequality. The maps visualize the shifting “scapes” of globalization, revealing how territory is continually repurposed, perpetuating cycles of inequality.
-                    <br>A sublayer of this project is the contrast between the Mercator and Gall-Peters map projection, with the Mercator being the most commonly used map in the Global North, which illustrates Greenland being the same size as Africa. In reality, Africa is 20 times larger than Greenland and can fit the entirety of the United States, Europe, China, and India within its borders. 
+                    <br><br>A sublayer of this project is the contrast between the Mercator and Gall-Peters map projection, with the Mercator being the most commonly used map in the Global North, which illustrates Greenland being the same size as Africa. In reality, Africa is 20 times larger than Greenland and can fit the entirety of the United States, Europe, China, and India within its borders. 
                     </p>
             </div>
         </div>
@@ -888,11 +906,12 @@ img.fade-in.visible {
         <div class="lightbox-content">
             <div class="lightbox-image-container">
                 <img src="images/archive/11.jpg" alt="Image 11" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
+                <div class="caption">2020, digital painting on aluminum sublimation, 42” x 28” </div>
             </div>
             <div class="lightbox-text">
-                <h3>Image 11</h3>
-                <p>Description for image 11.</p>
+                <h3>Tank Man</h3>
+                <p>From the project “Time 100” which transforms the “Time 100 greatest images of all time” into abstract digital paintings, I strip away temporal and spatial contexts, reinterpreting their cultural, historical, and emotional significance through fluid mark-making.
+                </p>
             </div>
         </div>
         <div class="lightbox-arrow lightbox-prev">‹</div>
@@ -908,11 +927,12 @@ img.fade-in.visible {
         <div class="lightbox-content">
             <div class="lightbox-image-container">
                 <img src="images/archive/12.jpg" alt="Image 12" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
+                <div class="caption">2020, digital painting on aluminum sublimation, 36”x 27”</div>
             </div>
             <div class="lightbox-text">
-                <h3>Image 12</h3>
-                <p>Description for image 12.</p>
+                <h3>Coffin Ban</h3>
+                <p>From the project “Time 100” which transforms the “Time 100 greatest images of all time” into abstract digital paintings, I strip away temporal and spatial contexts, reinterpreting their cultural, historical, and emotional significance through fluid mark-making.
+                </p>
             </div>
         </div>
         <div class="lightbox-arrow lightbox-prev">‹</div>
@@ -968,11 +988,12 @@ img.fade-in.visible {
         <div class="lightbox-content">
             <div class="lightbox-image-container">
                 <img src="images/archive/15.jpg" alt="Image 15" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
+                <div class="caption">2020, digital painting on aluminum sublimation, 30”x 40”</div>
             </div>
             <div class="lightbox-text">
-                <h3>Image 15</h3>
-                <p>Description for image 15.</p>
+                <h3>The Hand of Mrs. Wilhelm Röntgen</h3>
+                <p>From the project “Time 100” which transforms the “Time 100 greatest images of all time” into abstract digital paintings, I strip away temporal and spatial contexts, reinterpreting their cultural, historical, and emotional significance through fluid mark-making.
+            </p>
             </div>
         </div>
         <div class="lightbox-arrow lightbox-prev">‹</div>
@@ -988,11 +1009,12 @@ img.fade-in.visible {
         <div class="lightbox-content">
             <div class="lightbox-image-container">
                 <img src="images/archive/16.jpg" alt="Image 16" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
+                <div class="caption">2017, archival inkjet print on matte paper (1/5), 17” x 21,” </div>
             </div>
             <div class="lightbox-text">
-                <h3>Image 16</h3>
-                <p>Description for image 16.</p>
+                <h3>Oceania (Mercator Projection), </h3>
+                <p>Superpower envisions global disparities shaped by economic, cultural, and political forces. Inequality isn’t just about wealth; it’s embedded in global flows of ideas, media, and capital. These forces aren’t confined to national borders but are part of a global consumer culture that spreads along fault lines of conflict and inequality. The maps visualize the shifting “scapes” of globalization, revealing how territory is continually repurposed, perpetuating cycles of inequality.
+                    <br><br>A sublayer of this project is the contrast between the Mercator and Gall-Peters map projection, with the Mercator being the most commonly used map in the Global North, which illustrates Greenland being the same size as Africa. In reality, Africa is 20 times larger than Greenland and can fit the entirety of the United States, Europe, China, and India within its borders. </p>
             </div>
         </div>
         <div class="lightbox-arrow lightbox-prev">‹</div>
@@ -1008,11 +1030,13 @@ img.fade-in.visible {
         <div class="lightbox-content">
             <div class="lightbox-image-container">
                 <img src="images/archive/17.jpg" alt="Image 17" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
+                <div class="caption">2017, archival inkjet print on matte paper (1/5), 25” x 17,”</div>
             </div>
             <div class="lightbox-text">
-                <h3>Image 17</h3>
-                <p>Description for image 17.</p>
+                <h3>America (Gall-Peters Projection)</h3>
+                <p>Superpower envisions global disparities shaped by economic, cultural, and political forces. Inequality isn’t just about wealth; it’s embedded in global flows of ideas, media, and capital. These forces aren’t confined to national borders but are part of a global consumer culture that spreads along fault lines of conflict and inequality. The maps visualize the shifting “scapes” of globalization, revealing how territory is continually repurposed, perpetuating cycles of inequality.
+                    <br><br>A sublayer of this project is the contrast between the Mercator and Gall-Peters map projection, with the Mercator being the most commonly used map in the Global North, which illustrates Greenland being the same size as Africa. In reality, Africa is 20 times larger than Greenland and can fit the entirety of the United States, Europe, China, and India within its borders. 
+                    </p>
             </div>
         </div>
         <div class="lightbox-arrow lightbox-prev">‹</div>
@@ -1028,11 +1052,13 @@ img.fade-in.visible {
         <div class="lightbox-content">
             <div class="lightbox-image-container">
                 <img src="images/archive/18.jpg" alt="Image 18" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
+                <div class="caption">2017, archival inkjet print on matte paper (1/5), 21” x 17,” $200.00
+                </div>
             </div>
             <div class="lightbox-text">
-                <h3>Image 18</h3>
-                <p>Description for image 18.</p>
+                <h3>Babylon (Mercator Projection)</h3>
+                <p>Superpower envisions global disparities shaped by economic, cultural, and political forces. Inequality isn’t just about wealth; it’s embedded in global flows of ideas, media, and capital. These forces aren’t confined to national borders but are part of a global consumer culture that spreads along fault lines of conflict and inequality. The maps visualize the shifting “scapes” of globalization, revealing how territory is continually repurposed, perpetuating cycles of inequality.
+                    <br><br>A sublayer of this project is the contrast between the Mercator and Gall-Peters map projection, with the Mercator being the most commonly used map in the Global North, which illustrates Greenland being the same size as Africa. In reality, Africa is 20 times larger than Greenland and can fit the entirety of the United States, Europe, China, and India within its borders. </p>
             </div>
         </div>
         <div class="lightbox-arrow lightbox-prev">‹</div>
@@ -1048,11 +1074,12 @@ img.fade-in.visible {
         <div class="lightbox-content">
             <div class="lightbox-image-container">
                 <img src="images/archive/19.jpg" alt="Image 19" class="lightbox-image">
-                <div class="caption">2022, digital image, size variable</div>
+                <div class="caption">2017, archival inkjet print on matte paper (1/5), 25” x 17,</div>
             </div>
             <div class="lightbox-text">
-                <h3>Image 19</h3>
-                <p>Description for image 19.</p>
+                <h3>America (Mercator Projection)</h3>
+                <p>Superpower envisions global disparities shaped by economic, cultural, and political forces. Inequality isn’t just about wealth; it’s embedded in global flows of ideas, media, and capital. These forces aren’t confined to national borders but are part of a global consumer culture that spreads along fault lines of conflict and inequality. The maps visualize the shifting “scapes” of globalization, revealing how territory is continually repurposed, perpetuating cycles of inequality.
+                    <br><br>A sublayer of this project is the contrast between the Mercator and Gall-Peters map projection, with the Mercator being the most commonly used map in the Global North, which illustrates Greenland being the same size as Africa. In reality, Africa is 20 times larger than Greenland and can fit the entirety of the United States, Europe, China, and India within its borders. </p>
             </div>
         </div>
         <div class="lightbox-arrow lightbox-prev">‹</div>
@@ -1690,97 +1717,84 @@ img.fade-in.visible {
         let currentLightbox = null;
         
         document.querySelectorAll('.image-container').forEach(container => {
-        container.addEventListener('click', () => openLightbox(container));
+            container.addEventListener('click', () => openLightbox(container));
         });
         
         function openLightbox(container) {
-        const overlay = container.querySelector('.lightbox-overlay');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        currentLightbox = container;
+            const overlay = container.querySelector('.lightbox-overlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            currentLightbox = container;
         }
         
         document.querySelectorAll('.close-button').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const overlay = e.target.closest('.lightbox-overlay');
-            if (overlay) {
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            currentLightbox = null;
-            }
-        });
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const overlay = e.target.closest('.lightbox-overlay');
+                if (overlay) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    currentLightbox = null;
+                }
+            });
         });
         
         document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
-        arrow.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const direction = arrow.classList.contains('lightbox-prev') ? -1 : 1;
-            navigateLightbox(direction, e);
-        });
+            arrow.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const direction = arrow.classList.contains('lightbox-prev') ? -1 : 1;
+                navigateLightbox(direction, e);
+            });
         });
         
         function navigateLightbox(direction, event) {
-        event.stopPropagation();
-        if (!currentLightbox) return;
-        
-        const containers = Array.from(document.querySelectorAll('.image-container'));
-        const currentIndex = containers.indexOf(currentLightbox);
-        const nextIndex = (currentIndex + direction + containers.length) % containers.length;
-        
-        // Get next lightbox
-        const nextLightbox = containers[nextIndex];
-        
-        // Get current and next overlay elements
-        const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
-        const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
-        
-        // Get current and next content elements
-        const currentContent = currentLightbox.querySelector('.lightbox-content');
-        const nextContent = nextLightbox.querySelector('.lightbox-content');
-        
-        // Show next overlay without animation
-        nextOverlay.style.transition = 'none';
-        nextOverlay.classList.add('active');
-        
-        // Force reflow to apply the style changes
-        void nextOverlay.offsetWidth;
-        
-        // Restore transition
-        nextOverlay.style.transition = '';
-        
-        // Update current lightbox reference
-        currentLightbox = nextLightbox;
-        
-        // Hide previous overlay after a small delay
-        setTimeout(() => {
+            event.stopPropagation();
+            if (!currentLightbox) return;
+            
+            const containers = Array.from(document.querySelectorAll('.image-container'));
+            const currentIndex = containers.indexOf(currentLightbox);
+            const nextIndex = (currentIndex + direction + containers.length) % containers.length;
+            
+            // Get next lightbox
+            const nextLightbox = containers[nextIndex];
+            
+            // Get current and next overlay elements
+            const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
+            const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
+            
+            // Hide previous overlay
             currentOverlay.classList.remove('active');
-        }, 50);
+            
+            // Show next overlay
+            nextOverlay.classList.add('active');
+            
+            // Update current lightbox reference
+            currentLightbox = nextLightbox;
         }
         
         document.addEventListener('keydown', function(event) {
-        if (!currentLightbox) return;
-        
-        if (event.key === 'Escape') {
-            const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
-            if (activeOverlay) {
-            activeOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            currentLightbox = null;
+            if (!currentLightbox) return;
+            
+            if (event.key === 'Escape') {
+                const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
+                if (activeOverlay) {
+                    activeOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    currentLightbox = null;
+                }
+            } else if (event.key === 'ArrowLeft') {
+                navigateLightbox(-1, event);
+            } else if (event.key === 'ArrowRight') {
+                navigateLightbox(1, event);
             }
-        } else if (event.key === 'ArrowLeft') {
-            navigateLightbox(-1, event);
-        } else if (event.key === 'ArrowRight') {
-            navigateLightbox(1, event);
-        }
         });
         
         document.addEventListener('click', function(event) {
-        if (event.target.classList.contains('lightbox-overlay')) {
-            event.target.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            currentLightbox = null;
-        }
+            if (event.target.classList.contains('lightbox-overlay')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                currentLightbox = null;
+            }
         });
         
         document.addEventListener('DOMContentLoaded', () => {
@@ -1824,6 +1838,6 @@ img.fade-in.visible {
                 htmlElement.setAttribute('data-theme', 'dark');
             }
         });
-        </script>
+    </script>
 </body>
 </html>
