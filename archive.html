@@ -447,12 +447,24 @@
 
         .lightbox-text {
             flex: 1;
-            color: var(--text-color);
-            padding: 20px;
-            max-width: 300px;
-            max-height: 75vh; /* Match image height */
-            overflow-y: auto; /* Make text area scrollable */
-        }
+    color: var(--text-color);
+    padding: 30px 40px; /* Increased padding from 20px to 30px top/bottom and 40px left/right */
+    max-width: 400px; /* Increased from 300px to 400px */
+    max-height: 75vh;
+    overflow-y: auto;
+    margin: 0 20px; /* Added margin for additional spacing */
+}
+
+.lightbox-text p {
+    margin-bottom: 1.2em; /* Space between paragraphs */
+    line-height: 1.6; /* Improved line height for readability */
+}
+
+.lightbox-text h3, 
+.lightbox-text h4 {
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+}
 
         .caption {
             margin-top: 15px;
