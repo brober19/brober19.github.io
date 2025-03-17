@@ -1,197 +1,730 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Standard favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+    <!-- For iOS devices -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+
+    <!-- For Android devices -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+
+    <!-- For modern browsers -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+    <!-- Web manifest for PWA support -->
+    <link rel="manifest" href="/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        :root {
+            --bg-color: #000;
+            --text-color: #fff;
+            --highlight-color: #FF7F50;
+            --container-bg: rgba(0, 0, 0, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --footer-bg: rgba(0, 0, 0, 0.3);
+            --nav-bg: rgba(0, 0, 0, 0.7);
+            --input-bg: rgba(0, 0, 0, 0.3);
+            --input-border: rgba(255, 255, 255, 0.2);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --highlight-color: #FF7F50;
+            --container-bg: rgba(255, 255, 255, 0.8);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --footer-bg: rgba(255, 255, 255, 0.8);
+            --nav-bg: rgba(245, 245, 245, 0.8);
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --input-border: rgba(0, 0, 0, 0.1);
         }
 
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            font-family: Helvetica, Arial, sans-serif;
             line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .contact-wrapper {
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
             display: flex;
-            gap: 40px;
-            margin-top: 30px;
+            flex-direction: column;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Navigation Styles */
+        nav {
+            background: var(--nav-bg);
+            padding: 1.5rem 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
         }
 
-        .contact-info {
-            flex: 1;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        nav.scrolled {
+            padding: 1rem 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .contact-form {
-            flex: 2;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .nav-container {
+            max-width: calc(100% - 60px);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            color: #2c3e50;
-            text-align: center;
+        /* Logo Styles */
+        .logo {
+            display: block;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 150px;
+            height: 75px;
+            margin-left: 0;
         }
 
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 40px;
+        .logo img {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            max-height: 75px;
+            width: auto;
+            transition: all 0.3s ease;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
         }
 
-        .contact-item {
-            margin-bottom: 20px;
+        .logo .logo-default { opacity: 1; }
+        .logo .logo-hover { opacity: 0; }
+
+        .logo:hover .logo-default { opacity: 0; }
+        .logo:hover .logo-hover {
+            opacity: 1;
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links.loaded {
+            opacity: 1;
+        }
+
+        .nav-links.visible {
+            display: flex !important;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: var(--highlight-color);
+            text-shadow:
+                0 0 10px rgba(255, 127, 80, 0.8),
+                0 0 20px rgba(255, 127, 80, 0.6);
+        }
+        
+        /* Navigation Link Effects */
+        .nav-links a {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-links a span {
+            position: relative;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover span {
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--highlight-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            cursor: pointer;
+            margin-left: 2rem;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            transition: color 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 15px;
         }
 
-        .contact-item i {
-            font-size: 24px;
-            color: #e74c3c;
+        .theme-toggle:hover {
+            color: var(--highlight-color);
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
         }
 
-        label {
+        .hamburger span {
             display: block;
-            margin-bottom: 8px;
-            color: #2c3e50;
-            font-weight: bold;
+            width: 25px;
+            height: 3px;
+            background: var(--text-color);
+            margin: 5px 0;
+            transition: all 0.3s ease;
         }
-
-        input, textarea {
+        
+        /* Contact Section */
+        .contact-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 30px 60px;
+        }
+        
+        .contact-container {
+            max-width: 800px;
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
+            background-color: var(--container-bg);
+            padding: 3rem;
             border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
         }
-
-        input:focus, textarea:focus {
+        
+        .contact-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .contact-header h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        .contact-header p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .contact-form {
+            margin-top: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 4px;
+            color: var(--text-color);
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
             outline: none;
-            border-color: #e74c3c;
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 5px rgba(255, 127, 80, 0.5);
         }
-
-        textarea {
-            height: 150px;
+        
+        .form-group textarea {
+            min-height: 150px;
             resize: vertical;
         }
-
-        button {
-            background-color: #e74c3c;
+        
+        .submit-btn {
+            background-color: var(--highlight-color);
             color: white;
-            padding: 15px 30px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        .submit-btn:hover {
+            background-color: #ff6a33;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 127, 80, 0.4);
+        }
+        
+        .contact-info {
+            margin-top: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+        }
+        
+        .contact-item {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--highlight-color);
+        }
+        
+        .contact-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+            color: var(--text-color);
+        }
+        
+        .contact-text p, .contact-text a {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-text a:hover {
+            color: var(--highlight-color);
+            opacity: 1;
         }
 
-        button:hover {
-            background-color: #c0392b;
+        /* Footer Styles */
+        footer {
+            background-color: var(--footer-bg);
+            padding: 2rem 0;
+            width: 100%;
+            margin-top: auto;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-info {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-info h3 {
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1.2rem;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .footer-info p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-family: Helvetica, Arial, sans-serif;
         }
 
         .social-links {
-            margin-top: 30px;
             display: flex;
-            gap: 15px;
-            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
         }
 
         .social-links a {
-            color: #2c3e50;
-            font-size: 24px;
+            color: var(--text-color);
+            font-size: 1.2rem;
             transition: color 0.3s ease;
+            text-decoration: none;
         }
 
         .social-links a:hover {
-            color: #e74c3c;
+            color: var(--highlight-color);
         }
 
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-nav-section {
+            min-width: 150px;
+        }
+
+        .footer-nav-section h4 {
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1rem;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .footer-nav-section ul {
+            list-style: none;
+        }
+
+        .footer-nav-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-nav-section ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .footer-nav-section ul li a:hover {
+            color: var(--highlight-color);
+            opacity: 1;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            opacity: 0.6;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .contact-wrapper {
+            .contact-container {
+                padding: 2rem;
+            }
+            
+            .contact-header h2 {
+                font-size: 2rem;
+            }
+            
+            .contact-info {
                 flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--container-bg);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links.active {
+                display: flex !important;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -6px);
+            }
+
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-nav {
+                width: 100%;
+                margin-top: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Let's Create Something Together</h1>
-        <p class="subtitle">I'm always excited to collaborate on new projects and hear your ideas!</p>
-
-        <div class="contact-wrapper">
-            <div class="contact-info">
-                <h2>Contact Information</h2>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>123 Artist Studio Lane<br>Creative District, CA 90210</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <p>(555) 123-4567</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <p>hello@artistname.com</p>
-                </div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-behance"></i></a>
-                </div>
-            </div>
-
-            <div class="contact-form">
-                <h2>Send Me a Message</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea id="message" required></textarea>
-                    </div>
-                    <button type="submit">Send Message</button>
-                </form>
+    <nav id="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/signature_light.png" alt="Logo" class="logo-default">
+                <img src="images/signature_red_v2.png" alt="Logo Hover" class="logo-hover">
+            </a>
+            <ul class="nav-links">
+                <li><a href="current.html"><span>1984</span></a></li>
+                <li><a href="archive.html"><span>Archive</span></a></li>
+                <li><a href="cv.html"><span>C.V.</span></a></li>
+                <li><a href="news.html"><span>News</span></a></li>
+                <li class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon" id="dark-icon"></i>
+                    <i class="fas fa-sun" id="light-icon" style="display: none;"></i>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
-    </div>
+    </nav>
+
+    <section class="contact-section">
+        <div class="contact-container">
+            <div class="contact-header">
+                <h2>Contact</h2>
+                <p>Get in touch for inquiries, commissions, or just to say hello.</p>
+            </div>
+            
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+            
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <h3>Bryan Robertson</h3>
+                <p>Visual Artist based in Arizona</p>
+                
+                <div class="social-links">
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" title="Email"><i class="far fa-envelope"></i></a>
+                </div>
+            </div>
+    
+            <div class="footer-nav">
+                <div class="footer-nav-section">
+                    <h4>Work</h4>
+                    <ul>
+                        <li><a href="painting.html">Paintings</a></li>
+                        <li><a href="digital.html">Digital Art</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="cv.html">Curriculum Vitae</a></li>
+                        <li><a href="statement.html">Artist Statement</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="news.html">Newsletter</a></li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="copyright">
+                &copy; 2025 Bryan Robertson. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.nav-links a');
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            const themeToggle = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('dark-icon');
+            const lightIcon = document.getElementById('light-icon');
+            const html = document.documentElement;
+            const nav = document.getElementById('main-nav');
+            const contactForm = document.getElementById('contact-form');
+            
+            // Scroll event for navbar
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+            
+            // Theme toggle functionality
+            themeToggle.addEventListener('click', () => {
+                if (html.getAttribute('data-theme') === 'dark') {
+                    html.setAttribute('data-theme', 'light');
+                    darkIcon.style.display = 'none';
+                    lightIcon.style.display = 'inline-block';
+                } else {
+                    html.setAttribute('data-theme', 'dark');
+                    darkIcon.style.display = 'inline-block';
+                    lightIcon.style.display = 'none';
+                }
+            });
+            
+            // Function to handle nav visibility based on screen size
+            function handleNavVisibility() {
+                if (window.innerWidth > 768) {
+                    navLinks.style.display = 'flex';
+                    navLinks.classList.add('visible');
+                } else {
+                    if (!navLinks.classList.contains('active')) {
+                        navLinks.style.display = 'none';
+                        navLinks.classList.remove('visible');
+                    }
+                }
+            }
+
+            // Initialize nav links
+            setTimeout(() => {
+                navLinks.classList.add('loaded');
+                handleNavVisibility();
+            }, 100);
+
+            // Hamburger menu toggle
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                navLinks.style.display = navLinks.classList.contains('active') ? 'flex' : 'none';
+            });
+            
+            // Form submission handler
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Here you would typically add code to handle the form submission
+                    // For example, using fetch to send the data to a server
+                    
+                    // Simple validation feedback
+                    alert('Thank you for your message! I will get back to you soon.');
+                    contactForm.reset();
+                });
+            }
+            
+            // Update on window resize
+            window.addEventListener('resize', handleNavVisibility);
+        });
+    </script>
 </body>
 </html>
