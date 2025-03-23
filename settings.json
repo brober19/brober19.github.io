@@ -1,0 +1,16 @@
+// .vscode/settings.json
+{
+  "liveServer.settings.port": 5501,
+  "liveServer.settings.root": "/Users/bryanrobertson/Documents/GitHub/brober19.github.io",
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": "chrome --user-data-dir=\"~/temp\"",
+  "liveServer.settings.https": {
+    "enable": false
+  }
+}
+// settings.json
+{
+  "html.preview.scrollPreviewWithEditor": true,
+  "html.preview.scrollEditorWithPreview": true,
+  "html.preview.doubleClickToSwitchToEditor": true
+}
