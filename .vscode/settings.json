@@ -1,3 +1,9 @@
+// .vscode/settings.json
 {
-    "liveServer.settings.port": 5501
-}
+    "liveServer.settings.port": 5501,
+    "liveServer.settings.root": "/",
+    "liveServer.settings.CustomBrowser": "chrome",
+    "liveServer.settings.https": {
+      "enable": false
+    }
+  }
