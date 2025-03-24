@@ -614,6 +614,51 @@ footer {
         margin-top: 1.5rem;
     }
 }
+.section-content ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+    text-shadow: 2px 2px 4px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.section-content ul li a:hover {
+    color: var(--accent-color);
+    text-shadow:
+        0 0 10px var(--accent-glow),
+        0 0 20px var(--accent-glow-secondary);
+}
+
+.section-content ul li a span {
+    position: relative;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.section-content ul li a:hover span {
+    transform: translateY(-2px);
+}
+
+.section-content ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.section-content ul li a:hover::after {
+    transform: scaleX();
+    transform-origin: left;
+}
     </style>
 </head>
 <body>
@@ -799,25 +844,25 @@ footer {
         <i class="fas fa-chevron-down"></i>
         </button>
         <div class="section-content">
-        <ul>
-        <li>2023 - Kim Leejin, "Brave New World, New Media Art 2023," CICA Press, Gimpo, Korea, February 1</li>
-        <li>2023 - G.E. Vogt, "Politics in Collage", Kolaj Institute and Kasini House, New Orleans, LA, July 8</li>
-        <li>2022 - "June 2022 Artist Interview," NYC Phoenix Collective, New York, NY, June 1</li>
-        <li>2021 - Michael Grady, "Seven College Programs Making a Positive Impact on the Community," YC360, Prescott, AZ, April 1</li>
-        <li>2019 - Bryan Hollerbach, <a href="https://www.laduenews.com/arts-and-culture/columns/art-soul-bryan-robertson/article_ff4f7df1-f9a0-5da8-bd33-c7e96924021b.html" class="nav-link" target="_blank">"Bryan Robertson: Body Politic,"</a> Ladue News, St. Louis, MO, March 1</li>
-        <li>2018 - Paul Langdon, "Bryan Robertson's Body Politic at The U City Public Library," HEC-TV (Higher Education Channel), St. Louis, MO, December 7, 2018</li>
-        <li>2018 - Danielle Mae Franklin, "U City Library Gallery to Feature local artist Bryan Robertson," The Missouri Times, Clayton, MO, November 30, 2018</li>
-        <li>2018 - Robin Shivley, "Artful Considerations," Ferguson Times, Ferguson, MO, November 9, 2018. 21</li>
-        <li>2018 - "The Switch," 3Elements Literary Review, no. 18 Spring 2018, Chicago, IL, April 1, 2018. 64</li>
-        <li>2018 - Bryan Hollerbach, "Art & Soul: Bryan Robertson," Ladue News, St. Louis, MO, March 1, 2018. 101</li>
-        <li>2018 - Yael Evan, "Superpower & Altar of Commerce," All the Art (the Visual Arts Quarterly of St. Louis) Spring 2018, St. Louis, MO, March 1, 2018. 1-2</li>
-        <li>2017 - Evie Hemphill, "Altar of Commerce' probes consequences of globalization," UMSL Daily, St. Louis, MO, July 15, 2017</li>
-        <li>2016 - Studio Visit (Volume 34), Steven T. Zevitas, editor. (Korea: The Open Studios Press):166-167</li>
-        </ul>
+            <ul>
+                <li>2023 - Kim Leejin, <a href="https://www.amazon.com/dp/B0BTMMGLT6"><span>"Brave New World, New Media Art 2023,"</span></a> CICA Press, Gimpo, Korea, February 1</li>
+                <li>2023 - G.E. Vogt, <a href="https://shop.kasinihouseartshop.com/product/politics-in-collage"><span>"Politics in Collage"</span></a>, Kolaj Institute and Kasini House, New Orleans, LA, July 8</li>
+                <li>2022 - <a href="NYC_PHX_Bryan Robertson.pdf"><span>"June 2022 Artist Interview,"</span></a> NYC Phoenix Collective, New York, NY, June 1</li>
+                <li>2021 - Michael Grady, <a href="yc360-article.jpg"><span>"Seven College Programs Making a Positive Impact on the Community,"</span></a> YC360, Prescott, AZ, April 1</li>
+                <li>2019 - Bryan Hollerbach, <a href="https://www.laduenews.com/arts-and-culture/columns/art-soul-bryan-robertson/article_2d7ff606-4029-5b84-a338-8a52355109ec.html" target="_blank"><span>"Bryan Robertson: Body Politic,"</span></a> Ladue News, St. Louis, MO, March 1</li>
+                <li>2018 - Paul Langdon, <a href="https://www.youtube.com/embed/NDA9nUlDGn0"><span>"Bryan Robertson's Body Politic at The U City Public Library,"</span></a> HEC-TV (Higher Education Channel), St. Louis, MO, December 7, 2018</li>
+                <li>2018 - Danielle Mae Franklin, <span>"U City Library Gallery to Feature local artist Bryan Robertson,"</span></a> The Missouri Times, Clayton, MO, November 30, 2018</li>
+                <li>2018 - Robin Shivley, <a href="Newspaper_highlight.pdf"><span>"Artful Considerations,"</span></a> Ferguson Times, Ferguson, MO, November 9, 2018. 21</li>
+                <li>2018 - <a href="https://www.3elementsreview.com/journal-issues/3elements-review-spring-journal-issue-18-2018-mobile.pdf"><span>"The Switch,"</span></a> 3Elements Literary Review, no. 18 Spring 2018, Chicago, IL, April 1, 2018. 64</li>
+                <li>2018 - Bryan Hollerbach, <a href="https://www.laduenews.com/arts-and-culture/columns/art-soul-bryan-robertson/article_ff4f7df1-f9a0-5da8-bd33-c7e96924021b.html"><span>"Art & Soul: Bryan Robertson,"</span></a> Ladue News, St. Louis, MO, March 1, 2018. 101</li>
+                <li>2018 - Yael Evan, <a href="https://issuu.com/alltheartstl/docs/spring2018webfinal"><span>"Superpower & Altar of Commerce,"</span></a> All the Art (the Visual Arts Quarterly of St. Louis) Spring 2018, St. Louis, MO, March 1, 2018. 1-2</li>
+                <li>2017 - Evie Hemphill, <a href="https://blogs.umsl.edu/news/2017/07/15/bryan-robertson/"><span>"Altar of Commerce' probes consequences of globalization,"</span></a> UMSL Daily, St. Louis, MO, July 15, 2017</li>
+                <li>2016 - Studio Visit (Volume 34), Steven T. Zevitas, editor. (Korea: The Open Studios Press):166-167</li>
+            </ul>
         </div>
         <hr>
         </div>
-        
+
         <div class="section">
         <button class="section-header" aria-expanded="false">
         Publications as Author
@@ -825,10 +870,10 @@ footer {
         </button>
         <div class="section-content">
         <ul>
-        <li>2023 - James Hutson, Jason Lively, Bryan Robertson, Peter Cotroneo, and Martin Lang, "Creative Convergence, The AI Renaissance in Art and Design," Springer Nature, Berlin Germany, September 1</li>
-        <li>2023 - "Exploring the Educational Potential of AI Generative Art in 3D Design Fundamentals," Global Journal of Human and Social Sciences, Volume 23 Issue 2, Framingham MA, May 1, 2023</li>
-        <li>2023 - "A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom," The International Journal of New Media, Technology and the Arts, Volume 18 Issue 1, August 4, 2023</li>
-        <li>2019 - "Ann Metzger National Biennial Exhibition," All the Art (the Visual Arts Quarterly of St. Louis) Summer 2019, St. Louis, MO, June 1, 2019. 1-2</li>
+        <li>2023 - James Hutson, Jason Lively, Bryan Robertson, Peter Cotroneo, and Martin Lang,  <a href="https://link.springer.com/book/10.1007/978-3-031-45127-0"><span>"Creative Convergence, The AI Renaissance in Art and Design," </span></a> Nature, Berlin Germany, September 1</li>
+        <li>2023 - <a href="https://cgscholar.com/bookstore/works/a-matter-of-perspective"><span>"Exploring the Educational Potential of AI Generative Art in 3D Design Fundamentals," </span></a>Global Journal of Human and Social Sciences, Volume 23 Issue 2, Framingham MA, May 1, 2023</li>
+        <li>2023 - <a href="https://globaljournals.org/GJHSS_Volume23/1-Exploring-the-Educational.pdf"><span>"A Matter of Perspective: A Case Study in the Use of AI-Generative Art in the Drawing Classroom,"</span></a> The International Journal of New Media, Technology and the Arts, Volume 18 Issue 1, August 4, 2023</li>
+        <li>2019 - <a href="https://issuu.com/alltheartstl/docs/summer2019finalupload"><span>"Ann Metzger National Biennial Exhibition,"</span></a>All the Art (the Visual Arts Quarterly of St. Louis) Summer 2019, St. Louis, MO, June 1, 2019. 1-2</li>
         </ul>
         </div>
         <hr>
