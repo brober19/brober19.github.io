@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer</title>
+    <!-- Standard favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <!-- For iOS devices -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+    <!-- For Android devices -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+    <!-- For modern browsers -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <!-- Web manifest for PWA support -->
+    <link rel="manifest" href="/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Add PDF.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        :root {
+            --bg-color: #000;
+            --text-color: #fff;
+            --highlight-color: #FF7F50;
+            --container-bg: rgba(0, 0, 0, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --footer-bg: rgba(0, 0, 0, 0.3);
+            --nav-bg: rgba(0, 0, 0, 0.7);
+            --input-bg: rgba(0, 0, 0, 0.3);
+            --input-border: rgba(255, 255, 255, 0.2);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --highlight-color: #FF7F50;
+            --container-bg: rgba(255, 255, 255, 0.8);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --footer-bg: rgba(255, 255, 255, 0.8);
+            --nav-bg: rgba(245, 245, 245, 0.8);
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --input-border: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        nav {
+            background: var(--nav-bg);
+            padding: 1.5rem 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: calc(100% - 60px);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: block;
+            transition: all 0.3s ease;
+            position: relative;
+            width: 150px;
+            height: 75px;
+            margin-left: 0;
+        }
+
+        .logo img {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            max-height: 75px;
+            width: auto;
+            transition: all 0.3s ease;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .logo .logo-default { opacity: 1; }
+        .logo .logo-hover { opacity: 0; }
+
+        .logo:hover .logo-default { opacity: 0; }
+        .logo:hover .logo-hover {
+            opacity: 1;
+            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
+                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
+                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links.loaded { opacity: 1; }
+        .nav-links.visible { display: flex !important; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: var(--highlight-color);
+            text-shadow: 0 0 10px rgba(255, 127, 80, 0.8),
+                        0 0 20px rgba(255, 127, 80, 0.6);
+        }
+        
+        .nav-links a {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-links a span {
+            position: relative;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover span {
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--highlight-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            margin-left: 2rem;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle:hover {
+            color: var(--highlight-color);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--text-color);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .pdf-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 30px 60px;
+        }
+        
+        .pdf-container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: var(--container-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+        }
+        
+        .pdf-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .pdf-header h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        
+        .pdf-header p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        #pdf-viewer {
+            width: 100%;
+            height: 700px;
+            border: 1px solid var(--border-color);
+            overflow: auto;
+            background-color: var(--input-bg);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        .pdf-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .pdf-controls button {
+            background-color: var(--highlight-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .pdf-controls button:hover {
+            background-color: #ff6a33;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 127, 80, 0.4);
+        }
+        
+        .pdf-page-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        #page-num {
+            width: 50px;
+            text-align: center;
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            color: var(--text-color);
+            padding: 0.3rem;
+            border-radius: 4px;
+        }
+        
+        footer {
+            background-color: var(--footer-bg);
+            padding: 2rem 0;
+            width: 100%;
+            margin-top: auto;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-info {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-info h3 {
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1.2rem;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .footer-info p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: var(--highlight-color);
+        }
+
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-nav-section {
+            min-width: 150px;
+        }
+
+        .footer-nav-section h4 {
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1rem;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .footer-nav-section ul {
+            list-style: none;
+        }
+
+        .footer-nav-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-nav-section ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .footer-nav-section ul li a:hover {
+            color: var(--highlight-color);
+            opacity: 1;
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            opacity: 0.6;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            .pdf-container { padding: 1.5rem; }
+            .pdf-header h2 { font-size: 1.8rem; }
+            #pdf-viewer { height: 500px; }
+            .hamburger { display: block; }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--container-bg);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links.active { display: flex !important; }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) { opacity: 0; }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -6px);
+            }
+
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-nav {
+                width: 100%;
+                margin-top: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/signature_light.png" alt="Logo" class="logo-default">
+                <img src="images/signature_red_v2.png" alt="Logo Hover" class="logo-hover">
+            </a>
+            <ul class="nav-links">
+                <li><a href="current.html"><span>1984</span></a></li>
+                <li><a href="archive.html"><span>Archive</span></a></li>
+                <li><a href="cv.html"><span>C.V.</span></a></li>
+                <li><a href="news.html"><span>News</span></a></li>
+                <li class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon" id="dark-icon"></i>
+                    <i class="fas fa-sun" id="light-icon" style="display: none;"></i>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pdf-section">
+        <div class="pdf-container">
+            <div class="pdf-header">
+                <h2>PDF Viewer</h2>
+                <p>View and navigate through the document</p>
+            </div>
+            
+            <div class="pdf-controls">
+                <button id="prev">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <div class="pdf-page-info">
+                    <input type="number" id="page-num" min="1" value="1">
+                    <span>of <span id="page-count">0</span></span>
+                </div>
+                <button id="next">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+                <button id="zoom-in">
+                    <i class="fas fa-search-plus"></i> Zoom In
+                </button>
+                <button id="zoom-out">
+                    <i class="fas fa-search-minus"></i> Zoom Out
+                </button>
+                <button id="download-pdf">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+            
+            <div id="pdf-viewer"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <h3>Bryan Robertson</h3>
+                <p>Visual Artist based in Arizona</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/bryan-robertson-2862b3b0" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:studio@bryan-robertson.com" title="Email"><i class="far fa-envelope"></i></a>
+                </div>
+            </div>
+    
+            <div class="footer-nav">
+                <div class="footer-nav-section">
+                    <h4>Work</h4>
+                    <ul>
+                        <li><a href="current.html">1984</a></li>
+                        <li><a href="archive.html">Archive</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>About</h4>
+                    <ul>
+                        <li><a href="cv.html">Curriculum Vitae</a></li>
+                        <li><a href="statement.html">Artist Statement</a></li>
+                    </ul>
+                </div>
+    
+                <div class="footer-nav-section">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="news.html">News</a></li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="copyright">
+                © 2025 Bryan Robertson. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            const themeToggle = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('dark-icon');
+            const lightIcon = document.getElementById('light-icon');
+            const html = document.documentElement;
+            const nav = document.getElementById('main-nav');
+            
+            window.addEventListener('scroll', function() {
+                nav.classList.toggle('scrolled', window.scrollY > 50);
+            });
+            
+            themeToggle.addEventListener('click', () => {
+                if (html.getAttribute('data-theme') === 'dark') {
+                    html.setAttribute('data-theme', 'light');
+                    darkIcon.style.display = 'none';
+                    lightIcon.style.display = 'inline-block';
+                } else {
+                    html.setAttribute('data-theme', 'dark');
+                    darkIcon.style.display = 'inline-block';
+                    lightIcon.style.display = 'none';
+                }
+            });
+            
+            function handleNavVisibility() {
+                if (window.innerWidth > 768) {
+                    navLinks.style.display = 'flex';
+                    navLinks.classList.add('visible');
+                } else if (!navLinks.classList.contains('active')) {
+                    navLinks.style.display = 'none';
+                    navLinks.classList.remove('visible');
+                }
+            }
+
+            setTimeout(() => {
+                navLinks.classList.add('loaded');
+                handleNavVisibility();
+            }, 100);
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+                navLinks.style.display = navLinks.classList.contains('active') ? 'flex' : 'none';
+            });
+            
+            window.addEventListener('resize', handleNavVisibility);
+            
+            let pdfDoc = null,
+                pageNum = 1,
+                pageRendering = false,
+                pageNumPending = null,
+                scale = 1.0,
+                canvas = document.createElement('canvas'),
+                ctx = canvas.getContext('2d'),
+                currentPdfUrl = null;
+                
+            document.getElementById('pdf-viewer').appendChild(canvas);
+            
+            function renderPage(num) {
+                pageRendering = true;
+                pdfDoc.getPage(num).then(function(page) {
+                    const viewport = page.getViewport({ scale: scale });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+                    
+                    const renderContext = {
+                        canvasContext: ctx,
+                        viewport: viewport
+                    };
+                    
+                    const renderTask = page.render(renderContext);
+                    renderTask.promise.then(function() {
+                        pageRendering = false;
+                        if (pageNumPending !== null) {
+                            renderPage(pageNumPending);
+                            pageNumPending = null;
+                        }
+                    });
+                });
+                document.getElementById('page-num').value = num;
+            }
+            
+            function queueRenderPage(num) {
+                if (pageRendering) {
+                    pageNumPending = num;
+                } else {
+                    renderPage(num);
+                }
+            }
+            
+            function onPrevPage() {
+                if (pageNum <= 1) return;
+                pageNum--;
+                queueRenderPage(pageNum);
+            }
+            
+            function onNextPage() {
+                if (pageNum >= pdfDoc.numPages) return;
+                pageNum++;
+                queueRenderPage(pageNum);
+            }
+            
+            function zoomIn() {
+                scale += 0.25;
+                queueRenderPage(pageNum);
+            }
+            
+            function zoomOut() {
+                if (scale <= 0.5) return;
+                scale -= 0.25;
+                queueRenderPage(pageNum);
+            }
+            
+            function loadPDF(url) {
+                currentPdfUrl = url;
+                document.getElementById('pdf-viewer').innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-color);">Loading PDF...</div>';
+                
+                pdfjsLib.getDocument(url).promise.then(function(pdf) {
+                    pdfDoc = pdf;
+                    document.getElementById('page-count').textContent = pdf.numPages;
+                    document.getElementById('pdf-viewer').innerHTML = '';
+                    canvas = document.createElement('canvas');
+                    ctx = canvas.getContext('2d');
+                    document.getElementById('pdf-viewer').appendChild(canvas);
+                    pageNum = 1;
+                    renderPage(pageNum);
+                    
+                    document.getElementById('prev').disabled = false;
+                    document.getElementById('next').disabled = false;
+                    document.getElementById('zoom-in').disabled = false;
+                    document.getElementById('zoom-out').disabled = false;
+                    document.getElementById('download-pdf').disabled = false;
+                }).catch(function(error) {
+                    console.error('Error loading PDF:', error);
+                    document.getElementById('pdf-viewer').innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-color);">Error loading PDF</div>';
+                });
+            }
+            
+            document.getElementById('prev').addEventListener('click', onPrevPage);
+            document.getElementById('next').addEventListener('click', onNextPage);
+            document.getElementById('zoom-in').addEventListener('click', zoomIn);
+            document.getElementById('zoom-out').addEventListener('click', zoomOut);
+            document.getElementById('page-num').addEventListener('change', function() {
+                const newPageNum = parseInt(this.value);
+                if (newPageNum > 0 && newPageNum <= pdfDoc.numPages) {
+                    pageNum = newPageNum;
+                    queueRenderPage(pageNum);
+                }
+            });
+            
+            document.getElementById('download-pdf').addEventListener('click', function() {
+                if (currentPdfUrl) {
+                    const a = document.createElement('a');
+                    a.href = currentPdfUrl;
+                    a.download = 'document.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            });
+            
+            const embeddedPdfUrl = 'student-work.pdf'; // Replace with your PDF path
+            loadPDF(embeddedPdfUrl);
+        });
+    </script>
+</body>
+</html>
