@@ -21,6 +21,7 @@
     </script>
     
     <style>
+        /* All your existing CSS remains unchanged */
         * {
             margin: 0;
             padding: 0;
@@ -639,6 +640,7 @@
                     }
                 } catch (error) {
                     console.error('Error rendering page:', error);
+                    pdfViewer.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-color);">Error rendering page: ${error.message}</div>`;
                 }
                 document.getElementById('page-num').value = num;
             }
@@ -654,7 +656,21 @@
             async function loadPDF(url) {
                 try {
                     pdfViewer.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-color);">Loading PDF...</div>';
-                    const loadingTask = pdfjsLib.getDocument(url);
+                    
+                    // Fetch PDF as ArrayBuffer to prevent direct download
+                    const response = await fetch(url, {
+                        headers: {
+                            'Accept': 'application/pdf',
+                            'Content-Type': 'application/pdf'
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const pdfData = await response.arrayBuffer();
+                    const loadingTask = pdfjsLib.getDocument({ data: pdfData });
                     pdfDoc = await loadingTask.promise;
                     
                     document.getElementById('page-count').textContent = pdfDoc.numPages;
@@ -669,34 +685,39 @@
                     });
                 } catch (error) {
                     console.error('Error loading PDF:', error);
-                    pdfViewer.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-color);">Error loading PDF. Please check if the file exists and is accessible.</div>';
+                    pdfViewer.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-color);">Error loading PDF: ${error.message}. Please ensure the file exists and is accessible.</div>`;
                 }
             }
 
-            document.getElementById('prev').addEventListener('click', () => {
+            document.getElementById('prev').addEventListener('click', (e) => {
+                e.preventDefault();
                 if (pageNum <= 1) return;
                 pageNum--;
                 queueRenderPage(pageNum);
             });
 
-            document.getElementById('next').addEventListener('click', () => {
+            document.getElementById('next').addEventListener('click', (e) => {
+                e.preventDefault();
                 if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
                 pageNum++;
                 queueRenderPage(pageNum);
             });
 
-            document.getElementById('zoom-in').addEventListener('click', () => {
+            document.getElementById('zoom-in').addEventListener('click', (e) => {
+                e.preventDefault();
                 scale += 0.25;
                 queueRenderPage(pageNum);
             });
 
-            document.getElementById('zoom-out').addEventListener('click', () => {
+            document.getElementById('zoom-out').addEventListener('click', (e) => {
+                e.preventDefault();
                 if (scale <= 0.5) return;
                 scale -= 0.25;
                 queueRenderPage(pageNum);
             });
 
             document.getElementById('page-num').addEventListener('change', (e) => {
+                e.preventDefault();
                 const newPageNum = parseInt(e.target.value);
                 if (newPageNum >= 1 && newPageNum <= pdfDoc.numPages) {
                     pageNum = newPageNum;
@@ -704,7 +725,8 @@
                 }
             });
 
-            document.getElementById('download-pdf').addEventListener('click', () => {
+            document.getElementById('download-pdf').addEventListener('click', (e) => {
+                e.preventDefault();
                 const url = 'student-work.pdf';
                 const a = document.createElement('a');
                 a.href = url;
@@ -714,7 +736,8 @@
                 document.body.removeChild(a);
             });
 
-            const pdfUrl = 'student.pdf';
+            // Load PDF
+            const pdfUrl = './student.pdf'; // Ensure correct relative path
             loadPDF(pdfUrl);
         });
     </script>
