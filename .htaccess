@@ -4,3 +4,15 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.html [NC, L]
+# Ensure PDFs are served with the correct MIME type
+AddType application/pdf .pdf
+
+# Prevent forcing download of PDFs, allowing inline viewing
+<FilesMatch "\.(?i:pdf)$">
+    Header set Content-Disposition "inline"
+</FilesMatch>
+
+# Optional: Disable caching for testing (remove after confirming it works)
+<FilesMatch "\.(?i:pdf)$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate"
+</FilesMatch>
