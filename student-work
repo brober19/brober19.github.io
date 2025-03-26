@@ -714,7 +714,7 @@
                 document.body.removeChild(a);
             });
 
-            const pdfUrl = 'student-work.pdf';
+            const pdfUrl = 'student.pdf';
             loadPDF(pdfUrl);
         });
     </script>
