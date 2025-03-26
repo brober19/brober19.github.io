@@ -4,21 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Viewer</title>
-    <!-- Standard favicon -->
+    <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-    <!-- For iOS devices -->
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
-    <!-- For Android devices -->
     <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
-    <!-- For modern browsers -->
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
-    <!-- Web manifest for PWA support -->
     <link rel="manifest" href="/images/favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Add PDF.js library -->
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
@@ -496,25 +492,15 @@
             </div>
             
             <div class="pdf-controls">
-                <button id="prev">
-                    <i class="fas fa-chevron-left"></i> Previous
-                </button>
+                <button id="prev"><i class="fas fa-chevron-left"></i> Previous</button>
                 <div class="pdf-page-info">
-                    <input type="number" id="page-num" min="1" value="1">
-                    <span>of <span id="page-count">0</span></span>
+                    Page <input type="number" id="page-num" min="1" value="1">
+                    of <span id="page-count">0</span>
                 </div>
-                <button id="next">
-                    Next <i class="fas fa-chevron-right"></i>
-                </button>
-                <button id="zoom-in">
-                    <i class="fas fa-search-plus"></i> Zoom In
-                </button>
-                <button id="zoom-out">
-                    <i class="fas fa-search-minus"></i> Zoom Out
-                </button>
-                <button id="download-pdf">
-                    <i class="fas fa-download"></i> Download
-                </button>
+                <button id="next">Next <i class="fas fa-chevron-right"></i></button>
+                <button id="zoom-in"><i class="fas fa-search-plus"></i> Zoom In</button>
+                <button id="zoom-out"><i class="fas fa-search-minus"></i> Zoom Out</button>
+                <button id="download-pdf"><i class="fas fa-download"></i> Download</button>
             </div>
             
             <div id="pdf-viewer"></div>
@@ -565,7 +551,8 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
+            // Navigation and Theme Toggle
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
             const themeToggle = document.getElementById('theme-toggle');
@@ -573,11 +560,11 @@
             const lightIcon = document.getElementById('light-icon');
             const html = document.documentElement;
             const nav = document.getElementById('main-nav');
-            
-            window.addEventListener('scroll', function() {
+
+            window.addEventListener('scroll', () => {
                 nav.classList.toggle('scrolled', window.scrollY > 50);
             });
-            
+
             themeToggle.addEventListener('click', () => {
                 if (html.getAttribute('data-theme') === 'dark') {
                     html.setAttribute('data-theme', 'light');
@@ -589,7 +576,7 @@
                     lightIcon.style.display = 'none';
                 }
             });
-            
+
             function handleNavVisibility() {
                 if (window.innerWidth > 768) {
                     navLinks.style.display = 'flex';
@@ -610,44 +597,52 @@
                 navLinks.classList.toggle('active');
                 navLinks.style.display = navLinks.classList.contains('active') ? 'flex' : 'none';
             });
-            
+
             window.addEventListener('resize', handleNavVisibility);
-            
+
+            // PDF Viewer Logic
+            const pdfViewer = document.getElementById('pdf-viewer');
             let pdfDoc = null,
                 pageNum = 1,
                 pageRendering = false,
                 pageNumPending = null,
-                scale = 1.0,
+                scale = 1.5,
                 canvas = document.createElement('canvas'),
-                ctx = canvas.getContext('2d'),
-                currentPdfUrl = null;
-                
-            document.getElementById('pdf-viewer').appendChild(canvas);
-            
-            function renderPage(num) {
+                ctx = canvas.getContext('2d');
+
+            pdfViewer.appendChild(canvas);
+
+            async function renderPage(num) {
+                if (!pdfDoc) return;
+
                 pageRendering = true;
-                pdfDoc.getPage(num).then(function(page) {
-                    const viewport = page.getViewport({ scale: scale });
+                try {
+                    const page = await pdfDoc.getPage(num);
+                    const viewport = page.getViewport({ scale });
+                    
                     canvas.height = viewport.height;
                     canvas.width = viewport.width;
-                    
+                    canvas.style.width = '100%';
+                    canvas.style.height = 'auto';
+
                     const renderContext = {
                         canvasContext: ctx,
                         viewport: viewport
                     };
-                    
-                    const renderTask = page.render(renderContext);
-                    renderTask.promise.then(function() {
-                        pageRendering = false;
-                        if (pageNumPending !== null) {
-                            renderPage(pageNumPending);
-                            pageNumPending = null;
-                        }
-                    });
-                });
+
+                    await page.render(renderContext).promise;
+                    pageRendering = false;
+
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                } catch (error) {
+                    console.error('Error rendering page:', error);
+                }
                 document.getElementById('page-num').value = num;
             }
-            
+
             function queueRenderPage(num) {
                 if (pageRendering) {
                     pageNumPending = num;
@@ -655,80 +650,72 @@
                     renderPage(num);
                 }
             }
-            
-            function onPrevPage() {
+
+            async function loadPDF(url) {
+                try {
+                    pdfViewer.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-color);">Loading PDF...</div>';
+                    const loadingTask = pdfjsLib.getDocument(url);
+                    pdfDoc = await loadingTask.promise;
+                    
+                    document.getElementById('page-count').textContent = pdfDoc.numPages;
+                    pdfViewer.innerHTML = '';
+                    pdfViewer.appendChild(canvas);
+                    
+                    pageNum = 1;
+                    await renderPage(pageNum);
+                    
+                    ['prev', 'next', 'zoom-in', 'zoom-out', 'download-pdf'].forEach(id => {
+                        document.getElementById(id).disabled = false;
+                    });
+                } catch (error) {
+                    console.error('Error loading PDF:', error);
+                    pdfViewer.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-color);">Error loading PDF. Please check if the file exists and is accessible.</div>';
+                }
+            }
+
+            document.getElementById('prev').addEventListener('click', () => {
                 if (pageNum <= 1) return;
                 pageNum--;
                 queueRenderPage(pageNum);
-            }
-            
-            function onNextPage() {
-                if (pageNum >= pdfDoc.numPages) return;
+            });
+
+            document.getElementById('next').addEventListener('click', () => {
+                if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
                 pageNum++;
                 queueRenderPage(pageNum);
-            }
-            
-            function zoomIn() {
+            });
+
+            document.getElementById('zoom-in').addEventListener('click', () => {
                 scale += 0.25;
                 queueRenderPage(pageNum);
-            }
-            
-            function zoomOut() {
+            });
+
+            document.getElementById('zoom-out').addEventListener('click', () => {
                 if (scale <= 0.5) return;
                 scale -= 0.25;
                 queueRenderPage(pageNum);
-            }
-            
-            function loadPDF(url) {
-                currentPdfUrl = url;
-                document.getElementById('pdf-viewer').innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-color);">Loading PDF...</div>';
-                
-                pdfjsLib.getDocument(url).promise.then(function(pdf) {
-                    pdfDoc = pdf;
-                    document.getElementById('page-count').textContent = pdf.numPages;
-                    document.getElementById('pdf-viewer').innerHTML = '';
-                    canvas = document.createElement('canvas');
-                    ctx = canvas.getContext('2d');
-                    document.getElementById('pdf-viewer').appendChild(canvas);
-                    pageNum = 1;
-                    renderPage(pageNum);
-                    
-                    document.getElementById('prev').disabled = false;
-                    document.getElementById('next').disabled = false;
-                    document.getElementById('zoom-in').disabled = false;
-                    document.getElementById('zoom-out').disabled = false;
-                    document.getElementById('download-pdf').disabled = false;
-                }).catch(function(error) {
-                    console.error('Error loading PDF:', error);
-                    document.getElementById('pdf-viewer').innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-color);">Error loading PDF</div>';
-                });
-            }
-            
-            document.getElementById('prev').addEventListener('click', onPrevPage);
-            document.getElementById('next').addEventListener('click', onNextPage);
-            document.getElementById('zoom-in').addEventListener('click', zoomIn);
-            document.getElementById('zoom-out').addEventListener('click', zoomOut);
-            document.getElementById('page-num').addEventListener('change', function() {
-                const newPageNum = parseInt(this.value);
-                if (newPageNum > 0 && newPageNum <= pdfDoc.numPages) {
+            });
+
+            document.getElementById('page-num').addEventListener('change', (e) => {
+                const newPageNum = parseInt(e.target.value);
+                if (newPageNum >= 1 && newPageNum <= pdfDoc.numPages) {
                     pageNum = newPageNum;
                     queueRenderPage(pageNum);
                 }
             });
-            
-            document.getElementById('download-pdf').addEventListener('click', function() {
-                if (currentPdfUrl) {
-                    const a = document.createElement('a');
-                    a.href = currentPdfUrl;
-                    a.download = 'document.pdf';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                }
+
+            document.getElementById('download-pdf').addEventListener('click', () => {
+                const url = 'student-work.pdf';
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'document.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             });
-            
-            const embeddedPdfUrl = 'student-work.pdf'; // Replace with your PDF path
-            loadPDF(embeddedPdfUrl);
+
+            const pdfUrl = 'student-work.pdf';
+            loadPDF(pdfUrl);
         });
     </script>
 </body>
