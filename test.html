@@ -665,7 +665,7 @@
                 <div class="close-button">×</div>
                 <div class="lightbox-content">
                     <div class="lightbox-image-container">
-                        <iframe src="https://vimeo.com/1066399046?autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="prolefeed"></iframe>
+                        <iframe data-src="https://player.vimeo.com/video/1066399046?autoplay=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="prolefeed"></iframe>
                         <div class="caption">2022, digital video, duration: 2:30</div>
                     </div>
                     <div class="lightbox-text">
@@ -721,9 +721,11 @@
             </div>
         </div>
     </footer>
+    <script src="https://player.vimeo.com/api/player.js"></script>
     <script>
         let currentLightbox = null;
-        
+        let vimeoPlayer = null;
+
         document.querySelectorAll('.image-container').forEach(container => {
             container.addEventListener('click', () => openLightbox(container));
         });
@@ -733,14 +735,23 @@
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             currentLightbox = container;
+            
             const iframe = container.querySelector('iframe');
-            if (iframe) {
-                const src = iframe.getAttribute('src');
-                if (!src.includes('autoplay=1')) {
-                    iframe.src = src + (src.includes('?') ? '&autoplay=1' : '?autoplay=1');
-                } else {
-                    iframe.src = iframe.src; // Force reload to trigger playback
+            if (iframe && !iframe.src) {
+                const src = iframe.getAttribute('data-src');
+                iframe.src = src;
+                try {
+                    vimeoPlayer = new Vimeo.Player(iframe);
+                    vimeoPlayer.play().catch(error => {
+                        console.error('Vimeo playback error:', error);
+                    });
+                } catch (error) {
+                    console.error('Error initializing Vimeo Player:', error);
                 }
+            } else if (vimeoPlayer) {
+                vimeoPlayer.play().catch(error => {
+                    console.error('Vimeo playback error:', error);
+                });
             }
         }
         
@@ -790,21 +801,29 @@
             }, 50);
             
             const iframe = nextLightbox.querySelector('iframe');
-            if (iframe) {
-                const src = iframe.getAttribute('src');
-                if (!src.includes('autoplay=1')) {
-                    iframe.src = src + (src.includes('?') ? '&autoplay=1' : '?autoplay=1');
-                } else {
-                    iframe.src = iframe.src; // Force reload to trigger playback
+            if (iframe && !iframe.src) {
+                const src = iframe.getAttribute('data-src');
+                iframe.src = src;
+                try {
+                    vimeoPlayer = new Vimeo.Player(iframe);
+                    vimeoPlayer.play().catch(error => {
+                        console.error('Vimeo playback error:', error);
+                    });
+                } catch (error) {
+                    console.error('Error initializing Vimeo Player:', error);
                 }
+            } else if (vimeoPlayer) {
+                vimeoPlayer.play().catch(error => {
+                    console.error('Vimeo playback error:', error);
+                });
             }
         }
         
         function stopVideo(overlay) {
             const iframe = overlay.querySelector('iframe');
-            if (iframe) {
-                const src = iframe.src;
-                iframe.src = src.replace(/[?&]autoplay=1/, '');
+            if (iframe && vimeoPlayer) {
+                vimeoPlayer.pause();
+                iframe.src = ''; // Reset src to stop completely
             }
         }
         
