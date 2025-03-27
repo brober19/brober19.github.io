@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Current Work: 1984</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Vimeo Player API -->
-    <script src="https://player.vimeo.com/api/player.js"></script>
     <!-- Standard favicon -->
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
     <!-- For iOS devices -->
@@ -681,6 +679,28 @@
                 <div class="lightbox-arrow lightbox-next">›</div>
             </div>
         </div>
+        
+        <!-- Example of adding a second video -->
+        <div class="image-container" data-video-id="824804225">
+            <img src="images/current/02.jpg" alt="Video Thumbnail" class="thumbnail">
+            <div class="lightbox-overlay">
+                <div class="close-button">×</div>
+                <div class="lightbox-content">
+                    <div class="lightbox-image-container">
+                        <div class="video-container">
+                            <!-- Vimeo player will be inserted here -->
+                        </div>
+                        <div class="caption">2023, digital video, duration: 3:15</div>
+                    </div>
+                    <div class="lightbox-text">
+                        <h3>Second Video</h3>
+                        <p>Description of the second video...</p>
+                    </div>
+                </div>
+                <div class="lightbox-arrow lightbox-prev">‹</div>
+                <div class="lightbox-arrow lightbox-next">›</div>
+            </div>
+        </div>
     </div>
     
     <footer>
@@ -727,7 +747,6 @@
     </footer>
     <script>
         let currentLightbox = null;
-        let vimeoPlayer = null;
 
         document.querySelectorAll('.image-container').forEach(container => {
             container.addEventListener('click', () => openLightbox(container));
@@ -738,50 +757,25 @@
             const videoContainer = overlay.querySelector('.video-container');
             const videoId = container.getAttribute('data-video-id');
             
-            // Clear previous player if exists
-            if (vimeoPlayer) {
-                vimeoPlayer.destroy();
-                vimeoPlayer = null;
-            }
-            
-            // Create Vimeo embed iframe
+            // Create direct iframe embed
             if (videoId && videoContainer) {
-                videoContainer.innerHTML = `<div id="vimeo-player-${videoId}" style="width:100%;height:100%;"></div>`;
+                console.log(`Attempting to load Vimeo video ID: ${videoId}`);
                 
-                // Initialize Vimeo player
-                try {
-                    vimeoPlayer = new Vimeo.Player(`vimeo-player-${videoId}`, {
-                        id: parseInt(videoId),
-                        width: '100%',
-                        height: '100%',
-                        autoplay: true,
-                        responsive: true,
-                        title: false,
-                        byline: false,
-                        portrait: false
-                    });
-                    
-                    // Handle errors
-                    vimeoPlayer.on('error', function(error) {
-                        console.error('Vimeo player error:', error);
-                        videoContainer.innerHTML = `<div style="color: var(--text-color); text-align: center; padding: 20px;">
-                            Error loading video. Please check the video ID and privacy settings.
-                        </div>`;
-                    });
-                    
-                    // Log when ready
-                    vimeoPlayer.on('loaded', function() {
-                        console.log('Vimeo player loaded successfully');
-                        vimeoPlayer.play().catch(function(error) {
-                            console.error('Play error:', error);
-                        });
-                    });
-                } catch (e) {
-                    console.error('Error initializing Vimeo player:', e);
-                    videoContainer.innerHTML = `<div style="color: var(--text-color); text-align: center; padding: 20px;">
-                        Error initializing video player. Please try again.
-                    </div>`;
-                }
+                // Show loading indicator
+                videoContainer.innerHTML = `
+                    <div style="color: var(--text-color); text-align: center; padding: 20px;">
+                        Loading video...
+                    </div>
+                `;
+                
+                // Use direct iframe embed
+                videoContainer.innerHTML = `
+                    <iframe src="https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0" 
+                            style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; picture-in-picture" 
+                            allowfullscreen></iframe>
+                `;
             }
             
             overlay.classList.add('active');
@@ -796,7 +790,7 @@
                 if (overlay) {
                     overlay.classList.remove('active');
                     document.body.style.overflow = 'auto';
-                    stopVideo();
+                    stopVideo(overlay);
                     currentLightbox = null;
                 }
             });
@@ -823,7 +817,7 @@
             const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
             
             // Stop current video
-            stopVideo();
+            stopVideo(currentOverlay);
             
             nextOverlay.style.transition = 'none';
             nextOverlay.classList.add('active');
@@ -840,55 +834,26 @@
                 const nextVideoId = nextLightbox.getAttribute('data-video-id');
                 
                 if (nextVideoId && nextVideoContainer) {
-                    nextVideoContainer.innerHTML = `<div id="vimeo-player-${nextVideoId}" style="width:100%;height:100%;"></div>`;
+                    console.log(`Navigating to Vimeo video ID: ${nextVideoId}`);
                     
-                    // Initialize Vimeo player
-                    try {
-                        vimeoPlayer = new Vimeo.Player(`vimeo-player-${nextVideoId}`, {
-                            id: parseInt(nextVideoId),
-                            width: '100%',
-                            height: '100%',
-                            autoplay: true,
-                            responsive: true,
-                            title: false,
-                            byline: false,
-                            portrait: false
-                        });
-                        
-                        // Handle errors
-                        vimeoPlayer.on('error', function(error) {
-                            console.error('Vimeo player error:', error);
-                            nextVideoContainer.innerHTML = `<div style="color: var(--text-color); text-align: center; padding: 20px;">
-                                Error loading video. Please check the video ID and privacy settings.
-                            </div>`;
-                        });
-                        
-                        // Log when ready
-                        vimeoPlayer.on('loaded', function() {
-                            console.log('Vimeo player loaded successfully');
-                            vimeoPlayer.play().catch(function(error) {
-                                console.error('Play error:', error);
-                            });
-                        });
-                    } catch (e) {
-                        console.error('Error initializing Vimeo player:', e);
-                        nextVideoContainer.innerHTML = `<div style="color: var(--text-color); text-align: center; padding: 20px;">
-                            Error initializing video player. Please try again.
-                        </div>`;
-                    }
+                    // Use direct iframe embed
+                    nextVideoContainer.innerHTML = `
+                        <iframe src="https://player.vimeo.com/video/${nextVideoId}?autoplay=1&title=0&byline=0&portrait=0" 
+                                style="position:absolute;top:0;left:0;width:100%;height:100%;" 
+                                frameborder="0" 
+                                allow="autoplay; fullscreen; picture-in-picture" 
+                                allowfullscreen></iframe>
+                    `;
                 }
             }, 50);
         }
 
-        function stopVideo() {
-            if (vimeoPlayer) {
-                try {
-                    vimeoPlayer.pause();
-                    vimeoPlayer.destroy();
-                } catch (e) {
-                    console.error('Error stopping video:', e);
+        function stopVideo(overlay) {
+            if (overlay) {
+                const videoContainer = overlay.querySelector('.video-container');
+                if (videoContainer) {
+                    videoContainer.innerHTML = '';
                 }
-                vimeoPlayer = null;
             }
         }
 
@@ -900,7 +865,7 @@
                 if (activeOverlay) {
                     activeOverlay.classList.remove('active');
                     document.body.style.overflow = 'auto';
-                    stopVideo();
+                    stopVideo(activeOverlay);
                     currentLightbox = null;
                 }
             } else if (event.key === 'ArrowLeft') {
@@ -914,7 +879,7 @@
             if (event.target.classList.contains('lightbox-overlay')) {
                 event.target.classList.remove('active');
                 document.body.style.overflow = 'auto';
-                stopVideo();
+                stopVideo(event.target);
                 currentLightbox = null;
             }
         });
