@@ -4,24 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Current Work: 1984</title>
+    
+    <!-- External Styles -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Standard favicon -->
-<link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <link rel="manifest" href="/images/favicon.png">
 
-<!-- For iOS devices -->
-<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
-
-<!-- For Android devices -->
-<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
-
-<!-- For modern browsers -->
-<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
-
-<!-- Web manifest for PWA support -->
-<link rel="manifest" href="/images/favicon.png">
     <style>
+        /* CSS Variables */
         :root {
             --bg-color: #fff;
             --bg-color-rgb: 255, 255, 255;
@@ -39,15 +36,13 @@
             --bg-color: #121212;
             --bg-color-rgb: 18, 18, 18;
             --text-color: #e0e0e0;
-            --accent-color: #FF7F50;
-            --accent-glow: rgba(255, 127, 80, 0.8);
-            --accent-glow-secondary: rgba(255, 127, 80, 0.6);
             --border-color: #333;
             --lightbox-bg: rgba(18, 18, 18, 0.95);
             --nav-bg: #1e1e1e;
             --shadow-color: rgba(0, 0, 0, 0.5);
         }
 
+        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -60,32 +55,30 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             transition: background-color 0.3s ease, color 0.3s ease;
+            opacity: 0;
+            transition: opacity 1s ease-in;
         }
-     
-        body {
-        opacity: 0;
-        transition: opacity 1s ease-in;
-    }
-    
-    body.loaded {
-        opacity: 1;
-    }
 
+        body.loaded {
+            opacity: 1;
+        }
+
+        /* Navigation */
         nav {
-    background-color: var(--bg-color);
-    padding: 2rem 30px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-nav.scrolled {
-    background-color: rgba(var(--bg-color-rgb, 255, 255, 255), 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 10px var(--nav-shadow);
-}
+            background-color: var(--bg-color);
+            padding: 2rem 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        nav.scrolled {
+            background-color: rgba(var(--bg-color-rgb), 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
 
         .nav-container {
             max-width: calc(100% - 60px);
@@ -95,13 +88,12 @@ nav.scrolled {
             align-items: center;
         }
 
+        /* Logo */
         .logo {
-            display: block;
-            transition: all 0.3s ease;
             position: relative;
             width: 150px;
             height: 75px;
-            margin-left: 0;
+            transition: all 0.3s ease;
         }
 
         .logo img {
@@ -120,11 +112,12 @@ nav.scrolled {
         .logo:hover .logo-default { opacity: 0; }
         .logo:hover .logo-hover {
             opacity: 1;
-            filter: drop-shadow(0 0 5px rgba(255, 127, 80, 0.8))
-                   drop-shadow(0 0 10px rgba(255, 127, 80, 0.6))
-                   drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+            filter: drop-shadow(0 0 5px var(--accent-glow))
+                    drop-shadow(0 0 10px var(--accent-glow-secondary))
+                    drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
         }
 
+        /* Nav Links */
         .nav-links {
             display: flex;
             gap: 2rem;
@@ -149,9 +142,8 @@ nav.scrolled {
 
         .nav-links a:hover {
             color: var(--accent-color);
-            text-shadow:
-                0 0 10px var(--accent-glow),
-                0 0 20px var(--accent-glow-secondary);
+            text-shadow: 0 0 10px var(--accent-glow),
+                        0 0 20px var(--accent-glow-secondary);
         }
 
         .nav-links a span {
@@ -180,6 +172,7 @@ nav.scrolled {
             transform-origin: left;
         }
 
+        /* Hamburger */
         .hamburger {
             display: none;
             cursor: pointer;
@@ -195,7 +188,7 @@ nav.scrolled {
             transition: all 0.3s ease;
         }
 
-        /* Theme toggle styling */
+        /* Theme Toggle */
         .theme-toggle {
             cursor: pointer;
             margin-left: 1.5rem;
@@ -206,50 +199,99 @@ nav.scrolled {
 
         .theme-toggle:hover {
             color: var(--accent-color);
-            text-shadow:
-                0 0 10px var(--accent-glow),
-                0 0 20px var(--accent-glow-secondary);
+            text-shadow: 0 0 10px var(--accent-glow),
+                        0 0 20px var(--accent-glow-secondary);
         }
 
-        .theme-toggle .fa-sun {
-            display: none;
-        }
+        .theme-toggle .fa-sun { display: none; }
+        .theme-toggle .fa-moon { display: inline-block; }
+        [data-theme="dark"] .theme-toggle .fa-sun { display: inline-block; }
+        [data-theme="dark"] .theme-toggle .fa-moon { display: none; }
 
-        .theme-toggle .fa-moon {
-            display: inline-block;
-        }
-
-        [data-theme="dark"] .theme-toggle .fa-sun {
-            display: inline-block;
-        }
-
-        [data-theme="dark"] .theme-toggle .fa-moon {
-            display: none;
-        }
-
+        /* Main Content */
         .container {
             margin-top: 50px;
             padding: 20px 30px;
         }
-        
 
-        /* Updated Gallery/Masonry Grid Styles */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            margin-left: 90px;
+            color: var(--text-color);
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end),
+                      caret 6.5s step-end forwards;
+            text-shadow: 0 0 20px var(--accent-glow-secondary);
+        }
+
+        .section-body {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin: 0 90px 30px;
+            color: var(--text-color);
+            overflow: hidden;
+            animation: typing-body 3.5s steps(40, end),
+                      caret 6.5s step-end forwards;
+            text-shadow: 0 0 20px var(--accent-glow-secondary);
+        }
+
+        .section-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 40px auto;
+            width: 100%;
+        }
+
+        /* Animations */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes typing-body {
+            from { width: 0 }
+            to { width: 35% }
+        }
+
+        @keyframes caret {
+            0%, 50% { border-right: 3px solid var(--accent-color); }
+            50.1%, 100% { border-right: none; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+
+        .fade-in.visible { opacity: 1; }
+
+        img.fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        img.fade-in.visible { opacity: 1; }
+
+        /* Gallery */
         .gallery {
-        column-count: 5;
-        column-gap: 30px;
-        padding: 20px 75px; /* Changed from 20px 30px to 20px 75px */
-    }
+            column-count: 5;
+            column-gap: 30px;
+            padding: 20px 75px;
+        }
 
         .image-container {
             position: relative;
-            break-inside: avoid; /* Prevents images from breaking across columns */
-            margin-bottom: 30px; /* Increased spacing between rows */
+            break-inside: avoid;
+            margin-bottom: 30px;
             cursor: pointer;
             overflow: hidden;
             border-radius: 4px;
             box-shadow: 0 4px 8px var(--shadow-color);
             transition: box-shadow 0.3s ease;
-            display: inline-block; /* Important for masonry layout */
+            display: inline-block;
             width: 100%;
         }
 
@@ -260,94 +302,12 @@ nav.scrolled {
         .image-container::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            inset: 0;
             background: rgba(255, 255, 255, 0.3);
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: 1;
         }
-        .section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    margin-left: 90px;
-    position: relative;
-    display: inline-block;
-    color: var(--text-color);
-    overflow: hidden;
-    white-space: nowrap;
-    /* Removed border-right from here */
-    animation: typing 3.5s steps(40, end),
-               caret 6.5s step-end forwards; /* Total duration: 3.5s typing + 3s caret */
-    text-shadow: 0 0 20px var(--accent-glow-secondary);
-}
-
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-}
-
-@keyframes caret {
-    0%, 50% { border-right: 3px solid var(--accent-color); }
-    50.1%, 100% { border-right: none; }
-}
-
-.section-body {
-    font-size: 1.25rem;
-    font-weight: 400;
-    margin-bottom: 30px;
-    margin-left: 90px;
-    margin-right: 90px;
-    position: relative;
-    display: inline-block;
-    color: var(--text-color);
-    overflow: hidden;
-    white-space: wrap;
-    /* Removed border-right from here */
-    animation: typing 3.5s steps(40, end),
-               caret 6.5s step-end forwards; /* Total: 3.5s typing + 3s caret */
-    text-shadow: 0 0 20px var(--accent-glow-secondary);
-}
-
-@keyframes typing {
-    from { width: 0 }
-    to { width: 35% }
-}
-
-@keyframes caret {
-    0%, 50% { border-right: 3px solid var(--accent-color); }
-    50.1%, 100% { border-right: none; }
-}
-
-        .section-divider {
-    height: 1px;
-    background-color: var(--border-color);
-    margin: 40px auto;
-    width: 100%;
-    
-}
-
-.fade-in {
-    opacity: 0;
-    transition: opacity 0.8s ease-in;
-}
-
-.fade-in.visible {
-    opacity: 1;
-}
-
-/* Optional: Add this if you want to fade in images specifically */
-img.fade-in {
-    opacity: 0;
-    transition: opacity 1s ease-in;
-}
-
-img.fade-in.visible {
-    opacity: 1;
-}
 
         [data-theme="dark"] .image-container::before {
             background: rgba(0, 0, 0, 0.3);
@@ -359,8 +319,8 @@ img.fade-in.visible {
 
         .thumbnail {
             width: 100%;
-            height: auto; /* Changed from 100% to auto to respect native resolution */
-            object-fit: contain; /* Changed from cover to contain */
+            height: auto;
+            object-fit: contain;
             transform: scale(1);
             transition: transform 0.3s ease;
             display: block;
@@ -370,31 +330,10 @@ img.fade-in.visible {
             transform: scale(1.05);
         }
 
-        /* Responsive adjustments for the masonry grid */
-        @media (max-width: 1200px) {
-            .gallery {
-                column-count: 3;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .gallery {
-                column-count: 2;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .gallery {
-                column-count: 1;
-            }
-        }
-
+        /* Lightbox */
         .lightbox-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background-color: var(--lightbox-bg);
             opacity: 0;
             visibility: hidden;
@@ -424,6 +363,7 @@ img.fade-in.visible {
             display: flex;
             flex-direction: column;
             align-items: center;
+            pointer-events: none;
         }
 
         .lightbox-image {
@@ -432,6 +372,41 @@ img.fade-in.visible {
             object-fit: contain;
             border-radius: 4px;
             box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .lightbox-video {
+            max-width: 60vw;
+            max-height: 75vh;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            pointer-events: auto;
+        }
+
+        .video-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            z-index: 1003;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
         }
 
         .close-button {
@@ -449,6 +424,7 @@ img.fade-in.visible {
             justify-content: center;
             transition: all 0.3s ease;
             z-index: 1002;
+            pointer-events: auto;
         }
 
         .close-button:hover {
@@ -462,26 +438,18 @@ img.fade-in.visible {
             max-width: 300px;
         }
 
-        .caption {
-            margin-top: 15px;
-            color: var(--text-color);
-            text-align: center;
-        }
-
         .lightbox-arrow {
             position: fixed;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
             font-size: 60px;
             font-weight: bold;
+            cursor: pointer;
             transition: all 0.3s ease;
             z-index: 1002;
             padding: 20px;
+            pointer-events: auto;
         }
 
         .lightbox-prev { left: 20px; }
@@ -490,92 +458,11 @@ img.fade-in.visible {
         .lightbox-arrow:hover {
             color: var(--accent-color);
         }
-        .lightbox-image-container {
-            pointer-events: none;
-        }
 
-        .lightbox-arrow, .close-button {
-            pointer-events: auto;
-        }
-
-        @media (max-width: 768px) {
-            .hamburger { display: block; }
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--nav-bg);
-                padding: 1rem;
-                flex-direction: column;
-                align-items: center;
-                box-shadow: 0 4px 8px var(--shadow-color);
-            }
-            .nav-links.active { display: flex !important; }
-            .lightbox-content { flex-direction: column; }
-            .lightbox-image { max-width: 85vw; }
-            .lightbox-text { max-width: 85vw; }
-        }
-/* Add video styling */
-.lightbox-video {
-    max-width: 60vw;
-    max-height: 75vh;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px var(--shadow-color);
-}
-
-/* Make video container clickable */
-.lightbox-image-container video {
-    pointer-events: auto;
-}
-
-/* Custom video controls */
-.video-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.fullscreen-btn {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
-    z-index: 1003;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.fullscreen-btn:hover {
-    background: rgba(0, 0, 0, 0.7);
-}
-
-/* Update pointer events to include fullscreen button */
-.lightbox-arrow, .close-button, .fullscreen-btn {
-    pointer-events: auto;
-}
-
-/* Responsive video */
-@media (max-width: 768px) {
-    .lightbox-video {
-        max-width: 85vw;
-    }
-}
-        
-        /* Footer Styles - consolidated and fixed */
+        /* Footer */
         footer {
             background-color: var(--bg-color);
             padding: 2rem 0;
-            width: 100%;
             margin-top: auto;
             border-top: 1px solid var(--border-color);
         }
@@ -591,7 +478,7 @@ img.fade-in.visible {
 
         .footer-info {
             flex: 1;
-            min-width: 250px;
+            min-weight: 250px;
             margin-bottom: 1rem;
         }
 
@@ -664,7 +551,7 @@ img.fade-in.visible {
 
         .copyright {
             width: 100%;
-            text-align: center;
+ Rousseau            text-align: center;
             margin-top: 2rem;
             padding-top: 1rem;
             border-top: 1px solid var(--border-color);
@@ -673,24 +560,40 @@ img.fade-in.visible {
             opacity: 0.8;
         }
 
-        /* Dark theme adjustments */
-        [data-theme="dark"] footer {
-            background-color: var(--bg-color);
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .gallery { column-count: 3; }
         }
 
-        /* Responsive Footer */
+        @media (max-width: 900px) {
+            .gallery { column-count: 2; }
+        }
+
         @media (max-width: 768px) {
-            .footer-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .footer-nav {
+            .hamburger { display: block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
                 width: 100%;
-                margin-top: 1.5rem;
+                background: var(--nav-bg);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+                box-shadow: 0 4px 8px var(--shadow-color);
             }
+            .nav-links.active { display: flex !important; }
+            .lightbox-content { flex-direction: column; }
+            .lightbox-image, .lightbox-video { max-width: 85vw; }
+            .lightbox-text { max-width: 85vw; }
+            .footer-container { flex-direction: column; align-items: flex-start; }
+            .footer-nav { width: 100%; margin-top: 1.5rem; }
         }
-        
+
+        @media (max-width: 600px) {
+            .gallery { column-count: 1; }
+        }
     </style>
 </head>
 <body>
@@ -717,15 +620,18 @@ img.fade-in.visible {
             </ul>
         </div>
     </nav>
-<br>
 
-<div class="container">
-    
-</div>      
-<div class="section-divider"></div>
-<h2 class="section-title">current work: 1984</h2>
-<br>
-<h1 class="section-body">My latest work, inspired by Orwell’s 1984, blends painting and digital media. Using looping animations, 3D models, and impasto paintings, I explore propaganda and truth manipulation. This Dada-influenced mix of digital collage and physicality reflects today’s fractured society and my evolving artistic voice.</h1>
+    <div class="container"></div>
+    <div class="section-divider"></div>
+    <h2 class="section-title">current work: 1984</h2>
+    <h1 class="section-body">
+        My latest work, inspired by Orwell’s 1984, blends painting and digital media. 
+        Using looping animations, 3D models, and impasto paintings, I explore 
+        propaganda and truth manipulation. This Dada-influenced mix of digital 
+        collage and physicality reflects today’s fractured society and my evolving 
+        artistic voice.
+    </h1>
+
 <div class="gallery full-width">
 <!-- Image 01 -->
 <div class="image-container">
@@ -1109,7 +1015,6 @@ img.fade-in.visible {
         <div class="footer-info">
             <h3>Bryan Robertson</h3>
             <p>Visual Artist based in Arizona</p>
-            
             <div class="social-links">
                 <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 <a href="#" title="Email"><i class="far fa-envelope"></i></a>
@@ -1124,7 +1029,6 @@ img.fade-in.visible {
                     <li><a href="digital.html">Digital Art</a></li>
                 </ul>
             </div>
-
             <div class="footer-nav-section">
                 <h4>About</h4>
                 <ul>
@@ -1132,7 +1036,6 @@ img.fade-in.visible {
                     <li><a href="statement.html">Artist Statement</a></li>
                 </ul>
             </div>
-
             <div class="footer-nav-section">
                 <h4>Connect</h4>
                 <ul>
@@ -1143,269 +1046,186 @@ img.fade-in.visible {
         </div>
 
         <div class="copyright">
-            &copy; 2025 Bryan Robertson. All rights reserved.
+            © 2025 Bryan Robertson. All rights reserved.
         </div>
     </div>
 </footer>
+
 <script>
     let currentLightbox = null;
 
-document.querySelectorAll('.image-container').forEach(container => {
-    container.addEventListener('click', () => openLightbox(container));
-});
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelector('.nav-links');
+        const hamburger = document.querySelector('.hamburger');
+        const themeToggle = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
 
-function openLightbox(container) {
-    const overlay = container.querySelector('.lightbox-overlay');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    currentLightbox = container;
-    
-    // Play video if it exists
-    const video = overlay.querySelector('video');
-    if (video) {
-        video.play();
-        
-        // Set up fullscreen button for this video
-        const fullscreenBtn = overlay.querySelector('.fullscreen-btn');
-        if (fullscreenBtn) {
-            fullscreenBtn.onclick = function(e) {
-                e.stopPropagation();
-                toggleFullScreen(video);
-            };
-        }
-    }
-}
+        // Page load animations
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+        }, 100);
+        setTimeout(() => {
+            navLinks.classList.add('loaded');
+        }, 300);
 
-// Function to toggle fullscreen
-function toggleFullScreen(videoElement) {
-    if (!document.fullscreenElement) {
-        // Enter fullscreen
-        if (videoElement.requestFullscreen) {
-            videoElement.requestFullscreen();
-        } else if (videoElement.webkitRequestFullscreen) { /* Safari */
-            videoElement.webkitRequestFullscreen();
-        } else if (videoElement.msRequestFullscreen) { /* IE11 */
-            videoElement.msRequestFullscreen();
-        }
-    } else {
-        // Exit fullscreen
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) { /* Safari */
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE11 */
-            document.msExitFullscreen();
-        }
-    }
-}
+        // Hamburger menu
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
 
-// Listen for fullscreen change events
-document.addEventListener('fullscreenchange', updateFullscreenButton);
-document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
-document.addEventListener('mozfullscreenchange', updateFullscreenButton);
-document.addEventListener('MSFullscreenChange', updateFullscreenButton);
+        // Theme toggle
+        themeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            const newTheme = htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
 
-function updateFullscreenButton() {
-    const fullscreenBtns = document.querySelectorAll('.fullscreen-btn');
-    fullscreenBtns.forEach(btn => {
-        const icon = btn.querySelector('i');
-        if (document.fullscreenElement) {
-            icon.classList.remove('fa-expand');
-            icon.classList.add('fa-compress');
-        } else {
-            icon.classList.remove('fa-compress');
-            icon.classList.add('fa-expand');
-        }
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        htmlElement.setAttribute('data-theme', savedTheme);
+
+        // Lightbox functionality
+        document.querySelectorAll('.image-container').forEach(container => {
+            container.addEventListener('click', () => openLightbox(container));
+        });
     });
-}
 
-document.querySelectorAll('.close-button').forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const overlay = e.target.closest('.lightbox-overlay');
-        if (overlay) {
-            // Pause video if it exists
+    function openLightbox(container) {
+        const overlay = container.querySelector('.lightbox-overlay');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        currentLightbox = container;
+
+        const video = overlay.querySelector('video');
+        if (video) {
+            video.play();
+            const fullscreenBtn = overlay.querySelector('.fullscreen-btn');
+            if (fullscreenBtn) {
+                fullscreenBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    toggleFullScreen(video);
+                };
+            }
+        }
+    }
+
+    function toggleFullScreen(videoElement) {
+        if (!document.fullscreenElement) {
+            videoElement.requestFullscreen?.() || 
+            videoElement.webkitRequestFullscreen?.() || 
+            videoElement.msRequestFullscreen?.();
+        } else {
+            document.exitFullscreen?.() || 
+            document.webkitExitFullscreen?.() || 
+            document.msExitFullscreen?.();
+        }
+    }
+
+    document.addEventListener('fullscreenchange', updateFullscreenButton);
+    function updateFullscreenButton() {
+        document.querySelectorAll('.fullscreen-btn').forEach(btn => {
+            const icon = btn.querySelector('i');
+            icon.classList.toggle('fa-expand', !document.fullscreenElement);
+            icon.classList.toggle('fa-compress', !!document.fullscreenElement);
+        });
+    }
+
+    document.querySelectorAll('.close-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const overlay = button.closest('.lightbox-overlay');
             const video = overlay.querySelector('video');
             if (video) {
                 video.pause();
-                
-                // Exit fullscreen if active
-                if (document.fullscreenElement) {
-                    document.exitFullscreen();
-                }
+                if (document.fullscreenElement) document.exitFullscreen();
             }
-            
             overlay.classList.remove('active');
             document.body.style.overflow = 'auto';
             currentLightbox = null;
-        }
+        });
     });
-});
 
-document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
-    arrow.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const direction = arrow.classList.contains('lightbox-prev') ? -1 : 1;
-        navigateLightbox(direction, e);
+    document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
+        arrow.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateLightbox(arrow.classList.contains('lightbox-prev') ? -1 : 1, e);
+        });
     });
-});
 
-function navigateLightbox(direction, event) {
-    event.stopPropagation();
-    if (!currentLightbox) return;
-    
-    // Exit fullscreen if active
-    if (document.fullscreenElement) {
-        document.exitFullscreen();
-    }
-    
-    // Pause current video if it exists
-    const currentVideo = currentLightbox.querySelector('video');
-    if (currentVideo) {
-        currentVideo.pause();
-    }
-    
-    const containers = Array.from(document.querySelectorAll('.image-container'));
-    const currentIndex = containers.indexOf(currentLightbox);
-    const nextIndex = (currentIndex + direction + containers.length) % containers.length;
-    
-    // Get next lightbox
-    const nextLightbox = containers[nextIndex];
-    
-    // Get current and next overlay elements
-    const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
-    const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
-    
-    // Show next overlay without animation
-    nextOverlay.style.transition = 'none';
-    nextOverlay.classList.add('active');
-    
-    // Force reflow to apply the style changes
-    void nextOverlay.offsetWidth;
-    
-    // Restore transition
-    nextOverlay.style.transition = '';
-    
-    // Play next video if it exists and set up fullscreen button
-    const nextVideo = nextLightbox.querySelector('video');
-    if (nextVideo) {
-        nextVideo.play();
-        
-        const fullscreenBtn = nextLightbox.querySelector('.fullscreen-btn');
-        if (fullscreenBtn) {
-            fullscreenBtn.onclick = function(e) {
-                e.stopPropagation();
-                toggleFullScreen(nextVideo);
-            };
-        }
-    }
-    
-    // Update current lightbox reference
-    currentLightbox = nextLightbox;
-    
-    // Hide previous overlay after a small delay
-    setTimeout(() => {
-        currentOverlay.classList.remove('active');
-    }, 50);
-}
+    function navigateLightbox(direction, event) {
+        if (!currentLightbox) return;
+        event.stopPropagation();
 
-document.addEventListener('keydown', function(event) {
-    if (!currentLightbox) return;
-    
-    if (event.key === 'Escape' && !document.fullscreenElement) {
-        const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
-        if (activeOverlay) {
-            // Pause video if it exists
-            const video = activeOverlay.querySelector('video');
-            if (video) {
-                video.pause();
+        if (document.fullscreenElement) document.exitFullscreen();
+        const currentVideo = currentLightbox.querySelector('video');
+        if (currentVideo) currentVideo.pause();
+
+        const containers = Array.from(document.querySelectorAll('.image-container'));
+        const currentIndex = containers.indexOf(currentLightbox);
+        const nextIndex = (currentIndex + direction + containers.length) % containers.length;
+        const nextLightbox = containers[nextIndex];
+
+        const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
+        const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
+
+        nextOverlay.style.transition = 'none';
+        nextOverlay.classList.add('active');
+        void nextOverlay.offsetWidth;
+        nextOverlay.style.transition = '';
+
+        const nextVideo = nextLightbox.querySelector('video');
+        if (nextVideo) {
+            nextVideo.play();
+            const fullscreenBtn = nextLightbox.querySelector('.fullscreen-btn');
+            if (fullscreenBtn) {
+                fullscreenBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    toggleFullScreen(nextVideo);
+                };
             }
-            
+        }
+
+        currentLightbox = nextLightbox;
+        setTimeout(() => currentOverlay.classList.remove('active'), 50);
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if (!currentLightbox) return;
+        const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
+        
+        if (event.key === 'Escape' && !document.fullscreenElement) {
+            const video = activeOverlay.querySelector('video');
+            if (video) video.pause();
             activeOverlay.classList.remove('active');
             document.body.style.overflow = 'auto';
             currentLightbox = null;
-        }
-    } else if (event.key === 'ArrowLeft') {
-        navigateLightbox(-1, event);
-    } else if (event.key === 'ArrowRight') {
-        navigateLightbox(1, event);
-    } else if (event.key === 'f') {
-        // 'f' key for fullscreen
-        const video = currentLightbox.querySelector('video');
-        if (video) {
-            toggleFullScreen(video);
-        }
-    }
-});
-
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('lightbox-overlay')) {
-        // Exit fullscreen if active
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        }
-        
-        // Pause video if it exists
-        const video = event.target.querySelector('video');
-        if (video) {
-            video.pause();
-        }
-        
-        event.target.classList.remove('active');
-        document.body.style.overflow = 'auto';
-        currentLightbox = null;
-    }
-});
-
-// Prevent right-click on videos
-document.addEventListener('contextmenu', function(e) {
-    if (e.target.tagName === 'VIDEO') {
-        e.preventDefault();
-        return false;
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.querySelector('.nav-links');
-    const hamburger = document.querySelector('.hamburger');
-    const themeToggle = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
-
-    // Add page fade-in effect
-    setTimeout(() => {
-        document.body.classList.add('loaded');
-    }, 100);
-
-    setTimeout(() => {
-        navLinks.classList.add('loaded');
-    }, 300);
-
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navLinks.classList.toggle('active');
-    });
-
-    // Theme toggle functionality
-    themeToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (htmlElement.getAttribute('data-theme') === 'dark') {
-            htmlElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-        } else {
-            htmlElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
+        } else if (event.key === 'ArrowLeft') {
+            navigateLightbox(-1, event);
+        } else if (event.key === 'ArrowRight') {
+            navigateLightbox(1, event);
+        } else if (event.key === 'f') {
+            const video = currentLightbox.querySelector('video');
+            if (video) toggleFullScreen(video);
         }
     });
 
-    // Check for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        htmlElement.setAttribute('data-theme', savedTheme);
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        // If no saved preference, use system preference
-        htmlElement.setAttribute('data-theme', 'dark');
-    }
-});
+    document.addEventListener('click', (event) => {
+        if (event.target.classList.contains('lightbox-overlay')) {
+            if (document.fullscreenElement) document.exitFullscreen();
+            const video = event.target.querySelector('video');
+            if (video) video.pause();
+            event.target.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentLightbox = null;
+        }
+    });
+
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'VIDEO') e.preventDefault();
+    });
 </script>
 </body>
 </html>
