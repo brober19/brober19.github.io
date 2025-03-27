@@ -749,28 +749,19 @@
 
             // Download PDF functionality
             downloadButton.addEventListener('click', () => {
-                if (!pdfData) {
-                    console.error('PDF data not available for download');
-                    return;
-                }
-                
-                // Create blob from the PDF data
-                const blob = new Blob([pdfData], { type: 'application/pdf' });
-                const url = URL.createObjectURL(blob);
-                
-                // Create temporary link and trigger download
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'document.pdf'; // Name for the downloaded file
-                document.body.appendChild(a);
-                a.click();
-                
-                // Clean up
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                }, 100);
-            });
+    // Direct download approach using the original PDF URL
+    const a = document.createElement('a');
+    a.href = pdfUrl;
+    a.download = 'student.pdf'; // Use the original filename
+    a.target = '_blank'; // Open in new tab as fallback
+    document.body.appendChild(a);
+    a.click();
+    
+    // Clean up
+    setTimeout(() => {
+        document.body.removeChild(a);
+    }, 100);
+});
 
             // Load PDF
             pdfUrl = './student.pdf'; // Ensure correct relative path
