@@ -16,3 +16,7 @@ AddType application/pdf .pdf
 <FilesMatch "\.(?i:pdf)$">
     Header set Cache-Control "no-store, no-cache, must-revalidate"
 </FilesMatch>
+<Files "student.pdf">
+    Header set Content-Disposition "attachment; filename=student.pdf"
+    Header set Content-Type "application/pdf"
+</Files>
