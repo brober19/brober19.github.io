@@ -225,7 +225,7 @@
         }
         
         .pdf-container {
-            max-width: 1000px;
+            max-width: 1000px; /* Increased from default to 1000px */
             width: 100%;
             background-color: var(--container-bg);
             padding: 2rem;
@@ -603,8 +603,11 @@
             // PDF Viewer Logic
             const pdfViewer = document.getElementById('pdf-viewer');
             const currentPageSpan = document.getElementById('current-page');
+            const downloadButton = document.getElementById('download-pdf');
             let pdfDoc = null;
             let pdfScale = 1.0; // Initial scale
+            let pdfUrl = './student.pdf'; // Store PDF URL for download
+            let pdfData = null; // Store PDF data for download
             
             // Calculate appropriate scale based on container width
             function calculateScale(containerWidth, pdfWidth) {
@@ -629,7 +632,7 @@
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     
-                    const pdfData = await response.arrayBuffer();
+                    pdfData = await response.arrayBuffer();
                     const loadingTask = pdfjsLib.getDocument({ data: pdfData });
                     pdfDoc = await loadingTask.promise;
                     
@@ -744,19 +747,33 @@
                 currentPageSpan.textContent = mostVisiblePage;
             }
 
-            document.getElementById('download-pdf').addEventListener('click', (e) => {
-                e.preventDefault();
-                const url = 'student-work.pdf';
+            // Download PDF functionality
+            downloadButton.addEventListener('click', () => {
+                if (!pdfData) {
+                    console.error('PDF data not available for download');
+                    return;
+                }
+                
+                // Create blob from the PDF data
+                const blob = new Blob([pdfData], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                
+                // Create temporary link and trigger download
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'document.pdf';
+                a.download = 'document.pdf'; // Name for the downloaded file
                 document.body.appendChild(a);
                 a.click();
-                document.body.removeChild(a);
+                
+                // Clean up
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 100);
             });
 
             // Load PDF
-            const pdfUrl = './student.pdf'; // Ensure correct relative path
+            pdfUrl = './student.pdf'; // Ensure correct relative path
             loadPDF(pdfUrl);
         });
     </script>
