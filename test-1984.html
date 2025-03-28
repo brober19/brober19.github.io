@@ -70,7 +70,7 @@ body.loaded {
     height: 100%;
     background-color: var(--bg-color);
     display: flex;
-    flex-direction: column; /* Stack text and bar vertically */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 2000;
@@ -108,35 +108,51 @@ body.loaded {
         0 0 10px var(--accent-glow),
         0 0 20px var(--accent-glow-secondary),
         0 0 30px rgba(255, 127, 80, 0.3);
-    animation: glow 1.5s infinite alternate;
+    animation: 
+        typing 1.5s steps(7, end) forwards, /* 7 steps for "Loading" */
+        caret 0.75s step-end infinite, /* Blinking caret */
+        glow 1.5s infinite alternate; /* Retain glow */
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 4px solid var(--accent-color); /* Caret */
 }
 
 /* Loading Bar Styles */
 .loading-bar {
-    width: 300px; /* Fixed width for consistency */
+    width: 300px;
     height: 10px;
-    background: rgba(255, 255, 255, 0.2); /* Light background for light theme */
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
     overflow: hidden;
-    margin-top: 20px; /* Space below text */
+    margin-top: 20px;
     position: relative;
     z-index: 2;
     box-shadow: 0 0 10px var(--shadow-color);
 }
 
 [data-theme="dark"] .loading-bar {
-    background: rgba(0, 0, 0, 0.3); /* Darker background for dark theme */
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .loading-bar-fill {
-    width: 0%; /* Starts at 0 */
+    width: 0%;
     height: 100%;
-    background: var(--accent-color); /* Coral fill */
-    transition: width 0.3s ease; /* Smooth fill animation */
+    background: var(--accent-color);
+    transition: width 0.3s ease;
     box-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow-secondary);
 }
 
 /* Animations */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes caret {
+    0%, 50% { border-right-color: var(--accent-color); }
+    50.1%, 100% { border-right-color: transparent; }
+}
+
 @keyframes glow {
     from {
         text-shadow: 
@@ -707,7 +723,7 @@ body.loaded {
 <body>
     <!-- Loading Overlay with "Loading" Text and Bar -->
     <div class="loading-overlay">
-        <div class="loading-text">Loading</div>
+        <div class="loading-text">Loading... Thank you for your patience as the digital art loads. </div>
         <div class="loading-bar">
             <div class="loading-bar-fill"></div>
         </div>
