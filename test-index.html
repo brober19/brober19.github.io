@@ -4,23 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artist Portfolio</title>
-      <!-- Standard favicon -->
-<link rel="icon" type="image/x-icon" href="/images/favicon.png">
-
-<!-- For iOS devices -->
-<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
-
-<!-- For Android devices -->
-<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
-
-<!-- For modern browsers -->
-<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
-
-<!-- Web manifest for PWA support -->
-<link rel="manifest" href="/images/favicon.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Standard favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <!-- For iOS devices -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+    <!-- For Android devices -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+    <!-- For modern browsers -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <!-- Web manifest for PWA support -->
+    <link rel="manifest" href="/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* Reset and Base Styles */
         * {
@@ -33,37 +29,33 @@
             font-family: 'Helvetica Neue', sans-serif;
             line-height: 1.6;
             background: #fff;
-            color: #000; /* Changed text color to black */
+            color: #000;
             overflow-x: hidden;
             min-height: 100vh;
             opacity: 0;
             animation: fadeIn 1s ease-in forwards;
             display: flex;
             flex-direction: column;
-            cursor: none; /* Hide default cursor */
+            cursor: auto; /* Changed to auto for normal cursor */
         }
         
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         /* Custom Cursor */
-        .brush-cursor {
+        .cursor {
             position: fixed;
-            width: 80px;
-            height: 80px;
+            width: 10px; /* Reduced from 20px to 10px */
+            height: 10px; /* Reduced from 20px to 10px */
             border-radius: 50%;
-            background: transparent;
+            background-color: #FF7F50;
             pointer-events: none;
             z-index: 9999;
-            mix-blend-mode: destination-out;
             transform: translate(-50%, -50%);
-            transition: transform 0.05s ease-out;
+            transition: width 0.3s, height 0.3s;
+            mix-blend-mode: difference;
         }
         
         /* Navigation Styles */
@@ -134,7 +126,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #000; /* Changed to black */
+            color: #000;
             font-size: 1.1rem;
             padding: 0.5rem 0;
             transition: all 0.3s ease;
@@ -193,7 +185,7 @@
             display: block;
             width: 25px;
             height: 3px;
-            background: #000; /* Changed to black */
+            background: #000;
             margin: 5px 0;
             transition: all 0.3s ease;
         }
@@ -210,25 +202,25 @@
 
         .hero-image {
             position: absolute;
-            top: -25%;
-            left: -25%;
-            width: 150%;
-            height: 150%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
-            transition: transform 0.2s ease-out;
         }
 
         .hero-image::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(255, 255, 255, 0.85); /* White opaque overlay */
+            background: rgba(255, 255, 255, 0.85);
         }
 
         .hero-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            opacity: 0.15; /* Make the base image very faint */
         }
         
         /* Image reveal canvas */
@@ -254,18 +246,18 @@
             font-size: 4rem;
             margin-bottom: 1rem;
             font-weight: 300;
-            letter-spacing: -0.02em; /* Further reduced to bring letters much closer together */
+            letter-spacing: -0.02em;
             text-transform: uppercase;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            color: #000; /* Changed to black */
+            color: #000;
         }
         
         /* Individual letter glow effect */
         .glow-letter {
             display: inline-block;
             transition: color 0.3s ease, text-shadow 0.3s ease;
-            cursor: none;
-            letter-spacing: -0.05em; /* Changed from positive to negative spacing for tighter letters */
+            cursor: auto; /* Changed to auto for normal cursor */
+            letter-spacing: -0.05em;
         }
 
         .glow-letter:hover {
@@ -336,7 +328,7 @@
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
             opacity: 0.8;
-            color: #000; /* Changed to black */
+            color: #000;
         }
 
         .social-links {
@@ -346,7 +338,7 @@
         }
 
         .social-links a {
-            color: #000; /* Changed to black */
+            color: #000;
             font-size: 1.2rem;
             transition: color 0.3s ease;
             text-decoration: none;
@@ -382,7 +374,7 @@
         }
 
         .footer-nav-section ul li a {
-            color: #000; /* Changed to black */
+            color: #000;
             text-decoration: none;
             font-size: 0.9rem;
             opacity: 0.8;
@@ -402,20 +394,14 @@
             border-top: 1px solid rgba(0, 0, 0, 0.1);
             font-size: 0.8rem;
             opacity: 0.6;
-            color: #000; /* Changed to black */
+            color: #000;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            font-weight: 300;
-            letter-spacing: -0.02em; /* Further reduced to bring letters much closer together */
-            text-transform: uppercase;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            color: #000; /* Changed to black */
-        }
+                font-size: 3rem;
+            }
 
             .hamburger {
                 display: block;
@@ -427,7 +413,7 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: rgba(255, 255, 255, 0.9); /* Changed to white */
+                background: rgba(255, 255, 255, 0.9);
                 padding: 1rem;
                 flex-direction: column;
                 align-items: center;
@@ -462,7 +448,7 @@
     </style>
 </head>
 <body>
-    <div class="brush-cursor"></div>
+    <div class="cursor"></div>
     
     <nav>
         <div class="nav-container">
@@ -486,7 +472,7 @@
 
     <section class="hero-section">
         <div class="hero-image">
-            <img src="images/G Gallery_1.JPG" alt="Hero Image">
+            <img src="https://placehold.co/1920x1080" alt="Hero Image">
         </div>
         <canvas class="reveal-canvas"></canvas>
         <div class="content">
@@ -559,23 +545,20 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const links = document.querySelectorAll('.nav-links a');
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
-            const heroImage = document.querySelector('.hero-image');
-            const content = document.querySelector('.content');
-            const brushCursor = document.querySelector('.brush-cursor');
+            const cursor = document.querySelector('.cursor');
             
             // Canvas setup for image reveal
             const canvas = document.querySelector('.reveal-canvas');
             const ctx = canvas.getContext('2d');
             const heroSection = document.querySelector('.hero-section');
-            const originalImage = document.querySelector('.hero-image img');
+            const heroImage = document.querySelector('.hero-image img');
             
             // Set canvas dimensions
             function resizeCanvas() {
-                canvas.width = heroSection.offsetWidth;
-                canvas.height = heroSection.offsetHeight;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
                 
                 // Clear the canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -585,167 +568,166 @@
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
             
-            // Load brush image
-            const brushImage = new Image();
-            brushImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNDAgMEM2Mi4wOTE0IDAgODAgMTcuOTA4NiA4MCA0MEM4MCA2Mi4wOTE0IDYyLjA5MTQgODAgNDAgODBDMTcuOTA4NiA4MCAwIDYyLjA5MTQgMCA0MEMwIDE3LjkwODYgMTcuOTA4NiAwIDQwIDBaIiBmaWxsPSIjMDAwIi8+PC9zdmc+';
+            // Load the image for the reveal effect
+            const revealImage = new Image();
+            revealImage.src = heroImage.src;
+            revealImage.onload = () => {
+                // Image is loaded and ready to use
+            };
             
-            // Store brush strokes and previous positions for trail effect
-            const brushStrokes = [];
-            const maxBrushStrokes = 45; // Increased to 45 (3x longer trail) // Increased from 5 to 15 for longer trail
-            let prevX = 0;
-            let prevY = 0;
-            let isFirstMove = true;
+            // Track mouse position and previous positions
+            let mouseX = 0;
+            let mouseY = 0;
+            let prevMouseX = 0;
+            let prevMouseY = 0;
+            
+            // Store cursor trail positions
+            const cursorTrail = [];
+            const maxTrailLength = 20;
             
             // Custom cursor movement
             document.addEventListener('mousemove', (e) => {
-                // Update brush cursor position
-                brushCursor.style.left = `${e.clientX}px`;
-                brushCursor.style.top = `${e.clientY}px`;
+                // Update cursor position
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                // Update custom cursor
+                cursor.style.left = `${mouseX}px`;
+                cursor.style.top = `${mouseY}px`;
+                
+                // Expand cursor on links and interactive elements
+                const target = e.target;
+                if (target.tagName === 'A' || target.tagName === 'BUTTON' || 
+                    target.classList.contains('glow-letter') || 
+                    target.parentElement.tagName === 'A') {
+                    cursor.style.width = '20px'; /* Reduced from 40px to 20px */
+                    cursor.style.height = '20px'; /* Reduced from 40px to 20px */
+                } else {
+                    cursor.style.width = '10px'; /* Reduced from 20px to 10px */
+                    cursor.style.height = '10px'; /* Reduced from 20px to 10px */
+                }
+                
+                // Add current position to trail
+                cursorTrail.push({ x: mouseX, y: mouseY });
+                
+                // Remove old positions if trail is too long
+                if (cursorTrail.length > maxTrailLength) {
+                    cursorTrail.shift();
+                }
                 
                 // Draw on canvas when mouse is over hero section
                 const heroRect = heroSection.getBoundingClientRect();
                 if (
-                    e.clientX >= heroRect.left && 
-                    e.clientX <= heroRect.right && 
-                    e.clientY >= heroRect.top && 
-                    e.clientY <= heroRect.bottom
+                    mouseX >= heroRect.left && 
+                    mouseX <= heroRect.right && 
+                    mouseY >= heroRect.top && 
+                    mouseY <= heroRect.bottom
                 ) {
-                    const x = e.clientX - heroRect.left;
-                    const y = e.clientY - heroRect.top;
-                    
-                    // For trail effect, add intermediate points between current and previous position
-                    if (!isFirstMove) {
-                        // Calculate distance between current and previous position
-                        const dx = x - prevX;
-                        const dy = y - prevY;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        // If distance is significant, add intermediate points for smoother trail
-                        if (distance > 10) {
-                            const steps = Math.floor(distance / 5);
-                            for (let i = 1; i <= steps; i++) {
-                                const ratio = i / (steps + 1);
-                                const intermediateX = prevX + dx * ratio;
-                                const intermediateY = prevY + dy * ratio;
-                                
-                                // Add intermediate brush stroke with reduced size
-                                brushStrokes.push({
-                                    x: intermediateX,
-                                    y: intermediateY,
-                                    opacity: 0.7,
-                                    size: 60 + (i * 2) // Gradually increase size
-                                });
-                            }
-                        }
-                    }
-                    
-                    // Add new brush stroke at current position
-                    brushStrokes.push({
-                        x: x,
-                        y: y,
-                        opacity: 1,
-                        size: 240 // Increased from 80 to 240 (3x larger) for more dramatic reveal
-                    });
-                    
-                    // Remove old brush strokes if we exceed the maximum
-                    while (brushStrokes.length > maxBrushStrokes) {
-                        brushStrokes.shift();
-                    }
-                    
                     // Clear the canvas
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     
-                    // Draw all brush strokes with their current opacity and size
-                    brushStrokes.forEach((stroke, index) => {
-                        // Decrease opacity of older strokes for fade-out effect
-                        stroke.opacity = 0.3 + ((index + 1) / brushStrokes.length) * 0.7;
+                    // Draw the cursor trail with varying sizes
+                    cursorTrail.forEach((pos, index) => {
+                        // Calculate size based on position in trail (newer positions are larger)
+                        const size = 25 + (index / cursorTrail.length) * 75; /* Reduced from 50+150 to 25+75 */
+                        const alpha = 0.3 + (index / cursorTrail.length) * 0.7;
                         
-                        ctx.globalAlpha = stroke.opacity;
-                        ctx.globalCompositeOperation = 'source-over';
-                        ctx.drawImage(
-                            brushImage, 
-                            stroke.x - (stroke.size / 2), 
-                            stroke.y - (stroke.size / 2), 
-                            stroke.size, 
-                            stroke.size
-                        );
+                        // Draw circle for reveal
+                        ctx.save();
+                        ctx.globalAlpha = alpha;
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, size, 0, Math.PI * 2);
+                        ctx.closePath();
+                        ctx.clip();
                         
-                        // Reveal the original image through the brush stroke
-                        ctx.globalCompositeOperation = 'source-in';
+                        // Draw the image inside the clipped area
+                        const imgRatio = revealImage.width / revealImage.height;
+                        const canvasRatio = canvas.width / canvas.height;
                         
-                        // Calculate the position of the original image relative to the canvas
-                        const imgX = (originalImage.offsetWidth - canvas.width) / -2;
-                        const imgY = (originalImage.offsetHeight - canvas.height) / -2;
+                        let drawWidth, drawHeight, offsetX, offsetY;
                         
-                        ctx.drawImage(originalImage, imgX, imgY, originalImage.offsetWidth, originalImage.offsetHeight);
-                    });
-                    
-                    // Reset global alpha
-                    ctx.globalAlpha = 1;
-                    
-                    // Update previous position for next move
-                    prevX = x;
-                    prevY = y;
-                    isFirstMove = false;
-                }
-
-                // Parallax effect
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
-
-                const moveX = (mouseX - 0.5) * 40;
-                const moveY = (mouseY - 0.5) * 40;
-
-                heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
-            });
-
-            // Function to gradually fade out brush strokes
-            function fadeOutBrushStrokes() {
-                if (brushStrokes.length > 0) {
-                    // Clear the canvas
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    
-                    // Draw and update all brush strokes
-                    brushStrokes.forEach((stroke, index) => {
-                        // Decrease opacity more slowly for trail effect
-                        stroke.opacity -= 0.005;
-                        
-                        if (stroke.opacity > 0) {
-                            ctx.globalAlpha = stroke.opacity;
-                            ctx.globalCompositeOperation = 'source-over';
-                            ctx.drawImage(
-                                brushImage, 
-                                stroke.x - (stroke.size / 2), 
-                                stroke.y - (stroke.size / 2), 
-                                stroke.size, 
-                                stroke.size
-                            );
-                            
-                            ctx.globalCompositeOperation = 'source-in';
-                            
-                            const imgX = (originalImage.offsetWidth - canvas.width) / -2;
-                            const imgY = (originalImage.offsetHeight - canvas.height) / -2;
-                            
-                            ctx.drawImage(originalImage, imgX, imgY, originalImage.offsetWidth, originalImage.offsetHeight);
+                        if (imgRatio > canvasRatio) {
+                            // Image is wider than canvas
+                            drawHeight = canvas.height;
+                            drawWidth = drawHeight * imgRatio;
+                            offsetX = (canvas.width - drawWidth) / 2;
+                            offsetY = 0;
+                        } else {
+                            // Image is taller than canvas
+                            drawWidth = canvas.width;
+                            drawHeight = drawWidth / imgRatio;
+                            offsetX = 0;
+                            offsetY = (canvas.height - drawHeight) / 2;
                         }
+                        
+                        ctx.drawImage(revealImage, offsetX, offsetY, drawWidth, drawHeight);
+                        ctx.restore();
                     });
-                    
-                    // Remove fully faded strokes
-                    while (brushStrokes.length > 0 && brushStrokes[0].opacity <= 0) {
-                        brushStrokes.shift();
-                    }
-                    
-                    // Reset global alpha
-                    ctx.globalAlpha = 1;
                 }
                 
-                requestAnimationFrame(fadeOutBrushStrokes);
+                // Update previous position
+                prevMouseX = mouseX;
+                prevMouseY = mouseY;
+            });
+            
+            // Function to gradually fade out cursor trail
+            function fadeOutTrail() {
+                if (cursorTrail.length > 0) {
+                    // Remove oldest position
+                    cursorTrail.shift();
+                    
+                    // Clear and redraw
+                    if (cursorTrail.length > 0) {
+                        const heroRect = heroSection.getBoundingClientRect();
+                        if (
+                            mouseX >= heroRect.left && 
+                            mouseX <= heroRect.right && 
+                            mouseY >= heroRect.top && 
+                            mouseY <= heroRect.bottom
+                        ) {
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            
+                            cursorTrail.forEach((pos, index) => {
+                                const size = 25 + (index / cursorTrail.length) * 75; /* Reduced from 50+150 to 25+75 */
+                                const alpha = 0.3 + (index / cursorTrail.length) * 0.7;
+                                
+                                ctx.save();
+                                ctx.globalAlpha = alpha;
+                                ctx.beginPath();
+                                ctx.arc(pos.x, pos.y, size, 0, Math.PI * 2);
+                                ctx.closePath();
+                                ctx.clip();
+                                
+                                const imgRatio = revealImage.width / revealImage.height;
+                                const canvasRatio = canvas.width / canvas.height;
+                                
+                                let drawWidth, drawHeight, offsetX, offsetY;
+                                
+                                if (imgRatio > canvasRatio) {
+                                    drawHeight = canvas.height;
+                                    drawWidth = drawHeight * imgRatio;
+                                    offsetX = (canvas.width - drawWidth) / 2;
+                                    offsetY = 0;
+                                } else {
+                                    drawWidth = canvas.width;
+                                    drawHeight = drawWidth / imgRatio;
+                                    offsetX = 0;
+                                    offsetY = (canvas.height - drawHeight) / 2;
+                                }
+                                
+                                ctx.drawImage(revealImage, offsetX, offsetY, drawWidth, drawHeight);
+                                ctx.restore();
+                            });
+                        }
+                    }
+                }
+                
+                setTimeout(fadeOutTrail, 100);
             }
-
+            
             // Start the fade out animation
-            fadeOutBrushStrokes();
-
+            setTimeout(fadeOutTrail, 100);
+            
             // Function to handle nav visibility based on screen size
             function handleNavVisibility() {
                 if (window.innerWidth > 768) {
