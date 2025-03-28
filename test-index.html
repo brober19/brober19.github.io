@@ -36,26 +36,12 @@
             animation: fadeIn 1s ease-in forwards;
             display: flex;
             flex-direction: column;
-            cursor: auto; /* Changed to auto for normal cursor */
+            cursor: auto;
         }
         
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
-        }
-        
-        /* Custom Cursor */
-        .cursor {
-            position: fixed;
-            width: 10px; /* Reduced from 20px to 10px */
-            height: 10px; /* Reduced from 20px to 10px */
-            border-radius: 50%;
-            background-color: #FF7F50;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s;
-            mix-blend-mode: difference;
         }
         
         /* Navigation Styles */
@@ -220,7 +206,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.15; /* Make the base image very faint */
+            opacity: 1.5;
         }
         
         /* Image reveal canvas */
@@ -256,7 +242,7 @@
         .glow-letter {
             display: inline-block;
             transition: color 0.3s ease, text-shadow 0.3s ease;
-            cursor: auto; /* Changed to auto for normal cursor */
+            cursor: auto;
             letter-spacing: -0.05em;
         }
 
@@ -448,12 +434,10 @@
     </style>
 </head>
 <body>
-    <div class="cursor"></div>
-    
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="images/signature_light.png" alt="Logo" class="logo-default">
+                <img src="images/signature.png" alt="Logo" class="logo-default">
                 <img src="images/signature_red_v2.png" alt="Logo Hover" class="logo-hover">
             </a>
             <div class="hamburger">
@@ -472,7 +456,7 @@
 
     <section class="hero-section">
         <div class="hero-image">
-            <img src="https://placehold.co/1920x1080" alt="Hero Image">
+            <img src="images/G Gallery_1.JPG" alt="Hero Image">
         </div>
         <canvas class="reveal-canvas"></canvas>
         <div class="content">
@@ -483,7 +467,7 @@
                     <span class="glow-letter">y</span>
                     <span class="glow-letter">a</span>
                     <span class="glow-letter">n</span>
-                    <span class="glow-letter">&nbsp;</span>
+                    <span class="glow-letter"> </span>
                     <span class="glow-letter">R</span>
                     <span class="glow-letter">o</span>
                     <span class="glow-letter">b</span>
@@ -503,11 +487,11 @@
         <div class="footer-container">
             <div class="footer-info">
                 <h3>Bryan Robertson</h3>
-                <p>Visual Artist based in Phoenix</p>
+                <p>Visual Artist based in Arizona</p>
                 
                 <div class="social-links">
-                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" title="Email"><i class="far fa-envelope"></i></a>
+                    <a href="www.linkedin.com/in/bryan-robertson00100" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:studio@bryan-robertson.com" title="Email"><i class="far fa-envelope"></i></a>
                 </div>
             </div>
     
@@ -515,8 +499,8 @@
                 <div class="footer-nav-section">
                     <h4>Work</h4>
                     <ul>
-                        <li><a href="painting.html">Paintings</a></li>
-                        <li><a href="digital.html">Digital Art</a></li>
+                        <li><a href="current.html">1984</a></li>
+                        <li><a href="archive.html">Archive</a></li>
                     </ul>
                 </div>
     
@@ -532,7 +516,7 @@
                     <h4>Connect</h4>
                     <ul>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="news.html">Newsletter</a></li>
+                        <li><a href="news.html">News</a></li>
                     </ul>
                 </div>
             </div>
@@ -547,7 +531,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
-            const cursor = document.querySelector('.cursor');
             
             // Canvas setup for image reveal
             const canvas = document.querySelector('.reveal-canvas');
@@ -585,27 +568,11 @@
             const cursorTrail = [];
             const maxTrailLength = 20;
             
-            // Custom cursor movement
+            // Mouse movement handler
             document.addEventListener('mousemove', (e) => {
-                // Update cursor position
+                // Update mouse position
                 mouseX = e.clientX;
                 mouseY = e.clientY;
-                
-                // Update custom cursor
-                cursor.style.left = `${mouseX}px`;
-                cursor.style.top = `${mouseY}px`;
-                
-                // Expand cursor on links and interactive elements
-                const target = e.target;
-                if (target.tagName === 'A' || target.tagName === 'BUTTON' || 
-                    target.classList.contains('glow-letter') || 
-                    target.parentElement.tagName === 'A') {
-                    cursor.style.width = '20px'; /* Reduced from 40px to 20px */
-                    cursor.style.height = '20px'; /* Reduced from 40px to 20px */
-                } else {
-                    cursor.style.width = '10px'; /* Reduced from 20px to 10px */
-                    cursor.style.height = '10px'; /* Reduced from 20px to 10px */
-                }
                 
                 // Add current position to trail
                 cursorTrail.push({ x: mouseX, y: mouseY });
@@ -628,8 +595,8 @@
                     
                     // Draw the cursor trail with varying sizes
                     cursorTrail.forEach((pos, index) => {
-                        // Calculate size based on position in trail (newer positions are larger)
-                        const size = 25 + (index / cursorTrail.length) * 75; /* Reduced from 50+150 to 25+75 */
+                        // Calculate size based on position in trail
+                        const size = 25 + (index / cursorTrail.length) * 75;
                         const alpha = 0.3 + (index / cursorTrail.length) * 0.7;
                         
                         // Draw circle for reveal
@@ -647,13 +614,11 @@
                         let drawWidth, drawHeight, offsetX, offsetY;
                         
                         if (imgRatio > canvasRatio) {
-                            // Image is wider than canvas
                             drawHeight = canvas.height;
                             drawWidth = drawHeight * imgRatio;
                             offsetX = (canvas.width - drawWidth) / 2;
                             offsetY = 0;
                         } else {
-                            // Image is taller than canvas
                             drawWidth = canvas.width;
                             drawHeight = drawWidth / imgRatio;
                             offsetX = 0;
@@ -688,7 +653,7 @@
                             ctx.clearRect(0, 0, canvas.width, canvas.height);
                             
                             cursorTrail.forEach((pos, index) => {
-                                const size = 25 + (index / cursorTrail.length) * 75; /* Reduced from 50+150 to 25+75 */
+                                const size = 25 + (index / cursorTrail.length) * 75;
                                 const alpha = 0.3 + (index / cursorTrail.length) * 0.7;
                                 
                                 ctx.save();
