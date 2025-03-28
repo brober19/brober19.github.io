@@ -1093,7 +1093,7 @@
 
     <script>
         let currentLightbox = null;
-
+    
         document.addEventListener('DOMContentLoaded', () => {
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
@@ -1103,22 +1103,25 @@
             const mainContent = document.querySelector('.main-content');
             const images = document.querySelectorAll('img');
             let imagesLoaded = 0;
-
-            // Function to check if all images are loaded
+            const minimumLoadingTime = 2000; // 2 seconds minimum display time
+            let startTime = Date.now();
+    
+            // Function to check if all images are loaded and enforce minimum time
             function checkImagesLoaded() {
                 imagesLoaded++;
                 if (imagesLoaded === images.length) {
-                    loadingOverlay.classList.add('hidden');
-                    mainContent.classList.add('loaded');
+                    const elapsedTime = Date.now() - startTime;
+                    const remainingTime = Math.max(0, minimumLoadingTime - elapsedTime);
+    
                     setTimeout(() => {
-                        document.body.classList.add('loaded');
-                    }, 100);
-                    setTimeout(() => {
-                        navLinks.classList.add('loaded');
-                    }, 300);
+                        loadingOverlay.classList.add('hidden');
+                        mainContent.classList.add('loaded');
+                        setTimeout(() => document.body.classList.add('loaded'), 100);
+                        setTimeout(() => navLinks.classList.add('loaded'), 300);
+                    }, remainingTime);
                 }
             }
-
+    
             // Preload all images
             images.forEach(img => {
                 const tempImg = new Image();
@@ -1126,19 +1129,21 @@
                 tempImg.onload = checkImagesLoaded;
                 tempImg.onerror = checkImagesLoaded; // Count even if image fails
             });
-
-            // If no images, show content immediately
+    
+            // If no images, show content after minimum time
             if (images.length === 0) {
-                loadingOverlay.classList.add('hidden');
-                mainContent.classList.add('loaded');
+                setTimeout(() => {
+                    loadingOverlay.classList.add('hidden');
+                    mainContent.classList.add('loaded');
+                }, minimumLoadingTime);
             }
-
+    
             // Hamburger menu
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 navLinks.classList.toggle('active');
             });
-
+    
             // Theme toggle
             themeToggle.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1146,24 +1151,24 @@
                 htmlElement.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
             });
-
+    
             // Load saved theme
             const savedTheme = localStorage.getItem('theme') || 
                 (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             htmlElement.setAttribute('data-theme', savedTheme);
-
+    
             // Lightbox functionality
             document.querySelectorAll('.image-container').forEach(container => {
                 container.addEventListener('click', () => openLightbox(container));
             });
         });
-
+    
         function openLightbox(container) {
             const overlay = container.querySelector('.lightbox-overlay');
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
             currentLightbox = container;
-
+    
             const video = overlay.querySelector('video');
             if (video) {
                 video.play();
@@ -1176,7 +1181,7 @@
                 }
             }
         }
-
+    
         function toggleFullScreen(videoElement) {
             if (!document.fullscreenElement) {
                 videoElement.requestFullscreen?.() || 
@@ -1188,7 +1193,7 @@
                 document.msExitFullscreen?.();
             }
         }
-
+    
         document.addEventListener('fullscreenchange', updateFullscreenButton);
         function updateFullscreenButton() {
             document.querySelectorAll('.fullscreen-btn').forEach(btn => {
@@ -1197,7 +1202,7 @@
                 icon.classList.toggle('fa-compress', !!document.fullscreenElement);
             });
         }
-
+    
         document.querySelectorAll('.close-button').forEach(button => {
             button.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -1212,35 +1217,35 @@
                 currentLightbox = null;
             });
         });
-
+    
         document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
             arrow.addEventListener('click', (e) => {
                 e.stopPropagation();
                 navigateLightbox(arrow.classList.contains('lightbox-prev') ? -1 : 1, e);
             });
         });
-
+    
         function navigateLightbox(direction, event) {
             if (!currentLightbox) return;
             event.stopPropagation();
-
+    
             if (document.fullscreenElement) document.exitFullscreen();
             const currentVideo = currentLightbox.querySelector('video');
             if (currentVideo) currentVideo.pause();
-
+    
             const containers = Array.from(document.querySelectorAll('.image-container'));
             const currentIndex = containers.indexOf(currentLightbox);
             const nextIndex = (currentIndex + direction + containers.length) % containers.length;
             const nextLightbox = containers[nextIndex];
-
+    
             const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
             const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
-
+    
             nextOverlay.style.transition = 'none';
             nextOverlay.classList.add('active');
             void nextOverlay.offsetWidth;
             nextOverlay.style.transition = '';
-
+    
             const nextVideo = nextLightbox.querySelector('video');
             if (nextVideo) {
                 nextVideo.play();
@@ -1252,11 +1257,11 @@
                     };
                 }
             }
-
+    
             currentLightbox = nextLightbox;
             setTimeout(() => currentOverlay.classList.remove('active'), 50);
         }
-
+    
         document.addEventListener('keydown', (event) => {
             if (!currentLightbox) return;
             const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
@@ -1276,7 +1281,7 @@
                 if (video) toggleFullScreen(video);
             }
         });
-
+    
         document.addEventListener('click', (event) => {
             if (event.target.classList.contains('lightbox-overlay')) {
                 if (document.fullscreenElement) document.exitFullscreen();
@@ -1287,19 +1292,7 @@
                 currentLightbox = null;
             }
         });
-
-        function checkImagesLoaded() {
-    imagesLoaded++;
-    if (imagesLoaded === images.length) {
-        setTimeout(() => {
-            loadingOverlay.classList.add('hidden');
-            mainContent.classList.add('loaded');
-            setTimeout(() => document.body.classList.add('loaded'), 100);
-            setTimeout(() => navLinks.classList.add('loaded'), 300);
-        }, 10000); // 2-second delay to see "Loading"
-    }
-}
-
+    
         document.addEventListener('contextmenu', (e) => {
             if (e.target.tagName === 'VIDEO') e.preventDefault();
         });
