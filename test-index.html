@@ -558,11 +558,12 @@
                 // Image is loaded and ready to use
             };
             
-            // Track mouse position and previous positions
+            // Track mouse position and smoothed position
             let mouseX = 0;
             let mouseY = 0;
-            let prevMouseX = 0;
-            let prevMouseY = 0;
+            let smoothMouseX = 0;
+            let smoothMouseY = 0;
+            const lerpFactor = 0.1; // Controls smoothness (0 to 1, lower = smoother but slower)
             
             // Store cursor trail positions
             const cursorTrail = [];
@@ -570,12 +571,19 @@
             
             // Mouse movement handler
             document.addEventListener('mousemove', (e) => {
-                // Update mouse position
+                // Update raw mouse position
                 mouseX = e.clientX;
                 mouseY = e.clientY;
+            });
+            
+            // Animation loop for smooth cursor movement
+            function animateCursor() {
+                // Linear interpolation (lerp) for smooth movement
+                smoothMouseX += (mouseX - smoothMouseX) * lerpFactor;
+                smoothMouseY += (mouseY - smoothMouseY) * lerpFactor;
                 
-                // Add current position to trail
-                cursorTrail.push({ x: mouseX, y: mouseY });
+                // Add smoothed position to trail
+                cursorTrail.push({ x: smoothMouseX, y: smoothMouseY });
                 
                 // Remove old positions if trail is too long
                 if (cursorTrail.length > maxTrailLength) {
@@ -585,17 +593,17 @@
                 // Draw on canvas when mouse is over hero section
                 const heroRect = heroSection.getBoundingClientRect();
                 if (
-                    mouseX >= heroRect.left && 
-                    mouseX <= heroRect.right && 
-                    mouseY >= heroRect.top && 
-                    mouseY <= heroRect.bottom
+                    smoothMouseX >= heroRect.left && 
+                    smoothMouseX <= heroRect.right && 
+                    smoothMouseY >= heroRect.top && 
+                    smoothMouseY <= heroRect.bottom
                 ) {
                     // Clear the canvas
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     
                     // Draw the cursor trail with varying sizes
                     cursorTrail.forEach((pos, index) => {
-                        // Calculate size based on position in trail
+                        // Calculate size and alpha based on position in trail
                         const size = 25 + (index / cursorTrail.length) * 75;
                         const alpha = 0.3 + (index / cursorTrail.length) * 0.7;
                         
@@ -630,10 +638,12 @@
                     });
                 }
                 
-                // Update previous position
-                prevMouseX = mouseX;
-                prevMouseY = mouseY;
-            });
+                // Continue the animation loop
+                requestAnimationFrame(animateCursor);
+            }
+            
+            // Start the animation loop
+            requestAnimationFrame(animateCursor);
             
             // Function to gradually fade out cursor trail
             function fadeOutTrail() {
@@ -645,10 +655,10 @@
                     if (cursorTrail.length > 0) {
                         const heroRect = heroSection.getBoundingClientRect();
                         if (
-                            mouseX >= heroRect.left && 
-                            mouseX <= heroRect.right && 
-                            mouseY >= heroRect.top && 
-                            mouseY <= heroRect.bottom
+                            smoothMouseX >= heroRect.left && 
+                            smoothMouseX <= heroRect.right && 
+                            smoothMouseY >= heroRect.top && 
+                            smoothMouseY <= heroRect.bottom
                         ) {
                             ctx.clearRect(0, 0, canvas.width, canvas.height);
                             
@@ -705,20 +715,20 @@
                     }
                 }
             }
-
+    
             // Initialize nav links
             setTimeout(() => {
                 navLinks.classList.add('loaded');
                 handleNavVisibility();
             }, 100);
-
+    
             // Hamburger menu toggle
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 navLinks.classList.toggle('active');
                 navLinks.style.display = navLinks.classList.contains('active') ? 'flex' : 'none';
             });
-
+    
             // Update on window resize
             window.addEventListener('resize', handleNavVisibility);
         });

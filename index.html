@@ -4,23 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bryan Robertson Studio</title>
-      <!-- Standard favicon -->
-<link rel="icon" type="image/x-icon" href="/images/favicon.png">
-
-<!-- For iOS devices -->
-<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
-
-<!-- For Android devices -->
-<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
-
-<!-- For modern browsers -->
-<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
-
-<!-- Web manifest for PWA support -->
-<link rel="manifest" href="/images/favicon.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Standard favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <!-- For iOS devices -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+    <!-- For Android devices -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+    <!-- For modern browsers -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <!-- Web manifest for PWA support -->
+    <link rel="manifest" href="/images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* Reset and Base Styles */
         * {
@@ -32,23 +28,22 @@
         body {
             font-family: 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            background: #000;
-            color: #fff;
+            background: #fff;
+            color: #000;
             overflow-x: hidden;
             min-height: 100vh;
             opacity: 0;
             animation: fadeIn 1s ease-in forwards;
             display: flex;
             flex-direction: column;
+            cursor: auto;
         }
+        
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
+        
         /* Navigation Styles */
         nav {
             background: transparent;
@@ -117,11 +112,11 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #fff;
+            color: #000;
             font-size: 1.1rem;
             padding: 0.5rem 0;
             transition: all 0.3s ease;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
         }
 
         .nav-links a:hover {
@@ -130,11 +125,13 @@
                 0 0 10px rgba(255, 127, 80, 0.8),
                 0 0 20px rgba(255, 127, 80, 0.6);
         }
+        
         /* Navigation Link Effects */
         .nav-links a {
             position: relative;
             overflow: hidden;
         }
+        
         .nav-links a span {
             position: relative;
             display: inline-block;
@@ -174,7 +171,7 @@
             display: block;
             width: 25px;
             height: 3px;
-            background: #fff;
+            background: #000;
             margin: 5px 0;
             transition: all 0.3s ease;
         }
@@ -191,28 +188,37 @@
 
         .hero-image {
             position: absolute;
-            top: -25%;
-            left: -25%;
-            width: 150%;
-            height: 150%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: -1;
-            transition: transform 0.2s ease-out;
         }
 
         .hero-image::after {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.85);
         }
 
         .hero-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: blur(5px);
+            opacity: 1.5;
         }
         
+        /* Image reveal canvas */
+        .reveal-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
 
         /* Content Styles */
         .content {
@@ -220,16 +226,32 @@
             z-index: 1;
             text-align: center;
             transition: transform 0.3s ease;
-            mix-blend-mode: difference;
         }
 
         h1 {
             font-size: 4rem;
             margin-bottom: 1rem;
             font-weight: 300;
-            letter-spacing: 0.2em;
+            letter-spacing: -0.02em;
             text-transform: uppercase;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            color: #000;
+        }
+        
+        /* Individual letter glow effect */
+        .glow-letter {
+            display: inline-block;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            cursor: auto;
+            letter-spacing: -0.05em;
+        }
+
+        .glow-letter:hover {
+            color: #FF7F50;
+            text-shadow:
+                0 0 10px rgba(255, 127, 80, 0.8),
+                0 0 20px rgba(255, 127, 80, 0.6),
+                0 0 30px rgba(255, 127, 80, 0.4);
         }
 
         /* Animations */
@@ -256,13 +278,13 @@
 
         /* Footer Styles */
         footer {
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 2rem 0;
             width: 100%;
             margin-top: auto;
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .footer-container {
@@ -292,6 +314,7 @@
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
             opacity: 0.8;
+            color: #000;
         }
 
         .social-links {
@@ -301,7 +324,7 @@
         }
 
         .social-links a {
-            color: #fff;
+            color: #000;
             font-size: 1.2rem;
             transition: color 0.3s ease;
             text-decoration: none;
@@ -337,7 +360,7 @@
         }
 
         .footer-nav-section ul li a {
-            color: #fff;
+            color: #000;
             text-decoration: none;
             font-size: 0.9rem;
             opacity: 0.8;
@@ -354,14 +377,17 @@
             text-align: center;
             margin-top: 2rem;
             padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
             font-size: 0.8rem;
             opacity: 0.6;
+            color: #000;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
+            h1 {
+                font-size: 3rem;
+            }
 
             .hamburger {
                 display: block;
@@ -373,7 +399,7 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: rgba(0, 0, 0, 0.8);
+                background: rgba(255, 255, 255, 0.9);
                 padding: 1rem;
                 flex-direction: column;
                 align-items: center;
@@ -411,7 +437,7 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="images/signature_light.png" alt="Logo" class="logo-default">
+                <img src="images/signature.png" alt="Logo" class="logo-default">
                 <img src="images/signature_red_v2.png" alt="Logo Hover" class="logo-hover">
             </a>
             <div class="hamburger">
@@ -432,8 +458,27 @@
         <div class="hero-image">
             <img src="images/G Gallery_1.JPG" alt="Hero Image">
         </div>
+        <canvas class="reveal-canvas"></canvas>
         <div class="content">
-            <h1><span class="typing-animation">Bryan Robertson</span></h1>
+            <h1>
+                <span class="typing-animation">
+                    <span class="glow-letter">B</span>
+                    <span class="glow-letter">r</span>
+                    <span class="glow-letter">y</span>
+                    <span class="glow-letter">a</span>
+                    <span class="glow-letter">n</span>
+                    <span class="glow-letter"> </span>
+                    <span class="glow-letter">R</span>
+                    <span class="glow-letter">o</span>
+                    <span class="glow-letter">b</span>
+                    <span class="glow-letter">e</span>
+                    <span class="glow-letter">r</span>
+                    <span class="glow-letter">t</span>
+                    <span class="glow-letter">s</span>
+                    <span class="glow-letter">o</span>
+                    <span class="glow-letter">n</span>
+                </span>
+            </h1>
             <p class="split-text">a visual artist working in paint and pixels</p>
         </div>
     </section>
@@ -445,7 +490,7 @@
                 <p>Visual Artist based in Arizona</p>
                 
                 <div class="social-links">
-                    <a href="www.linkedin.com/in/bryan-robertson-2862b3b0" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="www.linkedin.com/in/bryan-robertson00100" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
                     <a href="mailto:studio@bryan-robertson.com" title="Email"><i class="far fa-envelope"></i></a>
                 </div>
             </div>
@@ -482,15 +527,182 @@
         </div>
     </footer>
 
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const links = document.querySelectorAll('.nav-links a');
             const navLinks = document.querySelector('.nav-links');
             const hamburger = document.querySelector('.hamburger');
-            const heroImage = document.querySelector('.hero-image');
-            const content = document.querySelector('.content');
-
+            
+            // Canvas setup for image reveal
+            const canvas = document.querySelector('.reveal-canvas');
+            const ctx = canvas.getContext('2d');
+            const heroSection = document.querySelector('.hero-section');
+            const heroImage = document.querySelector('.hero-image img');
+            
+            // Set canvas dimensions
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                // Clear the canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // Initialize canvas
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Load the image for the reveal effect
+            const revealImage = new Image();
+            revealImage.src = heroImage.src;
+            revealImage.onload = () => {
+                // Image is loaded and ready to use
+            };
+            
+            // Track mouse position and smoothed position
+            let mouseX = 0;
+            let mouseY = 0;
+            let smoothMouseX = 0;
+            let smoothMouseY = 0;
+            const lerpFactor = 0.1; // Controls smoothness (0 to 1, lower = smoother but slower)
+            
+            // Store cursor trail positions
+            const cursorTrail = [];
+            const maxTrailLength = 20;
+            
+            // Mouse movement handler
+            document.addEventListener('mousemove', (e) => {
+                // Update raw mouse position
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            
+            // Animation loop for smooth cursor movement
+            function animateCursor() {
+                // Linear interpolation (lerp) for smooth movement
+                smoothMouseX += (mouseX - smoothMouseX) * lerpFactor;
+                smoothMouseY += (mouseY - smoothMouseY) * lerpFactor;
+                
+                // Add smoothed position to trail
+                cursorTrail.push({ x: smoothMouseX, y: smoothMouseY });
+                
+                // Remove old positions if trail is too long
+                if (cursorTrail.length > maxTrailLength) {
+                    cursorTrail.shift();
+                }
+                
+                // Draw on canvas when mouse is over hero section
+                const heroRect = heroSection.getBoundingClientRect();
+                if (
+                    smoothMouseX >= heroRect.left && 
+                    smoothMouseX <= heroRect.right && 
+                    smoothMouseY >= heroRect.top && 
+                    smoothMouseY <= heroRect.bottom
+                ) {
+                    // Clear the canvas
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Draw the cursor trail with varying sizes
+                    cursorTrail.forEach((pos, index) => {
+                        // Calculate size and alpha based on position in trail
+                        const size = 25 + (index / cursorTrail.length) * 75;
+                        const alpha = 0.3 + (index / cursorTrail.length) * 0.7;
+                        
+                        // Draw circle for reveal
+                        ctx.save();
+                        ctx.globalAlpha = alpha;
+                        ctx.beginPath();
+                        ctx.arc(pos.x, pos.y, size, 0, Math.PI * 2);
+                        ctx.closePath();
+                        ctx.clip();
+                        
+                        // Draw the image inside the clipped area
+                        const imgRatio = revealImage.width / revealImage.height;
+                        const canvasRatio = canvas.width / canvas.height;
+                        
+                        let drawWidth, drawHeight, offsetX, offsetY;
+                        
+                        if (imgRatio > canvasRatio) {
+                            drawHeight = canvas.height;
+                            drawWidth = drawHeight * imgRatio;
+                            offsetX = (canvas.width - drawWidth) / 2;
+                            offsetY = 0;
+                        } else {
+                            drawWidth = canvas.width;
+                            drawHeight = drawWidth / imgRatio;
+                            offsetX = 0;
+                            offsetY = (canvas.height - drawHeight) / 2;
+                        }
+                        
+                        ctx.drawImage(revealImage, offsetX, offsetY, drawWidth, drawHeight);
+                        ctx.restore();
+                    });
+                }
+                
+                // Continue the animation loop
+                requestAnimationFrame(animateCursor);
+            }
+            
+            // Start the animation loop
+            requestAnimationFrame(animateCursor);
+            
+            // Function to gradually fade out cursor trail
+            function fadeOutTrail() {
+                if (cursorTrail.length > 0) {
+                    // Remove oldest position
+                    cursorTrail.shift();
+                    
+                    // Clear and redraw
+                    if (cursorTrail.length > 0) {
+                        const heroRect = heroSection.getBoundingClientRect();
+                        if (
+                            smoothMouseX >= heroRect.left && 
+                            smoothMouseX <= heroRect.right && 
+                            smoothMouseY >= heroRect.top && 
+                            smoothMouseY <= heroRect.bottom
+                        ) {
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                            
+                            cursorTrail.forEach((pos, index) => {
+                                const size = 25 + (index / cursorTrail.length) * 75;
+                                const alpha = 0.3 + (index / cursorTrail.length) * 0.7;
+                                
+                                ctx.save();
+                                ctx.globalAlpha = alpha;
+                                ctx.beginPath();
+                                ctx.arc(pos.x, pos.y, size, 0, Math.PI * 2);
+                                ctx.closePath();
+                                ctx.clip();
+                                
+                                const imgRatio = revealImage.width / revealImage.height;
+                                const canvasRatio = canvas.width / canvas.height;
+                                
+                                let drawWidth, drawHeight, offsetX, offsetY;
+                                
+                                if (imgRatio > canvasRatio) {
+                                    drawHeight = canvas.height;
+                                    drawWidth = drawHeight * imgRatio;
+                                    offsetX = (canvas.width - drawWidth) / 2;
+                                    offsetY = 0;
+                                } else {
+                                    drawWidth = canvas.width;
+                                    drawHeight = drawWidth / imgRatio;
+                                    offsetX = 0;
+                                    offsetY = (canvas.height - drawHeight) / 2;
+                                }
+                                
+                                ctx.drawImage(revealImage, offsetX, offsetY, drawWidth, drawHeight);
+                                ctx.restore();
+                            });
+                        }
+                    }
+                }
+                
+                setTimeout(fadeOutTrail, 100);
+            }
+            
+            // Start the fade out animation
+            setTimeout(fadeOutTrail, 100);
+            
             // Function to handle nav visibility based on screen size
             function handleNavVisibility() {
                 if (window.innerWidth > 768) {
@@ -503,32 +715,20 @@
                     }
                 }
             }
-
+    
             // Initialize nav links
             setTimeout(() => {
                 navLinks.classList.add('loaded');
                 handleNavVisibility();
             }, 100);
-
+    
             // Hamburger menu toggle
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 navLinks.classList.toggle('active');
                 navLinks.style.display = navLinks.classList.contains('active') ? 'flex' : 'none';
             });
-
-            // Parallax effect
-            document.addEventListener('mousemove', (e) => {
-                const mouseX = e.clientX / window.innerWidth;
-                const mouseY = e.clientY / window.innerHeight;
-
-                const moveX = (mouseX - 0.5) * 40;
-                const moveY = (mouseY - 0.5) * 40;
-
-                heroImage.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                content.style.transform = `translate(${-moveX * 0.15}px, ${-moveY * 0.15}px)`;
-            });
-
+    
             // Update on window resize
             window.addEventListener('resize', handleNavVisibility);
         });
