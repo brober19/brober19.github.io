@@ -79,13 +79,13 @@
         }
 
         .loading-overlay.hidden {
-            opacity: 0;
+            opacity: 100;
             pointer-events: none;
         }
 
         .loading-text {
-            font-size: 2rem;
-            color: var(--text-color);
+            font-size: 5rem;
+            color: var(--text-color)black;
             text-align: center;
             font-weight: bold; /* Added for better visibility */
         }
@@ -1288,7 +1288,7 @@
                 currentLightbox = null;
             }
         });
-        
+
         function checkImagesLoaded() {
     imagesLoaded++;
     if (imagesLoaded === images.length) {
