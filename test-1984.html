@@ -50,20 +50,19 @@
         }
 
         body {
-            font-family: Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
-            opacity: 0;
-            transition: opacity 1s ease-in;
-        }
+    font-family: Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Remove opacity: 0 from body to avoid hiding everything initially */
+}
 
-        body.loaded {
-            opacity: 1;
-        }
+body.loaded {
+    /* No need for opacity here unless you want a fade-in effect for the body */
+}
 
-        .loading-overlay {
+.loading-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -75,29 +74,32 @@
     align-items: center;
     z-index: 2000;
     transition: opacity 0.5s ease;
-    opacity: 1; /* Ensure it starts visible */
+    opacity: 1; /* Starts visible */
 }
 
-        .loading-overlay.hidden {
-    opacity: 0; /* Correct value to hide the overlay */
+.loading-overlay.hidden {
+    opacity: 0;
     pointer-events: none;
+    /* Ensure it disappears fully after fading */
+    visibility: hidden;
 }
 
 .loading-text {
     font-size: 5rem;
-    color: var(--text-color); /* Use the variable alone */
+    color: var(--text-color);
     text-align: center;
     font-weight: bold;
 }
-        /* Main Content */
-        .main-content {
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
 
-        .main-content.loaded {
-            opacity: 1;
-        }
+/* Main Content */
+.main-content {
+    opacity: 0; /* Keep main content hidden initially */
+    transition: opacity 0.5s ease;
+}
+
+.main-content.loaded {
+    opacity: 1; /* Fade in when loaded */
+}
 
         /* Navigation */
         nav {
@@ -632,12 +634,13 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Loading Overlay with "Loading" Text -->
     <div class="loading-overlay">
         <div class="loading-text">Loading</div>
     </div>
-
+    
     <!-- Main Content Wrapper -->
     <div class="main-content">
         <nav>
@@ -1090,7 +1093,6 @@
             </div>
         </footer>
     </div>
-
     <script>
         let currentLightbox = null;
     
@@ -1106,19 +1108,20 @@
             const minimumLoadingTime = 2000; // 2 seconds minimum display time
             let startTime = Date.now();
     
-            // Function to check if all images are loaded and enforce minimum time
+            // Function to hide overlay and show content
+            function completeLoading() {
+                loadingOverlay.classList.add('hidden');
+                mainContent.classList.add('loaded');
+                setTimeout(() => navLinks.classList.add('loaded'), 300);
+            }
+    
+            // Function to check if all images are loaded
             function checkImagesLoaded() {
                 imagesLoaded++;
                 if (imagesLoaded === images.length) {
                     const elapsedTime = Date.now() - startTime;
                     const remainingTime = Math.max(0, minimumLoadingTime - elapsedTime);
-    
-                    setTimeout(() => {
-                        loadingOverlay.classList.add('hidden');
-                        mainContent.classList.add('loaded');
-                        setTimeout(() => document.body.classList.add('loaded'), 100);
-                        setTimeout(() => navLinks.classList.add('loaded'), 300);
-                    }, remainingTime);
+                    setTimeout(completeLoading, remainingTime);
                 }
             }
     
@@ -1130,12 +1133,9 @@
                 tempImg.onerror = checkImagesLoaded; // Count even if image fails
             });
     
-            // If no images, show content after minimum time
+            // If no images, respect minimum loading time
             if (images.length === 0) {
-                setTimeout(() => {
-                    loadingOverlay.classList.add('hidden');
-                    mainContent.classList.add('loaded');
-                }, minimumLoadingTime);
+                setTimeout(completeLoading, minimumLoadingTime);
             }
     
             // Hamburger menu
@@ -1157,7 +1157,7 @@
                 (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             htmlElement.setAttribute('data-theme', savedTheme);
     
-            // Lightbox functionality
+            // Lightbox functionality (unchanged)
             document.querySelectorAll('.image-container').forEach(container => {
                 container.addEventListener('click', () => openLightbox(container));
             });
