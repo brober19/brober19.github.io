@@ -70,18 +70,30 @@ body.loaded {
     height: 100%;
     background-color: var(--bg-color);
     display: flex;
+    flex-direction: column; /* Stack text and bar vertically */
     justify-content: center;
     align-items: center;
     z-index: 2000;
     transition: opacity 0.5s ease;
-    opacity: 1; /* Starts visible */
+    opacity: 1;
 }
 
 .loading-overlay.hidden {
     opacity: 0;
     pointer-events: none;
-    /* Ensure it disappears fully after fading */
     visibility: hidden;
+}
+
+.loading-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 127, 80, 0.2);
+    z-index: 1;
+    animation: pulse 2s infinite ease-in-out;
 }
 
 .loading-text {
@@ -89,6 +101,63 @@ body.loaded {
     color: var(--text-color);
     text-align: center;
     font-weight: bold;
+    position: relative;
+    z-index: 2;
+    text-shadow: 
+        0 0 5px var(--accent-color),
+        0 0 10px var(--accent-glow),
+        0 0 20px var(--accent-glow-secondary),
+        0 0 30px rgba(255, 127, 80, 0.3);
+    animation: glow 1.5s infinite alternate;
+}
+
+/* Loading Bar Styles */
+.loading-bar {
+    width: 300px; /* Fixed width for consistency */
+    height: 10px;
+    background: rgba(255, 255, 255, 0.2); /* Light background for light theme */
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 20px; /* Space below text */
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
+[data-theme="dark"] .loading-bar {
+    background: rgba(0, 0, 0, 0.3); /* Darker background for dark theme */
+}
+
+.loading-bar-fill {
+    width: 0%; /* Starts at 0 */
+    height: 100%;
+    background: var(--accent-color); /* Coral fill */
+    transition: width 0.3s ease; /* Smooth fill animation */
+    box-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow-secondary);
+}
+
+/* Animations */
+@keyframes glow {
+    from {
+        text-shadow: 
+            0 0 5px var(--accent-color),
+            0 0 10px var(--accent-glow),
+            0 0 20px var(--accent-glow-secondary),
+            0 0 30px rgba(255, 127, 80, 0.3);
+    }
+    to {
+        text-shadow: 
+            0 0 10px var(--accent-color),
+            0 0 20px var(--accent-glow),
+            0 0 30px var(--accent-glow-secondary),
+            0 0 40px rgba(255, 127, 80, 0.5);
+    }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.2; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0.2; }
 }
 
 /* Main Content */
@@ -636,11 +705,13 @@ body.loaded {
 </head>
 
 <body>
-    <!-- Loading Overlay with "Loading" Text -->
+    <!-- Loading Overlay with "Loading" Text and Bar -->
     <div class="loading-overlay">
         <div class="loading-text">Loading</div>
+        <div class="loading-bar">
+            <div class="loading-bar-fill"></div>
+        </div>
     </div>
-    
     <!-- Main Content Wrapper -->
     <div class="main-content">
         <nav>
@@ -1104,9 +1175,16 @@ body.loaded {
             const loadingOverlay = document.querySelector('.loading-overlay');
             const mainContent = document.querySelector('.main-content');
             const images = document.querySelectorAll('img');
+            const loadingBarFill = document.querySelector('.loading-bar-fill');
             let imagesLoaded = 0;
             const minimumLoadingTime = 2000; // 2 seconds minimum display time
             let startTime = Date.now();
+    
+            // Function to update loading bar progress
+            function updateLoadingBar() {
+                const progress = (imagesLoaded / images.length) * 100;
+                loadingBarFill.style.width = `${progress}%`;
+            }
     
             // Function to hide overlay and show content
             function completeLoading() {
@@ -1118,6 +1196,7 @@ body.loaded {
             // Function to check if all images are loaded
             function checkImagesLoaded() {
                 imagesLoaded++;
+                updateLoadingBar(); // Update bar each time an image loads
                 if (imagesLoaded === images.length) {
                     const elapsedTime = Date.now() - startTime;
                     const remainingTime = Math.max(0, minimumLoadingTime - elapsedTime);
@@ -1133,8 +1212,9 @@ body.loaded {
                 tempImg.onerror = checkImagesLoaded; // Count even if image fails
             });
     
-            // If no images, respect minimum loading time
+            // If no images, simulate progress and respect minimum time
             if (images.length === 0) {
+                loadingBarFill.style.width = '100%'; // Immediate full bar
                 setTimeout(completeLoading, minimumLoadingTime);
             }
     
@@ -1293,7 +1373,7 @@ body.loaded {
             }
         });
     
-        document.addEventListener('contextmenu', (e) => {
+        document.addEventListener('Massive Attack - Unfinished Sympathycontextmenu', (e) => {
             if (e.target.tagName === 'VIDEO') e.preventDefault();
         });
     </script>
