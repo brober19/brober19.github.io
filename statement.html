@@ -480,7 +480,7 @@
                 <img src="images/signature_red_v2.png" alt="Logo Hover" class="logo-hover">
             </a>
             <ul class="nav-links">
-                <li><a href="current.html"><span>1984</span></a></li>
+                <li><a href="current.html"><span>Current</span></a></li>
                 <li><a href="archive.html"><span>Archive</span></a></li>
                 <li><a href="cv.html"><span>C.V.</span></a></li>
                 <li><a href="news.html"><span>News</span></a></li>
@@ -496,15 +496,15 @@
             </div>
         </div>
     </nav>
-<br>
-<br>
+    <br>
+    <br>
     <section class="statement-section">
         <div class="statement-container">
             <div class="statement-header">
                 <h2>Artist Statement</h2>
             </div>
             <div id="artist-statement"></div>
-            <span class="cursor"></span>
+            <!-- Removed static cursor from here -->
         </div>
     </section>
 
@@ -524,7 +524,7 @@
                 <div class="footer-nav-section">
                     <h4>Work</h4>
                     <ul>
-                        <li><a href="current.html">1984</a></li>
+                        <li><a href="current.html">Current</a></li>
                         <li><a href="archive.html">Archive</a></li>
                     </ul>
                 </div>
@@ -547,11 +547,10 @@
             </div>
     
             <div class="copyright">
-                &copy; 2025 Bryan Robertson. All rights reserved.
+                © 2025 Bryan Robertson. All rights reserved.
             </div>
         </div>
     </footer>
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -572,17 +571,28 @@ Rooted in art history, Bryan Robertson’s work draws influence from the disjoin
 Conversely, Robertson’s use of thick impasto paint forges a direct link between the mind and the physical motion of the body. Paint, is a primordial substance employed since the dawn of time to project one’s inner realities onto the external world. For Bryan, painting is a sacred philosophy that uses visual analogy, to resonate with the lived experiences of many. He harnesses paint to distill the modern cacophony of the digital age into a unified pictorial space.
 `;
             
-            const highlightWords = ['painting', 'digital', 'language', '1984', 'propaganda', 'dichotomy', 'dada', 'animation', 'primodial', 'philosophy'];
+            const highlightWords = ['painting', 'digital', 'language', '1984', 'propaganda', 'dichotomy', 'dada', 'animation', 'primordial', 'philosophy'];
             
             const statementElement = document.getElementById('artist-statement');
-            const cursor = document.querySelector('.cursor');
             
             let i = 0;
             const typingSpeed = 20; // slightly slower typing speed
             let highlightElements = []; // Store all highlighted elements
             let typingComplete = false;
             
+            function createCursor() {
+                const cursor = document.createElement('span');
+                cursor.className = 'cursor';
+                return cursor;
+            }
+
             function typeWriter() {
+                // Remove any existing cursor before adding new content
+                const existingCursor = statementElement.querySelector('.cursor');
+                if (existingCursor) {
+                    existingCursor.remove();
+                }
+
                 if (i < statement.length) {
                     // Check if we're at the start of a word
                     if (i === 0 || statement[i-1] === ' ' || statement[i-1] === '\n') {
@@ -607,6 +617,9 @@ Conversely, Robertson’s use of thick impasto paint forges a direct link betwee
                                     statementElement.appendChild(document.createTextNode(' '));
                                 }
                                 
+                                // Append cursor after the word
+                                statementElement.appendChild(createCursor());
+                                
                                 // Skip ahead
                                 i += nextWord.length;
                                 if (statement[i] === ' ') i++;
@@ -619,15 +632,21 @@ Conversely, Robertson’s use of thick impasto paint forges a direct link betwee
                     // Normal typing for non-highlighted text
                     if (statement[i] === '\n') {
                         statementElement.appendChild(document.createElement('br'));
-                        // Single line break for paragraphs
                     } else {
                         statementElement.appendChild(document.createTextNode(statement[i]));
                     }
+                    
+                    // Append cursor after each character
+                    statementElement.appendChild(createCursor());
+                    
                     i++;
                     setTimeout(typeWriter, typingSpeed);
                 } else {
                     // Remove cursor when typing is complete
-                    cursor.style.display = 'none';
+                    const finalCursor = statementElement.querySelector('.cursor');
+                    if (finalCursor) {
+                        finalCursor.remove();
+                    }
                     typingComplete = true;
                     
                     // Set timeout to change highlighted words back to white after 10 seconds
