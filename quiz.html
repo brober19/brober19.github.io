@@ -1,0 +1,236 @@
+function App() {
+    const [currentQuestion, setCurrentQuestion] = React.useState(0);
+    const [score, setScore] = React.useState(0);
+    const [showScore, setShowScore] = React.useState(false);
+    const [selectedAnswer, setSelectedAnswer] = React.useState(null);
+    const [isCorrect, setIsCorrect] = React.useState(null);
+  
+    const questions = [
+      {
+        questionText: 'Which ancient civilization built the pyramids?',
+        answerOptions: [
+          { answerText: 'Romans', isCorrect: false, icon: '🏛️' },
+          { answerText: 'Egyptians', isCorrect: true, icon: '🏺' },
+          { answerText: 'Greeks', isCorrect: false, icon: '🏆' },
+          { answerText: 'Chinese', isCorrect: false, icon: '🐉' }
+        ],
+        image: 'https://placehold.co/400x200/f8d56b/333333?text=Ancient+Pyramids'
+      },
+      {
+        questionText: 'What animal did ancient Egyptians treat as sacred?',
+        answerOptions: [
+          { answerText: 'Dogs', isCorrect: false, icon: '🐕' },
+          { answerText: 'Cats', isCorrect: true, icon: '🐈' },
+          { answerText: 'Lions', isCorrect: false, icon: '🦁' },
+          { answerText: 'Birds', isCorrect: false, icon: '🦅' }
+        ],
+        image: 'https://placehold.co/400x200/f5cac3/333333?text=Egyptian+Animals'
+      },
+      {
+        questionText: 'What did ancient Romans build to carry water?',
+        answerOptions: [
+          { answerText: 'Bridges', isCorrect: false, icon: '🌉' },
+          { answerText: 'Aqueducts', isCorrect: true, icon: '🌊' },
+          { answerText: 'Tunnels', isCorrect: false, icon: '🚇' },
+          { answerText: 'Boats', isCorrect: false, icon: '⛵' }
+        ],
+        image: 'https://placehold.co/400x200/84a9c0/333333?text=Roman+Structures'
+      },
+      {
+        questionText: 'Which of these was NOT an ancient civilization?',
+        answerOptions: [
+          { answerText: 'Maya', isCorrect: false, icon: '🌽' },
+          { answerText: 'Vikings', isCorrect: true, icon: '⚔️' },
+          { answerText: 'Mesopotamia', isCorrect: false, icon: '🏙️' },
+          { answerText: 'Indus Valley', isCorrect: false, icon: '🐘' }
+        ],
+        image: 'https://placehold.co/400x200/a7c957/333333?text=World+History'
+      },
+      {
+        questionText: 'What did ancient Chinese people invent?',
+        answerOptions: [
+          { answerText: 'Paper', isCorrect: true, icon: '📜' },
+          { answerText: 'Cars', isCorrect: false, icon: '🚗' },
+          { answerText: 'Computers', isCorrect: false, icon: '💻' },
+          { answerText: 'Telephones', isCorrect: false, icon: '📞' }
+        ],
+        image: 'https://placehold.co/400x200/e5989b/333333?text=Ancient+Inventions'
+      }
+    ];
+  
+    const handleAnswerClick = (isCorrect, index) => {
+      setSelectedAnswer(index);
+      setIsCorrect(isCorrect);
+      
+      if (isCorrect) {
+        setScore(score + 1);
+      }
+      
+      setTimeout(() => {
+        const nextQuestion = currentQuestion + 1;
+        if (nextQuestion < questions.length) {
+          setCurrentQuestion(nextQuestion);
+          setSelectedAnswer(null);
+          setIsCorrect(null);
+        } else {
+          setShowScore(true);
+        }
+      }, 1500);
+    };
+  
+    const resetQuiz = () => {
+      setCurrentQuestion(0);
+      setScore(0);
+      setShowScore(false);
+      setSelectedAnswer(null);
+      setIsCorrect(null);
+    };
+  
+    const getButtonClass = (index) => {
+      if (selectedAnswer === null) return "bg-blue-500 hover:bg-blue-600";
+      if (selectedAnswer === index) {
+        return isCorrect ? "bg-green-500" : "bg-red-500";
+      }
+      return "bg-blue-500";
+    };
+  
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 animated-bg">
+        <style>
+          {`
+            @keyframes gradientBG {
+              0% { background-position: 0% 50%; }
+              50% { background-position: 100% 50%; }
+              100% { background-position: 0% 50%; }
+            }
+            
+            @keyframes fadeIn {
+              from { opacity: 0; transform: translateY(10px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            
+            @keyframes pulse {
+              0% { transform: scale(1); }
+              50% { transform: scale(1.03); }
+              100% { transform: scale(1); }
+            }
+            
+            .animated-bg {
+              background: linear-gradient(-45deg, #f8d56b, #f5cac3, #84a9c0, #a7c957);
+              background-size: 400% 400%;
+              animation: gradientBG 15s ease infinite;
+              font-family: Helvetica, Arial, sans-serif;
+              color: black;
+            }
+            
+            .card-shadow {
+              box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+              transition: all 0.3s ease;
+              animation: fadeIn 0.5s ease-out;
+            }
+            
+            .card-shadow:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            }
+            
+            .title-text {
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+              animation: pulse 2s infinite;
+            }
+            
+            .image-container {
+              overflow: hidden;
+              border-radius: 8px;
+            }
+            
+            .image-container img {
+              transition: transform 0.5s ease;
+            }
+            
+            .image-container:hover img {
+              transform: scale(1.05);
+            }
+            
+            .answer-button {
+              animation: fadeIn 0.3s ease-out;
+              animation-fill-mode: both;
+            }
+            
+            .answer-button:nth-child(1) { animation-delay: 0.1s; }
+            .answer-button:nth-child(2) { animation-delay: 0.2s; }
+            .answer-button:nth-child(3) { animation-delay: 0.3s; }
+            .answer-button:nth-child(4) { animation-delay: 0.4s; }
+          `}
+        </style>
+        
+        <div className="w-full max-w-lg bg-white rounded-xl card-shadow p-6 border-4 border-yellow-400">
+          <h1 className="text-3xl font-bold text-center mb-6 text-black title-text">Ancient History Quiz</h1>
+          
+          {showScore ? (
+            <div className="text-center text-black">
+              <div className="text-2xl mb-4">
+                You scored {score} out of {questions.length}!
+              </div>
+              
+              {score === questions.length ? (
+                <div className="mb-6">
+                  <div className="text-4xl mb-2">🎉 Perfect Score! 🎉</div>
+                  <div className="text-xl">You're an ancient history expert!</div>
+                </div>
+              ) : score >= questions.length / 2 ? (
+                <div className="mb-6">
+                  <div className="text-4xl mb-2">👍 Good Job! 👍</div>
+                  <div className="text-xl">You know a lot about ancient history!</div>
+                </div>
+              ) : (
+                <div className="mb-6">
+                  <div className="text-4xl mb-2">📚 Keep Learning! 📚</div>
+                  <div className="text-xl">Ancient history is fascinating!</div>
+                </div>
+              )}
+              
+              <button 
+                onClick={resetQuiz}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-full text-xl transition-colors duration-200"
+              >
+                Play Again
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="mb-4 flex justify-between items-center text-black">
+                <div className="text-lg font-semibold">Question {currentQuestion + 1}/{questions.length}</div>
+                <div className="text-lg font-semibold">Score: {score}</div>
+              </div>
+              
+              <div className="mb-6">
+                <div className="image-container">
+                  <img 
+                    src={questions[currentQuestion].image} 
+                    alt="Question illustration" 
+                    className="w-full h-48 object-cover rounded-lg mb-4"
+                  />
+                </div>
+                <div className="text-xl font-bold mb-4 text-black">{questions[currentQuestion].questionText}</div>
+              </div>
+              
+              <div className="space-y-3">
+                {questions[currentQuestion].answerOptions.map((answerOption, index) => (
+                  <button
+                    key={index}
+                    onClick={() => selectedAnswer === null && handleAnswerClick(answerOption.isCorrect, index)}
+                    className={`answer-button w-full text-left p-3 rounded-lg text-white font-medium flex items-center ${getButtonClass(index)} transition-all duration-300 transform hover:scale-102`}
+                    disabled={selectedAnswer !== null}
+                  >
+                    <span className="text-2xl mr-3">{answerOption.icon}</span>
+                    <span className="text-lg">{answerOption.answerText}</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
