@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Work: 1984</title>
+    
+    <!-- External Styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <link rel="manifest" href="/images/favicon.png">
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --bg-color: #fff;
+            --bg-color-rgb: 255, 255, 255;
+            --text-color: #333;
+            --accent-color: #FF7F50;
+            --accent-glow: rgba(255, 127, 80, 0.8);
+            --accent-glow-secondary: rgba(255, 127, 80, 0.6);
+            --border-color: #eee;
+            --lightbox-bg: rgba(255, 255, 255, 0.95);
+            --nav-bg: #fff;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --bg-color-rgb: 18, 18, 18;
+            --text-color: #e0e0e0;
+            --border-color: #333;
+            --lightbox-bg: rgba(18, 18, 18, 0.95);
+            --nav-bg: #1e1e1e;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+    font-family: Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Remove opacity: 0 from body to avoid hiding everything initially */
+}
+
+body.loaded {
+    /* No need for opacity here unless you want a fade-in effect for the body */
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    transition: opacity 0.5s ease;
+    opacity: 1;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.loading-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 127, 80, 0.2);
+    z-index: 1;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.loading-text {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    text-shadow: 
+        0 0 5px var(--accent-color),
+        0 0 10px var(--accent-glow),
+        0 0 20px var(--accent-glow-secondary),
+        0 0 30px rgba(255, 127, 80, 0.3);
+    animation: 
+        typing 1.5s steps(7, end) forwards, /* 7 steps for "Loading" */
+        caret 0.75s step-end infinite, /* Blinking caret */
+        glow 1.5s infinite alternate; /* Retain glow */
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 4px solid var(--accent-color); /* Caret */
+}
+
+/* Loading Bar Styles */
+.loading-bar {
+    width: 300px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
+[data-theme="dark"] .loading-bar {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.loading-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--accent-color);
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow-secondary);
+}
+
+/* Animations */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes caret {
+    0%, 50% { border-right-color: var(--accent-color); }
+    50.1%, 100% { border-right-color: transparent; }
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 
+            0 0 5px var(--accent-color),
+            0 0 10px var(--accent-glow),
+            0 0 20px var(--accent-glow-secondary),
+            0 0 30px rgba(255, 127, 80, 0.3);
+    }
+    to {
+        text-shadow: 
+            0 0 10px var(--accent-color),
+            0 0 20px var(--accent-glow),
+            0 0 30px var(--accent-glow-secondary),
+            0 0 40px rgba(255, 127, 80, 0.5);
+    }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.2; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0.2; }
+}
+
+/* Main Content */
+.main-content {
+    opacity: 0; /* Keep main content hidden initially */
+    transition: opacity 0.5s ease;
+}
+
+.main-content.loaded {
+    opacity: 1; /* Fade in when loaded */
+}
+
+        /* Navigation */
+        nav {
+            background-color: var(--bg-color);
+            padding: 2rem 30px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        nav.scrolled {
+            background-color: rgba(var(--bg-color-rgb), 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+
+        .nav-container {
+            max-width: calc(100% - 60px);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo */
+        .logo {
+            position: relative;
+            width: 150px;
+            height: 75px;
+            transition: all 0.3s ease;
+        }
+
+        .logo img {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            max-height: 75px;
+            width: auto;
+            transition: all 0.3s ease;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .logo .logo-default { opacity: 1; }
+        .logo .logo-hover { opacity: 0; }
+
+        .logo:hover .logo-default { opacity: 0; }
+        .logo:hover .logo-hover {
+            opacity: 1;
+            filter: drop-shadow(0 0 5px var(--accent-glow))
+                    drop-shadow(0 0 10px var(--accent-glow-secondary))
+                    drop-shadow(0 0 15px rgba(255, 127, 80, 0.4));
+        }
+
+        /* Nav Links */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links.loaded { opacity: 1; }
+        .nav-links.visible { display: flex !important; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-glow),
+                        0 0 20px var(--accent-glow-secondary);
+        }
+
+        .nav-links a span {
+            position: relative;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover span { transform: translateY(-2px); }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--text-color);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            cursor: pointer;
+            margin-left: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-glow),
+                        0 0 20px var(--accent-glow-secondary);
+        }
+
+        .theme-toggle .fa-sun { display: none; }
+        .theme-toggle .fa-moon { display: inline-block; }
+        [data-theme="dark"] .theme-toggle .fa-sun { display: inline-block; }
+        [data-theme="dark"] .theme-toggle .fa-moon { display: none; }
+
+        /* Main Content */
+        .container {
+            margin-top: 50px;
+            padding: 20px 30px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            margin-left: 90px;
+            color: var(--text-color);
+            overflow: hidden;
+            
+            animation: typing 4.5s steps(40, end),
+                      caret 6.5s step-end forwards;
+            text-shadow: 0 0 20px var(--accent-glow-secondary);
+        }
+
+        .section-body {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin: 0 90px 30px;
+            color: var(--text-color);
+            overflow: hidden;
+            animation: typing-body 3.5s steps(40, end),
+                      caret 6.5s step-end forwards;
+            text-shadow: 0 0 20px var(--accent-glow-secondary);
+        }
+
+        .section-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 40px auto;
+            width: 100%;
+        }
+
+        /* Animations */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes typing-body {
+            from { width: 0 }
+            to { width: 35% }
+        }
+
+        @keyframes caret {
+            0%, 50% { border-right: 3px solid var(--accent-color); }
+            50.1%, 100% { border-right: none; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+
+        .fade-in.visible { opacity: 1; }
+
+        img.fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        img.fade-in.visible { opacity: 1; }
+
+        /* Gallery */
+        .gallery {
+            column-count: 5;
+            column-gap: 30px;
+            padding: 20px 75px;
+        }
+
+        .image-container {
+            position: relative;
+            break-inside: avoid;
+            margin-bottom: 30px;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            transition: box-shadow 0.3s ease;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .image-container:hover {
+            box-shadow: 0 8px 16px var(--shadow-color);
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        [data-theme="dark"] .image-container::before {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .image-container:hover::before {
+            opacity: 1;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        .image-container:hover .thumbnail {
+            transform: scale(1.05);
+        }
+
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: var(--lightbox-bg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            display: flex;
+            gap: 30px;
+            max-width: 90vw;
+            max-height: 90vh;
+            padding: 20px;
+        }
+
+        .lightbox-image-container {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .lightbox-image {
+            max-width: 60vw;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .lightbox-video {
+            max-width: 60vw;
+            max-height: 75vh;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            pointer-events: auto;
+        }
+
+        .video-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            z-index: 1003;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            color: var(--text-color);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1002;
+            pointer-events: auto;
+        }
+
+        .close-button:hover {
+            color: var(--accent-color);
+        }
+
+        .lightbox-text {
+            flex: 1;
+            color: var(--text-color);
+            padding: 20px;
+            max-width: 300px;
+        }
+
+        .lightbox-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            font-size: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1002;
+            padding: 20px;
+            pointer-events: auto;
+        }
+
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+
+        .lightbox-arrow:hover {
+            color: var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-color);
+            padding: 2rem 0;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-info {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-info h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1.2rem;
+        }
+
+        .footer-info p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-nav-section {
+            min-width: 150px;
+        }
+
+        .footer-nav-section h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: 400;
+            font-size: 1rem;
+        }
+
+        .footer-nav-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-nav-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-nav-section ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-nav-section ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .gallery { column-count: 3; }
+        }
+
+        @media (max-width: 900px) {
+            .gallery { column-count: 2; }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--nav-bg);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+                box-shadow: 0 4px 8px var(--shadow-color);
+            }
+            .nav-links.active { display: flex !important; }
+            .lightbox-content { flex-direction: column; }
+            .lightbox-image, .lightbox-video { max-width: 85vw; }
+            .lightbox-text { max-width: 85vw; }
+            .footer-container { flex-direction: column; align-items: flex-start; }
+            .footer-nav { width: 100%; margin-top: 1.5rem; }
+        }
+
+        @media (max-width: 600px) {
+            .gallery { column-count: 1; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Overlay with "Loading" Text and Bar -->
+    <div class="loading-overlay">
+        <div class="loading-text">Loading... Thank you for your patience. </div>
+        <div class="loading-bar">
+            <div class="loading-bar-fill"></div>
+        </div>
+    </div>
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
+        <nav>
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <img src="images/signature.png" alt="Logo" class="logo-default">
+                    <img src="images/signature_red.png" alt="Logo Hover" class="logo-hover">
+                </a>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="current.html"><span>Current</span></a></li>
+                    <li><a href="archive.html"><span>Archive</span></a></li>
+                    <li><a href="cv.html"><span>C.V.</span></a></li>
+                    <li><a href="news.html"><span>News</span></a></li>
+                    <li><a href="#" id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun"></i>
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container"></div>
+        <div class="section-divider"></div>
+        <h2 class="section-title">current work</h2>
+        <h1 class="section-body">
+            My latest work, inspired by Orwell’s language, blends painting and digital media. 
+            Using looping animations, 3D models, and impasto paintings, I explore 
+            themes of propaganda, truth manipulation, and the clash between physical and virutal 
+            realities. Drawing from Dada, I rearrange modern life through hypnotic, looping motion, 
+            capturing the rhythms of the Internet Age.
+        </h1>
+
+        <div class="gallery full-width">
+            <!-- Image 01 -->
+            <div class="image-container">
+                <img src="images/current/01.jpg" alt="goodthink" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/01.jpg" alt="goodthink" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>goodthink</h3>
+                            <p>2024, acrylic and oil on mylar, 22" x 58"</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/02.jpg" alt="oldthink" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/02.jpg" alt="oldthink" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>oldthink</h3>
+                            <p>2023, acrylic emulsion, raw pigment, and oil on mylar, 30" x 84"</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/03.gif" alt="crimestop" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/03.gif" alt="crimestop" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>crimestop</h3>
+                            <p>2022, digital collage and looping GIF</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/04.gif" alt="Teledep" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/04.gif" alt="Teledep" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Teledep</h3>
+                            <p>2023, digital collage and looping GIF</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/05.jpg" alt="Ficdep" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/05.jpg" alt="Ficdep" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Ficdep</h3>
+                            <p>2023, acrylic emulsion, raw pigment, and oil on mylar, 50" x 40"</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/06.jpg" alt="duckspeak" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/06.jpg" alt="duckspeak" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>duckspeak</h3>
+                            <p>2025, acrylic and oil on mylar, 28" x 20"</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/07.jpg" alt="blackwhite" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/07.jpg" alt="blackwhite" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>blackwhite</h3>
+                            <p>2025, acrylic and oil on mylar, 28" x 20"</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/10.jpg" alt="Minipax" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/10.jpg" alt="Minipax" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Minipax</h3>
+                            <p>2024, 3D model with AR support, size variable, <a href="https://collaborate.shapr3d.com/v/hDq3dDsR-E6agrqB4dsjZ" target="_blank">View 3D Model</a></p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/11.jpg" alt="Miniluv" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/11.jpg" alt="Miniluv" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Miniluv</h3>
+                            <p>2024, 3D model with AR support, size variable, <a href="https://collaborate.shapr3d.com/v/LZ5TmKxx-H3evUnO5_EcB" target="_blank">View 3D Model</a></p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/13.gif" alt="malreported" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/13.gif" alt="malreported" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>malreported</h3>
+                            <p>2022, digital collage and looping GIF</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/14.jpg" alt="crimethink" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/14.jpg" alt="crimethink" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>crimethink</h3>
+                            <p>2022, acrylic emulsion, raw pigment, and oil on mylar, 30" x 84"</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/17.gif" alt="doublethink" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/15.jpg" alt="doublethink" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>doublethink</h3>
+                            <p>2023, acrylic emulsion, raw pigment, and oil on mylar, 50" x 40"</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/16.jpg" alt="joycamp" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/16.jpg" alt="joycamp" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>joycamp</h3>
+                            <p>2025, cold wax and oil on panel, 55" x 40"</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/17.gif" alt="bellyfeel" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/17.gif" alt="bellyfeel" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>bellyfeel</h3>
+                            <p>2025, digital collage and looping GIF</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/18.gif" alt="bb" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/18.gif" alt="bb" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>bb</h3>
+                            <p>2024, digital collage and looping GIF</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/19.gif" alt="Recdep" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/19.gif" alt="Recdep" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Recdep</h3>
+                            <p>2022, digital collage and looping GIF</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <!-- Video Container -->
+            <div class="image-container">
+                <img src="images/current/20.jpg" alt="prolefeed" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <div class="video-container">
+                                <video id="lightbox-video" class="lightbox-video" controls controlsList="nodownload" oncontextmenu="return false;">
+                                    <source src="images/current/20.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <button class="fullscreen-btn" id="fullscreen-btn">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>prolefeed</h3>
+                            <p>2025, single channel video, 2:00, <a href="https://vimeo.com/1066399046?share=copy" target="_blank">View on Vimeo</a></p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/22.jpg" alt="bellyfeel" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/22.jpg" alt="bellyfeel" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>bellyfeel</h3>
+                            <p>2025, acrylic and oil on mylar, 36" x 36"</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/24.jpg" alt="Character Study" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/24.jpg" alt="Character Study" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>Character Study</h3>
+                            <p>2023, silverpoint and graphite on vellum, 11" x 14"</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="images/current/25.gif" alt="joycamp" class="thumbnail">
+                <div class="lightbox-overlay">
+                    <div class="close-button">×</div>
+                    <div class="lightbox-content">
+                        <div class="lightbox-image-container">
+                            <img src="images/current/25.gif" alt="joycamp" class="lightbox-image">
+                        </div>
+                        <div class="lightbox-text">
+                            <h3>joycamp</h3>
+                            <p>2025, digital collage and looping GIF</p>
+                        </div>
+                    </div>
+                    <div class="lightbox-arrow lightbox-prev">‹</div>
+                    <div class="lightbox-arrow lightbox-next">›</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="image-container">
+        <img src="images/current/26.gif" alt="goodthink" class="thumbnail">
+        <div class="lightbox-overlay">
+            <div class="close-button">×</div>
+            <div class="lightbox-content">
+                <div class="lightbox-image-container">
+                    <img src="images/current/26.gif" alt="goodthink" class="lightbox-image">
+                </div>
+                <div class="lightbox-text">
+                    <h3>joycamp</h3>
+                    <p>2023, digital collage and looping GIF</p>
+                </div>
+            </div>
+            <div class="lightbox-arrow lightbox-prev">‹</div>
+            <div class="lightbox-arrow lightbox-next">›</div>
+        </div>
+    </div>
+</div>
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-info">
+                    <h3>Bryan Robertson</h3>
+                    <p>Visual Artist based in Arizona</p>
+                    <div class="social-links">
+                        <a href="www.linkedin.com/in/bryan-robertson00100" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:studio@bryan-robertson.com" title="Email"><i class="far fa-envelope"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-nav">
+                    <div class="footer-nav-section">
+                        <h4>Work</h4>
+                        <ul>
+                            <li><a href="current.html">Current</a></li>
+                            <li><a href="archive.html">Archive</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-nav-section">
+                        <h4>About</h4>
+                        <ul>
+                            <li><a href="cv.html">Curriculum Vitae</a></li>
+                            <li><a href="statement.html">Artist Statement</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-nav-section">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="news.html">News</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="copyright">
+                    © 2025 Bryan Robertson. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        let currentLightbox = null;
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlElement = document.documentElement;
+            const loadingOverlay = document.querySelector('.loading-overlay');
+            const mainContent = document.querySelector('.main-content');
+            const images = document.querySelectorAll('img');
+            const loadingBarFill = document.querySelector('.loading-bar-fill');
+            let imagesLoaded = 0;
+            const minimumLoadingTime = 2000; // 2 seconds minimum display time
+            let startTime = Date.now();
+    
+            // Function to update loading bar progress
+            function updateLoadingBar() {
+                const progress = (imagesLoaded / images.length) * 100;
+                loadingBarFill.style.width = `${progress}%`;
+            }
+    
+            // Function to hide overlay and show content
+            function completeLoading() {
+                loadingOverlay.classList.add('hidden');
+                mainContent.classList.add('loaded');
+                setTimeout(() => navLinks.classList.add('loaded'), 300);
+            }
+    
+            // Function to check if all images are loaded
+            function checkImagesLoaded() {
+                imagesLoaded++;
+                updateLoadingBar(); // Update bar each time an image loads
+                if (imagesLoaded === images.length) {
+                    const elapsedTime = Date.now() - startTime;
+                    const remainingTime = Math.max(0, minimumLoadingTime - elapsedTime);
+                    setTimeout(completeLoading, remainingTime);
+                }
+            }
+    
+            // Preload all images
+            images.forEach(img => {
+                const tempImg = new Image();
+                tempImg.src = img.src;
+                tempImg.onload = checkImagesLoaded;
+                tempImg.onerror = checkImagesLoaded; // Count even if image fails
+            });
+    
+            // If no images, simulate progress and respect minimum time
+            if (images.length === 0) {
+                loadingBarFill.style.width = '100%'; // Immediate full bar
+                setTimeout(completeLoading, minimumLoadingTime);
+            }
+    
+            // Hamburger menu
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+    
+            // Theme toggle
+            themeToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                const newTheme = htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+    
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            htmlElement.setAttribute('data-theme', savedTheme);
+    
+            // Lightbox functionality (unchanged)
+            document.querySelectorAll('.image-container').forEach(container => {
+                container.addEventListener('click', () => openLightbox(container));
+            });
+        });
+    
+        function openLightbox(container) {
+            const overlay = container.querySelector('.lightbox-overlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            currentLightbox = container;
+    
+            const video = overlay.querySelector('video');
+            if (video) {
+                video.play();
+                const fullscreenBtn = overlay.querySelector('.fullscreen-btn');
+                if (fullscreenBtn) {
+                    fullscreenBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        toggleFullScreen(video);
+                    };
+                }
+            }
+        }
+    
+        function toggleFullScreen(videoElement) {
+            if (!document.fullscreenElement) {
+                videoElement.requestFullscreen?.() || 
+                videoElement.webkitRequestFullscreen?.() || 
+                videoElement.msRequestFullscreen?.();
+            } else {
+                document.exitFullscreen?.() || 
+                document.webkitExitFullscreen?.() || 
+                document.msExitFullscreen?.();
+            }
+        }
+    
+        document.addEventListener('fullscreenchange', updateFullscreenButton);
+        function updateFullscreenButton() {
+            document.querySelectorAll('.fullscreen-btn').forEach(btn => {
+                const icon = btn.querySelector('i');
+                icon.classList.toggle('fa-expand', !document.fullscreenElement);
+                icon.classList.toggle('fa-compress', !!document.fullscreenElement);
+            });
+        }
+    
+        document.querySelectorAll('.close-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const overlay = button.closest('.lightbox-overlay');
+                const video = overlay.querySelector('video');
+                if (video) {
+                    video.pause();
+                    if (document.fullscreenElement) document.exitFullscreen();
+                }
+                overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                currentLightbox = null;
+            });
+        });
+    
+        document.querySelectorAll('.lightbox-arrow').forEach(arrow => {
+            arrow.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navigateLightbox(arrow.classList.contains('lightbox-prev') ? -1 : 1, e);
+            });
+        });
+    
+        function navigateLightbox(direction, event) {
+            if (!currentLightbox) return;
+            event.stopPropagation();
+    
+            if (document.fullscreenElement) document.exitFullscreen();
+            const currentVideo = currentLightbox.querySelector('video');
+            if (currentVideo) currentVideo.pause();
+    
+            const containers = Array.from(document.querySelectorAll('.image-container'));
+            const currentIndex = containers.indexOf(currentLightbox);
+            const nextIndex = (currentIndex + direction + containers.length) % containers.length;
+            const nextLightbox = containers[nextIndex];
+    
+            const currentOverlay = currentLightbox.querySelector('.lightbox-overlay');
+            const nextOverlay = nextLightbox.querySelector('.lightbox-overlay');
+    
+            nextOverlay.style.transition = 'none';
+            nextOverlay.classList.add('active');
+            void nextOverlay.offsetWidth;
+            nextOverlay.style.transition = '';
+    
+            const nextVideo = nextLightbox.querySelector('video');
+            if (nextVideo) {
+                nextVideo.play();
+                const fullscreenBtn = nextLightbox.querySelector('.fullscreen-btn');
+                if (fullscreenBtn) {
+                    fullscreenBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        toggleFullScreen(nextVideo);
+                    };
+                }
+            }
+    
+            currentLightbox = nextLightbox;
+            setTimeout(() => currentOverlay.classList.remove('active'), 50);
+        }
+    
+        document.addEventListener('keydown', (event) => {
+            if (!currentLightbox) return;
+            const activeOverlay = currentLightbox.querySelector('.lightbox-overlay');
+            
+            if (event.key === 'Escape' && !document.fullscreenElement) {
+                const video = activeOverlay.querySelector('video');
+                if (video) video.pause();
+                activeOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                currentLightbox = null;
+            } else if (event.key === 'ArrowLeft') {
+                navigateLightbox(-1, event);
+            } else if (event.key === 'ArrowRight') {
+                navigateLightbox(1, event);
+            } else if (event.key === 'f') {
+                const video = currentLightbox.querySelector('video');
+                if (video) toggleFullScreen(video);
+            }
+        });
+    
+        document.addEventListener('click', (event) => {
+            if (event.target.classList.contains('lightbox-overlay')) {
+                if (document.fullscreenElement) document.exitFullscreen();
+                const video = event.target.querySelector('video');
+                if (video) video.pause();
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                currentLightbox = null;
+            }
+        });
+    
+        document.addEventListener('Massive Attack - Unfinished Sympathycontextmenu', (e) => {
+            if (e.target.tagName === 'VIDEO') e.preventDefault();
+        });
+    </script>
+</body>
+</html>
