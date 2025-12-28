@@ -338,15 +338,13 @@ body.loaded {
         }
 
         .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            margin-left: 90px;
+            font-size: 2.25rem;
+            font-weight: 500;
+            margin: 0 90px 30px;
             color: var(--text-color);
             overflow: hidden;
-            
-            animation: typing 4.5s steps(40, end),
-                      caret 6.5s step-end forwards;
+            animation: typing-body 4.5s steps(40, end),
+                       step-end forwards;
             text-shadow: 0 0 20px var(--accent-glow-secondary);
         }
 
@@ -356,8 +354,8 @@ body.loaded {
             margin: 0 90px 30px;
             color: var(--text-color);
             overflow: hidden;
-            animation: typing-body 3.5s steps(40, end),
-                      caret 6.5s step-end forwards;
+            animation: typing-body 6.5s steps(70, end),
+                       step-end forwards;
             text-shadow: 0 0 20px var(--accent-glow-secondary);
         }
 
@@ -386,7 +384,7 @@ body.loaded {
 
         .fade-in {
             opacity: 0;
-            transition: opacity 0.8s ease-in;
+            transition: opacity .8s ease-in;
         }
 
         .fade-in.visible { opacity: 1; }
