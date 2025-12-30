@@ -224,7 +224,7 @@
         }
 
         .propaganda-box li::before {
-            content: "▶ ";
+            content: "\25B6 ";
             color: #ff0000;
         }
 
@@ -237,6 +237,100 @@
             font-size: 18px;
             z-index: 2;
             position: relative;
+        }
+
+        .visitor-bar {
+            margin-top: 5px;
+            padding: 15px 20px;
+            background: #ff0000;
+            color: #000;
+            font-weight: bold;
+            font-size: 16px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .trust-level-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #fff;
+        }
+
+        .trust-level-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+        }
+
+        .trust-level-bar {
+            width: 100%;
+            height: 30px;
+            background: #333;
+            border: 2px solid #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trust-level-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0000 0%, #ff6600 50%, #ffaa00 100%);
+            transition: width 2s ease-out;
+            position: relative;
+            animation: trustPulse 2s infinite;
+        }
+
+        @keyframes trustPulse {
+            0%, 100% { 
+                filter: brightness(1);
+            }
+            50% { 
+                filter: brightness(1.3);
+            }
+        }
+
+        .trust-level-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            font-size: 14px;
+            color: #fff;
+            text-shadow: 1px 1px 2px #000;
+            z-index: 1;
+        }
+
+        .upload-container {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px dashed #ff0000;
+        }
+
+        .upload-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff0000;
+            text-transform: uppercase;
+        }
+
+        .upload-help {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #ffcccc;
+            font-style: italic;
+        }
+
+        #complianceUpload {
+            width: 100%;
+            padding: 8px;
+            background: #111;
+            border: 1px solid #ff0000;
+            color: #fff;
         }
 
         @media (max-width: 768px) {
@@ -279,6 +373,30 @@
             <div class="visitor-id">
                 IP ADDRESS: <span id="ipAddress">DETECTING...</span>
             </div>
+            <div class="visitor-bar">
+                LOCATION: <span id="location">DETECTING...</span>
+            </div>
+            <div class="visitor-bar">
+                DEVICE TYPE: <span id="deviceType">DETECTING...</span>
+            </div>
+            <div class="visitor-bar">
+                LAST SEEN AT: <span id="lastSeen">DETECTING...</span>
+            </div>
+
+            <div class="trust-level-container">
+                <div class="trust-level-label">COMPLIANCE LEVEL</div>
+                <div class="trust-level-bar">
+                    <div class="trust-level-fill" id="trustFill" style="width: 0%;">
+                        <div class="trust-level-text" id="trustText">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upload-container">
+                <div class="upload-label">SUBMIT EVIDENCE OF COMPLIANCE</div>
+                <input type="file" id="complianceUpload" accept="image/*" multiple>
+                <div class="upload-help">All images will be permanently logged and reviewed by the Ministry of Truth.</div>
+            </div>
         </div>
     </div>
 
@@ -289,11 +407,110 @@
                 const response = await fetch('https://api.ipify.org?format=json');
                 const data = await response.json();
                 document.getElementById('ipAddress').textContent = data.ip;
+                fetchLocation(data.ip);
             } catch (error) {
                 document.getElementById('ipAddress').textContent = 'UNKNOWN';
+                document.getElementById('location').textContent = 'UNKNOWN';
             }
         }
+
+        // Fetch approximate location from IP
+        async function fetchLocation(ip) {
+            try {
+                const response = await fetch(`https://ipapi.co/${ip}/json/`);
+                const data = await response.json();
+
+                if (data && !data.error) {
+                    const parts = [data.city, data.region, data.country_name].filter(Boolean);
+                    document.getElementById('location').textContent = parts.join(', ') || 'UNKNOWN';
+                } else {
+                    document.getElementById('location').textContent = 'UNKNOWN';
+                }
+            } catch (error) {
+                document.getElementById('location').textContent = 'UNKNOWN';
+            }
+        }
+
+        // Detect device type
+        function detectDeviceType() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            let type = 'DESKTOP';
+
+            if (/android/i.test(ua)) {
+                type = 'ANDROID DEVICE';
+            } else if (/iPad|Tablet/i.test(ua)) {
+                type = 'TABLET';
+            } else if (/iPhone|iPod/i.test(ua)) {
+                type = 'IPHONE';
+            } else if (/Mobile/i.test(ua)) {
+                type = 'MOBILE DEVICE';
+            } else if (/Macintosh/i.test(ua)) {
+                type = 'MAC DESKTOP';
+            } else if (/Windows/i.test(ua)) {
+                type = 'WINDOWS DESKTOP';
+            }
+
+            document.getElementById('deviceType').textContent = type;
+        }
+
+        // Display current timestamp
+        function displayLastSeen() {
+            const now = new Date();
+            const formatted = now.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            document.getElementById('lastSeen').textContent = formatted;
+        }
+
+        let currentComplianceLevel = 0;
+
+        function setComplianceLevel(level) {
+            const fillElement = document.getElementById('trustFill');
+            const textElement = document.getElementById('trustText');
+            currentComplianceLevel = Math.max(0, Math.min(100, level));
+            fillElement.style.width = currentComplianceLevel + '%';
+            textElement.textContent = currentComplianceLevel + '%';
+        }
+
+        // Initial compliance level (ominously low)
+        function initialComplianceLevel() {
+            const level = Math.floor(Math.random() * 31) + 15; // 15-45%
+            setTimeout(() => setComplianceLevel(level), 500);
+        }
+
+        // Reassess compliance when images are uploaded
+        function handleComplianceUpload(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            const count = files.length;
+            const bonus = Math.min(40, count * 10); // up to +40 for many images
+            const noise = Math.floor(Math.random() * 11) - 5; // -5..+5
+
+            const newLevel = Math.max(
+                currentComplianceLevel,
+                Math.min(95, currentComplianceLevel + bonus + noise)
+            );
+
+            setTimeout(() => setComplianceLevel(newLevel), 500);
+        }
+
         fetchIPAddress();
+        detectDeviceType();
+        displayLastSeen();
+        initialComplianceLevel();
+
+        // Update last seen every second
+        setInterval(displayLastSeen, 1000);
+
+        // Attach upload listener
+        document.getElementById('complianceUpload').addEventListener('change', handleComplianceUpload);
     </script>
 </body>
 </html>
