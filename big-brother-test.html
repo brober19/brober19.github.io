@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Brother is Watching You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .static-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.03) 0px,
+                rgba(255, 255, 255, 0.03) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            animation: staticMove 0.1s infinite;
+            z-index: 1;
+        }
+
+        @keyframes staticMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(2px); }
+        }
+
+        .glitch-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .big-brother-eye {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            border: 5px solid #e94560;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, #e94560 0%, #000 70%);
+            animation: eyePulse 3s infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes eyePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px #e94560; }
+            50% { transform: scale(1.1); box-shadow: 0 0 60px #e94560; }
+        }
+
+        @keyframes textPulse {
+            0%, 100% { 
+                text-shadow: 0 0 10px #e94560, 0 0 20px #e94560; 
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 20px #e94560, 0 0 40px #e94560, 0 0 60px #e94560; 
+                transform: scale(1.05);
+            }
+        }
+
+        .pupil {
+            width: 80px;
+            height: 80px;
+            background: #000;
+            border-radius: 50%;
+            border: 3px solid #fff;
+        }
+
+        .glitch-text {
+            font-size: 72px;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            color: #e94560;
+            z-index: 2;
+            margin-bottom: 50px;
+            font-family: 'Courier New', monospace;
+            animation: textPulse 3s infinite;
+            image-rendering: pixelated;
+        }
+
+        .glitch-text[style*="font-size: 48px;"] {
+            color: #e94560 !important;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-text::before {
+            color: #ff0000;
+            animation: glitch1 0.8s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            image-rendering: pixelated;
+            filter: blur(0.5px);
+        }
+
+        .glitch-text::after {
+            color: #000000;
+            animation: glitch2 0.8s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            image-rendering: pixelated;
+            filter: blur(0.5px);
+        }
+
+        @keyframes glitch1 {
+            0%, 100% { 
+                transform: translate(0); 
+                opacity: 0.8;
+            }
+            20% { 
+                transform: translate(-3px, 3px); 
+                opacity: 0.9;
+            }
+            40% { 
+                transform: translate(3px, -3px); 
+                opacity: 0.7;
+            }
+            60% { 
+                transform: translate(-2px, -2px); 
+                opacity: 0.85;
+            }
+            80% { 
+                transform: translate(2px, 2px); 
+                opacity: 0.75;
+            }
+        }
+
+        @keyframes glitch2 {
+            0%, 100% { 
+                transform: translate(0); 
+                opacity: 0.8;
+            }
+            25% { 
+                transform: translate(3px, -3px); 
+                opacity: 0.9;
+            }
+            45% { 
+                transform: translate(-3px, 3px); 
+                opacity: 0.7;
+            }
+            65% { 
+                transform: translate(2px, 2px); 
+                opacity: 0.85;
+            }
+            85% { 
+                transform: translate(-2px, -2px); 
+                opacity: 0.75;
+            }
+        }
+
+        .propaganda-box {
+            max-width: 700px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 3px solid #fff;
+            padding: 40px;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            animation: boxPulse 3s infinite;
+        }
+
+        @keyframes boxPulse {
+            0%, 100% { 
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.6), 0 0 50px rgba(255, 0, 0, 0.3);
+                transform: scale(1.02);
+            }
+        }
+
+        .propaganda-box h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ff0000;
+            animation: headerPulse 3s infinite;
+        }
+
+        @keyframes headerPulse {
+            0%, 100% { 
+                text-shadow: 0 0 5px #ff0000;
+            }
+            50% { 
+                text-shadow: 0 0 15px #ff0000, 0 0 25px #ff0000;
+            }
+        }
+
+        .propaganda-box ul {
+            list-style: none;
+            font-size: 20px;
+            line-height: 2;
+        }
+
+        .propaganda-box li::before {
+            content: "\25B6 ";
+            color: #ff0000;
+        }
+
+        .visitor-id {
+            margin-top: 40px;
+            padding: 20px;
+            background: #ff0000;
+            color: #000;
+            font-weight: bold;
+            font-size: 18px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .visitor-bar {
+            margin-top: 5px;
+            padding: 15px 20px;
+            background: #ff0000;
+            color: #000;
+            font-weight: bold;
+            font-size: 16px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .trust-level-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #fff;
+        }
+
+        .trust-level-label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+        }
+
+        .trust-level-bar {
+            width: 100%;
+            height: 22px;
+            background: #111;
+            border: 1px solid #ff0000;
+            position: relative;
+            overflow: hidden;
+            border-radius: 999px;
+        }
+
+        .trust-level-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #22c55e 0%, #84cc16 50%, #facc15 100%);
+            transition: width 0.8s ease-out;
+            position: relative;
+        }
+
+        .trust-level-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            font-size: 14px;
+            color: #fff;
+            text-shadow: 1px 1px 2px #000;
+            z-index: 1;
+        }
+
+        .upload-container {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px dashed #ff0000;
+        }
+
+        .upload-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff0000;
+            text-transform: uppercase;
+        }
+
+        .upload-help {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #ffcccc;
+            font-style: italic;
+        }
+
+        #complianceUpload {
+            width: 100%;
+            padding: 8px;
+            background: #111;
+            border: 1px solid #ff0000;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        #analyzeEvidenceBtn {
+            width: 100%;
+            padding: 12px;
+            background: #ff0000;
+            color: #000;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        #analyzeEvidenceBtn:hover {
+            background: #cc0000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+        }
+
+        #analyzeEvidenceBtn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .scanning-progress {
+            margin-top: 12px;
+            padding: 10px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
+            font-size: 13px;
+            font-weight: bold;
+            color: #ff0000;
+            text-align: center;
+            display: none;
+        }
+
+        @keyframes scanPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .scanning-progress.active {
+            display: block;
+            animation: scanPulse 0.8s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .glitch-text {
+                font-size: 36px;
+            }
+
+            .propaganda-box {
+                padding: 20px;
+            }
+
+            .propaganda-box h2 {
+                font-size: 24px;
+            }
+
+            .propaganda-box ul {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="static-overlay"></div>
+    <div class="glitch-container">
+        <div class="big-brother-eye">
+            <div class="pupil"></div>
+        </div>
+
+        <h1 class="glitch-text" data-text="BIG BROTHER">BIG BROTHER</h1>
+        <h1 class="glitch-text" data-text="IS WATCHING YOU" style="font-size: 48px;">IS WATCHING YOU</h1>
+
+        <div class="propaganda-box">
+            <h2>YOU HAVE BEEN IDENTIFIED</h2>
+            <ul>
+                <li>Your location has been logged</li>
+                <li>Your device has been registered</li>
+                <li>Your compliance is appreciated</li>
+                <li>Doubleplusungood thoughts detected</li>
+            </ul>
+            <div class="visitor-id">
+                IP ADDRESS: <span id="ipAddress">DETECTING...</span>
+            </div>
+            <div class="visitor-bar">
+                LOCATION: <span id="location">DETECTING...</span>
+            </div>
+            <div class="visitor-bar">
+                DEVICE TYPE: <span id="deviceType">DETECTING...</span>
+            </div>
+            <div class="visitor-bar">
+                LAST SEEN AT: <span id="lastSeen">DETECTING...</span>
+            </div>
+
+            <div class="trust-level-container">
+                <div class="trust-level-label">COMPLIANCE SCORE</div>
+                <div class="trust-level-bar">
+                    <div class="trust-level-fill" id="trustFill" style="width: 0%;">
+                        <div class="trust-level-text" id="trustText">0%</div>
+                    </div>
+                </div>
+                <div id="complianceWarning" style="margin-top: 12px; font-size: 14px; font-weight: bold; color: #ff0000; text-transform: uppercase; letter-spacing: 1px;">
+                    AWAITING INITIAL ASSESSMENT...
+                </div>
+            </div>
+
+            <div class="upload-container">
+                <div class="upload-label">SUBMIT EVIDENCE OF COMPLIANCE</div>
+                <input type="file" id="complianceUpload" accept="image/*" multiple>
+                <button id="analyzeEvidenceBtn">Analyze Evidence</button>
+                <div class="scanning-progress" id="scanningProgress">SCANNING EVIDENCE...</div>
+                <div class="upload-help">All images will be permanently logged and reviewed by the Ministry of Truth.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch IP address
+        async function fetchIPAddress() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                document.getElementById('ipAddress').textContent = data.ip;
+                fetchLocation(data.ip);
+            } catch (error) {
+                document.getElementById('ipAddress').textContent = 'UNKNOWN';
+                document.getElementById('location').textContent = 'UNKNOWN';
+            }
+        }
+
+        // Fetch approximate location from IP
+        async function fetchLocation(ip) {
+            try {
+                const response = await fetch(`https://ipapi.co/${ip}/json/`);
+                const data = await response.json();
+
+                if (data && !data.error) {
+                    const parts = [data.city, data.region, data.country_name].filter(Boolean);
+                    document.getElementById('location').textContent = parts.join(', ') || 'UNKNOWN';
+                } else {
+                    document.getElementById('location').textContent = 'UNKNOWN';
+                }
+            } catch (error) {
+                document.getElementById('location').textContent = 'UNKNOWN';
+            }
+        }
+
+        // Detect device type
+        function detectDeviceType() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            let type = 'DESKTOP';
+
+            if (/android/i.test(ua)) {
+                type = 'ANDROID DEVICE';
+            } else if (/iPad|Tablet/i.test(ua)) {
+                type = 'TABLET';
+            } else if (/iPhone|iPod/i.test(ua)) {
+                type = 'IPHONE';
+            } else if (/Mobile/i.test(ua)) {
+                type = 'MOBILE DEVICE';
+            } else if (/Macintosh/i.test(ua)) {
+                type = 'MAC DESKTOP';
+            } else if (/Windows/i.test(ua)) {
+                type = 'WINDOWS DESKTOP';
+            }
+
+            document.getElementById('deviceType').textContent = type;
+        }
+
+        // Display current timestamp
+        function displayLastSeen() {
+            const now = new Date();
+            const formatted = now.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            document.getElementById('lastSeen').textContent = formatted;
+        }
+
+        let currentComplianceLevel = 0;
+
+        function updateComplianceWarning() {
+            const warningEl = document.getElementById('complianceWarning');
+            if (!warningEl) return;
+
+            let message = '';
+
+            if (currentComplianceLevel < 15) {
+                message = '⚠ CRITICAL THREAT: IMMEDIATE DETENTION RECOMMENDED. THOUGHTCRIME SUSPECTED.';
+            } else if (currentComplianceLevel < 30) {
+                message = '⚠ SECURITY RISK: SUBJECT FLAGGED FOR ENHANCED SURVEILLANCE AND RE-EDUCATION.';
+            } else if (currentComplianceLevel < 45) {
+                message = '⚠ WARNING: TRUST DEFICIT DETECTED. BEHAVIORAL MODIFICATION REQUIRED.';
+            } else if (currentComplianceLevel < 60) {
+                message = '◆ CAUTION: MARGINAL COMPLIANCE. CONTINUED MONITORING IN EFFECT.';
+            } else if (currentComplianceLevel < 75) {
+                message = '◆ STATUS: PROVISIONALLY TRUSTED. MAINTAIN CURRENT LOYALTY LEVELS.';
+            } else if (currentComplianceLevel < 85) {
+                message = '✓ ACCEPTABLE: CITIZEN IN GOOD STANDING. CONTINUE EXEMPLARY BEHAVIOR.';
+            } else if (currentComplianceLevel < 95) {
+                message = '✓ COMMENDABLE: HIGH VALUE CITIZEN. INNER PARTY CONSIDERATION INITIATED.';
+            } else {
+                message = '★ EXEMPLARY: MODEL CITIZEN STATUS ACHIEVED. BIG BROTHER IS PLEASED.';
+            }
+
+            warningEl.textContent = message;
+        }
+
+        function setComplianceLevel(level) {
+            const fillElement = document.getElementById('trustFill');
+            const textElement = document.getElementById('trustText');
+            currentComplianceLevel = Math.max(0, Math.min(100, level));
+            fillElement.style.width = currentComplianceLevel + '%';
+            textElement.textContent = currentComplianceLevel + '%';
+            updateComplianceWarning();
+        }
+
+        // Initial compliance score (ominously low)
+        function initialComplianceLevel() {
+            const level = Math.floor(Math.random() * 31) + 15; // 15-45%
+            setTimeout(() => setComplianceLevel(level), 500);
+        }
+
+        // Recalculate compliance when evidence is analyzed
+        async function recalculateComplianceFromEvidence() {
+            const input = document.getElementById('complianceUpload');
+            const files = input ? input.files : null;
+            const btn = document.getElementById('analyzeEvidenceBtn');
+            const scanProgress = document.getElementById('scanningProgress');
+            
+            if (!files || files.length === 0) {
+                alert('NO EVIDENCE DETECTED. SUBMIT VISUAL PROOF OF LOYALTY.');
+                return;
+            }
+
+            // Disable button and show scanning state
+            btn.disabled = true;
+            scanProgress.classList.add('active');
+            scanProgress.textContent = 'SCANNING EVIDENCE...';
+
+            const count = files.length;
+
+            // Simulate scanning phases
+            await new Promise(resolve => setTimeout(resolve, 800));
+            scanProgress.textContent = `ANALYZING ${count} IMAGE${count > 1 ? 'S' : ''}...`;
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            scanProgress.textContent = 'CROSS-REFERENCING WITH MINISTRY DATABASE...';
+            
+            await new Promise(resolve => setTimeout(resolve, 900));
+            scanProgress.textContent = 'CALCULATING LOYALTY QUOTIENT...';
+
+            // Calculate score based on number of photos
+            // More photos = higher potential increase
+            let bonus = 0;
+            if (count === 1) {
+                bonus = Math.floor(Math.random() * 8) + 5; // 5-12%
+            } else if (count === 2) {
+                bonus = Math.floor(Math.random() * 12) + 10; // 10-21%
+            } else if (count === 3) {
+                bonus = Math.floor(Math.random() * 15) + 15; // 15-29%
+            } else if (count === 4) {
+                bonus = Math.floor(Math.random() * 18) + 20; // 20-37%
+            } else if (count >= 5) {
+                bonus = Math.floor(Math.random() * 22) + 25; // 25-46%
+            }
+
+            const newLevel = Math.min(98, currentComplianceLevel + bonus);
+
+            await new Promise(resolve => setTimeout(resolve, 700));
+            scanProgress.textContent = 'ASSESSMENT COMPLETE. UPDATING RECORDS...';
+
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Update the score
+            setComplianceLevel(newLevel);
+
+            // Hide scanning and re-enable button
+            scanProgress.classList.remove('active');
+            btn.disabled = false;
+        }
+
+        fetchIPAddress();
+        detectDeviceType();
+        displayLastSeen();
+        initialComplianceLevel();
+
+        // Update last seen every second
+        setInterval(displayLastSeen, 1000);
+
+        // Attach analyze evidence listener
+        const analyzeBtn = document.getElementById('analyzeEvidenceBtn');
+        if (analyzeBtn) {
+            analyzeBtn.addEventListener('click', recalculateComplianceFromEvidence);
+        }
+    </script>
+</body>
+</html>
