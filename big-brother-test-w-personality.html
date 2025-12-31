@@ -353,6 +353,121 @@
             background: rgba(239, 68, 68, 0.15);
         }
 
+
+        .test-container {
+            margin-top: 25px;
+            padding: 18px 18px 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 0, 0, 0.7);
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        .test-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ff0000;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .test-subtitle {
+            font-size: 12px;
+            color: #ffcccc;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .test-question {
+            margin-bottom: 10px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .test-question.active {
+            display: block;
+        }
+
+        .test-question-text {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .test-options {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 12px;
+        }
+
+        .test-options label {
+            cursor: pointer;
+        }
+
+        .test-options input[type="radio"] {
+            margin-right: 6px;
+        }
+
+        .test-progress {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #ffcccc;
+            font-family: 'Courier New', monospace;
+        }
+
+        #submitTestBtn {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            background: #e11d48;
+            border: none;
+            color: #000;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.08em;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        #submitTestBtn:hover {
+            background: #be123c;
+            box-shadow: 0 0 12px rgba(248, 113, 113, 0.7);
+        }
+
+        #submitTestBtn:disabled {
+            background: #4b5563;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .test-result {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .test-result strong {
+            color: #fca5a5;
+        }
+
+        .newspeak-tag {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 2px 6px;
+            border-radius: 2px;
+            background: rgba(248, 113, 113, 0.15);
+            border: 1px solid rgba(248, 113, 113, 0.6);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
         .upload-container {
             margin-top: 25px;
             padding: 20px;
@@ -544,7 +659,7 @@
                 <li>Your compliance is appreciated</li>
                 <li>Doubleplusungood thoughts detected</li>
             </ul>
-       
+
 
             <div class="trust-level-container">
                 <div class="trust-level-label">COMPLIANCE SCORE</div>
@@ -557,6 +672,21 @@
                 <div id="complianceWarning" style="margin-top: 10px; font-size: 12px; font-weight: bold; color: #ff6b6b; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4;">
                     AWAITING INITIAL ASSESSMENT...
                 </div>
+            </div>
+
+
+            <div class="test-container">
+                <div class="test-title">PSYCHOMETRIC LOYALTY INDEX</div>
+                <div class="test-subtitle">
+                    Answer a brief Myers-Briggs style inventory translated into Newspeak.
+                    Your pattern of goodthink versus potential crimethink will adjust your compliance score.
+                </div>
+                <form id="personalityTestForm">
+                    <div id="testQuestions"></div>
+                    <button type="button" id="submitTestBtn">Submit Profile For Evaluation</button>
+                    <div class="test-progress" id="testProgress">0 / 0 QUESTIONS ANSWERED</div>
+                    <div class="test-result" id="testResult"></div>
+                </form>
             </div>
 
             <div class="upload-container">
@@ -644,6 +774,165 @@
 
         let currentComplianceLevel = 0;
 
+        const personalityQuestions = [
+            {
+                id: 'q1',
+                axis: 'EI',
+                text: 'At the daily Two Minutes Hate, you are most likely to...',
+                options: [
+                    {
+                        value: 'E',
+                        label: 'Lead the chanting, raise your fist, and shout the slogans doubleplusloud (doubleplusgood).',
+                        complianceDelta: 3
+                    },
+                    {
+                        value: 'I',
+                        label: 'Stand at the edge, repeating the words quietly while observing the crowd.',
+                        complianceDelta: -1
+                    }
+                ]
+            },
+            {
+                id: 'q2',
+                axis: 'SN',
+                text: 'When given access to the archives, you prefer to...',
+                options: [
+                    {
+                        value: 'S',
+                        label: 'Review clear lists of production quotas and approved statistics from the Ministry of Plenty.',
+                        complianceDelta: 3
+                    },
+                    {
+                        value: 'N',
+                        label: 'Search for patterns, rumors, and interesting oldspeak fragments between the lines.',
+                        complianceDelta: -3
+                    }
+                ]
+            },
+            {
+                id: 'q3',
+                axis: 'TF',
+                text: 'A comrade makes a borderline remark during a broadcast.',
+                options: [
+                    {
+                        value: 'T',
+                        label: 'Evaluate the remark logically and report if it matches written crimethink criteria.',
+                        complianceDelta: 2
+                    },
+                    {
+                        value: 'F',
+                        label: 'Consider the comrade feelings and decide whether reporting would feel doubleplusungood.',
+                        complianceDelta: -2
+                    }
+                ]
+            },
+            {
+                id: 'q4',
+                axis: 'JP',
+                text: 'How do you approach your daily victory schedule?',
+                options: [
+                    {
+                        value: 'J',
+                        label: 'Follow the posted timetable exactly, ticking each goodthink task as completed.',
+                        complianceDelta: 3
+                    },
+                    {
+                        value: 'P',
+                        label: 'Prefer a flexible day where Party events fit around your own stream of thought.',
+                        complianceDelta: -2
+                    }
+                ]
+            },
+            {
+                id: 'q5',
+                axis: 'EI',
+                text: 'At a Victory Gin canteen, you usually...',
+                options: [
+                    {
+                        value: 'E',
+                        label: 'Move table to table, sharing fresh slogans and starting loud toasts to Big Brother.',
+                        complianceDelta: 2
+                    },
+                    {
+                        value: 'I',
+                        label: 'Stay with a small trusted group and listen more than you speak.',
+                        complianceDelta: -1
+                    }
+                ]
+            },
+            {
+                id: 'q6',
+                axis: 'SN',
+                text: 'During a state broadcast, you pay most attention to...',
+                options: [
+                    {
+                        value: 'S',
+                        label: 'Official numbers, uniforms, and visible order on the screen.',
+                        complianceDelta: 2
+                    },
+                    {
+                        value: 'N',
+                        label: 'Tone, hidden meanings, and small glitches that hint at reality behind the telescreen.',
+                        complianceDelta: -3
+                    }
+                ]
+            },
+            {
+                id: 'q7',
+                axis: 'TF',
+                text: 'If ordered to support a policy that sends many citizens to joycamp, you...',
+                options: [
+                    {
+                        value: 'T',
+                        label: 'Calculate how it improves efficiency and stability for the whole system.',
+                        complianceDelta: 1
+                    },
+                    {
+                        value: 'F',
+                        label: 'Worry first about individual suffering, even if the policy is called doubleplusnecessary.',
+                        complianceDelta: -3
+                    }
+                ]
+            },
+            {
+                id: 'q8',
+                axis: 'JP',
+                text: 'When asked to prepare a poster for Hate Week, you...',
+                options: [
+                    {
+                        value: 'J',
+                        label: 'Carefully follow design guidelines, using only approved Newspeak and Party colors.',
+                        complianceDelta: 3
+                    },
+                    {
+                        value: 'P',
+                        label: 'Experiment with creative layouts and playful oldspeak phrases to catch attention.',
+                        complianceDelta: -3
+                    }
+                ]
+            }
+        ];
+
+        const NEWSPEAK_TYPE_LABELS = {
+            ISTJ: 'DOUBLEPLUSDUTIFUL ARCHIVIST',
+            ISFJ: 'GOODTHINKFUL CARETAKER',
+            INFJ: 'VISIONARY GOODTHINKER (POTENTIAL CRIMETHINK IF UNSUPERVISED)',
+            INTJ: 'STRATEGIC CRIMETHINK RISK',
+            ISTP: 'PRACTICAL MECHANIC OF REALITYCONTROL',
+            ISFP: 'QUIET JOYCAMP COMPANION',
+            INFP: 'DREAMFUL OLDSPEAK ROMANTIC',
+            INTP: 'LOGIC-DRUNK CRIMETHINK ENGINE',
+            ESTP: 'HATE-RALLY INSTIGATOR',
+            ESFP: 'PROLEFEED ENTERTAINER',
+            ENFP: 'DOUBLEPLUSWARM AGITATOR',
+            ENTP: 'IDEA-WRANGLER, HIGH THOUGHTCRIME INDEX',
+            ESTJ: 'MINISTRY-APPROVED ORGANIZER',
+            ESFJ: 'PARTY SOCIAL-COORDINATOR',
+            ENFJ: 'CHARISMATIC GOODTHINK TRAINER',
+            ENTJ: 'INNER PARTY COMMAND MATERIAL'
+        };
+
+
         function updateComplianceWarning() {
             const warningEl = document.getElementById('complianceWarning');
             const fillEl = document.getElementById('trustFill');
@@ -695,6 +984,143 @@
             fillElement.style.width = currentComplianceLevel + '%';
             textElement.textContent = currentComplianceLevel + '%';
             updateComplianceWarning();
+        }
+
+
+        let currentQuestionIndex = 0;
+
+        function renderPersonalityTest() {
+            const container = document.getElementById('testQuestions');
+            if (!container || !Array.isArray(personalityQuestions)) return;
+
+            let html = '';
+            personalityQuestions.forEach((q, index) => {
+                const activeClass = index === 0 ? ' active' : '';
+                html += `
+                    <div class="test-question${activeClass}" data-question-id="${q.id}" data-question-index="${index}">
+                        <div class="test-question-text">Q${index + 1}. ${q.text}</div>
+                        <div class="test-options">
+                `;
+
+                if (Array.isArray(q.options)) {
+                    q.options.forEach((opt, optIndex) => {
+                        const inputId = `${q.id}_${optIndex}`;
+                        html += `
+                            <label>
+                                <input type="radio"
+                                       name="${q.id}"
+                                       id="${inputId}"
+                                       value="${opt.value}"
+                                       data-axis="${q.axis}"
+                                       data-compliance="${opt.complianceDelta}">
+                                ${opt.label}
+                            </label>
+                        `;
+                    });
+                }
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function showNextQuestion() {
+            const questions = document.querySelectorAll('.test-question');
+            if (currentQuestionIndex < questions.length - 1) {
+                questions[currentQuestionIndex].classList.remove('active');
+                currentQuestionIndex++;
+                questions[currentQuestionIndex].classList.add('active');
+            }
+        }
+
+        function updateTestProgress() {
+            const form = document.getElementById('personalityTestForm');
+            const progressEl = document.getElementById('testProgress');
+            if (!form || !progressEl || !Array.isArray(personalityQuestions)) return;
+
+            let answered = 0;
+            personalityQuestions.forEach(q => {
+                const selected = form.querySelector('input[name="' + q.id + '"]:checked');
+                if (selected) {
+                    answered += 1;
+                }
+            });
+
+            const total = personalityQuestions.length;
+            progressEl.textContent = answered + ' / ' + total + ' QUESTIONS ANSWERED';
+        }
+
+        function handlePersonalitySubmit() {
+            const form = document.getElementById('personalityTestForm');
+            const resultEl = document.getElementById('testResult');
+            if (!form || !resultEl || !Array.isArray(personalityQuestions)) return;
+
+            const scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            let totalDelta = 0;
+            let unanswered = 0;
+
+            personalityQuestions.forEach(q => {
+                const selected = form.querySelector('input[name="' + q.id + '"]:checked');
+                if (!selected) {
+                    unanswered += 1;
+                    return;
+                }
+                const letter = selected.value;
+                const complianceDelta = parseInt(selected.getAttribute('data-compliance') || '0', 10);
+                if (scores.hasOwnProperty(letter)) {
+                    scores[letter] += 1;
+                }
+                totalDelta += complianceDelta;
+            });
+
+            if (unanswered > 0) {
+                resultEl.innerHTML = '<span style="color:#fca5a5;">INCOMPLETE PROFILE: ANSWER ALL QUESTIONS BEFORE SUBMISSION.</span>';
+                return;
+            }
+
+            const typeLetters = [
+                scores.E >= scores.I ? 'E' : 'I',
+                scores.S >= scores.N ? 'S' : 'N',
+                scores.T >= scores.F ? 'T' : 'F',
+                scores.J >= scores.P ? 'J' : 'P'
+            ];
+            const type = typeLetters.join('');
+
+            const profileLabel = NEWSPEAK_TYPE_LABELS[type] || 'UNCLASSIFIABLE PERSONALITY PATTERN';
+            const clampedDelta = Math.max(-20, Math.min(20, totalDelta));
+            const before = currentComplianceLevel;
+            const after = Math.max(0, Math.min(100, before + clampedDelta));
+
+            setComplianceLevel(after);
+
+            let deltaText;
+            if (clampedDelta > 0) {
+                deltaText = 'Compliance score increased by ' + clampedDelta + '%.';
+            } else if (clampedDelta < 0) {
+                deltaText = 'Compliance score decreased by ' + Math.abs(clampedDelta) + '%.';
+            } else {
+                deltaText = 'No change to compliance score. Profile marked for continued observation.';
+            }
+
+            resultEl.innerHTML =
+                '<div><strong>Psychometric designation:</strong> ' + type + '</div>' +
+                '<div><strong>Newspeak profile:</strong> ' + profileLabel + '</div>' +
+                '<div style="margin-top:6px;">' + deltaText + '</div>' +
+                '<div class="newspeak-tag">GOODTHINK INDEX UPDATED</div>';
+
+            const logEl = document.getElementById('assessmentLog');
+            if (logEl) {
+                const sign = clampedDelta >= 0 ? '+' : '';
+                const action = clampedDelta >= 0
+                    ? 'PSYCHOMETRIC PROFILE ALIGNS WITH GOODTHINK'
+                    : 'TRAITS FLAGGED FOR POTENTIAL CRIMETHINK';
+                logEl.textContent = 'Last Assessment: ' + sign + clampedDelta + '% (PERSONALITY TEST  ' + type + ')';
+                logEl.className = 'assessment-log ' + (clampedDelta >= 0 ? 'positive' : 'negative');
+            }
         }
 
         // Initial compliance score (ominously low)
@@ -792,7 +1218,7 @@
         function addImagesToGallery(files) {
             const gallery = document.getElementById('evidenceGallery');
             const grid = document.getElementById('galleryGrid');
-            
+
             if (!gallery || !grid) return;
 
             // Show gallery
@@ -840,6 +1266,26 @@
         const analyzeBtn = document.getElementById('analyzeEvidenceBtn');
         if (analyzeBtn) {
             analyzeBtn.addEventListener('click', recalculateComplianceFromEvidence);
+        }
+
+        // Initialize personality test
+        renderPersonalityTest();
+        updateTestProgress();
+
+        // Attach personality test listeners
+        const testForm = document.getElementById('personalityTestForm');
+        if (testForm) {
+            testForm.addEventListener('change', function(e) {
+                if (e.target.type === 'radio') {
+                    updateTestProgress();
+                    setTimeout(showNextQuestion, 300);
+                }
+            });
+        }
+
+        const submitTestBtn = document.getElementById('submitTestBtn');
+        if (submitTestBtn) {
+            submitTestBtn.addEventListener('click', handlePersonalitySubmit);
         }
     </script>
 </body>
