@@ -260,20 +260,9 @@
             }
         }
 
-        .propaganda-box ul {
-            list-style: none;
-            font-size: 20px;
-            line-height: 2;
-        }
-
-        .propaganda-box li::before {
-            content: "\25B6 ";
-            color: #ff0000;
-        }
-
         .visitor-panel {
             margin-top: 25px;
-            padding: 14px 18px;
+            padding: 18px 20px;
             background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
             color: #000;
             font-weight: bold;
@@ -281,22 +270,25 @@
             z-index: 2;
             position: relative;
             border-radius: 4px;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            grid-row-gap: 4px;
-            grid-column-gap: 14px;
             box-shadow: 0 2px 8px rgba(255, 0, 0, 0.4);
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .visitor-panel-title {
-            grid-column: 1 / -1;
-            font-size: 14px;
-            margin-bottom: 4px;
+            font-size: 15px;
+            margin-bottom: 12px;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-            padding-bottom: 4px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+            padding-bottom: 8px;
+        }
+
+        .visitor-info-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-row-gap: 6px;
+            grid-column-gap: 14px;
+            margin-bottom: 12px;
         }
 
         .visitor-label {
@@ -308,6 +300,28 @@
         .visitor-value {
             text-align: left;
             font-size: 12px;
+        }
+
+        .visitor-status {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid rgba(0, 0, 0, 0.3);
+            font-size: 11px;
+            line-height: 1.8;
+            letter-spacing: 0.05em;
+        }
+
+        .visitor-status div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visitor-status div::before {
+            content: "✓";
+            margin-right: 8px;
+            font-weight: bold;
+            font-size: 14px;
         }
 
         .trust-level-container {
@@ -499,10 +513,6 @@
                 font-size: 24px;
             }
 
-            .propaganda-box ul {
-                font-size: 16px;
-            }
-
             .flash-overlay {
                 font-size: 40px;
                 padding: 20px;
@@ -524,25 +534,26 @@
         <div class="propaganda-box">
             <h2>YOU HAVE BEEN IDENTIFIED</h2>
             <div class="visitor-panel">
-                <div class="visitor-panel-title">CITIZEN METADATA</div>
-                <div class="visitor-label">IP ADDRESS</div>
-                <div class="visitor-value" id="ipAddress">DETECTING...</div>
-                <div class="visitor-label">LOCATION</div>
-                <div class="visitor-value" id="location">DETECTING...</div>
-                <div class="visitor-label">DEVICE TYPE</div>
-                <div class="visitor-value" id="deviceType">DETECTING...</div>
-                <div class="visitor-label">LAST SEEN AT</div>
-                <div class="visitor-value" id="lastSeen">DETECTING...</div>
+                <div class="visitor-panel-title">CITIZEN REGISTRATION COMPLETE</div>
+                <div class="visitor-info-grid">
+                    <div class="visitor-label">IP ADDRESS</div>
+                    <div class="visitor-value" id="ipAddress">DETECTING...</div>
+                    <div class="visitor-label">LOCATION</div>
+                    <div class="visitor-value" id="location">DETECTING...</div>
+                    <div class="visitor-label">DEVICE TYPE</div>
+                    <div class="visitor-value" id="deviceType">DETECTING...</div>
+                    <div class="visitor-label">LAST SEEN AT</div>
+                    <div class="visitor-value" id="lastSeen">DETECTING...</div>
+                </div>
+                <div class="visitor-status">
+                    <div>YOUR LOCATION HAS BEEN LOGGED</div>
+                    <div>YOUR DEVICE HAS BEEN REGISTERED</div>
+                    <div>YOUR COMPLIANCE IS COMPULSORY</div>
+                </div>
             </div>
-            <p></p>
-            <ul>
-                <li>Your location has been logged</li>
-                <li>Your device has been registered</li>
-                <li>Your compliance is appreciated</li>
-            </ul>
 
             <div class="test-container">
-                <div class="test-label">Compulsory Psychometric Loyalty Index</div>
+                <div class="test-label">Necessary Psychometric Loyalty Test</div>
                 <div id="questionArea">
                     <div class="question-counter" id="questionCounter">QUESTION 1 OF 10</div>
                     <div class="question-container">
@@ -586,7 +597,7 @@
 
             setTimeout(() => {
                 overlay.classList.remove('active');
-            }, 400); // 0.4 seconds
+            }, 400);
         }
 
         // Schedule random flashes
@@ -722,113 +733,113 @@
             updateComplianceWarning();
         }
 
-        // Initial compliance score - RANDOM 0-100
+        // Initial compliance score - RANDOM 0-50
         function initialComplianceLevel() {
-            const level = Math.floor(Math.random() * 101);
+            const level = Math.floor(Math.random() * 51);
             setTimeout(() => setComplianceLevel(level), 500);
         }
 
-        // Personality Test Questions
+        // Personality Test Questions - answers swing by 10-35%
         const questions = [
-            {
-                q: "During the Two Minutes Hate, how do you most often recharge your energy after the broadcast ends?",
-                answers: [
-                    { text: "Seek pluscrowd goodthink, loudly sharing slogans with many comrades.", value: 9 },
-                    { text: "Share quiet goodthink with a small inner circle of trusted comrades.", value: 5 },
-                    { text: "Return to quarters in silence to calmly process Party wisdom alone.", value: 2 },
-                    { text: "Avoid others and question why such Hate is needed at all.", value: -10 }
-                ]
-            },
-            {
-                q: "When the Party issues a new production report, what do you notice first?",
-                answers: [
-                    { text: "The clear numbers showing plusgood increase in output.", value: 8 },
-                    { text: "Precise details: dates, figures, and footnotes to memorize.", value: 5 },
-                    { text: "Hidden patterns and what the report implies for future directives.", value: 2 },
-                    { text: "Strange inconsistencies that suggest possible rewrite of reality.", value: -7 }
-                ]
-            },
-            {
-                q: "A comrade commits a minor work error that harms Party efficiency but not feelings. What is your first impulse?",
-                answers: [
-                    { text: "Report immediately so the system remains doubleplus efficient.", value: 10 },
-                    { text: "Correct the error and explain the logic so it never happens again.", value: 6 },
-                    { text: "Quietly fix the issue to keep peace in the workcell.", value: 0 },
-                    { text: "Ignore the error; rules are less important than personal comfort.", value: -8 }
-                ]
-            },
-            {
-                q: "How do you prefer to receive new weekly directives from the Ministry?",
-                answers: [
-                    { text: "In a strict schedule with clear checklists and deadlines.", value: 9 },
-                    { text: "In organized bulletins I can plan my entire week around.", value: 5 },
-                    { text: "As flexible guidance I can adapt moment to moment.", value: -1 },
-                    { text: "With as few rules as possible so I can do ownlife as I wish.", value: -11 }
-                ]
-            },
-            {
-                q: "When Big Brother gives a speech, how do you process the message?",
-                answers: [
-                    { text: "Take every word as literal, perfect truth to be memorized.", value: 10 },
-                    { text: "Focus on key phrases and slogans to apply in daily tasks.", value: 6 },
-                    { text: "Search for deeper symbolic meaning between the lines.", value: 1 },
-                    { text: "Wonder privately if the meaning changes each week.", value: -9 }
-                ]
-            },
-            {
-                q: "A comrade is punished for mild crimethink. How do you respond internally?",
-                answers: [
-                    { text: "Feel calm: justice served, plusgood example for all.", value: 9 },
-                    { text: "Respect the process but quietly hope for their reeducation.", value: 4 },
-                    { text: "Feel uneasy and dwell on their personal suffering.", value: -3 },
-                    { text: "Experience outrage that thought alone can be punished.", value: -12 }
-                ]
-            },
-            {
-                q: "How do you like to arrange your day under Party oversight?",
-                answers: [
-                    { text: "Every hour pre-planned: work, rally, rest, all by schedule.", value: 10 },
-                    { text: "General structure with time blocks for duties and loyal study.", value: 5 },
-                    { text: "Loose outline, adjusting whenever new impulses arrive.", value: -2 },
-                    { text: "No plan; I follow only personal whims and chance.", value: -10 }
-                ]
-            },
-            {
-                q: "When you notice the telescreen observing you in your quarters, what is your immediate thought?",
-                answers: [
-                    { text: "Feel plusgood comfort knowing Big Brother protects me always.", value: 10 },
-                    { text: "Appreciate the safety but wish for brief moments of unwatched rest.", value: 3 },
-                    { text: "Feel uneasy but understand it is necessary for collective security.", value: -2 },
-                    { text: "Experience deep anxiety and resentment at constant observation.", value: -11 }
-                ]
-            },
-            {
-                q: "You notice yesterday's newspaper now says something different than you remember. What is your reaction?",
-                answers: [
-                    { text: "Assume my memory is wrong; the record is always right.", value: 10 },
-                    { text: "Accept the new text and promptly forget the old version.", value: 6 },
-                    { text: "Quietly wonder which version was true but say nothing.", value: -1 },
-                    { text: "Insist the change proves the Party rewrites reality.", value: -11 }
-                ]
-            },
-            {
-                q: "A new rule contradicts an older one you carefully followed. How do you resolve this?",
-                answers: [
-                    { text: "Instantly adopt the new rule; Oldthink is unrule.", value: 9 },
-                    { text: "Study both, then fully align with the latest decree.", value: 5 },
-                    { text: "Wait and watch what others do before changing anything.", value: -2 },
-                    { text: "Refuse to change until someone explains the contradiction.", value: -9 }
-                ]
-            },
-            {
-                q: "When alone with your own thoughts, how do you relate to inner voice?",
-                answers: [
-                    { text: "Train inner voice to repeat Party slogans: goodthink only.", value: 10 },
-                    { text: "Reflect on how to better serve the collective tomorrow.", value: 6 },
-                    { text: "Wander through private dreams and imagined futures.", value: -3 },
-                    { text: "Indulge in long ownlife fantasies beyond Party control.", value: -12 }
-                ]
-            }
+        {
+    q: "During the Two Minutes of Hate, how do you most often recharge your energy after the broadcast ends?",
+    answers: [
+        { text: "Seek doubleplusgood bellyfeel, loudly sharing slogans with many comrades.", value: 13 },
+        { text: "Share quiet goodthink with a small inner circle of trusted comrades.", value: 8 },
+        { text: "Return to quarters in silence to calmly process Party wisdom alone.", value: -7 },
+        { text: "Avoid others and question why such Hate is needed at all.", value: -10 }
+    ]
+},
+{
+    q: "When the Party issues a telescreen report, what do you notice first?",
+    answers: [
+        { text: "The clear numbers showing plusgood increase in output.", value: 9 },
+        { text: "Precise details: dates, figures, and footnotes to memorize.", value: 6 },
+        { text: "Hidden patterns and what the report implies for future directives.", value: -5 },
+        { text: "Strange inconsistencies that suggest possible rewrite of reality.", value: -7 }
+    ]
+},
+{
+    q: "A comrade commits a minor work error that harms Party efficiency but not feelings. What is your first impulse?",
+    answers: [
+        { text: "Report immediately to thinkpol so the system remains doubleplus efficient.", value: 11 },
+        { text: "Correct the error and explain the crimestop so it never happens again.", value: 6 },
+        { text: "Quietly fix the issue to keep peace in the joycamp.", value: -4 },
+        { text: "Ignore the error; rules are less important than ownlife.", value: -14 }
+    ]
+},
+{
+    q: "How do you prefer to receive new weekly directives from the Ministry?",
+    answers: [
+        { text: "In a strict schedule with clear checklists and deadlines.", value: 9 },
+        { text: "In organized bulletins I can plan my entire day order.", value: -2 },
+        { text: "As flexible guidance I can adapt moment to moment.", value: -9 },
+        { text: "With as few rules as possible so I can do ownlife as I wish.", value: -13 }
+    ]
+},
+{
+    q: "When you encounter official Party slogans in posters, broadcasts, or speeches, how do you relate to them?",
+    answers: [
+        { text: "Repeat them proudly until they become duckspeak.", value: 17 },
+        { text: "Recall the key slogans when you need guidance in blackwhite.", value: 6 },
+        { text: "Analyze the slogans for hidden layers of meaning and doublethink.", value: -7 },
+        { text: "Question privately whether the slogans always mean what they say.", value: -11 }
+    ]
+},
+{
+    q: "A comrade is punished for mild crimethink. How do you respond internally?",
+    answers: [
+        { text: "Feel calm: no more malreported and malquoted influences in the joycamp.", value: 9 },
+        { text: "Respect the process, plusgood example for all.", value: 4 },
+        { text: "Feel uneasy and dwell on their facecrime.", value: -3 },
+        { text: "Experience outrage that thought alone can be punished.", value: -12 }
+    ]
+},
+{
+    q: "When you picture Big Brother watching over you, what feeling rises first in your chest?",
+    answers: [
+        { text: "Warm reassurance — I feel safest when I know He sees everything.", value: 10 },
+        { text: "Steady respect — His presence reminds me to stay loyal and focused.", value: 5 },
+        { text: "Tight unease — I tell myself it is necessary, but I cannot relax.", value: -5 },
+        { text: "Cold resentment — I long for even a single moment unwatched.", value: -13 }
+    ]
+},
+{
+    q: "When you notice the telescreen observing you in your quarters, what is your immediate thought?",
+    answers: [
+        { text: "Feel plusgood comfort knowing Big Brother protects me always.", value: 22 },
+        { text: "Appreciate the safety but wish for brief moments of unwatched rest.", value: 11 },
+        { text: "Feel uneasy but understand it is necessary for collective security.", value: 9 },
+        { text: "Experience deep anxiety and resentment at constant observation.", value: -11 }
+    ]
+},
+{
+    q: "You notice yesterday's newspaper now says something different than you remember. What is your reaction?",
+    answers: [
+        { text: "Assume my memory is wrong; the record is always right.", value: 10 },
+        { text: "Accept the new text and promptly forget the old version.", value: 6 },
+        { text: "Quietly wonder which version was true but say nothing.", value: -1 },
+        { text: "Insist the change proves the Party rewrites reality.", value: -11 }
+    ]
+},
+{
+    q: "A new rule contradicts an older one you carefully followed. How do you resolve this?",
+    answers: [
+        { text: "Instantly adopt the new rule; Oldthink is unrule.", value: 9 },
+        { text: "Study both, then fully align with the latest decree.", value: 5 },
+        { text: "Wait and watch what others do before changing anything.", value: -2 },
+        { text: "Refuse to change until someone explains the contradiction.", value: -9 }
+    ]
+},
+{
+    q: "When alone with your own thoughts, how do you relate to inner voice?",
+    answers: [
+        { text: "Train inner voice to repeat Party slogans: goodthink only.", value: 10 },
+        { text: "Reflect on how to better serve the collective tomorrow.", value: 6 },
+        { text: "Wander through private dreams and imagined futures.", value: -3 },
+        { text: "Indulge in long ownlife fantasies beyond Party control.", value: -12 }
+    ]
+}
         ];
 
         let currentQuestionIndex = 0;
@@ -946,7 +957,7 @@
         function resetTest() {
             questionsAnswered = 0;
             usedQuestions = [];
-            setComplianceLevel(Math.floor(Math.random() * 101));
+            setComplianceLevel(Math.floor(Math.random() * 51));
             const logEl = document.getElementById('assessmentLog');
             if (logEl) {
                 logEl.textContent = 'AWAITING PERSONALITY ASSESSMENT...';
