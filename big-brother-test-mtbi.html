@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Brother is Watching You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .static-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.03) 0px,
+                rgba(255, 255, 255, 0.03) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            animation: staticMove 0.1s infinite;
+            z-index: 1;
+        }
+
+        @keyframes staticMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(2px); }
+        }
+
+        .glitch-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .big-brother-eye {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            border: 5px solid #e94560;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, #e94560 0%, #000 70%);
+            animation: eyePulse 3s infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes eyePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px #e94560; }
+            50% { transform: scale(1.1); box-shadow: 0 0 60px #e94560; }
+        }
+
+        @keyframes textPulse {
+            0%, 100% { 
+                text-shadow: 0 0 10px #e94560, 0 0 20px #e94560; 
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 20px #e94560, 0 0 40px #e94560, 0 0 60px #e94560; 
+                transform: scale(1.05);
+            }
+        }
+
+        .pupil {
+            width: 80px;
+            height: 80px;
+            background: #000;
+            border-radius: 50%;
+            border: 3px solid #fff;
+        }
+
+        .glitch-text {
+            font-size: 72px;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            color: #e94560;
+            z-index: 2;
+            margin-bottom: 50px;
+            font-family: 'Courier New', monospace;
+            animation: textPulse 3s infinite;
+            image-rendering: pixelated;
+        }
+
+        .glitch-text[style*="font-size: 48px;"] {
+            color: #e94560 !important;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch-text::before {
+            color: #ff0000;
+            animation: glitch1 0.8s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            image-rendering: pixelated;
+            filter: blur(0.5px);
+        }
+
+        .glitch-text::after {
+            color: #000000;
+            animation: glitch2 0.8s infinite;
+            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+            image-rendering: pixelated;
+            filter: blur(0.5px);
+        }
+
+        @keyframes glitch1 {
+            0%, 100% { 
+                transform: translate(0); 
+                opacity: 0.8;
+            }
+            20% { 
+                transform: translate(-3px, 3px); 
+                opacity: 0.9;
+            }
+            40% { 
+                transform: translate(3px, -3px); 
+                opacity: 0.7;
+            }
+            60% { 
+                transform: translate(-2px, -2px); 
+                opacity: 0.85;
+            }
+            80% { 
+                transform: translate(2px, 2px); 
+                opacity: 0.75;
+            }
+        }
+
+        @keyframes glitch2 {
+            0%, 100% { 
+                transform: translate(0); 
+                opacity: 0.8;
+            }
+            25% { 
+                transform: translate(3px, -3px); 
+                opacity: 0.9;
+            }
+            45% { 
+                transform: translate(-3px, 3px); 
+                opacity: 0.7;
+            }
+            65% { 
+                transform: translate(2px, 2px); 
+                opacity: 0.85;
+            }
+            85% { 
+                transform: translate(-2px, -2px); 
+                opacity: 0.75;
+            }
+        }
+
+        .propaganda-box {
+            max-width: 700px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 3px solid #fff;
+            padding: 40px;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            animation: boxPulse 3s infinite;
+        }
+
+        @keyframes boxPulse {
+            0%, 100% { 
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.6), 0 0 50px rgba(255, 0, 0, 0.3);
+                transform: scale(1.02);
+            }
+        }
+
+        .propaganda-box h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ff0000;
+            animation: headerPulse 3s infinite;
+        }
+
+        @keyframes headerPulse {
+            0%, 100% { 
+                text-shadow: 0 0 5px #ff0000;
+            }
+            50% { 
+                text-shadow: 0 0 15px #ff0000, 0 0 25px #ff0000;
+            }
+        }
+
+        .propaganda-box ul {
+            list-style: none;
+            font-size: 20px;
+            line-height: 2;
+        }
+
+        .propaganda-box li::before {
+            content: "\25B6 ";
+            color: #ff0000;
+        }
+
+        .visitor-panel {
+            margin-top: 25px;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+            color: #000;
+            font-weight: bold;
+            font-size: 13px;
+            z-index: 2;
+            position: relative;
+            border-radius: 4px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-row-gap: 4px;
+            grid-column-gap: 14px;
+            box-shadow: 0 2px 8px rgba(255, 0, 0, 0.4);
+            line-height: 1.5;
+        }
+
+        .visitor-panel-title {
+            grid-column: 1 / -1;
+            font-size: 14px;
+            margin-bottom: 4px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            padding-bottom: 4px;
+        }
+
+        .visitor-label {
+            opacity: 0.8;
+            text-align: right;
+            font-size: 12px;
+        }
+
+        .visitor-value {
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .trust-level-container {
+            margin-top: 25px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 0, 0, 0.6);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(255, 0, 0, 0.3);
+        }
+
+        .trust-level-label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff0000;
+            text-shadow: 0 0 8px #ff0000;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .trust-level-bar {
+            width: 100%;
+            height: 26px;
+            background: #0a0a0a;
+            border: 2px solid #ff0000;
+            position: relative;
+            overflow: hidden;
+            border-radius: 3px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        .trust-level-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dc2626 0%, #ef4444 50%, #f87171 100%);
+            transition: width 0.8s ease-out, background 0.8s ease-out;
+            position: relative;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .trust-level-fill.high-compliance {
+            background: linear-gradient(90deg, #22c55e 0%, #84cc16 50%, #facc15 100%);
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+        }
+
+        .trust-level-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            font-size: 13px;
+            color: #fff;
+            text-shadow: 1px 1px 3px #000;
+            z-index: 1;
+            letter-spacing: 0.05em;
+        }
+
+        .assessment-log {
+            margin-top: 8px;
+            padding: 8px 10px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #ffcccc;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.03em;
+            min-height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .assessment-log.positive {
+            color: #86efac;
+            border-color: rgba(34, 197, 94, 0.3);
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .assessment-log.negative {
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.4);
+            background: rgba(239, 68, 68, 0.15);
+        }
+
+        .test-container {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid #ff0000;
+        }
+
+        .test-label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ff0000;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .question-container {
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 15px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .question-counter {
+            font-size: 12px;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .answer-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .answer-btn {
+            padding: 12px 20px;
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid #ff0000;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .answer-btn:hover {
+            background: rgba(255, 0, 0, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            transform: translateX(5px);
+        }
+
+        .answer-btn:active {
+            transform: translateX(5px) scale(0.98);
+        }
+
+        .test-help {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #ffcccc;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .processing-message {
+            padding: 15px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
+            font-size: 13px;
+            font-weight: bold;
+            color: #ff0000;
+            text-align: center;
+            animation: scanPulse 0.8s infinite;
+            margin-top: 10px;
+        }
+
+        @keyframes scanPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        @media (max-width: 768px) {
+            .glitch-text {
+                font-size: 36px;
+            }
+
+            .propaganda-box {
+                padding: 20px;
+            }
+
+            .propaganda-box h2 {
+                font-size: 24px;
+            }
+
+            .propaganda-box ul {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="static-overlay"></div>
+    <div class="glitch-container">
+        <div class="big-brother-eye">
+            <div class="pupil"></div>
+        </div>
+
+        <h1 class="glitch-text" data-text="BIG BROTHER">BIG BROTHER</h1>
+        <h1 class="glitch-text" data-text="IS WATCHING YOU" style="font-size: 48px;">IS WATCHING YOU</h1>
+
+        <div class="propaganda-box">
+            <h2>YOU HAVE BEEN IDENTIFIED</h2>
+            <div class="visitor-panel">
+                <div class="visitor-panel-title">CITIZEN METADATA</div>
+                <div class="visitor-label">IP ADDRESS</div>
+                <div class="visitor-value" id="ipAddress">DETECTING...</div>
+                <div class="visitor-label">LOCATION</div>
+                <div class="visitor-value" id="location">DETECTING...</div>
+                <div class="visitor-label">DEVICE TYPE</div>
+                <div class="visitor-value" id="deviceType">DETECTING...</div>
+                <div class="visitor-label">LAST SEEN AT</div>
+                <div class="visitor-value" id="lastSeen">DETECTING...</div>
+            </div>
+            <p></p>
+            <ul>
+                <li>Your location has been logged</li>
+                <li>Your device has been registered</li>
+                <li>Your compliance is appreciated</li>
+                <li>Doubleplusungood thoughts detected</li>
+            </ul>
+
+            <div class="trust-level-container">
+                <div class="trust-level-label">COMPLIANCE SCORE</div>
+                <div class="trust-level-bar">
+                    <div class="trust-level-fill" id="trustFill" style="width: 0%;">
+                        <div class="trust-level-text" id="trustText">0%</div>
+                    </div>
+                </div>
+                <div class="assessment-log" id="assessmentLog">AWAITING PERSONALITY ASSESSMENT...</div>
+                <div id="complianceWarning" style="margin-top: 10px; font-size: 12px; font-weight: bold; color: #ff6b6b; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4;">
+                    AWAITING INITIAL ASSESSMENT...
+                </div>
+            </div>
+
+            <div class="test-container">
+                <div class="test-label">MANDATORY PERSONALITY ASSESSMENT</div>
+                <div id="questionArea">
+                    <div class="question-counter" id="questionCounter">QUESTION 1 OF 10</div>
+                    <div class="question-container">
+                        <div class="question-text" id="questionText">Loading question...</div>
+                        <div class="answer-buttons" id="answerButtons"></div>
+                    </div>
+                </div>
+                <div class="test-help">Answer honestly. The Ministry of Truth is monitoring your responses. Your compliance score will be recalculated after each answer.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch IP address
+        async function fetchIPAddress() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                document.getElementById('ipAddress').textContent = data.ip;
+                fetchLocation(data.ip);
+            } catch (error) {
+                document.getElementById('ipAddress').textContent = 'UNKNOWN';
+                document.getElementById('location').textContent = 'UNKNOWN';
+            }
+        }
+
+        // Fetch approximate location from IP
+        async function fetchLocation(ip) {
+            try {
+                const response = await fetch(`https://ipapi.co/${ip}/json/`);
+                const data = await response.json();
+
+                if (data && !data.error) {
+                    const parts = [data.city, data.region, data.country_name].filter(Boolean);
+                    document.getElementById('location').textContent = parts.join(', ') || 'UNKNOWN';
+                } else {
+                    document.getElementById('location').textContent = 'UNKNOWN';
+                }
+            } catch (error) {
+                document.getElementById('location').textContent = 'UNKNOWN';
+            }
+        }
+
+        // Detect device type
+        function detectDeviceType() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            let type = 'DESKTOP';
+
+            if (/android/i.test(ua)) {
+                type = 'ANDROID DEVICE';
+            } else if (/iPad|Tablet/i.test(ua)) {
+                type = 'TABLET';
+            } else if (/iPhone|iPod/i.test(ua)) {
+                type = 'IPHONE';
+            } else if (/Mobile/i.test(ua)) {
+                type = 'MOBILE DEVICE';
+            } else if (/Macintosh/i.test(ua)) {
+                type = 'MAC DESKTOP';
+            } else if (/Windows/i.test(ua)) {
+                type = 'WINDOWS DESKTOP';
+            }
+
+            document.getElementById('deviceType').textContent = type;
+        }
+
+        // Display current timestamp
+        function displayLastSeen() {
+            const now = new Date();
+            const formatted = now.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            document.getElementById('lastSeen').textContent = formatted;
+        }
+
+        let currentComplianceLevel = 0;
+
+        function updateComplianceWarning() {
+            const warningEl = document.getElementById('complianceWarning');
+            const fillEl = document.getElementById('trustFill');
+            if (!warningEl) return;
+
+            const messages = [
+                'SUBJECT UNREGISTERED: MAXIMUM THREAT CLASSIFICATION IN EFFECT.',
+                'HOSTILE ENTITY: PERMANENT SURVEILLANCE AUTHORIZED.',
+                'EXTREME THOUGHTCRIME RISK: DETENTION PROTOCOLS ARMED.',
+                'CRITICAL THREAT: IMMEDIATE INTERROGATION RECOMMENDED.',
+                'HIGH RISK: MANDATORY RE-EDUCATION SCHEDULED.',
+                'UNSTABLE LOYALTY: PROPAGANDA DOSAGE INCREASED.',
+                'DEFICIENT COMPLIANCE: BEHAVIORAL ADJUSTMENT IN PROGRESS.',
+                'BORDERLINE TRUSTWORTHY: CLOSE MONITORING ACTIVE.',
+                'LOW COMPLIANCE: ADDITIONAL REPORTING REQUIRED.',
+                'NEUTRAL STATUS: CONTINUED OBSERVATION ADVISED.',
+                'AVERAGE CITIZEN: LOYALTY UNDER REVIEW.',
+                'MODERATE COMPLIANCE: MAINTAIN PUBLIC ENTHUSIASM LEVELS.',
+                'PROVISIONALLY TRUSTED: LIMITED PRIVILEGES MAY APPLY.',
+                'RELIABLE CITIZEN: MINISTRY APPROVAL NOTED.',
+                'PREFERRED CITIZEN: EXEMPLARY PUBLIC BEHAVIOR RECORDED.',
+                'HIGH VALUE CITIZEN: INNER SLOGAN ACCESS GRANTED.',
+                'PRIORITY LOYALIST: SURVEILLANCE LOAD PARTIALLY REDUCED.',
+                'DISTINGUISHED SUPPORTER: INNER PARTY OBSERVES WITH APPROVAL.',
+                'ELITE COMPLIER: PROPAGANDA MODEL STATUS ACHIEVED.',
+                'EXEMPLARY: MODEL CITIZEN. BIG BROTHER SMILES UPON YOU.',
+                'ABSOLUTE LOYALTY: THOUGHT AND ACTION FULLY ALIGNED WITH THE PARTY.'
+            ];
+
+            const index = Math.min(
+                messages.length - 1,
+                Math.max(0, Math.floor(currentComplianceLevel / 5))
+            );
+
+            warningEl.textContent = messages[index];
+
+            if (currentComplianceLevel >= 60) {
+                fillEl.classList.add('high-compliance');
+            } else {
+                fillEl.classList.remove('high-compliance');
+            }
+        }
+
+        function setComplianceLevel(level) {
+            const fillElement = document.getElementById('trustFill');
+            const textElement = document.getElementById('trustText');
+            currentComplianceLevel = Math.max(0, Math.min(100, level));
+            fillElement.style.width = currentComplianceLevel + '%';
+            textElement.textContent = currentComplianceLevel + '%';
+            updateComplianceWarning();
+        }
+
+        // Initial compliance score
+        function initialComplianceLevel() {
+            const level = Math.floor(Math.random() * 31) + 15;
+            setTimeout(() => setComplianceLevel(level), 500);
+        }
+
+        // Personality Test Questions
+        const questions = [
+    {
+        q: "During the Two Minutes Hate, how do you most often recharge your energy after the broadcast ends?",
+        answers: [
+            { text: "Seek pluscrowd goodthink, loudly sharing slogans with many comrades.", value: 9 },   // Extraverted + compliant
+            { text: "Share quiet goodthink with a small inner circle of trusted comrades.", value: 5 },    // Extraverted-ish, softer
+            { text: "Return to quarters in silence to calmly process Party wisdom alone.", value: 2 },      // Introverted but obedient
+            { text: "Avoid others and question why such Hate is needed at all.", value: -10 }               // Introverted + dissent
+        ]
+    },
+    {
+        q: "When the Party issues a new production report, what do you notice first?",
+        answers: [
+            { text: "The clear numbers showing plusgood increase in output.", value: 8 },                   // Sensing + compliant
+            { text: "Precise details: dates, figures, and footnotes to memorize.", value: 5 },             // Strong Sensing
+            { text: "Hidden patterns and what the report implies for future directives.", value: 2 },      // Intuitive but still Party-focused
+            { text: "Strange inconsistencies that suggest possible rewrite of reality.", value: -7 }        // Intuitive + suspicious
+        ]
+    },
+    {
+        q: "A comrade commits a minor work error that harms Party efficiency but not feelings. What is your first impulse?",
+        answers: [
+            { text: "Report immediately so the system remains doubleplus efficient.", value: 10 },          // Thinking + compliant
+            { text: "Correct the error and explain the logic so it never happens again.", value: 6 },       // Thinking, still loyal
+            { text: "Quietly fix the issue to keep peace in the workcell.", value: 0 },                     // Feeling over logic
+            { text: "Ignore the error; rules are less important than personal comfort.", value: -8 }        // Non‑compliant
+        ]
+    },
+    {
+        q: "How do you prefer to receive new weekly directives from the Ministry?",
+        answers: [
+            { text: "In a strict schedule with clear checklists and deadlines.", value: 9 },                // Judging + compliant
+            { text: "In organized bulletins I can plan my entire week around.", value: 5 },                 // Judging
+            { text: "As flexible guidance I can adapt moment to moment.", value: -1 },                      // Perceiving
+            { text: "With as few rules as possible so I can do ownlife as I wish.", value: -11 }            // Perceiving + ownlife
+        ]
+    },
+    {
+        q: "When Big Brother gives a speech, how do you process the message?",
+        answers: [
+            { text: "Take every word as literal, perfect truth to be memorized.", value: 10 },              // Sensing/Judging + compliant
+            { text: "Focus on key phrases and slogans to apply in daily tasks.", value: 6 },                // Practical loyalty
+            { text: "Search for deeper symbolic meaning between the lines.", value: 1 },                    // Intuitive, mildly neutral
+            { text: "Wonder privately if the meaning changes each week.", value: -9 }                       // Intuitive + skeptical
+        ]
+    },
+    {
+        q: "A comrade is punished for mild crimethink. How do you respond internally?",
+        answers: [
+            { text: "Feel calm: justice served, plusgood example for all.", value: 9 },                     // Thinking/Judging + loyal
+            { text: "Respect the process but quietly hope for their re‑education.", value: 4 },             // Some empathy, still loyal
+            { text: "Feel uneasy and dwell on their personal suffering.", value: -3 },                      // Feeling > Party
+            { text: "Experience outrage that thought alone can be punished.", value: -12 }                  // Open dissent
+        ]
+    },
+    {
+        q: "How do you like to arrange your day under Party oversight?",
+        answers: [
+            { text: "Every hour pre-planned: work, rally, rest, all by schedule.", value: 10 },             // Strong Judging + compliant
+            { text: "General structure with time blocks for duties and loyal study.", value: 5 },           // Moderate Judging
+            { text: "Loose outline, adjusting whenever new impulses arrive.", value: -2 },                  // Perceiving
+            { text: "No plan; I follow only personal whims and chance.", value: -10 }                       // Chaotic + non‑compliant
+        ]
+    },
+    {
+    q: "When you notice the telescreen observing you in your quarters, what is your immediate thought?",
+    answers: [
+        { text: "Feel plusgood comfort knowing Big Brother protects me always.", value: 10 },              // Extraverted trust + compliant
+        { text: "Appreciate the safety but wish for brief moments of unwatched rest.", value: 3 },         // Moderate acceptance
+        { text: "Feel uneasy but understand it is necessary for collective security.", value: -2 },        // Introverted discomfort
+        { text: "Experience deep anxiety and resentment at constant observation.", value: -11 }            // Strong privacy need + dissent
+    ]
+},
+    {
+        q: "You notice yesterday’s newspaper now says something different than you remember. What is your reaction?",
+        answers: [
+            { text: "Assume my memory is wrong; the record is always right.", value: 10 },                  // Sensing + compliant
+            { text: "Accept the new text and promptly forget the old version.", value: 6 },                 // High compliance
+            { text: "Quietly wonder which version was true but say nothing.", value: -1 },                  // Intuitive, cautious
+            { text: "Insist the change proves the Party rewrites reality.", value: -11 }                    // Crimethink
+        ]
+    },
+    {
+        q: "A new rule contradicts an older one you carefully followed. How do you resolve this?",
+        answers: [
+            { text: "Instantly adopt the new rule; Oldthink is unrule.", value: 9 },                        // Judging + compliant
+            { text: "Study both, then fully align with the latest decree.", value: 5 },                     // Analytical but loyal
+            { text: "Wait and watch what others do before changing anything.", value: -2 },                 // Perceiving, hesitant
+            { text: "Refuse to change until someone explains the contradiction.", value: -9 }               // Independent thinking
+        ]
+    },
+    {
+        q: "When alone with your own thoughts, how do you relate to inner voice?",
+        answers: [
+            { text: "Train inner voice to repeat Party slogans: goodthink only.", value: 10 },              // Introverted but fully aligned
+            { text: "Reflect on how to better serve the collective tomorrow.", value: 6 },                  // Reflective + compliant
+            { text: "Wander through private dreams and imagined futures.", value: -3 },                     // Intuitive/Perceiving
+            { text: "Indulge in long ownlife fantasies beyond Party control.", value: -12 }                 // Extreme ownlife
+        ]
+    }
+];
+
+        let currentQuestionIndex = 0;
+        let usedQuestions = [];
+        let questionsAnswered = 0;
+        const totalQuestions = 10;
+
+        function getRandomQuestion() {
+            const availableQuestions = questions.filter((_, index) => !usedQuestions.includes(index));
+            if (availableQuestions.length === 0) {
+                usedQuestions = [];
+                return questions[Math.floor(Math.random() * questions.length)];
+            }
+            const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+            const questionIndex = questions.indexOf(availableQuestions[randomIndex]);
+            usedQuestions.push(questionIndex);
+            return questions[questionIndex];
+        }
+
+        function displayQuestion() {
+            if (questionsAnswered >= totalQuestions) {
+                showFinalAssessment();
+                return;
+            }
+
+            const question = getRandomQuestion();
+            const questionText = document.getElementById('questionText');
+            const answerButtons = document.getElementById('answerButtons');
+            const questionCounter = document.getElementById('questionCounter');
+
+            questionCounter.textContent = `QUESTION ${questionsAnswered + 1} OF ${totalQuestions}`;
+            questionText.textContent = question.q;
+            answerButtons.innerHTML = '';
+
+            question.answers.forEach((answer, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.textContent = answer.text;
+                btn.onclick = () => handleAnswer(answer.value);
+                answerButtons.appendChild(btn);
+            });
+        }
+
+        async function handleAnswer(value) {
+            questionsAnswered++;
+
+            // Disable buttons temporarily
+            const buttons = document.querySelectorAll('.answer-btn');
+            buttons.forEach(btn => btn.disabled = true);
+
+            // Show processing message
+            const questionArea = document.getElementById('questionArea');
+            const processingMsg = document.createElement('div');
+            processingMsg.className = 'processing-message';
+            processingMsg.textContent = 'ANALYZING RESPONSE...';
+            questionArea.appendChild(processingMsg);
+
+            await new Promise(resolve => setTimeout(resolve, 800));
+
+            // Update compliance score
+            const newLevel = Math.max(0, Math.min(100, currentComplianceLevel + value));
+            setComplianceLevel(newLevel);
+
+            // Update assessment log
+            const logEl = document.getElementById('assessmentLog');
+            if (logEl) {
+                const sign = value >= 0 ? '+' : '';
+                const action = value >= 0 ? 'LOYAL RESPONSE DETECTED' : 'SUSPICIOUS ANSWER FLAGGED';
+                logEl.textContent = `Last Assessment: ${sign}${value}% (${action})`;
+                logEl.className = 'assessment-log ' + (value >= 0 ? 'positive' : 'negative');
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 600));
+
+            // Remove processing message
+            processingMsg.remove();
+
+            // Show next question or final assessment
+            if (questionsAnswered < totalQuestions) {
+                displayQuestion();
+            } else {
+                showFinalAssessment();
+            }
+        }
+
+        function showFinalAssessment() {
+            const questionArea = document.getElementById('questionArea');
+            let finalMessage = '';
+            let finalClass = '';
+
+            if (currentComplianceLevel >= 80) {
+                finalMessage = 'ASSESSMENT COMPLETE: EXEMPLARY CITIZEN STATUS CONFIRMED. You have demonstrated unwavering loyalty to the Party. Your compliance is a model for others.';
+                finalClass = 'positive';
+            } else if (currentComplianceLevel >= 50) {
+                finalMessage = 'ASSESSMENT COMPLETE: ADEQUATE COMPLIANCE LEVEL. You show acceptable loyalty but require continued monitoring. Attend additional re-education sessions.';
+                finalClass = 'positive';
+            } else if (currentComplianceLevel >= 25) {
+                finalMessage = 'ASSESSMENT COMPLETE: DEFICIENT LOYALTY DETECTED. Your responses indicate dangerous tendencies. Mandatory re-education has been scheduled.';
+                finalClass = 'negative';
+            } else {
+                finalMessage = 'ASSESSMENT COMPLETE: CRITICAL THREAT IDENTIFIED. Your thoughtcrime patterns are severe. The Ministry of Love has been notified.';
+                finalClass = 'negative';
+            }
+
+            questionArea.innerHTML = `
+                <div class="assessment-log ${finalClass}" style="font-size: 13px; padding: 20px; min-height: auto;">
+                    ${finalMessage}
+                </div>
+                <button class="answer-btn" onclick="resetTest()" style="margin-top: 20px; text-align: center;">
+                    BEGIN NEW ASSESSMENT
+                </button>
+            `;
+        }
+
+        function resetTest() {
+            questionsAnswered = 0;
+            usedQuestions = [];
+            setComplianceLevel(Math.floor(Math.random() * 31) + 15);
+            const logEl = document.getElementById('assessmentLog');
+            if (logEl) {
+                logEl.textContent = 'AWAITING PERSONALITY ASSESSMENT...';
+                logEl.className = 'assessment-log';
+            }
+            displayQuestion();
+        }
+
+        // Initialize
+        fetchIPAddress();
+        detectDeviceType();
+        displayLastSeen();
+        initialComplianceLevel();
+        displayQuestion();
+
+        // Update last seen every second
+        setInterval(displayLastSeen, 1000);
+    </script>
+</body>
+</html>
