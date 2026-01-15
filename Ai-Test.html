@@ -1,682 +1,566 @@
-function App() {
-  const [cart, setCart] = React.useState([]);
-  const [showCart, setShowCart] = React.useState(false);
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const [activeChip, setActiveChip] = React.useState('All');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hobocat Books - Modern reads, old-road vibes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .backdrop-blur {
+            backdrop-filter: blur(12px);
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-900">
 
-  const categories = ['All', 'Fiction', 'Mystery', 'Technology', 'Business', 'Cooking', 'Sci‑Fi'];
-
-  const books = [
-    {
-      id: 1,
-      title: 'The Great Adventure',
-      author: 'John Smith',
-      price: 24.99,
-      category: 'Fiction',
-      rating: 4.5,
-      badge: 'Staff pick',
-      image: 'https://placehold.co/600x800/111827/f3f4f6?text=The+Great+Adventure'
-    },
-    {
-      id: 2,
-      title: 'Learning React',
-      author: 'Sarah Johnson',
-      price: 39.99,
-      category: 'Technology',
-      rating: 4.8,
-      badge: 'New',
-      image: 'https://placehold.co/600x800/0f766e/ecfeff?text=Learning+React'
-    },
-    {
-      id: 3,
-      title: 'Mystery at Midnight',
-      author: 'Emily Brown',
-      price: 19.99,
-      category: 'Mystery',
-      rating: 4.3,
-      badge: 'Bestseller',
-      image: 'https://placehold.co/600x800/4c1d95/f5f3ff?text=Mystery+at+Midnight'
-    },
-    {
-      id: 4,
-      title: 'Cooking Mastery',
-      author: 'Chef Michael',
-      price: 29.99,
-      category: 'Cooking',
-      rating: 4.7,
-      badge: 'Trending',
-      image: 'https://placehold.co/600x800/9a3412/fff7ed?text=Cooking+Mastery'
-    },
-    {
-      id: 5,
-      title: 'Space Odyssey',
-      author: 'David Clarke',
-      price: 27.99,
-      category: 'Sci‑Fi',
-      rating: 4.6,
-      badge: 'Classic',
-      image: 'https://placehold.co/600x800/0b1220/e5e7eb?text=Space+Odyssey'
-    },
-    {
-      id: 6,
-      title: 'Business Strategy',
-      author: 'Robert Williams',
-      price: 44.99,
-      category: 'Business',
-      rating: 4.4,
-      badge: 'Popular',
-      image: 'https://placehold.co/600x800/0f172a/e2e8f0?text=Business+Strategy'
-    }
-  ];
-
-  const iconBadgeClass = (badge) => {
-    const map = {
-      'New': 'bg-emerald-100 text-emerald-900',
-      'Bestseller': 'bg-amber-100 text-amber-900',
-      'Staff pick': 'bg-cyan-100 text-cyan-900',
-      'Trending': 'bg-fuchsia-100 text-fuchsia-900',
-      'Classic': 'bg-indigo-100 text-indigo-900',
-      'Popular': 'bg-slate-100 text-slate-900'
-    };
-    return map[badge] || 'bg-slate-100 text-slate-900';
-  };
-
-  const addToCart = (book) => {
-    const existing = cart.find((i) => i.id === book.id);
-    if (existing) {
-      setCart(cart.map((i) => (i.id === book.id ? { ...i, quantity: i.quantity + 1 } : i)));
-    } else {
-      setCart([...cart, { ...book, quantity: 1 }]);
-    }
-  };
-
-  const removeFromCart = (bookId) => setCart(cart.filter((i) => i.id !== bookId));
-
-  const updateQuantity = (bookId, q) => {
-    if (q <= 0) return removeFromCart(bookId);
-    setCart(cart.map((i) => (i.id === bookId ? { ...i, quantity: q } : i)));
-  };
-
-  const itemCount = cart.reduce((t, i) => t + i.quantity, 0);
-  const total = cart.reduce((t, i) => t + i.price * i.quantity, 0);
-
-  const filteredBooks = books
-    .filter((b) => (activeChip === 'All' ? true : b.category === activeChip))
-    .filter((b) => {
-      const q = searchTerm.trim().toLowerCase();
-      if (!q) return true;
-      return (
-        b.title.toLowerCase().includes(q) ||
-        b.author.toLowerCase().includes(q) ||
-        b.category.toLowerCase().includes(q)
-      );
-    });
-
-  const CatBindleMark = ({ className }) => (
-    <svg
-      viewBox="0 0 96 96"
-      className={className}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      {/* Contemporary icon: cat + bindlestiff */}
-      <rect x="0" y="0" width="96" height="96" rx="22" fill="#0B1220" />
-
-      {/* bindle stick */}
-      <path
-        d="M22 24 L70 8"
-        stroke="#5EEAD4"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-
-      {/* bundle */}
-      <path
-        d="M76 6 C84 10, 86 20, 78 26 C70 32, 58 26, 60 16 C62 8, 70 2, 76 6 Z"
-        fill="#ECFEFF"
-        stroke="#0B1220"
-        strokeWidth="3"
-      />
-      <path d="M62 16 L78 26" stroke="#0B1220" strokeWidth="3" strokeLinecap="round" />
-
-      {/* cat head */}
-      <path
-        d="M34 44 C34 34, 42 28, 50 28 C58 28, 66 34, 66 44 C66 54, 58 60, 50 60 C42 60, 34 54, 34 44 Z"
-        fill="#F3F4F6"
-        stroke="#0B1220"
-        strokeWidth="4"
-      />
-      {/* ears */}
-      <path
-        d="M38 34 L34 26 C34 24, 36 22, 38 23 L44 28"
-        fill="#F3F4F6"
-        stroke="#0B1220"
-        strokeWidth="4"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M62 34 L66 26 C66 24, 64 22, 62 23 L56 28"
-        fill="#F3F4F6"
-        stroke="#0B1220"
-        strokeWidth="4"
-        strokeLinejoin="round"
-      />
-
-      {/* cap */}
-      <path
-        d="M36 40 C40 34, 45 32, 50 32 C55 32, 60 34, 64 40"
-        stroke="#111827"
-        strokeWidth="6"
-        strokeLinecap="round"
-      />
-      <path
-        d="M40 39 C44 36, 47 35, 50 35 C53 35, 56 36, 60 39"
-        stroke="#5EEAD4"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-
-      {/* face */}
-      <circle cx="44" cy="45" r="2.2" fill="#0B1220" />
-      <circle cx="56" cy="45" r="2.2" fill="#0B1220" />
-      <path d="M50 48 L48.5 50.2 L51.5 50.2 Z" fill="#0B1220" />
-      <path
-        d="M46.5 52.5 C48.5 54.5, 51.5 54.5, 53.5 52.5"
-        stroke="#0B1220"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-
-      {/* body */}
-      <path
-        d="M30 82 C30 70, 38 62, 50 62 C62 62, 70 70, 70 82"
-        fill="#F3F4F6"
-        stroke="#0B1220"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-
-      {/* scarf */}
-      <path
-        d="M38 66 C42 70, 58 70, 62 66"
-        stroke="#5EEAD4"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-
-      {/* tail */}
-      <path
-        d="M70 78 C78 76, 82 70, 80 64"
-        stroke="#F3F4F6"
-        strokeWidth="6"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-
-  const StarRow = ({ rating }) => {
-    const full = Math.floor(rating);
-    const hasHalf = rating - full >= 0.5;
-    const totalStars = 5;
-
-    return (
-      <div className="flex items-center gap-2">
-        <div className="flex items-center text-amber-400">
-          {[...Array(totalStars)].map((_, i) => {
-            const idx = i + 1;
-            if (idx <= full) return <i key={i} className="fas fa-star"></i>;
-            if (idx === full + 1 && hasHalf) return <i key={i} className="fas fa-star-half-alt"></i>;
-            return <i key={i} className="far fa-star"></i>;
-          })}
+    <!-- Top bar -->
+    <div class="bg-slate-900 text-slate-100">
+        <div class="max-w-6xl mx-auto px-4 py-2 text-sm flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-truck"></i>
+                <span>Free shipping over $40</span>
+            </div>
+            <div class="hidden md:flex items-center gap-4 text-slate-300">
+                <span>Support: 24/7</span>
+                <span>•</span>
+                <span>Gift cards</span>
+            </div>
         </div>
-        <span className="text-sm text-slate-600">{rating.toFixed(1)}</span>
-      </div>
-    );
-  };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-900">
-      {/* Top bar */}
-      <div className="bg-slate-900 text-slate-100">
-        <div className="max-w-6xl mx-auto px-4 py-2 text-sm flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <i className="fas fa-truck"></i>
-            <span>Free shipping over $40</span>
-          </div>
-          <div className="hidden md:flex items-center gap-4 text-slate-300">
-            <span>Support: 24/7</span>
-            <span>•</span>
-            <span>Gift cards</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <CatBindleMark className="w-10 h-10" />
-            <div className="leading-tight">
-              <div className="text-lg font-extrabold tracking-tight">Hobocat Books</div>
-              <div className="text-xs text-slate-500">Modern reads, old-road vibes</div>
-            </div>
-          </div>
-
-          <nav className="hidden md:flex items-center gap-2">
-            {['Home', 'Shop', 'Bestsellers', 'New', 'About'].map((t) => (
-              <a
-                key={t}
-                href="#"
-                className="px-3 py-2 rounded-full text-sm text-slate-700 hover:bg-slate-100"
-              >
-                {t}
-              </a>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <button
-              className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50"
-              onClick={() => {
-                setActiveChip('All');
-                setSearchTerm('');
-              }}
-              title="Reset"
-            >
-              <i className="fas fa-rotate-left text-slate-500"></i>
-              <span className="text-sm text-slate-700">Reset</span>
-            </button>
-
-            <button
-              onClick={() => setShowCart(true)}
-              className="relative inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800"
-            >
-              <i className="fas fa-shopping-bag"></i>
-              <span className="text-sm font-semibold">Cart</span>
-              {itemCount > 0 && (
-                <span className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-teal-300 text-slate-900 text-xs font-extrabold flex items-center justify-center">
-                  {itemCount}
-                </span>
-              )}
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero */}
-      <section className="max-w-6xl mx-auto px-4 pt-10 pb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          <div className="lg:col-span-7">
-            <div className="bg-slate-900 text-white rounded-3xl p-8 shadow-sm relative overflow-hidden">
-              <div className="absolute -right-10 -top-10 w-64 h-64 rounded-full bg-teal-300/20"></div>
-              <div className="absolute -left-16 -bottom-16 w-72 h-72 rounded-full bg-white/10"></div>
-
-              <div className="relative">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 text-xs font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-teal-300"></span>
-                  Curated weekly drops
-                </div>
-
-                <h1 className="mt-4 text-4xl md:text-5xl font-extrabold tracking-tight">
-                  A contemporary bookstore for curious minds.
-                </h1>
-                <p className="mt-3 text-white/80 text-lg max-w-xl">
-                  Discover fiction, craft, and tech—picked with care by Hobocat.
-                </p>
-
-                <div className="mt-6">
-                  <div className="relative">
-                    <input
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      placeholder="Search titles, authors, categories…"
-                      className="w-full bg-white text-slate-900 placeholder-slate-400 rounded-2xl px-5 py-4 pr-12 focus:outline-none focus:ring-4 focus:ring-teal-200"
-                    />
-                    <i className="fas fa-search absolute right-5 top-5 text-slate-400"></i>
-                  </div>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {categories.map((c) => (
-                      <button
-                        key={c}
-                        onClick={() => setActiveChip(c)}
-                        className={
-                          (activeChip === c
-                            ? 'bg-teal-300 text-slate-900'
-                            : 'bg-white/10 text-white hover:bg-white/15') +
-                          ' px-4 py-2 rounded-full text-sm font-semibold transition'
-                        }
-                      >
-                        {c}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <button className="px-5 py-3 rounded-2xl bg-teal-300 text-slate-900 font-extrabold hover:bg-teal-200">
-                    Shop new arrivals
-                  </button>
-                  <button className="px-5 py-3 rounded-2xl border border-white/20 text-white font-semibold hover:bg-white/10">
-                    View bestsellers
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-5">
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm h-full">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-semibold text-slate-500">Featured</div>
-                  <div className="text-xl font-extrabold tracking-tight">Bindlestiff Collection</div>
-                </div>
-                <div className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">Limited</div>
-              </div>
-
-              <div className="mt-4 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 p-5 flex items-center gap-4">
-                <CatBindleMark className="w-16 h-16" />
-                <div className="flex-1">
-                  <div className="text-sm text-slate-600">New logo system</div>
-                  <div className="text-base font-bold">Anthropomorphic Hobocat</div>
-                  <div className="text-sm text-slate-500">Icon + wordmark-ready</div>
-                </div>
-              </div>
-
-              <div className="mt-5 grid grid-cols-2 gap-3">
-                {[{ label: 'Fast checkout', icon: 'fa-bolt' }, { label: 'Secure payments', icon: 'fa-lock' }, { label: 'Easy returns', icon: 'fa-rotate-left' }, { label: 'Curated lists', icon: 'fa-heart' }].map((x) => (
-                  <div key={x.label} className="rounded-2xl border border-slate-200 p-4 bg-white">
-                    <div className="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center">
-                      <i className={"fas " + x.icon}></i>
-                    </div>
-                    <div className="mt-3 text-sm font-bold">{x.label}</div>
-                    <div className="text-xs text-slate-500">Mock feature</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <div className="flex items-center justify-between">
-                  <div className="text-sm font-bold">Today’s deal</div>
-                  <div className="text-xs font-semibold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full">-15%</div>
-                </div>
-                <div className="mt-1 text-sm text-slate-600">Add any 2 books in Tech + Business.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Listing */}
-      <main className="max-w-6xl mx-auto px-4 pb-14">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">Shop books</h2>
-            <p className="text-slate-600">A clean, contemporary grid with quick add-to-cart.</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <button className="px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold">
-              <i className="fas fa-sliders-h mr-2 text-slate-500"></i>
-              Filters
-            </button>
-            <button className="px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold">
-              <i className="fas fa-sort mr-2 text-slate-500"></i>
-              Sort
-            </button>
-          </div>
-        </div>
-
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredBooks.map((b) => (
-            <div
-              key={b.id}
-              className="group bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition"
-            >
-              <div className="relative">
-                <img
-                  src={b.image}
-                  alt={b.title}
-                  className="w-full h-80 object-cover"
-                />
-                <div className={"absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-extrabold " + iconBadgeClass(b.badge)}>
-                  {b.badge}
-                </div>
-
-                <button
-                  className="absolute top-4 right-4 w-10 h-10 rounded-2xl bg-white/90 border border-slate-200 text-slate-800 hover:bg-white"
-                  title="Save"
-                >
-                  <i className="far fa-bookmark"></i>
-                </button>
-              </div>
-
-              <div className="p-5">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="text-xs font-semibold text-slate-500">{b.category}</div>
-                  <StarRow rating={b.rating} />
-                </div>
-
-                <div className="mt-2">
-                  <div className="text-lg font-extrabold tracking-tight text-slate-900">{b.title}</div>
-                  <div className="text-sm text-slate-600">by {b.author}</div>
-                </div>
-
-                <div className="mt-4 flex items-center justify-between">
-                  <div className="text-xl font-extrabold">${b.price.toFixed(2)}</div>
-                  <button
-                    onClick={() => addToCart(b)}
-                    className="px-4 py-2 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-slate-800"
-                  >
-                    <i className="fas fa-plus mr-2"></i>
-                    Add
-                  </button>
-                </div>
-
-                <div className="mt-4 grid grid-cols-2 gap-2">
-                  <button className="px-3 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold">
-                    Preview
-                  </button>
-                  <button className="px-3 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold">
-                    Details
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {filteredBooks.length === 0 && (
-          <div className="mt-10 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-semibold">
-              <i className="fas fa-magnifying-glass"></i>
-              No matches. Try a different search.
-            </div>
-          </div>
-        )}
-      </main>
-
-      {/* Cart Drawer */}
-      {showCart && (
-        <div className="fixed inset-0 z-50" role="dialog" aria-modal="true">
-          <div
-            className="absolute inset-0 bg-slate-900/50"
-            onClick={() => setShowCart(false)}
-          ></div>
-
-          <div className="absolute right-0 top-0 h-full w-full sm:w-[420px] bg-white shadow-2xl border-l border-slate-200">
-            <div className="h-full flex flex-col">
-              <div className="p-5 border-b border-slate-200 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center">
-                    <i className="fas fa-shopping-bag"></i>
-                  </div>
-                  <div>
-                    <div className="text-lg font-extrabold">Your bag</div>
-                    <div className="text-sm text-slate-500">{itemCount} item{itemCount === 1 ? '' : 's'}</div>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setShowCart(false)}
-                  className="w-10 h-10 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50"
-                  title="Close"
-                >
-                  <i className="fas fa-xmark"></i>
-                </button>
-              </div>
-
-              <div className="flex-1 overflow-auto p-5">
-                {cart.length === 0 ? (
-                  <div className="text-center py-10">
-                    <div className="mx-auto w-16 h-16 rounded-3xl bg-slate-100 flex items-center justify-center text-slate-600">
-                      <i className="fas fa-bag-shopping text-2xl"></i>
-                    </div>
-                    <div className="mt-4 text-lg font-bold">Your cart is empty</div>
-                    <div className="text-slate-600">Add a few books and come back here.</div>
-                    <button
-                      onClick={() => setShowCart(false)}
-                      className="mt-6 px-5 py-3 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-slate-800"
-                    >
-                      Browse books
-                    </button>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {cart.map((i) => (
-                      <div key={i.id} className="flex gap-4 p-3 rounded-3xl border border-slate-200">
-                        <img
-                          src={i.image}
-                          alt={i.title}
-                          className="w-20 h-28 rounded-2xl object-cover border border-slate-200"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between gap-2">
-                            <div className="min-w-0">
-                              <div className="font-extrabold truncate">{i.title}</div>
-                              <div className="text-sm text-slate-600 truncate">{i.author}</div>
-                            </div>
-                            <button
-                              onClick={() => removeFromCart(i.id)}
-                              className="w-9 h-9 rounded-2xl border border-slate-200 hover:bg-slate-50 text-slate-700"
-                              title="Remove"
-                            >
-                              <i className="fas fa-trash"></i>
-                            </button>
-                          </div>
-
-                          <div className="mt-3 flex items-center justify-between">
-                            <div className="text-sm font-extrabold">${(i.price * i.quantity).toFixed(2)}</div>
-
-                            <div className="inline-flex items-center rounded-2xl border border-slate-200 overflow-hidden">
-                              <button
-                                onClick={() => updateQuantity(i.id, i.quantity - 1)}
-                                className="w-10 h-10 bg-white hover:bg-slate-50"
-                                title="Decrease"
-                              >
-                                <i className="fas fa-minus text-xs"></i>
-                              </button>
-                              <div className="w-10 h-10 flex items-center justify-center text-sm font-extrabold">
-                                {i.quantity}
-                              </div>
-                              <button
-                                onClick={() => updateQuantity(i.id, i.quantity + 1)}
-                                className="w-10 h-10 bg-white hover:bg-slate-50"
-                                title="Increase"
-                              >
-                                <i className="fas fa-plus text-xs"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="p-5 border-t border-slate-200 bg-white">
-                <div className="flex items-center justify-between">
-                  <div className="text-sm text-slate-600">Subtotal</div>
-                  <div className="text-lg font-extrabold">${total.toFixed(2)}</div>
-                </div>
-                <div className="mt-2 text-xs text-slate-500">Taxes and shipping calculated at checkout (mock).</div>
-
-                <button
-                  disabled={cart.length === 0}
-                  className={
-                    (cart.length === 0
-                      ? 'bg-slate-200 text-slate-500 cursor-not-allowed'
-                      : 'bg-slate-900 text-white hover:bg-slate-800') +
-                    ' mt-4 w-full py-3 rounded-2xl font-extrabold'
-                  }
-                >
-                  <i className="fas fa-lock mr-2"></i>
-                  Checkout
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="max-w-6xl mx-auto px-4 py-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center gap-3">
-                <CatBindleMark className="w-10 h-10" />
-                <div>
-                  <div className="font-extrabold">Hobocat Books</div>
-                  <div className="text-sm text-slate-500">A contemporary e‑commerce mockup</div>
-                </div>
-              </div>
-              <p className="mt-3 text-sm text-slate-600">
-                A modern bookstore experience with a whimsical bindlestiff mascot.
-              </p>
-            </div>
-
-            <div>
-              <div className="text-sm font-extrabold">Shop</div>
-              <ul className="mt-3 space-y-2 text-sm text-slate-600">
-                <li><a href="#" className="hover:text-slate-900">All books</a></li>
-                <li><a href="#" className="hover:text-slate-900">New arrivals</a></li>
-                <li><a href="#" className="hover:text-slate-900">Bestsellers</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <div className="text-sm font-extrabold">Help</div>
-              <ul className="mt-3 space-y-2 text-sm text-slate-600">
-                <li><a href="#" className="hover:text-slate-900">Contact</a></li>
-                <li><a href="#" className="hover:text-slate-900">Shipping</a></li>
-                <li><a href="#" className="hover:text-slate-900">Returns</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <div className="text-sm font-extrabold">Follow</div>
-              <div className="mt-3 flex items-center gap-3">
-                {[
-                  { icon: 'fa-x-twitter', label: 'X' },
-                  { icon: 'fa-instagram', label: 'Instagram' },
-                  { icon: 'fa-facebook', label: 'Facebook' }
-                ].map((s) => (
-                  <a
-                    key={s.label}
-                    href="#"
-                    className="w-11 h-11 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center"
-                    title={s.label}
-                  >
-                    <i className={"fab " + s.icon + " text-slate-700"}></i>
-                  </a>
-                ))}
-              </div>
-              <div className="mt-4 text-xs text-slate-500">© 2026 Hobocat Books. All rights reserved.</div>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
-  );
-}
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <svg viewBox="0 0 96 96" class="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0" y="0" width="96" height="96" rx="22" fill="#0B1220" />
+                    <path d="M22 24 L70 8" stroke="#5EEAD4" stroke-width="4" stroke-linecap="round" />
+                    <path d="M76 6 C84 10, 86 20, 78 26 C70 32, 58 26, 60 16 C62 8, 70 2, 76 6 Z" fill="#ECFEFF" stroke="#0B1220" stroke-width="3" />
+                    <path d="M62 16 L78 26" stroke="#0B1220" stroke-width="3" stroke-linecap="round" />
+                    <path d="M34 44 C34 34, 42 28, 50 28 C58 28, 66 34, 66 44 C66 54, 58 60, 50 60 C42 60, 34 54, 34 44 Z" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" />
+                    <path d="M38 34 L34 26 C34 24, 36 22, 38 23 L44 28" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" stroke-linejoin="round" />
+                    <path d="M62 34 L66 26 C66 24, 64 22, 62 23 L56 28" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" stroke-linejoin="round" />
+                    <path d="M36 40 C40 34, 45 32, 50 32 C55 32, 60 34, 64 40" stroke="#111827" stroke-width="6" stroke-linecap="round" />
+                    <path d="M40 39 C44 36, 47 35, 50 35 C53 35, 56 36, 60 39" stroke="#5EEAD4" stroke-width="3" stroke-linecap="round" />
+                    <circle cx="44" cy="45" r="2.2" fill="#0B1220" />
+                    <circle cx="56" cy="45" r="2.2" fill="#0B1220" />
+                    <path d="M50 48 L48.5 50.2 L51.5 50.2 Z" fill="#0B1220" />
+                    <path d="M46.5 52.5 C48.5 54.5, 51.5 54.5, 53.5 52.5" stroke="#0B1220" stroke-width="3" stroke-linecap="round" />
+                    <path d="M30 82 C30 70, 38 62, 50 62 C62 62, 70 70, 70 82" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" stroke-linecap="round" />
+                    <path d="M38 66 C42 70, 58 70, 62 66" stroke="#5EEAD4" stroke-width="4" stroke-linecap="round" />
+                    <path d="M70 78 C78 76, 82 70, 80 64" stroke="#F3F4F6" stroke-width="6" stroke-linecap="round" />
+                </svg>
+                <div class="leading-tight">
+                    <div class="text-lg font-extrabold tracking-tight">Hobocat Books</div>
+                    <div class="text-xs text-slate-500">Modern reads, old-road vibes</div>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-2">
+                <a href="#" class="px-3 py-2 rounded-full text-sm text-slate-700 hover:bg-slate-100">Home</a>
+                <a href="#" class="px-3 py-2 rounded-full text-sm text-slate-700 hover:bg-slate-100">Shop</a>
+                <a href="#" class="px-3 py-2 rounded-full text-sm text-slate-700 hover:bg-slate-100">Bestsellers</a>
+                <a href="#" class="px-3 py-2 rounded-full text-sm text-slate-700 hover:bg-slate-100">New</a>
+                <a href="#" class="px-3 py-2 rounded-full text-sm text-slate-700 hover:bg-slate-100">About</a>
+            </nav>
+
+            <div class="flex items-center gap-2">
+                <button onclick="resetFilters()" class="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50">
+                    <i class="fas fa-rotate-left text-slate-500"></i>
+                    <span class="text-sm text-slate-700">Reset</span>
+                </button>
+
+                <button onclick="toggleCart()" class="relative inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="text-sm font-semibold">Cart</span>
+                    <span id="cart-badge" class="hidden absolute -top-2 -right-2 w-6 h-6 rounded-full bg-teal-300 text-slate-900 text-xs font-extrabold items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-4 pt-10 pb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            <div class="lg:col-span-7">
+                <div class="bg-slate-900 text-white rounded-3xl p-8 shadow-sm relative overflow-hidden h-full">
+                    <div class="absolute -right-10 -top-10 w-64 h-64 rounded-full bg-teal-300/20"></div>
+                    <div class="absolute -left-16 -bottom-16 w-72 h-72 rounded-full bg-white/10"></div>
+
+                    <div class="relative">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 text-xs font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-teal-300"></span>
+                            Curated weekly drops
+                        </div>
+
+                        <h1 class="mt-4 text-4xl md:text-5xl font-extrabold tracking-tight">
+                            A contemporary bookstore for curious minds.
+                        </h1>
+                        <p class="mt-3 text-white/80 text-lg max-w-xl">
+                            Discover fiction, craft, and tech—picked with care by Hobocat.
+                        </p>
+
+                        <div class="mt-6">
+                            <div class="relative">
+                                <input id="search-input" type="text" placeholder="Search titles, authors, categories…" 
+                                    class="w-full bg-white text-slate-900 placeholder-slate-400 rounded-2xl px-5 py-4 pr-12 focus:outline-none focus:ring-4 focus:ring-teal-200"
+                                    oninput="filterBooks()">
+                                <i class="fas fa-search absolute right-5 top-5 text-slate-400"></i>
+                            </div>
+                            <div class="mt-4 flex flex-wrap gap-2" id="category-chips">
+                                <button onclick="filterByCategory('All')" class="category-chip px-4 py-2 rounded-full text-sm font-semibold transition bg-teal-300 text-slate-900" data-category="All">All</button>
+                                <button onclick="filterByCategory('Fiction')" class="category-chip px-4 py-2 rounded-full text-sm font-semibold transition bg-white/10 text-white hover:bg-white/15" data-category="Fiction">Fiction</button>
+                                <button onclick="filterByCategory('Mystery')" class="category-chip px-4 py-2 rounded-full text-sm font-semibold transition bg-white/10 text-white hover:bg-white/15" data-category="Mystery">Mystery</button>
+                                <button onclick="filterByCategory('Technology')" class="category-chip px-4 py-2 rounded-full text-sm font-semibold transition bg-white/10 text-white hover:bg-white/15" data-category="Technology">Technology</button>
+                                <button onclick="filterByCategory('Business')" class="category-chip px-4 py-2 rounded-full text-sm font-semibold transition bg-white/10 text-white hover:bg-white/15" data-category="Business">Business</button>
+                                <button onclick="filterByCategory('Cooking')" class="category-chip px-4 py-2 rounded-full text-sm font-semibold transition bg-white/10 text-white hover:bg-white/15" data-category="Cooking">Cooking</button>
+                                <button onclick="filterByCategory('Sci‑Fi')" class="category-chip px-4 py-2 rounded-full text-sm font-semibold transition bg-white/10 text-white hover:bg-white/15" data-category="Sci‑Fi">Sci‑Fi</button>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 flex flex-wrap gap-3">
+                            <button class="px-5 py-3 rounded-2xl bg-teal-300 text-slate-900 font-extrabold hover:bg-teal-200">
+                                Shop new arrivals
+                            </button>
+                            <button class="px-5 py-3 rounded-2xl border border-white/20 text-white font-semibold hover:bg-white/10">
+                                View bestsellers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5">
+                <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm h-full">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-xs font-semibold text-slate-500">Featured</div>
+                            <div class="text-xl font-extrabold tracking-tight">Bindlestiff Collection</div>
+                        </div>
+                        <div class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">Limited</div>
+                    </div>
+
+                    <div class="mt-4 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 p-5 flex items-center gap-4">
+                        <svg viewBox="0 0 96 96" class="w-16 h-16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="96" height="96" rx="22" fill="#0B1220" />
+                            <path d="M22 24 L70 8" stroke="#5EEAD4" stroke-width="4" stroke-linecap="round" />
+                            <path d="M76 6 C84 10, 86 20, 78 26 C70 32, 58 26, 60 16 C62 8, 70 2, 76 6 Z" fill="#ECFEFF" stroke="#0B1220" stroke-width="3" />
+                            <path d="M62 16 L78 26" stroke="#0B1220" stroke-width="3" stroke-linecap="round" />
+                            <path d="M34 44 C34 34, 42 28, 50 28 C58 28, 66 34, 66 44 C66 54, 58 60, 50 60 C42 60, 34 54, 34 44 Z" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" />
+                            <path d="M38 34 L34 26 C34 24, 36 22, 38 23 L44 28" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" stroke-linejoin="round" />
+                            <path d="M62 34 L66 26 C66 24, 64 22, 62 23 L56 28" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" stroke-linejoin="round" />
+                            <path d="M36 40 C40 34, 45 32, 50 32 C55 32, 60 34, 64 40" stroke="#111827" stroke-width="6" stroke-linecap="round" />
+                            <path d="M40 39 C44 36, 47 35, 50 35 C53 35, 56 36, 60 39" stroke="#5EEAD4" stroke-width="3" stroke-linecap="round" />
+                            <circle cx="44" cy="45" r="2.2" fill="#0B1220" />
+                            <circle cx="56" cy="45" r="2.2" fill="#0B1220" />
+                            <path d="M50 48 L48.5 50.2 L51.5 50.2 Z" fill="#0B1220" />
+                            <path d="M46.5 52.5 C48.5 54.5, 51.5 54.5, 53.5 52.5" stroke="#0B1220" stroke-width="3" stroke-linecap="round" />
+                            <path d="M30 82 C30 70, 38 62, 50 62 C62 62, 70 70, 70 82" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" stroke-linecap="round" />
+                            <path d="M38 66 C42 70, 58 70, 62 66" stroke="#5EEAD4" stroke-width="4" stroke-linecap="round" />
+                            <path d="M70 78 C78 76, 82 70, 80 64" stroke="#F3F4F6" stroke-width="6" stroke-linecap="round" />
+                        </svg>
+                        <div class="flex-1">
+                            <div class="text-sm text-slate-600">New logo system</div>
+                            <div class="text-base font-bold">Anthropomorphic Hobocat</div>
+                            <div class="text-sm text-slate-500">Icon + wordmark-ready</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 grid grid-cols-2 gap-3">
+                        <div class="rounded-2xl border border-slate-200 p-4 bg-white">
+                            <div class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="mt-3 text-sm font-bold">Fast checkout</div>
+                            <div class="text-xs text-slate-500">Mock feature</div>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200 p-4 bg-white">
+                            <div class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="mt-3 text-sm font-bold">Secure payments</div>
+                            <div class="text-xs text-slate-500">Mock feature</div>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200 p-4 bg-white">
+                            <div class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center">
+                                <i class="fas fa-rotate-left"></i>
+                            </div>
+                            <div class="mt-3 text-sm font-bold">Easy returns</div>
+                            <div class="text-xs text-slate-500">Mock feature</div>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200 p-4 bg-white">
+                            <div class="w-9 h-9 rounded-xl bg-slate-900 text-white flex items-center justify-center">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="mt-3 text-sm font-bold">Curated lists</div>
+                            <div class="text-xs text-slate-500">Mock feature</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm font-bold">Today's deal</div>
+                            <div class="text-xs font-semibold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full">-15%</div>
+                        </div>
+                        <div class="mt-1 text-sm text-slate-600">Add any 2 books in Tech + Business.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Listing -->
+    <main class="max-w-6xl mx-auto px-4 pb-14">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+                <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">Shop books</h2>
+                <p class="text-slate-600">A clean, contemporary grid with quick add-to-cart.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold">
+                    <i class="fas fa-sliders-h mr-2 text-slate-500"></i>Filters
+                </button>
+                <button class="px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold">
+                    <i class="fas fa-sort mr-2 text-slate-500"></i>Sort
+                </button>
+            </div>
+        </div>
+
+        <div id="books-grid" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+        <div id="no-results" class="hidden mt-10 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-semibold">
+                <i class="fas fa-magnifying-glass"></i>
+                No matches. Try a different search.
+            </div>
+        </div>
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="hidden fixed inset-0 z-50">
+        <div class="absolute inset-0 bg-slate-900/50" onclick="toggleCart()"></div>
+
+        <div class="absolute right-0 top-0 h-full w-full sm:w-[420px] bg-white shadow-2xl border-l border-slate-200">
+            <div class="h-full flex flex-col">
+                <div class="p-5 border-b border-slate-200 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div>
+                            <div class="text-lg font-extrabold">Your bag</div>
+                            <div class="text-sm text-slate-500"><span id="cart-count">0</span> items</div>
+                        </div>
+                    </div>
+                    <button onclick="toggleCart()" class="w-10 h-10 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div class="flex-1 overflow-auto p-5">
+                    <div id="cart-empty" class="text-center py-10">
+                        <div class="mx-auto w-16 h-16 rounded-3xl bg-slate-100 flex items-center justify-center text-slate-600">
+                            <i class="fas fa-bag-shopping text-2xl"></i>
+                        </div>
+                        <div class="mt-4 text-lg font-bold">Your cart is empty</div>
+                        <div class="text-slate-600">Add a few books and come back here.</div>
+                        <button onclick="toggleCart()" class="mt-6 px-5 py-3 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-slate-800">
+                            Browse books
+                        </button>
+                    </div>
+                    <div id="cart-items" class="hidden space-y-4"></div>
+                </div>
+
+                <div class="p-5 border-t border-slate-200 bg-white">
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-slate-600">Subtotal</div>
+                        <div class="text-lg font-extrabold">$<span id="cart-total">0.00</span></div>
+                    </div>
+                    <div class="mt-2 text-xs text-slate-500">Taxes and shipping calculated at checkout (mock).</div>
+
+                    <button id="checkout-btn" disabled class="mt-4 w-full py-3 rounded-2xl font-extrabold bg-slate-200 text-slate-500 cursor-not-allowed">
+                        <i class="fas fa-lock mr-2"></i>Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white">
+        <div class="max-w-6xl mx-auto px-4 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-3">
+                        <svg viewBox="0 0 96 96" class="w-10 h-10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" y="0" width="96" height="96" rx="22" fill="#0B1220" />
+                            <path d="M22 24 L70 8" stroke="#5EEAD4" stroke-width="4" stroke-linecap="round" />
+                            <path d="M76 6 C84 10, 86 20, 78 26 C70 32, 58 26, 60 16 C62 8, 70 2, 76 6 Z" fill="#ECFEFF" stroke="#0B1220" stroke-width="3" />
+                            <path d="M62 16 L78 26" stroke="#0B1220" stroke-width="3" stroke-linecap="round" />
+                            <path d="M34 44 C34 34, 42 28, 50 28 C58 28, 66 34, 66 44 C66 54, 58 60, 50 60 C42 60, 34 54, 34 44 Z" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" />
+                            <path d="M38 34 L34 26 C34 24, 36 22, 38 23 L44 28" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" stroke-linejoin="round" />
+                            <path d="M62 34 L66 26 C66 24, 64 22, 62 23 L56 28" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" stroke-linejoin="round" />
+                            <path d="M36 40 C40 34, 45 32, 50 32 C55 32, 60 34, 64 40" stroke="#111827" stroke-width="6" stroke-linecap="round" />
+                            <path d="M40 39 C44 36, 47 35, 50 35 C53 35, 56 36, 60 39" stroke="#5EEAD4" stroke-width="3" stroke-linecap="round" />
+                            <circle cx="44" cy="45" r="2.2" fill="#0B1220" />
+                            <circle cx="56" cy="45" r="2.2" fill="#0B1220" />
+                            <path d="M50 48 L48.5 50.2 L51.5 50.2 Z" fill="#0B1220" />
+                            <path d="M46.5 52.5 C48.5 54.5, 51.5 54.5, 53.5 52.5" stroke="#0B1220" stroke-width="3" stroke-linecap="round" />
+                            <path d="M30 82 C30 70, 38 62, 50 62 C62 62, 70 70, 70 82" fill="#F3F4F6" stroke="#0B1220" stroke-width="4" stroke-linecap="round" />
+                            <path d="M38 66 C42 70, 58 70, 62 66" stroke="#5EEAD4" stroke-width="4" stroke-linecap="round" />
+                            <path d="M70 78 C78 76, 82 70, 80 64" stroke="#F3F4F6" stroke-width="6" stroke-linecap="round" />
+                        </svg>
+                        <div>
+                            <div class="font-extrabold">Hobocat Books</div>
+                            <div class="text-sm text-slate-500">A contemporary e‑commerce mockup</div>
+                        </div>
+                    </div>
+                    <p class="mt-3 text-sm text-slate-600">
+                        A modern bookstore experience with a whimsical bindlestiff mascot.
+                    </p>
+                </div>
+
+                <div>
+                    <div class="text-sm font-extrabold">Shop</div>
+                    <ul class="mt-3 space-y-2 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-slate-900">All books</a></li>
+                        <li><a href="#" class="hover:text-slate-900">New arrivals</a></li>
+                        <li><a href="#" class="hover:text-slate-900">Bestsellers</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="text-sm font-extrabold">Help</div>
+                    <ul class="mt-3 space-y-2 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-slate-900">Contact</a></li>
+                        <li><a href="#" class="hover:text-slate-900">Shipping</a></li>
+                        <li><a href="#" class="hover:text-slate-900">Returns</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="text-sm font-extrabold">Follow</div>
+                    <div class="mt-3 flex items-center gap-3">
+                        <a href="#" class="w-11 h-11 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center">
+                            <i class="fab fa-x-twitter text-slate-700"></i>
+                        </a>
+                        <a href="#" class="w-11 h-11 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center">
+                            <i class="fab fa-instagram text-slate-700"></i>
+                        </a>
+                        <a href="#" class="w-11 h-11 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center">
+                            <i class="fab fa-facebook text-slate-700"></i>
+                        </a>
+                    </div>
+                    <div class="mt-4 text-xs text-slate-500">© 2026 Hobocat Books. All rights reserved.</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data
+        const BOOKS = [
+            { id: 1, title: 'The Great Adventure', author: 'John Smith', price: 24.99, category: 'Fiction', rating: 4.5, badge: 'Staff pick', badgeClass: 'bg-cyan-100 text-cyan-900', image: 'https://placehold.co/600x800/111827/f3f4f6?text=The+Great+Adventure' },
+            { id: 2, title: 'Learning React', author: 'Sarah Johnson', price: 39.99, category: 'Technology', rating: 4.8, badge: 'New', badgeClass: 'bg-emerald-100 text-emerald-900', image: 'https://placehold.co/600x800/0f766e/ecfeff?text=Learning+React' },
+            { id: 3, title: 'Mystery at Midnight', author: 'Emily Brown', price: 19.99, category: 'Mystery', rating: 4.3, badge: 'Bestseller', badgeClass: 'bg-amber-100 text-amber-900', image: 'https://placehold.co/600x800/4c1d95/f5f3ff?text=Mystery+at+Midnight' },
+            { id: 4, title: 'Cooking Mastery', author: 'Chef Michael', price: 29.99, category: 'Cooking', rating: 4.7, badge: 'Trending', badgeClass: 'bg-fuchsia-100 text-fuchsia-900', image: 'https://placehold.co/600x800/9a3412/fff7ed?text=Cooking+Mastery' },
+            { id: 5, title: 'Space Odyssey', author: 'David Clarke', price: 27.99, category: 'Sci‑Fi', rating: 4.6, badge: 'Classic', badgeClass: 'bg-indigo-100 text-indigo-900', image: 'https://placehold.co/600x800/0b1220/e5e7eb?text=Space+Odyssey' },
+            { id: 6, title: 'Business Strategy', author: 'Robert Williams', price: 44.99, category: 'Business', rating: 4.4, badge: 'Popular', badgeClass: 'bg-slate-100 text-slate-900', image: 'https://placehold.co/600x800/0f172a/e2e8f0?text=Business+Strategy' }
+        ];
+
+        let cart = [];
+        let activeCategory = 'All';
+
+        // Render stars
+        function renderStars(rating) {
+            const full = Math.floor(rating);
+            const hasHalf = rating - full >= 0.5;
+            let html = '';
+            for (let i = 0; i < 5; i++) {
+                if (i < full) html += '<i class="fas fa-star"></i>';
+                else if (i === full && hasHalf) html += '<i class="fas fa-star-half-alt"></i>';
+                else html += '<i class="far fa-star"></i>';
+            }
+            return html;
+        }
+
+        // Render books
+        function renderBooks() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const filtered = BOOKS.filter(book => {
+                const matchesCategory = activeCategory === 'All' || book.category === activeCategory;
+                const matchesSearch = !searchTerm || 
+                    book.title.toLowerCase().includes(searchTerm) ||
+                    book.author.toLowerCase().includes(searchTerm) ||
+                    book.category.toLowerCase().includes(searchTerm);
+                return matchesCategory && matchesSearch;
+            });
+
+            const grid = document.getElementById('books-grid');
+            const noResults = document.getElementById('no-results');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+                grid.innerHTML = filtered.map(book => `
+                    <div class="group bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition">
+                        <div class="relative">
+                            <img src="${book.image}" alt="${book.title}" class="w-full h-80 object-cover">
+                            <div class="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-extrabold ${book.badgeClass}">
+                                ${book.badge}
+                            </div>
+                            <button class="absolute top-4 right-4 w-10 h-10 rounded-2xl bg-white/90 border border-slate-200 text-slate-800 hover:bg-white">
+                                <i class="far fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center justify-between gap-3">
+                                <div class="text-xs font-semibold text-slate-500">${book.category}</div>
+                                <div class="flex items-center gap-2">
+                                    <div class="flex items-center text-amber-400">${renderStars(book.rating)}</div>
+                                    <span class="text-sm text-slate-600">${book.rating.toFixed(1)}</span>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <div class="text-lg font-extrabold tracking-tight text-slate-900">${book.title}</div>
+                                <div class="text-sm text-slate-600">by ${book.author}</div>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between">
+                                <div class="text-xl font-extrabold">$${book.price.toFixed(2)}</div>
+                                <button onclick="addToCart(${book.id})" class="px-4 py-2 rounded-2xl bg-slate-900 text-white font-semibold hover:bg-slate-800">
+                                    <i class="fas fa-plus mr-2"></i>Add
+                                </button>
+                            </div>
+                            <div class="mt-4 grid grid-cols-2 gap-2">
+                                <button class="px-3 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold">Preview</button>
+                                <button class="px-3 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold">Details</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            activeCategory = category;
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                if (chip.dataset.category === category) {
+                    chip.className = 'category-chip px-4 py-2 rounded-full text-sm font-semibold transition bg-teal-300 text-slate-900';
+                } else {
+                    chip.className = 'category-chip px-4 py-2 rounded-full text-sm font-semibold transition bg-white/10 text-white hover:bg-white/15';
+                }
+            });
+            renderBooks();
+        }
+
+        // Filter books
+        function filterBooks() {
+            renderBooks();
+        }
+
+        // Reset filters
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            filterByCategory('All');
+        }
+
+        // Add to cart
+        function addToCart(bookId) {
+            const book = BOOKS.find(b => b.id === bookId);
+            const existing = cart.find(item => item.id === bookId);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ ...book, quantity: 1 });
+            }
+            updateCart();
+        }
+
+        // Remove from cart
+        function removeFromCart(bookId) {
+            cart = cart.filter(item => item.id !== bookId);
+            updateCart();
+        }
+
+        // Update quantity
+        function updateQuantity(bookId, delta) {
+            const item = cart.find(i => i.id === bookId);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    removeFromCart(bookId);
+                } else {
+                    updateCart();
+                }
+            }
+        }
+
+        // Update cart UI
+        function updateCart() {
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+            document.getElementById('cart-badge').textContent = itemCount;
+            document.getElementById('cart-count').textContent = itemCount;
+            document.getElementById('cart-total').textContent = total.toFixed(2);
+
+            if (itemCount > 0) {
+                document.getElementById('cart-badge').classList.remove('hidden');
+                document.getElementById('cart-badge').classList.add('flex');
+                document.getElementById('cart-empty').classList.add('hidden');
+                document.getElementById('cart-items').classList.remove('hidden');
+                document.getElementById('checkout-btn').disabled = false;
+                document.getElementById('checkout-btn').className = 'mt-4 w-full py-3 rounded-2xl font-extrabold bg-slate-900 text-white hover:bg-slate-800';
+            } else {
+                document.getElementById('cart-badge').classList.add('hidden');
+                document.getElementById('cart-empty').classList.remove('hidden');
+                document.getElementById('cart-items').classList.add('hidden');
+                document.getElementById('checkout-btn').disabled = true;
+                document.getElementById('checkout-btn').className = 'mt-4 w-full py-3 rounded-2xl font-extrabold bg-slate-200 text-slate-500 cursor-not-allowed';
+            }
+
+            document.getElementById('cart-items').innerHTML = cart.map(item => `
+                <div class="flex gap-4 p-3 rounded-3xl border border-slate-200">
+                    <img src="${item.image}" alt="${item.title}" class="w-20 h-28 rounded-2xl object-cover border border-slate-200">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="min-w-0">
+                                <div class="font-extrabold truncate">${item.title}</div>
+                                <div class="text-sm text-slate-600 truncate">${item.author}</div>
+                            </div>
+                            <button onclick="removeFromCart(${item.id})" class="w-9 h-9 rounded-2xl border border-slate-200 hover:bg-slate-50 text-slate-700">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="mt-3 flex items-center justify-between">
+                            <div class="text-sm font-extrabold">$${(item.price * item.quantity).toFixed(2)}</div>
+                            <div class="inline-flex items-center rounded-2xl border border-slate-200 overflow-hidden">
+                                <button onclick="updateQuantity(${item.id}, -1)" class="w-10 h-10 bg-white hover:bg-slate-50">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <div class="w-10 h-10 flex items-center justify-center text-sm font-extrabold">${item.quantity}</div>
+                                <button onclick="updateQuantity(${item.id}, 1)" class="w-10 h-10 bg-white hover:bg-slate-50">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Toggle cart
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('hidden');
+        }
+
+        // Initialize
+        renderBooks();
+    </script>
+</body>
+</html>
