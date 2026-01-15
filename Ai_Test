@@ -1,0 +1,309 @@
+function App() {
+  const [cart, setCart] = React.useState([]);
+  const [showCart, setShowCart] = React.useState(false);
+  const [searchTerm, setSearchTerm] = React.useState('');
+
+  const books = [
+    {
+      id: 1,
+      title: 'The Great Adventure',
+      author: 'John Smith',
+      price: 24.99,
+      category: 'Fiction',
+      rating: 4.5,
+      image: 'https://placehold.co/200x300/3b82f6/ffffff?text=Great+Adventure'
+    },
+    {
+      id: 2,
+      title: 'Learning React',
+      author: 'Sarah Johnson',
+      price: 39.99,
+      category: 'Technology',
+      rating: 4.8,
+      image: 'https://placehold.co/200x300/10b981/ffffff?text=Learning+React'
+    },
+    {
+      id: 3,
+      title: 'Mystery at Midnight',
+      author: 'Emily Brown',
+      price: 19.99,
+      category: 'Mystery',
+      rating: 4.3,
+      image: 'https://placehold.co/200x300/8b5cf6/ffffff?text=Mystery+Midnight'
+    },
+    {
+      id: 4,
+      title: 'Cooking Mastery',
+      author: 'Chef Michael',
+      price: 29.99,
+      category: 'Cooking',
+      rating: 4.7,
+      image: 'https://placehold.co/200x300/f59e0b/ffffff?text=Cooking+Mastery'
+    },
+    {
+      id: 5,
+      title: 'Space Odyssey',
+      author: 'David Clarke',
+      price: 27.99,
+      category: 'Science Fiction',
+      rating: 4.6,
+      image: 'https://placehold.co/200x300/ef4444/ffffff?text=Space+Odyssey'
+    },
+    {
+      id: 6,
+      title: 'Business Strategy',
+      author: 'Robert Williams',
+      price: 44.99,
+      category: 'Business',
+      rating: 4.4,
+      image: 'https://placehold.co/200x300/06b6d4/ffffff?text=Business+Strategy'
+    }
+  ];
+
+  const addToCart = (book) => {
+    const existingItem = cart.find(item => item.id === book.id);
+    if (existingItem) {
+      setCart(cart.map(item => 
+        item.id === book.id ? { ...item, quantity: item.quantity + 1 } : item
+      ));
+    } else {
+      setCart([...cart, { ...book, quantity: 1 }]);
+    }
+  };
+
+  const removeFromCart = (bookId) => {
+    setCart(cart.filter(item => item.id !== bookId));
+  };
+
+  const updateQuantity = (bookId, newQuantity) => {
+    if (newQuantity === 0) {
+      removeFromCart(bookId);
+    } else {
+      setCart(cart.map(item => 
+        item.id === bookId ? { ...item, quantity: newQuantity } : item
+      ));
+    }
+  };
+
+  const getTotalPrice = () => {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+  };
+
+  const filteredBooks = books.filter(book =>
+    book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    book.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-blue-600 text-white shadow-lg">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <i className="fas fa-book text-3xl"></i>
+              <h1 className="text-2xl font-bold">BookHaven</h1>
+            </div>
+            <div className="flex items-center space-x-6">
+              <nav className="hidden md:flex space-x-6">
+                <a href="#" className="hover:text-blue-200">Home</a>
+                <a href="#" className="hover:text-blue-200">Categories</a>
+                <a href="#" className="hover:text-blue-200">Best Sellers</a>
+                <a href="#" className="hover:text-blue-200">About</a>
+              </nav>
+              <button 
+                onClick={() => setShowCart(!showCart)}
+                className="relative bg-blue-700 px-4 py-2 rounded-lg hover:bg-blue-800 transition"
+              >
+                <i className="fas fa-shopping-cart mr-2"></i>
+                Cart
+                {cart.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+                    {cart.reduce((total, item) => total + item.quantity, 0)}
+                  </span>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl font-bold mb-4">Discover Your Next Great Read</h2>
+          <p className="text-xl mb-8">Thousands of books at your fingertips</p>
+          <div className="max-w-2xl mx-auto">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search for books, authors, or categories..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-6 py-4 rounded-full text-gray-800 text-lg focus:outline-none focus:ring-4 focus:ring-blue-300"
+              />
+              <i className="fas fa-search absolute right-6 top-5 text-gray-400 text-xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-12">
+        <div className="flex justify-between items-center mb-8">
+          <h3 className="text-3xl font-bold text-gray-800">Featured Books</h3>
+          <div className="flex space-x-2">
+            <button className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+              <i className="fas fa-filter mr-2"></i>Filter
+            </button>
+            <button className="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+              <i className="fas fa-sort mr-2"></i>Sort
+            </button>
+          </div>
+        </div>
+
+        {/* Books Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredBooks.map(book => (
+            <div key={book.id} className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden">
+              <img src={book.image} alt={book.title} className="w-full h-80 object-cover" />
+              <div className="p-6">
+                <div className="text-sm text-blue-600 font-semibold mb-2">{book.category}</div>
+                <h4 className="text-xl font-bold text-gray-800 mb-2">{book.title}</h4>
+                <p className="text-gray-600 mb-3">by {book.author}</p>
+                <div className="flex items-center mb-4">
+                  <div className="flex text-yellow-400">
+                    {[...Array(5)].map((_, i) => (
+                      <i key={i} className={i < Math.floor(book.rating) ? 'fas fa-star' : 'far fa-star'}></i>
+                    ))}
+                  </div>
+                  <span className="ml-2 text-gray-600 text-sm">({book.rating})</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl font-bold text-gray-800">${book.price}</span>
+                  <button
+                    onClick={() => addToCart(book)}
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+                  >
+                    <i className="fas fa-cart-plus mr-2"></i>Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Cart Sidebar */}
+      {showCart && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50" onClick={() => setShowCart(false)}>
+          <div 
+            className="fixed right-0 top-0 h-full w-full md:w-96 bg-white shadow-2xl overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-2xl font-bold text-gray-800">Shopping Cart</h3>
+                <button onClick={() => setShowCart(false)} className="text-gray-500 hover:text-gray-700">
+                  <i className="fas fa-times text-2xl"></i>
+                </button>
+              </div>
+
+              {cart.length === 0 ? (
+                <div className="text-center py-12">
+                  <i className="fas fa-shopping-cart text-6xl text-gray-300 mb-4"></i>
+                  <p className="text-gray-500 text-lg">Your cart is empty</p>
+                </div>
+              ) : (
+                <>
+                  <div className="space-y-4 mb-6">
+                    {cart.map(item => (
+                      <div key={item.id} className="flex items-center space-x-4 border-b pb-4">
+                        <img src={item.image} alt={item.title} className="w-16 h-24 object-cover rounded" />
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-gray-800">{item.title}</h4>
+                          <p className="text-sm text-gray-600">${item.price}</p>
+                          <div className="flex items-center space-x-2 mt-2">
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              className="w-6 h-6 bg-gray-200 rounded hover:bg-gray-300"
+                            >
+                              -
+                            </button>
+                            <span className="text-sm font-semibold">{item.quantity}</span>
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              className="w-6 h-6 bg-gray-200 rounded hover:bg-gray-300"
+                            >
+                              +
+                            </button>
+                            <button
+                              onClick={() => removeFromCart(item.id)}
+                              className="ml-auto text-red-500 hover:text-red-700"
+                            >
+                              <i className="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="border-t pt-4">
+                    <div className="flex justify-between items-center mb-6">
+                      <span className="text-xl font-bold text-gray-800">Total:</span>
+                      <span className="text-2xl font-bold text-blue-600">${getTotalPrice()}</span>
+                    </div>
+                    <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                      <i className="fas fa-lock mr-2"></i>Proceed to Checkout
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-8 mt-12">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h4 className="text-lg font-bold mb-4">About BookHaven</h4>
+              <p className="text-gray-400">Your trusted online bookstore with thousands of titles across all genres.</p>
+            </div>
+            <div>
+              <h4 className="text-lg font-bold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white">About Us</a></li>
+                <li><a href="#" className="hover:text-white">Contact</a></li>
+                <li><a href="#" className="hover:text-white">FAQs</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-bold mb-4">Categories</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white">Fiction</a></li>
+                <li><a href="#" className="hover:text-white">Non-Fiction</a></li>
+                <li><a href="#" className="hover:text-white">Technology</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-lg font-bold mb-4">Follow Us</h4>
+              <div className="flex space-x-4 text-2xl">
+                <a href="#" className="hover:text-blue-400"><i className="fab fa-facebook"></i></a>
+                <a href="#" className="hover:text-blue-400"><i className="fab fa-twitter"></i></a>
+                <a href="#" className="hover:text-pink-400"><i className="fab fa-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+            <p>© 2026 BookHaven. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
