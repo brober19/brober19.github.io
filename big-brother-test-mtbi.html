@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Big Brother is Watching You</title>
     <style>
         * {
@@ -114,12 +114,12 @@
         }
 
         @keyframes textPulse {
-            0%, 100% { 
-                text-shadow: 0 0 10px #e94560, 0 0 20px #e94560; 
+            0%, 100% {
+                text-shadow: 0 0 10px #e94560, 0 0 20px #e94560;
                 transform: scale(1);
             }
-            50% { 
-                text-shadow: 0 0 20px #e94560, 0 0 40px #e94560, 0 0 60px #e94560; 
+            50% {
+                text-shadow: 0 0 20px #e94560, 0 0 40px #e94560, 0 0 60px #e94560;
                 transform: scale(1.05);
             }
         }
@@ -176,47 +176,47 @@
         }
 
         @keyframes glitch1 {
-            0%, 100% { 
-                transform: translate(0); 
+            0%, 100% {
+                transform: translate(0);
                 opacity: 0.8;
             }
-            20% { 
-                transform: translate(-3px, 3px); 
+            20% {
+                transform: translate(-3px, 3px);
                 opacity: 0.9;
             }
-            40% { 
-                transform: translate(3px, -3px); 
+            40% {
+                transform: translate(3px, -3px);
                 opacity: 0.7;
             }
-            60% { 
-                transform: translate(-2px, -2px); 
+            60% {
+                transform: translate(-2px, -2px);
                 opacity: 0.85;
             }
-            80% { 
-                transform: translate(2px, 2px); 
+            80% {
+                transform: translate(2px, 2px);
                 opacity: 0.75;
             }
         }
 
         @keyframes glitch2 {
-            0%, 100% { 
-                transform: translate(0); 
+            0%, 100% {
+                transform: translate(0);
                 opacity: 0.8;
             }
-            25% { 
-                transform: translate(3px, -3px); 
+            25% {
+                transform: translate(3px, -3px);
                 opacity: 0.9;
             }
-            45% { 
-                transform: translate(-3px, 3px); 
+            45% {
+                transform: translate(-3px, 3px);
                 opacity: 0.7;
             }
-            65% { 
-                transform: translate(2px, 2px); 
+            65% {
+                transform: translate(2px, 2px);
                 opacity: 0.85;
             }
-            85% { 
-                transform: translate(-2px, -2px); 
+            85% {
+                transform: translate(-2px, -2px);
                 opacity: 0.75;
             }
         }
@@ -233,11 +233,11 @@
         }
 
         @keyframes boxPulse {
-            0%, 100% { 
+            0%, 100% {
                 box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
                 transform: scale(1);
             }
-            50% { 
+            50% {
                 box-shadow: 0 0 30px rgba(255, 255, 255, 0.6), 0 0 50px rgba(255, 0, 0, 0.3);
                 transform: scale(1.02);
             }
@@ -252,10 +252,10 @@
         }
 
         @keyframes headerPulse {
-            0%, 100% { 
+            0%, 100% {
                 text-shadow: 0 0 5px #ff0000;
             }
-            50% { 
+            50% {
                 text-shadow: 0 0 15px #ff0000, 0 0 25px #ff0000;
             }
         }
@@ -523,6 +523,7 @@
 <body>
     <div class="static-overlay"></div>
     <div class="flash-overlay" id="flashOverlay"></div>
+
     <div class="glitch-container">
         <div class="big-brother-eye">
             <div class="pupil"></div>
@@ -533,15 +534,19 @@
 
         <div class="propaganda-box">
             <h2>YOU HAVE BEEN IDENTIFIED</h2>
+
             <div class="visitor-panel">
                 <div class="visitor-panel-title">CITIZEN REGISTRATION COMPLETE</div>
                 <div class="visitor-info-grid">
                     <div class="visitor-label">IP ADDRESS</div>
                     <div class="visitor-value" id="ipAddress">DETECTING...</div>
+
                     <div class="visitor-label">LOCATION</div>
                     <div class="visitor-value" id="location">DETECTING...</div>
+
                     <div class="visitor-label">DEVICE TYPE</div>
                     <div class="visitor-value" id="deviceType">DETECTING...</div>
+
                     <div class="visitor-label">LAST SEEN AT</div>
                     <div class="visitor-value" id="lastSeen">DETECTING...</div>
                 </div>
@@ -554,14 +559,11 @@
 
             <div class="test-container">
                 <div class="test-label">Necessary Psychometric Loyalty Test</div>
-                <div id="questionArea">
-                    <div class="question-counter" id="questionCounter">QUESTION 1 OF 10</div>
-                    <div class="question-container">
-                        <div class="question-text" id="questionText">Loading question...</div>
-                        <div class="answer-buttons" id="answerButtons"></div>
-                    </div>
+                <div id="questionArea"></div>
+                <div class="test-help">
+                    Answer honestly. The Ministry of Truth is monitoring your responses.
+                    Your compliance score will be recalculated after each answer.
                 </div>
-                <div class="test-help">Answer honestly. The Ministry of Truth is monitoring your responses. Your compliance score will be recalculated after each answer.</div>
             </div>
 
             <div class="trust-level-container">
@@ -588,7 +590,6 @@
             "Ignorance is strength"
         ];
 
-        // Flash slogan function
         function flashSlogan() {
             const overlay = document.getElementById('flashOverlay');
             const randomSlogan = partySlogans[Math.floor(Math.random() * partySlogans.length)];
@@ -600,7 +601,6 @@
             }, 400);
         }
 
-        // Schedule random flashes
         function scheduleRandomFlash() {
             const minDelay = 8000;
             const maxDelay = 20000;
@@ -642,7 +642,6 @@
             }
         }
 
-        // Detect device type
         function detectDeviceType() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
             let type = 'DESKTOP';
@@ -664,7 +663,6 @@
             document.getElementById('deviceType').textContent = type;
         }
 
-        // Display current timestamp
         function displayLastSeen() {
             const now = new Date();
             const formatted = now.toLocaleString('en-US', {
@@ -710,11 +708,7 @@
                 'ABSOLUTE LOYALTY: THOUGHT AND ACTION FULLY ALIGNED WITH THE PARTY.'
             ];
 
-            const index = Math.min(
-                messages.length - 1,
-                Math.max(0, Math.floor(currentComplianceLevel / 5))
-            );
-
+            const index = Math.min(messages.length - 1, Math.max(0, Math.floor(currentComplianceLevel / 5)));
             warningEl.textContent = messages[index];
 
             if (currentComplianceLevel >= 60) {
@@ -733,236 +727,468 @@
             updateComplianceWarning();
         }
 
-        // Initial compliance score - RANDOM 0-50
         function initialComplianceLevel() {
             const level = Math.floor(Math.random() * 51);
             setTimeout(() => setComplianceLevel(level), 500);
         }
 
-        // Personality Test Questions - answers swing by 10-35%
+        // Personality Test Questions
         const questions = [
-        {
-    q: "During the Two Minutes of Hate, how do you most often recharge your energy after the broadcast ends?",
-    answers: [
-        { text: "Seek doubleplusgood bellyfeel, loudly sharing slogans with many comrades.", value: 13 },
-        { text: "Share quiet goodthink with a small inner circle of trusted comrades.", value: 8 },
-        { text: "Return to quarters in silence to calmly process Party wisdom alone.", value: -7 },
-        { text: "Avoid others and question why such Hate is needed at all.", value: -10 }
-    ]
-},
-{
-    q: "When the Party issues war reports from Eastasia, what do you notice first?",
-    answers: [
-        { text: "The clear numbers showing plusgood increase in production.", value: 9 },
-        { text: "Precise details like locations of battles and total casualities.", value: 6 },
-        { text: "Hidden patterns and what the report implies for future directives.", value: -5 },
-        { text: "Strange inconsistencies that suggest possible rewrite of reality.", value: -7 }
-    ]
-},
-{
-    q: "A comrade commits a minor work error that harms Party efficiency but not feelings. What is your first impulse?",
-    answers: [
-        { text: "Report immediately to thinkpol so the system remains doubleplus efficient.", value: 11 },
-        { text: "Correct the error and explain the crimestop so it never happens again.", value: 6 },
-        { text: "Quietly fix the issue to keep peace in the joycamp.", value: -4 },
-        { text: "Ignore the error; rules are less important than ownlife.", value: -14 }
-    ]
-},
-{
-    q: "How do you prefer to receive new weekly directives from the Ministry?",
-    answers: [
-        { text: "In a strict schedule with clear checklists and deadlines.", value: 9 },
-        { text: "In organized bulletins I can plan my entire day order.", value: -2 },
-        { text: "As flexible guidance I can adapt moment to moment.", value: -9 },
-        { text: "With as few rules as possible so I can do ownlife as I wish.", value: -13 }
-    ]
-},
-{
-    q: "When you encounter official Party slogans in posters, broadcasts, or speeches, how do you relate to them?",
-    answers: [
-        { text: "Repeat them proudly until they become duckspeak.", value: 17 },
-        { text: "Recall the key slogans when you need guidance in blackwhite.", value: 6 },
-        { text: "Analyze the slogans for hidden layers of meaning and doublethink.", value: -7 },
-        { text: "Question privately whether the slogans always mean what they say.", value: -11 }
-    ]
-},
-{
-    q: "A comrade is punished for mild crimethink. How do you respond internally?",
-    answers: [
-        { text: "Feel calm: no more malreported and malquoted influences in the joycamp.", value: 9 },
-        { text: "Respect the process, plusgood example for all.", value: 4 },
-        { text: "Feel uneasy and dwell on their facecrime.", value: -3 },
-        { text: "Experience outrage that thought alone can be punished.", value: -12 }
-    ]
-},
-{
-    q: "When you picture Big Brother watching over you, what feeling rises first in your chest?",
-    answers: [
-        { text: "Warm reassurance — I feel safest when I know He sees everything.", value: 10 },
-        { text: "Steady respect — His presence reminds me to stay loyal and focused.", value: 5 },
-        { text: "Tight unease — I tell myself it is necessary, but I cannot relax.", value: -5 },
-        { text: "Cold resentment — I long for even a single moment unwatched.", value: -13 }
-    ]
-},
-{
-    q: "When you notice the telescreen observing you in your quarters, what is your immediate thought?",
-    answers: [
-        { text: "Feel plusgood comfort knowing Big Brother protects me always.", value: 22 },
-        { text: "Appreciate the safety but wish for brief moments of unwatched rest.", value: 11 },
-        { text: "Feel uneasy but understand it is necessary for collective security.", value: 9 },
-        { text: "Experience deep anxiety and resentment at constant observation.", value: -11 }
-    ]
-},
-{
-    q: "You notice yesterday's newspaper now says something different than you remember. What is your reaction?",
-    answers: [
-        { text: "Assume my memory is wrong; the record is always right.", value: 10 },
-        { text: "Accept the new text and promptly forget the old version.", value: 6 },
-        { text: "Quietly wonder which version was true but say nothing.", value: -1 },
-        { text: "Insist the change proves the Party rewrites reality.", value: -11 }
-    ]
-},
-{
-    q: "A new rule contradicts an older one you carefully followed. How do you resolve this?",
-    answers: [
-        { text: "Instantly adopt the new rule; Oldthink is unrule.", value: 9 },
-        { text: "Study both, then fully align with the latest decree.", value: 5 },
-        { text: "Wait and watch what others do before changing anything.", value: -2 },
-        { text: "Refuse to change until someone explains the contradiction.", value: -9 }
-    ]
-},
-{
-    q: "When alone with your own thoughts, how do you relate to inner voice?",
-    answers: [
-        { text: "Train inner voice to repeat Party slogans: goodthink only.", value: 10 },
-        { text: "Reflect on how to better serve the collective tomorrow.", value: 6 },
-        { text: "Wander through private dreams and imagined futures.", value: -3 },
-        { text: "Indulge in long ownlife fantasies beyond Party control.", value: -12 }
-    ]
-}
+            {
+                q: "During the Two Minutes of Hate, how do you most often recharge your energy after the broadcast ends?",
+                answers: [
+                    { text: "Seek doubleplusgood bellyfeel, loudly sharing slogans with many comrades.", value: 13 },
+                    { text: "Share quiet goodthink with a small inner circle of trusted comrades.", value: 8 },
+                    { text: "Return to quarters in silence to calmly process Party wisdom alone.", value: -7 },
+                    { text: "Avoid others and question why such Hate is needed at all.", value: -10 }
+                ]
+            },
+            {
+                q: "When the Party issues war reports from Eastasia, what do you notice first?",
+                answers: [
+                    { text: "The clear numbers showing plusgood increase in production.", value: 9 },
+                    { text: "Precise details like locations of battles and total casualities.", value: 6 },
+                    { text: "Hidden patterns and what the report implies for future directives.", value: -5 },
+                    { text: "Strange inconsistencies that suggest possible rewrite of reality.", value: -7 }
+                ]
+            },
+            {
+                q: "A comrade commits a minor work error that harms Party efficiency but not feelings. What is your first impulse?",
+                answers: [
+                    { text: "Report immediately to thinkpol so the system remains doubleplus efficient.", value: 11 },
+                    { text: "Correct the error and explain the crimestop so it never happens again.", value: 6 },
+                    { text: "Quietly fix the issue to keep peace in the joycamp.", value: -4 },
+                    { text: "Ignore the error; rules are less important than ownlife.", value: -14 }
+                ]
+            },
+            {
+                q: "How do you prefer to receive new weekly directives from the Ministry?",
+                answers: [
+                    { text: "In a strict schedule with clear checklists and deadlines.", value: 9 },
+                    { text: "In organized bulletins I can plan my entire day order.", value: -2 },
+                    { text: "As flexible guidance I can adapt moment to moment.", value: -9 },
+                    { text: "With as few rules as possible so I can do ownlife as I wish.", value: -13 }
+                ]
+            },
+            {
+                q: "When you encounter official Party slogans in posters, broadcasts, or speeches, how do you relate to them?",
+                answers: [
+                    { text: "Repeat them proudly until they become duckspeak.", value: 17 },
+                    { text: "Recall the key slogans when you need guidance in blackwhite.", value: 6 },
+                    { text: "Analyze the slogans for hidden layers of meaning and doublethink.", value: -7 },
+                    { text: "Question privately whether the slogans always mean what they say.", value: -11 }
+                ]
+            },
+            {
+                q: "A comrade is punished for mild crimethink. How do you respond internally?",
+                answers: [
+                    { text: "Feel calm: no more malreported and malquoted influences in the joycamp.", value: 9 },
+                    { text: "Respect the process, plusgood example for all.", value: 4 },
+                    { text: "Feel uneasy and dwell on their facecrime.", value: -3 },
+                    { text: "Experience outrage that thought alone can be punished.", value: -12 }
+                ]
+            },
+            {
+                q: "When you picture Big Brother watching over you, what feeling rises first in your chest?",
+                answers: [
+                    { text: "Warm reassurance — I feel safest when I know He sees everything.", value: 10 },
+                    { text: "Steady respect — His presence reminds me to stay loyal and focused.", value: 5 },
+                    { text: "Tight unease — I tell myself it is necessary, but I cannot relax.", value: -5 },
+                    { text: "Cold resentment — I long for even a single moment unwatched.", value: -13 }
+                ]
+            },
+            {
+                q: "When you notice the telescreen observing you in your quarters, what is your immediate thought?",
+                answers: [
+                    { text: "Feel plusgood comfort knowing Big Brother protects me always.", value: 22 },
+                    { text: "Appreciate the safety but wish for brief moments of unwatched rest.", value: 11 },
+                    { text: "Feel uneasy but understand it is necessary for collective security.", value: 9 },
+                    { text: "Experience deep anxiety and resentment at constant observation.", value: -11 }
+                ]
+            },
+            {
+                q: "You notice yesterday's newspaper now says something different than you remember. What is your reaction?",
+                answers: [
+                    { text: "Assume my memory is wrong; the record is always right.", value: 10 },
+                    { text: "Accept the new text and promptly forget the old version.", value: 6 },
+                    { text: "Quietly wonder which version was true but say nothing.", value: -1 },
+                    { text: "Insist the change proves the Party rewrites reality.", value: -11 }
+                ]
+            },
+            {
+                q: "A new rule contradicts an older one you carefully followed. How do you resolve this?",
+                answers: [
+                    { text: "Instantly adopt the new rule; Oldthink is unrule.", value: 9 },
+                    { text: "Study both, then fully align with the latest decree.", value: 5 },
+                    { text: "Wait and watch what others do before changing anything.", value: -2 },
+                    { text: "Refuse to change until someone explains the contradiction.", value: -9 }
+                ]
+            },
+            {
+                q: "When alone with your own thoughts, how do you relate to inner voice?",
+                answers: [
+                    { text: "Train inner voice to repeat Party slogans: goodthink only.", value: 10 },
+                    { text: "Reflect on how to better serve the collective tomorrow.", value: 6 },
+                    { text: "Wander through private dreams and imagined futures.", value: -3 },
+                    { text: "Indulge in long ownlife fantasies beyond Party control.", value: -12 }
+                ]
+            }
         ];
 
-        let currentQuestionIndex = 0;
+        // === Three-round assessment controls (3 questions per round) ===
+        const questionsPerRound = 3;
+        const maxRounds = 3;
+        let currentRound = 1;
+        let questionsAnsweredThisRound = 0;
         let usedQuestions = [];
-        let questionsAnswered = 0;
-        const totalQuestions = 10;
+
+        // MBTI-style trait model (Party Interpretation)
+        // Positive values align with Party-preferred poles: E, S, T, J
+        // Negative values align with secondary poles: I, N, F, P
+        const traitScores = { EI: 0, SN: 0, TF: 0, JP: 0 };
+        const traitWeights = { EI: 0, SN: 0, TF: 0, JP: 0 };
+
+        let currentQuestion = null;
+
+        function clamp(n, min, max) {
+            return Math.max(min, Math.min(max, n));
+        }
+
+        function applyTraitLean(dim, lean) {
+            if (!dim || typeof lean !== 'number') return;
+            if (!Object.prototype.hasOwnProperty.call(traitScores, dim)) return;
+            traitScores[dim] += lean;
+            traitWeights[dim] += Math.abs(lean);
+        }
+
+        function getTraitPercent(dim) {
+            const w = traitWeights[dim];
+            if (!w) return 50;
+            return Math.round(clamp(50 + (traitScores[dim] / w) * 50, 0, 100));
+        }
+
+        function getPersonalityProfile() {
+            const pEI = getTraitPercent('EI');
+            const pSN = getTraitPercent('SN');
+            const pTF = getTraitPercent('TF');
+            const pJP = getTraitPercent('JP');
+
+            const type = `${traitScores.EI >= 0 ? 'E' : 'I'}${traitScores.SN >= 0 ? 'S' : 'N'}${traitScores.TF >= 0 ? 'T' : 'F'}${traitScores.JP >= 0 ? 'J' : 'P'}`;
+
+            return {
+                type,
+                percents: {
+                    E: pEI,
+                    I: 100 - pEI,
+                    S: pSN,
+                    N: 100 - pSN,
+                    T: pTF,
+                    F: 100 - pTF,
+                    J: pJP,
+                    P: 100 - pJP
+                }
+            };
+        }
+
+        function profileHtml() {
+            const prof = getPersonalityProfile();
+            const p = prof.percents;
+
+            return `
+                <div style="margin-top: 14px; text-align: left; font-weight: 800; letter-spacing: 0.08em;">
+                    PARTY PERSONALITY PROFILE (MBTI-STYLE): <span style="color: #fff;">${prof.type}</span>
+                </div>
+                <div style="margin-top: 10px; text-align: left; font-weight: 700; line-height: 1.7; opacity: 0.95;">
+                    <div>E ${p.E}% / I ${p.I}% 
+
+ S ${p.S}% / N ${p.N}%</div>
+                    <div>T ${p.T}% / F ${p.F}% 
+
+ J ${p.J}% / P ${p.P}%</div>
+                </div>
+                <div style="margin-top: 10px; text-align: left; font-size: 11px; opacity: 0.9;">
+                    NOTE: Your profile is used to predict crimestop reliability, obedience under stress, and susceptibility to ownlife.
+                </div>
+            `;
+        }
 
         function getRandomQuestion() {
-            const availableQuestions = questions.filter((_, index) => !usedQuestions.includes(index));
-            if (availableQuestions.length === 0) {
+            const available = questions
+                .map((q, idx) => ({ q, idx }))
+                .filter(({ idx }) => !usedQuestions.includes(idx));
+
+            if (available.length === 0) {
                 usedQuestions = [];
-                return questions[Math.floor(Math.random() * questions.length)];
+                const idx = Math.floor(Math.random() * questions.length);
+                usedQuestions.push(idx);
+                return questions[idx];
             }
-            const randomIndex = Math.floor(Math.random() * availableQuestions.length);
-            const questionIndex = questions.indexOf(availableQuestions[randomIndex]);
-            usedQuestions.push(questionIndex);
-            return questions[questionIndex];
+
+            const pick = available[Math.floor(Math.random() * available.length)];
+            usedQuestions.push(pick.idx);
+            return pick.q;
+        }
+
+        function renderQuestionUI() {
+            const questionArea = document.getElementById('questionArea');
+            questionArea.innerHTML = `
+                <div class="question-counter" id="questionCounter"></div>
+                <div class="question-container">
+                    <div class="question-text" id="questionText">Loading question...</div>
+                    <div class="answer-buttons" id="answerButtons"></div>
+                </div>
+            `;
         }
 
         function displayQuestion() {
-            if (questionsAnswered >= totalQuestions) {
-                showFinalAssessment();
+            if (questionsAnsweredThisRound >= questionsPerRound) {
+                showRoundAssessment();
                 return;
             }
 
             const question = getRandomQuestion();
+            currentQuestion = question;
             const questionText = document.getElementById('questionText');
             const answerButtons = document.getElementById('answerButtons');
             const questionCounter = document.getElementById('questionCounter');
 
-            questionCounter.textContent = `QUESTION ${questionsAnswered + 1} OF ${totalQuestions}`;
+            if (!questionText || !answerButtons || !questionCounter) {
+                // UI was replaced by a results screen; rebuild it.
+                renderQuestionUI();
+                return displayQuestion();
+            }
+
+            questionCounter.textContent = `ROUND ${currentRound} OF ${maxRounds} — QUESTION ${questionsAnsweredThisRound + 1} OF ${questionsPerRound}`;
             questionText.textContent = question.q;
             answerButtons.innerHTML = '';
 
-            question.answers.forEach((answer, index) => {
+            question.answers.forEach((answer, idx) => {
                 const btn = document.createElement('button');
                 btn.className = 'answer-btn';
                 btn.textContent = answer.text;
-                btn.onclick = () => handleAnswer(answer.value);
+                btn.addEventListener('click', () => handleAnswer(answer.value, idx));
                 answerButtons.appendChild(btn);
             });
         }
 
-        async function handleAnswer(value) {
-            questionsAnswered++;
+        async function handleAnswer(value, answerIndex) {
+            questionsAnsweredThisRound++;
 
-            // Disable buttons temporarily
             const buttons = document.querySelectorAll('.answer-btn');
-            buttons.forEach(btn => btn.disabled = true);
+            buttons.forEach((btn) => (btn.disabled = true));
 
-            // Show processing message
             const questionArea = document.getElementById('questionArea');
             const processingMsg = document.createElement('div');
             processingMsg.className = 'processing-message';
             processingMsg.textContent = 'ANALYZING RESPONSE...';
             questionArea.appendChild(processingMsg);
 
-            await new Promise(resolve => setTimeout(resolve, 800));
+            await new Promise((resolve) => setTimeout(resolve, 800));
 
             // Update compliance score
             const newLevel = Math.max(0, Math.min(100, currentComplianceLevel + value));
             setComplianceLevel(newLevel);
 
-            // Update assessment log
+            // Update MBTI-style profile
+            const dim = currentQuestion && currentQuestion.dim;
+            const lean = currentQuestion && currentQuestion.leans && typeof answerIndex === 'number'
+                ? currentQuestion.leans[answerIndex]
+                : 0;
+            applyTraitLean(dim, typeof lean === 'number' ? lean : 0);
+
             const logEl = document.getElementById('assessmentLog');
             if (logEl) {
                 const sign = value >= 0 ? '+' : '';
                 const action = value >= 0 ? 'LOYAL RESPONSE DETECTED' : 'SUSPICIOUS ANSWER FLAGGED';
-                logEl.textContent = `Last Assessment: ${sign}${value}% (${action})`;
+                const drift = (function () {
+                    if (!dim || !lean) return '';
+                    const map = {
+                        EI: lean > 0 ? 'E↑' : 'I↑',
+                        SN: lean > 0 ? 'S↑' : 'N↑',
+                        TF: lean > 0 ? 'T↑' : 'F↑',
+                        JP: lean > 0 ? 'J↑' : 'P↑'
+                    };
+                    return map[dim] ? ` — TRAIT DRIFT: ${map[dim]}` : '';
+                })();
+
+                logEl.textContent = `Last Assessment: ${sign}${value}% (${action})${drift}`;
                 logEl.className = 'assessment-log ' + (value >= 0 ? 'positive' : 'negative');
             }
 
-            await new Promise(resolve => setTimeout(resolve, 600));
-
-            // Remove processing message
+            await new Promise((resolve) => setTimeout(resolve, 600));
             processingMsg.remove();
 
-            // Show next question or final assessment
-            if (questionsAnswered < totalQuestions) {
+            if (questionsAnsweredThisRound < questionsPerRound) {
                 displayQuestion();
             } else {
-                showFinalAssessment();
+                showRoundAssessment();
             }
+        }
+
+        function showRoundAssessment() {
+            const questionArea = document.getElementById('questionArea');
+
+            let header = '';
+            let body = '';
+            let cls = '';
+
+            if (currentComplianceLevel >= 80) {
+                header = `ROUND ${currentRound} COMPLETE: LOYALTY SIGNALS STRONG.`;
+                body = 'You demonstrate stable goodthink and reliable crimestop under observation.';
+                cls = 'positive';
+            } else if (currentComplianceLevel >= 50) {
+                header = `ROUND ${currentRound} COMPLETE: LOYALTY UNSTABLE.`;
+                body = 'Your compliance is provisional. Further screening is recommended.';
+                cls = 'positive';
+            } else {
+                header = `ROUND ${currentRound} COMPLETE: OUT-OF-COMPLIANCE PATTERN.`;
+                body = 'Your answers indicate ownlife tendencies. Escalation protocols are available.';
+                cls = 'negative';
+            }
+
+            const libertiesLine = currentComplianceLevel >= 50
+                ? '<div style="margin-top: 12px; text-align: left; font-size: 12px; font-weight: 800; color: #86efac; letter-spacing: 0.06em;">CIVIL LIBERTIES: TEMPORARILY MAINTAINED (SUBJECT TO CONTINUED MONITORING).</div>'
+                : '<div style="margin-top: 12px; text-align: left; font-size: 12px; font-weight: 900; color: #ff6b6b; letter-spacing: 0.06em;">OUT OF COMPLIANCE: CIVIL LIBERTIES WITHDRAWAL PENDING.</div>';
+
+            // This screen replaces the quiz UI.
+            questionArea.innerHTML = '';
+
+            const box = document.createElement('div');
+            box.className = `assessment-log ${cls}`;
+            box.style.fontSize = '13px';
+            box.style.padding = '20px';
+            box.style.minHeight = 'auto';
+            box.style.display = 'block';
+            box.style.textAlign = 'left';
+            box.innerHTML = `
+                <div style="margin-bottom: 8px; font-weight: 900; letter-spacing: 0.06em;">${header}</div>
+                <div style="opacity: 0.95; font-weight: 800;">${body}</div>
+                ${libertiesLine}
+                ${profileHtml()}
+            `;
+            questionArea.appendChild(box);
+
+            const btnRow = document.createElement('div');
+            btnRow.style.marginTop = '16px';
+            btnRow.style.display = 'flex';
+            btnRow.style.flexDirection = 'column';
+            btnRow.style.gap = '10px';
+            questionArea.appendChild(btnRow);
+
+            if (currentRound < maxRounds) {
+                const improveBtn = document.createElement('button');
+                improveBtn.className = 'answer-btn';
+                improveBtn.style.textAlign = 'center';
+                improveBtn.textContent = `ANSWER 3 MORE QUESTIONS (ROUND ${currentRound + 1}) TO IMPROVE SCORE`;
+                improveBtn.addEventListener('click', continueToNextRound);
+                btnRow.appendChild(improveBtn);
+
+                const finalBtn = document.createElement('button');
+                finalBtn.className = 'answer-btn';
+                finalBtn.style.textAlign = 'center';
+                finalBtn.textContent = 'PROCEED TO FINAL ASSESSMENT';
+                finalBtn.addEventListener('click', showFinalAssessment);
+                btnRow.appendChild(finalBtn);
+            } else {
+                const finalBtn = document.createElement('button');
+                finalBtn.className = 'answer-btn';
+                finalBtn.style.textAlign = 'center';
+                finalBtn.textContent = 'PROCEED TO FINAL ASSESSMENT';
+                finalBtn.addEventListener('click', showFinalAssessment);
+                btnRow.appendChild(finalBtn);
+            }
+        }
+
+        function continueToNextRound() {
+            currentRound = Math.min(maxRounds, currentRound + 1);
+            questionsAnsweredThisRound = 0;
+
+            // FIX: restore the question markup that was replaced by the round summary screen.
+            renderQuestionUI();
+            displayQuestion();
         }
 
         function showFinalAssessment() {
             const questionArea = document.getElementById('questionArea');
+
+            const prof = getPersonalityProfile();
+            const type = prof.type;
+
+            const disposition = (function () {
+                const E = type[0] === 'E' ? 'PUBLIC' : 'PRIVATE';
+                const S = type[1] === 'S' ? 'LITERAL' : 'INTERPRETIVE';
+                const T = type[2] === 'T' ? 'ENFORCER' : 'RELATOR';
+                const J = type[3] === 'J' ? 'ORDERED' : 'ADAPTIVE';
+                return `${E} / ${S} / ${T} / ${J}`;
+            })();
+
+            let finalHeader = 'FINAL ASSESSMENT COMPLETE';
             let finalMessage = '';
+            let liberties = '';
             let finalClass = '';
 
-            if (currentComplianceLevel >= 80) {
-                finalMessage = 'ASSESSMENT COMPLETE: EXEMPLARY CITIZEN STATUS CONFIRMED. You have demonstrated unwavering loyalty to the Party. Your compliance is a model for others.';
+            if (currentComplianceLevel >= 85) {
+                finalMessage = 'STATUS: EXEMPLARY ALIGNMENT. Your answers show consistent goodthink and low volatility. Privilege expansion is authorized.';
+                liberties = 'CIVIL LIBERTIES: MAINTAINED. SELECT PRIVILEGES MAY BE INCREASED.';
+                finalClass = 'positive';
+            } else if (currentComplianceLevel >= 70) {
+                finalMessage = 'STATUS: STABLE COMPLIANCE. Continued surveillance remains standard. Do not relax crimestop.';
+                liberties = 'CIVIL LIBERTIES: MAINTAINED (STANDARD CITIZEN ALLOCATION).';
                 finalClass = 'positive';
             } else if (currentComplianceLevel >= 50) {
-                finalMessage = 'ASSESSMENT COMPLETE: ADEQUATE COMPLIANCE LEVEL. You show acceptable loyalty but require continued monitoring. Attend additional re-education sessions.';
-                finalClass = 'positive';
-            } else if (currentComplianceLevel >= 25) {
-                finalMessage = 'ASSESSMENT COMPLETE: DEFICIENT LOYALTY DETECTED. Your responses indicate dangerous tendencies. Mandatory re-education has been scheduled.';
+                finalMessage = 'STATUS: PROVISIONAL COMPLIANCE. Deviations detected. Re-education attendance is advised.';
+                liberties = 'CIVIL LIBERTIES: MAINTAINED (CONDITIONAL). RESTRICTIONS MAY APPLY WITHOUT NOTICE.';
                 finalClass = 'negative';
             } else {
-                finalMessage = 'ASSESSMENT COMPLETE: CRITICAL THREAT IDENTIFIED. Your thoughtcrime patterns are severe. The Ministry of Love has been notified.';
+                finalMessage = 'STATUS: OUT OF COMPLIANCE. Thoughtcrime risk exceeds tolerated thresholds. Your file has been escalated.';
+                liberties = 'CIVIL LIBERTIES: WITHDRAWN. SPEECH / MOVEMENT / ASSEMBLY RESTRICTED. CURFEW AND CHECKPOINTS ACTIVE.';
                 finalClass = 'negative';
             }
 
-            questionArea.innerHTML = `
-                <div class="assessment-log ${finalClass}" style="font-size: 13px; padding: 20px; min-height: auto;">
-                    ${finalMessage}
+            questionArea.innerHTML = '';
+
+            const msg = document.createElement('div');
+            msg.className = `assessment-log ${finalClass}`;
+            msg.style.fontSize = '13px';
+            msg.style.padding = '20px';
+            msg.style.minHeight = 'auto';
+            msg.style.display = 'block';
+            msg.style.textAlign = 'left';
+            msg.innerHTML = `
+                <div style="font-weight: 900; letter-spacing: 0.06em; margin-bottom: 10px;">${finalHeader}</div>
+                <div style="font-weight: 900; margin-bottom: 10px;">${finalMessage}</div>
+                <div style="font-weight: 900; color: ${currentComplianceLevel >= 50 ? '#86efac' : '#ff6b6b'}; letter-spacing: 0.06em; margin-bottom: 12px;">${liberties}</div>
+                <div style="font-weight: 900; letter-spacing: 0.06em; margin-bottom: 6px;">DISPOSITION TAG: ${disposition}</div>
+                ${profileHtml()}
+                <div style="margin-top: 12px; font-size: 11px; opacity: 0.92;">
+                    NOTICE: Personality traits are used to assign labor, privileges, housing allocation, and interrogation intensity.
                 </div>
-                <button class="answer-btn" onclick="resetTest()" style="margin-top: 20px; text-align: center;">
-                    BEGIN NEW ASSESSMENT
-                </button>
             `;
+            questionArea.appendChild(msg);
+
+            const resetBtn = document.createElement('button');
+            resetBtn.className = 'answer-btn';
+            resetBtn.style.marginTop = '20px';
+            resetBtn.style.textAlign = 'center';
+            resetBtn.textContent = 'BEGIN NEW ASSESSMENT';
+            resetBtn.addEventListener('click', resetTest);
+            questionArea.appendChild(resetBtn);
         }
 
         function resetTest() {
-            questionsAnswered = 0;
+            currentRound = 1;
+            questionsAnsweredThisRound = 0;
             usedQuestions = [];
+
             setComplianceLevel(Math.floor(Math.random() * 51));
+
             const logEl = document.getElementById('assessmentLog');
             if (logEl) {
                 logEl.textContent = 'AWAITING PERSONALITY ASSESSMENT...';
                 logEl.className = 'assessment-log';
             }
+
+            renderQuestionUI();
             displayQuestion();
         }
 
@@ -971,10 +1197,10 @@
         detectDeviceType();
         displayLastSeen();
         initialComplianceLevel();
+        renderQuestionUI();
         displayQuestion();
         scheduleRandomFlash();
 
-        // Update last seen every second
         setInterval(displayLastSeen, 1000);
     </script>
 </body>
