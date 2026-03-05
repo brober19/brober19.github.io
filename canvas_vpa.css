@@ -1,0 +1,336 @@
+/*
+  Yavapai College — Division III: Visual & Performing Arts (VPA)
+  Sub-account Theme CSS
+  Palette: #FFC72C (gold), #006747 (green), black/white
+
+  Notes:
+  - Keep selectors resilient; Canvas DOM can change.
+  - Preserve accessibility: visible focus, adequate contrast, reduced motion.
+*/
+
+:root {
+  --vpa-gold: #FFC72C;
+  --vpa-green: #006747;
+  --vpa-black: #000000;
+  --vpa-white: #ffffff;
+
+  --vpa-ink: #111111;
+  --vpa-muted: #4b5563; /* neutral gray */
+  --vpa-surface: #ffffff;
+  --vpa-surface-2: #f7f7f8;
+
+  --vpa-radius: 14px;
+  --vpa-radius-sm: 10px;
+  --vpa-shadow: 0 12px 28px rgba(0,0,0,.12);
+  --vpa-shadow-sm: 0 6px 16px rgba(0,0,0,.10);
+
+  --vpa-focus: 2px solid var(--vpa-gold);
+}
+
+/* Prefer system font stack; Canvas provides its own but we avoid heavy overrides */
+body {
+  color: var(--vpa-ink);
+}
+
+/* Visible, brand-consistent focus without removing outlines */
+:focus-visible {
+  outline: var(--vpa-focus);
+  outline-offset: 2px;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Forced colors support (Windows High Contrast Mode) */
+@media (forced-colors: active) {
+  .vpa-hub__drawer,
+  .vpa-hub__button {
+    forced-color-adjust: auto;
+    border: 1px solid CanvasText;
+  }
+}
+
+/*
+  1) Header “Spotlight” ribbon
+  Targets common Canvas header containers.
+*/
+.ic-app-header,
+#application.ic-app {
+  position: relative;
+}
+
+.ic-app-header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--vpa-green) 0%, var(--vpa-green) 55%, var(--vpa-gold) 55%, var(--vpa-gold) 100%);
+  z-index: 2;
+}
+
+.ic-app-header::after {
+  /* subtle stage-light pattern */
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  right: 0;
+  height: 28px;
+  z-index: 1;
+  opacity: .12;
+  background:
+    radial-gradient(circle at 20% 60%, var(--vpa-gold) 0 8px, transparent 9px),
+    radial-gradient(circle at 55% 40%, var(--vpa-gold) 0 6px, transparent 7px),
+    radial-gradient(circle at 82% 65%, var(--vpa-gold) 0 7px, transparent 8px),
+    linear-gradient(90deg, var(--vpa-black), var(--vpa-black));
+}
+
+/*
+  2) Links & buttons
+  Aim for subtle brand accents without breaking Canvas UI.
+*/
+a {
+  color: var(--vpa-green);
+}
+a:hover {
+  color: #004f35; /* darker green */
+}
+
+a:focus-visible {
+  border-radius: 6px;
+}
+
+/* Common Canvas button styles (names vary across releases) */
+.Button,
+.btn,
+.ic-Button,
+button[type="submit"],
+input[type="submit"] {
+  border-radius: 999px;
+}
+
+/* Primary actions (best-effort; avoid overly broad changes) */
+.Button--primary,
+.btn-primary,
+.ic-Button--primary {
+  background: var(--vpa-green) !important;
+  border-color: var(--vpa-green) !important;
+}
+
+.Button--primary:hover,
+.btn-primary:hover,
+.ic-Button--primary:hover {
+  background: #004f35 !important;
+  border-color: #004f35 !important;
+}
+
+/*
+  3) Dashboard Course Cards (high-impact, low risk)
+*/
+.ic-DashboardCard {
+  border-radius: var(--vpa-radius);
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: none;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.ic-DashboardCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--vpa-shadow-sm);
+  border-color: rgba(0,103,71,.25);
+}
+
+/* Add a “spotlight” accent on the left edge */
+.ic-DashboardCard::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: linear-gradient(180deg, var(--vpa-gold), var(--vpa-green));
+  border-top-left-radius: var(--vpa-radius);
+  border-bottom-left-radius: var(--vpa-radius);
+}
+
+/* Course card title */
+.ic-DashboardCard__header-title {
+  letter-spacing: .2px;
+}
+
+/* Discipline tag injected by JS */
+.vpa-discipline-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  width: fit-content;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255, 199, 44, .18);
+  color: var(--vpa-ink);
+}
+
+.vpa-discipline-tag__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--vpa-green);
+}
+
+/*
+  4) “VPA Hub” drawer UI (injected by JS)
+*/
+.vpa-hub__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(0,0,0,.18);
+  color: var(--vpa-white);
+  font-weight: 800;
+  letter-spacing: .3px;
+  cursor: pointer;
+}
+
+.vpa-hub__button:hover {
+  background: rgba(0,0,0,.28);
+}
+
+.vpa-hub__button-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--vpa-gold);
+  box-shadow: 0 0 0 4px rgba(255,199,44,.18);
+}
+
+.vpa-hub__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.46);
+  z-index: 9998;
+}
+
+.vpa-hub__drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: min(420px, 92vw);
+  background: linear-gradient(180deg, #0b0b0b 0%, #131313 60%, #0b0b0b 100%);
+  color: var(--vpa-white);
+  z-index: 9999;
+  box-shadow: var(--vpa-shadow);
+  border-left: 1px solid rgba(255,255,255,.10);
+  display: flex;
+  flex-direction: column;
+}
+
+.vpa-hub__header {
+  padding: 18px 18px 12px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,199,44,.22), transparent 55%),
+    radial-gradient(circle at 85% 15%, rgba(0,103,71,.22), transparent 55%);
+}
+
+.vpa-hub__title {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: .6px;
+  margin: 0;
+}
+
+.vpa-hub__subtitle {
+  margin: 6px 0 0 0;
+  color: rgba(255,255,255,.78);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.vpa-hub__content {
+  padding: 14px 18px 18px 18px;
+  overflow: auto;
+}
+
+.vpa-hub__section {
+  margin-top: 14px;
+}
+
+.vpa-hub__section-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,.70);
+  margin: 0 0 10px 0;
+}
+
+.vpa-hub__linklist {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.vpa-hub__link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 12px;
+  border-radius: var(--vpa-radius-sm);
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: var(--vpa-white) !important;
+  text-decoration: none;
+}
+
+.vpa-hub__link:hover {
+  border-color: rgba(255,199,44,.35);
+  background: rgba(255,199,44,.08);
+}
+
+.vpa-hub__kicker {
+  font-size: 12px;
+  color: rgba(255,255,255,.70);
+}
+
+.vpa-hub__close {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  color: var(--vpa-white);
+  cursor: pointer;
+}
+
+.vpa-hub__close:hover {
+  border-color: rgba(255,199,44,.35);
+}
+
+/* If the drawer is hidden, avoid tab stops */
+.vpa-hidden {
+  display: none !important;
+}
