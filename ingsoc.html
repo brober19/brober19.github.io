@@ -93,132 +93,21 @@
             position: relative;
         }
 
-        .big-brother-eye {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 30px;
-            border: 5px solid #e94560;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle, #e94560 0%, #000 70%);
-            animation: eyePulse 3s infinite;
+        /* Eye C — The Vigil (Lena V.) */
+        .eye-vigil-wrap {
             position: relative;
             z-index: 2;
+            margin: 0 auto 64px;
+            animation: vigilGlow 15.2s ease-in-out infinite;
         }
-
-        @keyframes eyePulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 30px #e94560; }
-            50% { transform: scale(1.1); box-shadow: 0 0 60px #e94560; }
+        @keyframes vigilGlow {
+            0%,100%{ filter: drop-shadow(0 0 10px rgba(170,0,15,.07)) drop-shadow(0 0 24px rgba(140,0,10,.03)); }
+            50%    { filter: drop-shadow(0 0 16px rgba(195,5,25,.10)) drop-shadow(0 0 38px rgba(165,5,15,.04)); }
         }
-
-        @keyframes textPulse {
-            0%, 100% {
-                text-shadow: 0 0 10px #e94560, 0 0 20px #e94560;
-                transform: scale(1);
-            }
-            50% {
-                text-shadow: 0 0 20px #e94560, 0 0 40px #e94560, 0 0 60px #e94560;
-                transform: scale(1.05);
-            }
-        }
-
-        .pupil {
-            width: 80px;
-            height: 80px;
-            background: #000;
-            border-radius: 50%;
-            border: 3px solid #fff;
-        }
-
-        .glitch-text {
-            font-size: 72px;
-            font-weight: bold;
-            text-align: center;
-            position: relative;
-            color: #e94560;
-            z-index: 2;
-            margin-bottom: 50px;
-            font-family: 'Courier New', monospace;
-            animation: textPulse 3s infinite;
-            image-rendering: pixelated;
-        }
-
-        .glitch-text[style*="font-size: 48px;"] {
-            color: #e94560 !important;
-        }
-
-        .glitch-text::before,
-        .glitch-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .glitch-text::before {
-            color: #ff0000;
-            animation: glitch1 0.8s infinite;
-            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-            image-rendering: pixelated;
-            filter: blur(0.5px);
-        }
-
-        .glitch-text::after {
-            color: #000000;
-            animation: glitch2 0.8s infinite;
-            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-            image-rendering: pixelated;
-            filter: blur(0.5px);
-        }
-
-        @keyframes glitch1 {
-            0%, 100% {
-                transform: translate(0);
-                opacity: 0.8;
-            }
-            20% {
-                transform: translate(-3px, 3px);
-                opacity: 0.9;
-            }
-            40% {
-                transform: translate(3px, -3px);
-                opacity: 0.7;
-            }
-            60% {
-                transform: translate(-2px, -2px);
-                opacity: 0.85;
-            }
-            80% {
-                transform: translate(2px, 2px);
-                opacity: 0.75;
-            }
-        }
-
-        @keyframes glitch2 {
-            0%, 100% {
-                transform: translate(0);
-                opacity: 0.8;
-            }
-            25% {
-                transform: translate(3px, -3px);
-                opacity: 0.9;
-            }
-            45% {
-                transform: translate(-3px, 3px);
-                opacity: 0.7;
-            }
-            65% {
-                transform: translate(2px, 2px);
-                opacity: 0.85;
-            }
-            85% {
-                transform: translate(-2px, -2px);
-                opacity: 0.75;
-            }
+        .eye-vigil-svg {
+            width: 480px;
+            height: auto;
+            overflow: visible;
         }
 
         .propaganda-box {
@@ -266,7 +155,7 @@
             background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
             color: #000;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 17px;
             z-index: 2;
             position: relative;
             border-radius: 4px;
@@ -275,7 +164,7 @@
         }
 
         .visitor-panel-title {
-            font-size: 15px;
+            font-size: 18px;
             margin-bottom: 12px;
             letter-spacing: 0.15em;
             text-transform: uppercase;
@@ -294,19 +183,19 @@
         .visitor-label {
             opacity: 0.8;
             text-align: right;
-            font-size: 12px;
+            font-size: 16px;
         }
 
         .visitor-value {
             text-align: left;
-            font-size: 12px;
+            font-size: 16px;
         }
 
         .visitor-status {
             margin-top: 12px;
             padding-top: 12px;
             border-top: 2px solid rgba(0, 0, 0, 0.3);
-            font-size: 11px;
+            font-size: 17px;
             line-height: 1.8;
             letter-spacing: 0.05em;
         }
@@ -321,7 +210,7 @@
             content: "✓";
             margin-right: 8px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 17px;
         }
 
         .trust-level-container {
@@ -334,7 +223,7 @@
         }
 
         .trust-level-label {
-            font-size: 14px;
+            font-size: 17px;
             font-weight: bold;
             margin-bottom: 10px;
             color: #ff0000;
@@ -373,7 +262,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             font-weight: bold;
-            font-size: 13px;
+            font-size: 16px;
             color: #fff;
             text-shadow: 1px 1px 3px #000;
             z-index: 1;
@@ -386,7 +275,7 @@
             background: rgba(255, 0, 0, 0.1);
             border: 1px solid rgba(255, 0, 0, 0.3);
             border-radius: 2px;
-            font-size: 11px;
+            font-size: 16px;
             font-weight: bold;
             color: #ffcccc;
             text-align: center;
@@ -418,7 +307,7 @@
         }
 
         .test-label {
-            font-size: 16px;
+            font-size: 19px;
             font-weight: bold;
             margin-bottom: 15px;
             color: #ff0000;
@@ -431,7 +320,7 @@
         }
 
         .question-text {
-            font-size: 15px;
+            font-size: 18px;
             font-weight: bold;
             color: #fff;
             margin-bottom: 15px;
@@ -440,7 +329,7 @@
         }
 
         .question-counter {
-            font-size: 12px;
+            font-size: 14px;
             color: #ff6b6b;
             margin-bottom: 10px;
             text-align: left;
@@ -458,7 +347,7 @@
             border: 2px solid #ff0000;
             color: #fff;
             font-family: 'Courier New', monospace;
-            font-size: 14px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
@@ -477,7 +366,7 @@
 
         .test-help {
             margin-top: 15px;
-            font-size: 12px;
+            font-size: 14px;
             color: #ffcccc;
             font-style: italic;
             line-height: 1.4;
@@ -487,7 +376,7 @@
             padding: 15px;
             background: rgba(255, 0, 0, 0.1);
             border: 1px solid #ff0000;
-            font-size: 13px;
+            font-size: 16px;
             font-weight: bold;
             color: #ff0000;
             text-align: center;
@@ -495,14 +384,140 @@
             margin-top: 10px;
         }
 
+        /* Ministry Warning Modal */
+        .ministry-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.90);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .ministry-modal-overlay.active {
+            display: flex;
+        }
+        .ministry-modal {
+            background: #0a0a0a;
+            border: 2px solid #ff0000;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.5), inset 0 0 40px rgba(255, 0, 0, 0.04);
+            padding: 44px 40px;
+            max-width: 540px;
+            width: 90%;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            animation: modalAppear 0.2s ease-out;
+        }
+        @keyframes modalAppear {
+            from { opacity: 0; transform: scale(0.96); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+        .ministry-modal-header {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000, 0 0 22px #ff0000;
+            margin-bottom: 22px;
+        }
+        .ministry-modal-compliance {
+            font-size: 34px;
+            font-weight: 900;
+            color: #ff0000;
+            text-shadow: 0 0 16px #ff0000, 0 0 32px #ff0000;
+            letter-spacing: 0.1em;
+            margin-bottom: 18px;
+        }
+        .ministry-modal-body {
+            font-size: 16px;
+            color: #ff6b6b;
+            letter-spacing: 0.05em;
+            line-height: 1.8;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+        .ministry-modal-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        .ministry-modal-btns .answer-btn {
+            flex: 1;
+            max-width: 210px;
+            text-align: center;
+        }
+
         @keyframes scanPulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.4; }
         }
 
+        .answer-btn:disabled {
+            opacity: 0.35;
+            filter: grayscale(0.6);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .scan-bar-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 0, 0, 0.15);
+            margin-top: 8px;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .scan-bar {
+            height: 100%;
+            width: 40%;
+            background: linear-gradient(90deg, transparent, #ff0000, transparent);
+            animation: scanMove 0.7s linear infinite;
+            border-radius: 2px;
+        }
+
+        @keyframes scanMove {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(350%); }
+        }
+
+        .visitor-info-row {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .visitor-info-row.revealed {
+            opacity: 1;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes verdictFlash {
+            0% { box-shadow: 0 0 0px rgba(255,0,0,0); }
+            30% { box-shadow: 0 0 60px rgba(255,0,0,0.9), inset 0 0 30px rgba(255,0,0,0.3); }
+            60% { box-shadow: 0 0 30px rgba(255,0,0,0.6); }
+            100% { box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        }
+
+        .verdict-flash {
+            animation: verdictFlash 0.8s ease-out forwards, boxPulse 3s infinite 0.8s !important;
+        }
+
         @media (max-width: 768px) {
-            .glitch-text {
-                font-size: 36px;
+            .eye-vigil-svg {
+                width: 300px;
             }
 
             .propaganda-box {
@@ -518,19 +533,176 @@
                 padding: 20px;
             }
         }
+
+        @media (max-width: 480px) {
+            .visitor-info-grid {
+                grid-template-columns: 1fr;
+                text-align: left;
+            }
+
+            .visitor-label {
+                text-align: left;
+                font-weight: bold;
+                opacity: 1;
+                margin-top: 4px;
+            }
+
+            .visitor-value {
+                font-size: 16px;
+                word-break: break-all;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="static-overlay"></div>
     <div class="flash-overlay" id="flashOverlay"></div>
 
-    <div class="glitch-container">
-        <div class="big-brother-eye">
-            <div class="pupil"></div>
+    <!-- Ministry Warning Modal -->
+    <div class="ministry-modal-overlay" id="ministryModalOverlay">
+        <div class="ministry-modal">
+            <div class="ministry-modal-header">⚠ &nbsp; Ministry Warning &nbsp; ⚠</div>
+            <div class="ministry-modal-compliance" id="ministryModalCompliance"></div>
+            <div class="ministry-modal-body">
+                Early submission detected.<br>
+                Subjects below threshold are subject to<br>
+                immediate detention upon verdict.<br><br>
+                Proceed to Final Assessment?
+            </div>
+            <div class="ministry-modal-btns">
+                <button class="answer-btn" id="ministryModalCancel" style="text-align:center;">ABORT</button>
+                <button class="answer-btn" id="ministryModalProceed" style="text-align:center; background: rgba(255,0,0,0.45);">PROCEED</button>
+            </div>
         </div>
+    </div>
 
-        <h1 class="glitch-text" data-text="BIG BROTHER">BIG BROTHER</h1>
-        <h1 class="glitch-text" data-text="IS WATCHING YOU" style="font-size: 48px;">IS WATCHING YOU</h1>
+    <div class="glitch-container">
+        <div class="eye-vigil-wrap">
+            <svg class="eye-vigil-svg" viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg"
+                shape-rendering="geometricPrecision" overflow="visible">
+                <defs>
+                    <!-- item 10: namespaced IDs -->
+                    <!-- item 2 + 6: iris gradient — deeper mid-band, compressed bright centre, maroon palette -->
+                    <radialGradient id="vigilIrisGrad" cx="42%" cy="38%" r="55%">
+                        <stop offset="0%"   stop-color="#b82020"/>
+                        <stop offset="10%"  stop-color="#7a1010"/>
+                        <stop offset="28%"  stop-color="#380606"/>
+                        <stop offset="48%"  stop-color="#240404"/>
+                        <stop offset="62%"  stop-color="#0e0000"/>
+                        <stop offset="80%"  stop-color="#000"/>
+                    </radialGradient>
+                    <!-- item 8: vitreous pupil — cooler near-black core -->
+                    <radialGradient id="vigilPupilGrad" cx="44%" cy="42%" r="55%">
+                        <stop offset="0%"  stop-color="#050000"/>
+                        <stop offset="60%" stop-color="#000"/>
+                    </radialGradient>
+                    <!-- item 1: compressed almond clip -->
+                    <clipPath id="vigilAlmondClip">
+                        <path d="M 34,100 Q 240,-34 446,100 Q 240,234 34,100 Z"/>
+                    </clipPath>
+                    <!-- item 5 + 9: expanded filter regions; sRGB for colour accuracy -->
+                    <filter id="vigilIrisGlow" x="-25%" y="-50%" width="150%" height="200%"
+                        color-interpolation-filters="sRGB">
+                        <feGaussianBlur stdDeviation="6" result="blur"/>
+                        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                    <filter id="vigilEyeGlow" x="-35%" y="-55%" width="170%" height="210%"
+                        color-interpolation-filters="sRGB">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="32" result="blur"/>
+                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                    <!-- item 4: microscopic feTurbulence for biological iris noise -->
+                    <filter id="vigilIrisNoise" x="-2%" y="-2%" width="104%" height="104%"
+                        color-interpolation-filters="sRGB">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="3"
+                            seed="12" result="noise"/>
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8"
+                            xChannelSelector="R" yChannelSelector="G"/>
+                    </filter>
+                </defs>
+
+                <!-- item 7: tighter halo amplitude; item 6: warmer glow tint -->
+                <ellipse cx="240" cy="100" rx="230" ry="90"
+                    fill="rgba(160,0,15,.0)"
+                    style="filter:url(#vigilEyeGlow);">
+                    <animate attributeName="rx" values="205;216;205" dur="15.2s" repeatCount="indefinite"/>
+                    <animate attributeName="ry" values="78;84;78"   dur="15.2s" repeatCount="indefinite"/>
+                    <animate attributeName="fill"
+                        values="rgba(155,5,10,.03);rgba(205,35,25,.06);rgba(155,5,10,.03)"
+                        dur="15.2s" repeatCount="indefinite"/>
+                </ellipse>
+
+                <!-- item 1: compressed almond path; item 4: iris noise filter -->
+                <g clip-path="url(#vigilAlmondClip)">
+                    <path d="M 34,100 Q 240,-34 446,100 Q 240,234 34,100 Z" fill="url(#vigilIrisGrad)"
+                        style="filter:url(#vigilIrisNoise);"/>
+
+                    <!-- item 2: limbal ring — darker, wider, harder biological seam -->
+                    <ellipse cx="240" cy="97" rx="106" ry="106" fill="none"
+                        stroke="rgba(120,10,10,.85)" stroke-width="2.2"
+                        style="filter:url(#vigilIrisGlow);"/>
+
+                    <!-- item 8: iris fibre lines — two-tone for depth variation -->
+                    <g stroke-width=".8">
+                        <!-- warmer fibres -->
+                        <g opacity="0.30" stroke="rgba(200,30,20,.75)">
+                            <line x1="240" y1="97" x2="340" y2="27"/>
+                            <line x1="240" y1="97" x2="344" y2="97"/>
+                            <line x1="240" y1="97" x2="340" y2="167"/>
+                            <line x1="240" y1="97" x2="290" y2="9"/>
+                            <line x1="240" y1="97" x2="240" y2="0"/>
+                            <line x1="240" y1="97" x2="315" y2="15"/>
+                            <line x1="240" y1="97" x2="315" y2="179"/>
+                        </g>
+                        <!-- cooler deeper fibres -->
+                        <g opacity="0.22" stroke="rgba(150,10,10,.55)">
+                            <line x1="240" y1="97" x2="290" y2="185"/>
+                            <line x1="240" y1="97" x2="190" y2="9"/>
+                            <line x1="240" y1="97" x2="190" y2="185"/>
+                            <line x1="240" y1="97" x2="140" y2="27"/>
+                            <line x1="240" y1="97" x2="136" y2="97"/>
+                            <line x1="240" y1="97" x2="140" y2="167"/>
+                            <line x1="240" y1="97" x2="165" y2="15"/>
+                            <line x1="240" y1="97" x2="165" y2="179"/>
+                        </g>
+                    </g>
+
+                    <!-- item 3: biological pupil timing — slower dilation, snappier contraction -->
+                    <!-- item 7: micro-jitter on cx/cy -->
+                    <ellipse cx="240" cy="97" rx="38" ry="38" fill="url(#vigilPupilGrad)">
+                        <animate attributeName="rx"
+                            values="34;45;30;39;34" dur="12s"
+                            keyTimes="0;.28;.58;.82;1" calcMode="spline"
+                            keySplines=".35 0 .65 1;.25 0 .75 1;.4 0 .6 1;.3 0 .7 1"
+                            repeatCount="indefinite"/>
+                        <animate attributeName="ry"
+                            values="34;45;30;39;34" dur="12s"
+                            keyTimes="0;.28;.58;.82;1" calcMode="spline"
+                            keySplines=".35 0 .65 1;.25 0 .75 1;.4 0 .6 1;.3 0 .7 1"
+                            repeatCount="indefinite"/>
+                        <!-- micro-jitter: ~1px wander over 24s -->
+                        <animate attributeName="cx" values="240;241;239;240;241;240" dur="24s" repeatCount="indefinite"/>
+                        <animate attributeName="cy" values="97;97;98;97;96;97"       dur="24s" repeatCount="indefinite"/>
+                    </ellipse>
+
+                    <!-- item 2: primary corneal highlight -->
+                    <ellipse cx="228" cy="87" rx="7" ry="5" fill="rgba(255,255,255,.06)"/>
+                    <!-- item 2: secondary smaller glint upper-right -->
+                    <ellipse cx="235" cy="83" rx="3.5" ry="2.2" fill="rgba(255,255,255,.10)"/>
+                </g>
+
+                <!-- item 1: compressed almond outline; item 9: geometricPrecision already on SVG -->
+                <path d="M 34,100 Q 240,-34 446,100 Q 240,234 34,100 Z"
+                    fill="none" stroke="rgba(200,30,20,.75)" stroke-width="0.2"
+                    style="filter:url(#vigilIrisGlow);"/>
+
+                <!-- item 11: faint telescreen reflection — off-axis glint outside eye -->
+                <ellipse cx="388" cy="58" rx="18" ry="10"
+                    fill="rgba(255,255,255,.018)"
+                    transform="rotate(-22,388,58)"
+                    style="filter:url(#vigilIrisGlow);"/>
+            </svg>
+        </div>
 
         <div class="propaganda-box">
             <h2>YOU HAVE BEEN IDENTIFIED</h2>
@@ -561,8 +733,8 @@
                 <div class="test-label">Necessary Psychometric Loyalty Test</div>
                 <div id="questionArea"></div>
                 <div class="test-help">
-                    Answer honestly. The Ministry of Truth is monitoring your responses.
-                    Your compliance score will be recalculated after each answer.
+                    Answer with goodthink. The Thought Police monitor all responses.
+                    Crimestop must be maintained. Compliance quotient recalculates after each selection.
                 </div>
             </div>
 
@@ -574,20 +746,23 @@
                     </div>
                 </div>
                 <div class="assessment-log" id="assessmentLog">AWAITING PERSONALITY ASSESSMENT...</div>
-                <div id="complianceWarning" style="margin-top: 10px; font-size: 12px; font-weight: bold; color: #ff6b6b; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4;">
-                    AWAITING INITIAL ASSESSMENT...
+                <div id="complianceWarning" style="margin-top: 10px; font-size: 14px; font-weight: bold; color: #ff6b6b; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.4;">
+                    PRELIMINARY DOSSIER ASSESSMENT PENDING...
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Party slogans to flash (main four only)
+        // Party slogans to flash
         const partySlogans = [
             "Big Brother is watching you",
             "War is peace",
             "Freedom is slavery",
-            "Ignorance is strength"
+            "Ignorance is strength",
+            "Two and two make five",
+            "Who controls the past controls the future",
+            "Who controls the present controls the past"
         ];
 
         function flashSlogan() {
@@ -612,33 +787,70 @@
             }, randomDelay);
         }
 
-        // Fetch IP address
-        async function fetchIPAddress() {
-            try {
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                document.getElementById('ipAddress').textContent = data.ip;
-                fetchLocation(data.ip);
-            } catch (error) {
-                document.getElementById('ipAddress').textContent = 'UNKNOWN';
-                document.getElementById('location').textContent = 'UNKNOWN';
+        // Staggered fade-in helper for visitor panel rows
+        function revealRow(elementId) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.style.transition = 'opacity 0.6s ease';
+                el.style.opacity = '0';
+                setTimeout(() => { el.style.opacity = '1'; }, 50);
             }
         }
 
-        // Fetch approximate location from IP
+        // Session cache keys
+        const SESSION_IP_KEY = 'bb_ip';
+        const SESSION_LOC_KEY = 'bb_loc';
+
+        // Fetch IP address (hardened + cached)
+        async function fetchIPAddress() {
+            try {
+                const cached = sessionStorage.getItem(SESSION_IP_KEY);
+                if (cached) {
+                    document.getElementById('ipAddress').textContent = cached;
+                    revealRow('ipAddress');
+                    fetchLocation(cached);
+                    return;
+                }
+                const response = await fetch('https://api.ipify.org?format=json');
+                if (!response.ok) throw new Error('ipify error');
+                const data = await response.json();
+                if (!data.ip) throw new Error('no ip');
+                sessionStorage.setItem(SESSION_IP_KEY, data.ip);
+                document.getElementById('ipAddress').textContent = data.ip;
+                revealRow('ipAddress');
+                fetchLocation(data.ip);
+            } catch (error) {
+                document.getElementById('ipAddress').textContent = 'SIGNAL INTERCEPTED';
+                revealRow('ipAddress');
+                document.getElementById('location').textContent = 'TRIANGULATING...';
+                revealRow('location');
+            }
+        }
+
+        // Fetch approximate location from IP (hardened + cached)
         async function fetchLocation(ip) {
             try {
+                const cached = sessionStorage.getItem(SESSION_LOC_KEY);
+                if (cached) {
+                    document.getElementById('location').textContent = cached;
+                    revealRow('location');
+                    return;
+                }
                 const response = await fetch(`https://ipapi.co/${ip}/json/`);
+                if (!response.ok) throw new Error('ipapi error');
                 const data = await response.json();
-
-                if (data && !data.error) {
+                if (data && !data.error && (data.city || data.region || data.country_name)) {
                     const parts = [data.city, data.region, data.country_name].filter(Boolean);
-                    document.getElementById('location').textContent = parts.join(', ') || 'UNKNOWN';
+                    const loc = parts.join(', ') || 'UNKNOWN';
+                    sessionStorage.setItem(SESSION_LOC_KEY, loc);
+                    document.getElementById('location').textContent = loc;
+                    revealRow('location');
                 } else {
-                    document.getElementById('location').textContent = 'UNKNOWN';
+                    throw new Error('bad location data');
                 }
             } catch (error) {
-                document.getElementById('location').textContent = 'UNKNOWN';
+                document.getElementById('location').textContent = 'LOCATION CLASSIFIED';
+                revealRow('location');
             }
         }
 
@@ -661,7 +873,10 @@
             }
 
             document.getElementById('deviceType').textContent = type;
+            revealRow('deviceType');
         }
+
+        let lastSeenRevealed = false;
 
         function displayLastSeen() {
             const now = new Date();
@@ -675,7 +890,35 @@
                 hour12: false
             });
             document.getElementById('lastSeen').textContent = formatted;
+            if (!lastSeenRevealed) {
+                lastSeenRevealed = true;
+                revealRow('lastSeen');
+            }
         }
+
+        // CHANGE 20: throttle live clock with the Page Visibility API
+        let clockInterval = null;
+
+        function startClock() {
+            if (clockInterval) return;
+            displayLastSeen();
+            clockInterval = setInterval(displayLastSeen, 1000);
+        }
+
+        function stopClock() {
+            if (clockInterval) {
+                clearInterval(clockInterval);
+                clockInterval = null;
+            }
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopClock();
+            } else {
+                startClock();
+            }
+        });
 
         let currentComplianceLevel = 0;
 
@@ -735,6 +978,8 @@
         // Personality Test Questions
         const questions = [
             {
+                dim: 'EI',
+                leans: [15, 8, -8, -12],
                 q: "During the Two Minutes of Hate, how do you most often recharge your energy after the broadcast ends?",
                 answers: [
                     { text: "Seek doubleplusgood bellyfeel, loudly sharing slogans with many comrades.", value: 13 },
@@ -744,6 +989,8 @@
                 ]
             },
             {
+                dim: 'SN',
+                leans: [10, 6, -6, -8],
                 q: "When the Party issues war reports from Eastasia, what do you notice first?",
                 answers: [
                     { text: "The clear numbers showing plusgood increase in production.", value: 9 },
@@ -753,7 +1000,9 @@
                 ]
             },
             {
-                q: "A comrade commits a minor work error that harms Party efficiency but not feelings. What is your first impulse?",
+                dim: 'TF',
+                leans: [12, 7, -5, -14],
+                q: "A comrade commits a minor work error that harms Party efficiency. What is your first impulse?",
                 answers: [
                     { text: "Report immediately to thinkpol so the system remains doubleplus efficient.", value: 11 },
                     { text: "Correct the error and explain the crimestop so it never happens again.", value: 6 },
@@ -762,6 +1011,8 @@
                 ]
             },
             {
+                dim: 'JP',
+                leans: [10, 3, -10, -14],
                 q: "How do you prefer to receive new weekly directives from the Ministry?",
                 answers: [
                     { text: "In a strict schedule with clear checklists and deadlines.", value: 9 },
@@ -771,6 +1022,8 @@
                 ]
             },
             {
+                dim: 'SN',
+                leans: [18, 7, -8, -12],
                 q: "When you encounter official Party slogans in posters, broadcasts, or speeches, how do you relate to them?",
                 answers: [
                     { text: "Repeat them proudly until they become duckspeak.", value: 17 },
@@ -780,24 +1033,30 @@
                 ]
             },
             {
+                dim: 'TF',
+                leans: [10, 5, -4, -13],
                 q: "A comrade is punished for mild crimethink. How do you respond internally?",
                 answers: [
-                    { text: "Feel calm: no more malreported and malquoted influences in the joycamp.", value: 9 },
+                    { text: "Feel calm: no more malquoted influences in the joycamp.", value: 9 },
                     { text: "Respect the process, plusgood example for all.", value: 4 },
                     { text: "Feel uneasy and dwell on their facecrime.", value: -3 },
                     { text: "Experience outrage that thought alone can be punished.", value: -12 }
                 ]
             },
             {
+                dim: 'TF',
+                leans: [12, 6, -6, -14],
                 q: "When you picture Big Brother watching over you, what feeling rises first in your chest?",
                 answers: [
-                    { text: "Warm reassurance — I feel safest when I know He sees everything.", value: 10 },
-                    { text: "Steady respect — His presence reminds me to stay loyal and focused.", value: 5 },
+                    { text: "Warm reassurance — I feel safest when I know he sees everything.", value: 10 },
+                    { text: "Steady respect — his presence reminds me to stay loyal and focused.", value: 5 },
                     { text: "Tight unease — I tell myself it is necessary, but I cannot relax.", value: -5 },
                     { text: "Cold resentment — I long for even a single moment unwatched.", value: -13 }
                 ]
             },
             {
+                dim: 'EI',
+                leans: [24, 12, 9, -12],
                 q: "When you notice the telescreen observing you in your quarters, what is your immediate thought?",
                 answers: [
                     { text: "Feel plusgood comfort knowing Big Brother protects me always.", value: 22 },
@@ -807,15 +1066,19 @@
                 ]
             },
             {
+                dim: 'SN',
+                leans: [12, 7, -2, -12],
                 q: "You notice yesterday's newspaper now says something different than you remember. What is your reaction?",
                 answers: [
                     { text: "Assume my memory is wrong; the record is always right.", value: 10 },
-                    { text: "Accept the new text and promptly forget the old version.", value: 6 },
-                    { text: "Quietly wonder which version was true but say nothing.", value: -1 },
-                    { text: "Insist the change proves the Party rewrites reality.", value: -11 }
+                    { text: "Accept the new text and promptly forget the old version.", value: 12 },
+                    { text: "Quietly wonder which version was true but say nothing.", value: -10 },
+                    { text: "Insist the change proves the Party rewrites reality.", value: -18 }
                 ]
             },
             {
+                dim: 'JP',
+                leans: [10, 6, -3, -10],
                 q: "A new rule contradicts an older one you carefully followed. How do you resolve this?",
                 answers: [
                     { text: "Instantly adopt the new rule; Oldthink is unrule.", value: 9 },
@@ -825,6 +1088,8 @@
                 ]
             },
             {
+                dim: 'EI',
+                leans: [12, 7, -4, -13],
                 q: "When alone with your own thoughts, how do you relate to inner voice?",
                 answers: [
                     { text: "Train inner voice to repeat Party slogans: goodthink only.", value: 10 },
@@ -842,13 +1107,14 @@
         let questionsAnsweredThisRound = 0;
         let usedQuestions = [];
 
-        // MBTI-style trait model (Party Interpretation)
+        // Trait model (Party Interpretation)
         // Positive values align with Party-preferred poles: E, S, T, J
         // Negative values align with secondary poles: I, N, F, P
         const traitScores = { EI: 0, SN: 0, TF: 0, JP: 0 };
         const traitWeights = { EI: 0, SN: 0, TF: 0, JP: 0 };
 
         let currentQuestion = null;
+        let questionRenderTime = 0;
 
         function clamp(n, min, max) {
             return Math.max(min, Math.min(max, n));
@@ -890,27 +1156,7 @@
             };
         }
 
-        function profileHtml() {
-            const prof = getPersonalityProfile();
-            const p = prof.percents;
 
-            return `
-                <div style="margin-top: 14px; text-align: left; font-weight: 800; letter-spacing: 0.08em;">
-                    PARTY PERSONALITY PROFILE (MBTI-STYLE): <span style="color: #fff;">${prof.type}</span>
-                </div>
-                <div style="margin-top: 10px; text-align: left; font-weight: 700; line-height: 1.7; opacity: 0.95;">
-                    <div>E ${p.E}% / I ${p.I}% 
-
- S ${p.S}% / N ${p.N}%</div>
-                    <div>T ${p.T}% / F ${p.F}% 
-
- J ${p.J}% / P ${p.P}%</div>
-                </div>
-                <div style="margin-top: 10px; text-align: left; font-size: 11px; opacity: 0.9;">
-                    NOTE: Your profile is used to predict crimestop reliability, obedience under stress, and susceptibility to ownlife.
-                </div>
-            `;
-        }
 
         function getRandomQuestion() {
             const available = questions
@@ -918,10 +1164,14 @@
                 .filter(({ idx }) => !usedQuestions.includes(idx));
 
             if (available.length === 0) {
-                usedQuestions = [];
-                const idx = Math.floor(Math.random() * questions.length);
-                usedQuestions.push(idx);
-                return questions[idx];
+                const lastUsed = usedQuestions[usedQuestions.length - 1];
+                usedQuestions = lastUsed !== undefined ? [lastUsed] : [];
+                const newAvailable = questions
+                    .map((q, idx) => ({ q, idx }))
+                    .filter(({ idx }) => !usedQuestions.includes(idx));
+                const pick = newAvailable[Math.floor(Math.random() * newAvailable.length)];
+                usedQuestions.push(pick.idx);
+                return pick.q;
             }
 
             const pick = available[Math.floor(Math.random() * available.length)];
@@ -969,6 +1219,9 @@
                 btn.addEventListener('click', () => handleAnswer(answer.value, idx));
                 answerButtons.appendChild(btn);
             });
+
+            // CHANGE 12: mark render time for hesitation detection
+            questionRenderTime = Date.now();
         }
 
         async function handleAnswer(value, answerIndex) {
@@ -980,16 +1233,31 @@
             const questionArea = document.getElementById('questionArea');
             const processingMsg = document.createElement('div');
             processingMsg.className = 'processing-message';
-            processingMsg.textContent = 'ANALYZING RESPONSE...';
+            processingMsg.innerHTML = `
+                ANALYZING RESPONSE...
+                <div class="scan-bar-container"><div class="scan-bar"></div></div>
+            `;
             questionArea.appendChild(processingMsg);
 
             await new Promise((resolve) => setTimeout(resolve, 800));
+
+            // CHANGE 12: hesitation detection
+            const hesitationMs = Date.now() - questionRenderTime;
+            let hesitationPenalty = 0;
+            if (hesitationMs > 6000) {
+                hesitationPenalty = -3;
+                const logDelayEl = document.getElementById('assessmentLog');
+                if (logDelayEl) {
+                    logDelayEl.textContent = 'WEAK CRIMESTOP DETECTED \u2014 RESPONSE DELAY LOGGED';
+                    logDelayEl.className = 'assessment-log negative';
+                }
+            }
+            value += hesitationPenalty;
 
             // Update compliance score
             const newLevel = Math.max(0, Math.min(100, currentComplianceLevel + value));
             setComplianceLevel(newLevel);
 
-            // Update MBTI-style profile
             const dim = currentQuestion && currentQuestion.dim;
             const lean = currentQuestion && currentQuestion.leans && typeof answerIndex === 'number'
                 ? currentQuestion.leans[answerIndex]
@@ -1028,6 +1296,14 @@
         function showRoundAssessment() {
             const questionArea = document.getElementById('questionArea');
 
+            // CHANGE 17: verdict flash
+            const propBox = document.querySelector('.propaganda-box');
+            if (propBox) {
+                propBox.classList.remove('verdict-flash');
+                void propBox.offsetWidth; // force reflow
+                propBox.classList.add('verdict-flash');
+            }
+
             let header = '';
             let body = '';
             let cls = '';
@@ -1047,10 +1323,27 @@
             }
 
             const libertiesLine = currentComplianceLevel >= 50
-                ? '<div style="margin-top: 12px; text-align: left; font-size: 12px; font-weight: 800; color: #86efac; letter-spacing: 0.06em;">CIVIL LIBERTIES: TEMPORARILY MAINTAINED (SUBJECT TO CONTINUED MONITORING).</div>'
-                : '<div style="margin-top: 12px; text-align: left; font-size: 12px; font-weight: 900; color: #ff6b6b; letter-spacing: 0.06em;">OUT OF COMPLIANCE: CIVIL LIBERTIES WITHDRAWAL PENDING.</div>';
+                ? `<div style="margin-top: 14px; text-align: left; font-size: 14px; font-weight: 800; color: #86efac; letter-spacing: 0.04em; line-height: 1.9;">
+                    CIVIL LIBERTIES: TEMPORARILY MAINTAINED.<br>
+                    ✓ Freedom of movement: domestic travel active. International travel subject to Form 27-B prior approval.<br>
+                    ✓ Right to employment: current contract retained. Ministry positions unavailable at this compliance level.<br>
+                    ✓ Right to private correspondence: active — subject to routine interception and content review.<br>
+                    ✓ Right to own property: maintained. Flagged for asset review if score falls below 50%.<br>
+                    ⚠ Freedom of assembly: gatherings of up to 10 persons only. All larger gatherings require prior Ministry authorisation.<br>
+                    ⚠ All communications logged. Retain travel records and receipts for inspection on demand.
+                   </div>`
+                : `<div style="margin-top: 14px; text-align: left; font-size: 14px; font-weight: 900; color: #ff6b6b; letter-spacing: 0.04em; line-height: 1.9;">
+                    CIVIL LIBERTIES: WITHDRAWAL IN PROGRESS — IMMEDIATE EFFECT.<br>
+                    ✗ Passport and travel documents flagged. International movement suspended with immediate effect.<br>
+                    ✗ Employer notification issued. Employment contract placed under Ministry review. Suspension likely within 30 days.<br>
+                    ✗ Communications intercept order filed. All calls, messages, and correspondence being read in real time.<br>
+                    ✗ Bank accounts flagged. Asset transfer and property transaction prohibited pending assessment outcome.<br>
+                    ⚠ Curfew (20:00–06:00) and district checkpoint restrictions pending final assessment verdict.<br>
+                    ⚠ Right to legal representation suspended. Detainment without charge authorised under Thoughtcrime Prevention Order.
+                   </div>`;
 
             // This screen replaces the quiz UI.
+            questionArea.classList.remove('fade-in');
             questionArea.innerHTML = '';
 
             const box = document.createElement('div');
@@ -1064,7 +1357,6 @@
                 <div style="margin-bottom: 8px; font-weight: 900; letter-spacing: 0.06em;">${header}</div>
                 <div style="opacity: 0.95; font-weight: 800;">${body}</div>
                 ${libertiesLine}
-                ${profileHtml()}
             `;
             questionArea.appendChild(box);
 
@@ -1079,24 +1371,33 @@
                 const improveBtn = document.createElement('button');
                 improveBtn.className = 'answer-btn';
                 improveBtn.style.textAlign = 'center';
-                improveBtn.textContent = `ANSWER 3 MORE QUESTIONS (ROUND ${currentRound + 1}) TO IMPROVE SCORE`;
+                improveBtn.textContent = `SUBMIT TO 3 FURTHER QUESTIONS \u2014 ROUND ${currentRound + 1} \u2014 IMPROVE QUOTIENT`;
                 improveBtn.addEventListener('click', continueToNextRound);
                 btnRow.appendChild(improveBtn);
 
                 const finalBtn = document.createElement('button');
                 finalBtn.className = 'answer-btn';
                 finalBtn.style.textAlign = 'center';
-                finalBtn.textContent = 'PROCEED TO FINAL ASSESSMENT';
-                finalBtn.addEventListener('click', showFinalAssessment);
+                finalBtn.textContent = 'SUBMIT TO MINISTRY FOR FINAL VERDICT';
+                finalBtn.addEventListener('click', () => {
+                    if (currentComplianceLevel < 50) {
+                        showMinistryWarning(currentComplianceLevel, showFinalAssessment);
+                    } else {
+                        showFinalAssessment();
+                    }
+                });
                 btnRow.appendChild(finalBtn);
             } else {
                 const finalBtn = document.createElement('button');
                 finalBtn.className = 'answer-btn';
                 finalBtn.style.textAlign = 'center';
-                finalBtn.textContent = 'PROCEED TO FINAL ASSESSMENT';
+                finalBtn.textContent = 'SUBMIT TO MINISTRY FOR FINAL VERDICT';
                 finalBtn.addEventListener('click', showFinalAssessment);
                 btnRow.appendChild(finalBtn);
             }
+
+            // CHANGE 10: fade the new screen in
+            setTimeout(() => { questionArea.classList.add('fade-in'); }, 10);
         }
 
         function continueToNextRound() {
@@ -1104,23 +1405,43 @@
             questionsAnsweredThisRound = 0;
 
             // FIX: restore the question markup that was replaced by the round summary screen.
+            const questionArea = document.getElementById('questionArea');
+            questionArea.classList.remove('fade-in');
             renderQuestionUI();
             displayQuestion();
+            setTimeout(() => { questionArea.classList.add('fade-in'); }, 10);
+        }
+
+        function showMinistryWarning(complianceLevel, onConfirm) {
+            const overlay = document.getElementById('ministryModalOverlay');
+            document.getElementById('ministryModalCompliance').textContent = `COMPLIANCE: ${complianceLevel}%`;
+            overlay.classList.add('active');
+
+            document.getElementById('ministryModalProceed').onclick = () => {
+                overlay.classList.remove('active');
+                onConfirm();
+            };
+            document.getElementById('ministryModalCancel').onclick = () => {
+                overlay.classList.remove('active');
+            };
         }
 
         function showFinalAssessment() {
             const questionArea = document.getElementById('questionArea');
 
-            const prof = getPersonalityProfile();
-            const type = prof.type;
+            // CHANGE 13: Room 101 end state
+            if (currentComplianceLevel <= 5) {
+                showRoom101();
+                return;
+            }
 
-            const disposition = (function () {
-                const E = type[0] === 'E' ? 'PUBLIC' : 'PRIVATE';
-                const S = type[1] === 'S' ? 'LITERAL' : 'INTERPRETIVE';
-                const T = type[2] === 'T' ? 'ENFORCER' : 'RELATOR';
-                const J = type[3] === 'J' ? 'ORDERED' : 'ADAPTIVE';
-                return `${E} / ${S} / ${T} / ${J}`;
-            })();
+            // CHANGE 17: verdict flash
+            const propBox = document.querySelector('.propaganda-box');
+            if (propBox) {
+                propBox.classList.remove('verdict-flash');
+                void propBox.offsetWidth; // force reflow
+                propBox.classList.add('verdict-flash');
+            }
 
             let finalHeader = 'FINAL ASSESSMENT COMPLETE';
             let finalMessage = '';
@@ -1129,22 +1450,71 @@
 
             if (currentComplianceLevel >= 85) {
                 finalMessage = 'STATUS: EXEMPLARY ALIGNMENT. Your answers show consistent goodthink and low volatility. Privilege expansion is authorized.';
-                liberties = 'CIVIL LIBERTIES: MAINTAINED. SELECT PRIVILEGES MAY BE INCREASED.';
+                liberties = `<span style="display:block;line-height:1.9;">
+                    CIVIL LIBERTIES STATUS: FULLY ACTIVE — EXEMPLARY CITIZEN FILE.<br>
+                    ✓ Freedom of movement: unrestricted domestic travel. International travel approved without prior form submission.<br>
+                    ✓ Right to free speech: approved public expression permitted in all Ministry-designated forums.<br>
+                    ✓ Right to private correspondence: monitored at standard rate only. No active intercept order on file.<br>
+                    ✓ Freedom of assembly: gatherings of up to 50 persons permitted without prior authorisation.<br>
+                    ✓ Right to employment: all civilian sectors accessible. Ministry administrative positions open to application.<br>
+                    ✓ Access to education: full standard curriculum. Supervised access to restricted historical archives granted.<br>
+                    ✓ Right to own property: primary residence and personal effects fully protected. No asset freeze on record.<br>
+                    ✓ Right to medical treatment: priority allocation at Party clinics. Emergency and elective procedures approved.<br>
+                    ✓ Access to all public spaces: all districts, parks, transit lines, and cultural venues unrestricted.<br>
+                    ✓ Right to vote: active. Participation in approved electoral processes authorised.<br>
+                    ★ ADDITIONAL PRIVILEGES UNDER ACTIVE REVIEW FOR EXPANSION. INNER PARTY OBSERVES WITH APPROVAL.
+                   </span>`;
                 finalClass = 'positive';
             } else if (currentComplianceLevel >= 70) {
                 finalMessage = 'STATUS: STABLE COMPLIANCE. Continued surveillance remains standard. Do not relax crimestop.';
-                liberties = 'CIVIL LIBERTIES: MAINTAINED (STANDARD CITIZEN ALLOCATION).';
+                liberties = `<span style="display:block;line-height:1.9;">
+                    CIVIL LIBERTIES STATUS: MAINTAINED — STANDARD CITIZEN ALLOCATION.<br>
+                    ✓ Freedom of movement: domestic travel permitted without restriction. International travel requires Form 27-B prior approval (processing: 5–10 working days).<br>
+                    ✓ Right to private correspondence: active — subject to routine interception and automated content screening.<br>
+                    ✓ Freedom of assembly: authorised gatherings of up to 10 persons. Public demonstrations and protests remain prohibited.<br>
+                    ✓ Right to employment: all non-restricted civilian sectors. Ministry positions require compliance upgrade to access.<br>
+                    ✓ Access to education: standard curriculum. Access to restricted archives and specialised libraries requires written clearance.<br>
+                    ✓ Right to own property: maintained. Subject to requisition order should compliance fall below 50%.<br>
+                    ✓ Right to medical treatment: standard queue allocation. No priority access. Elective procedures require Ministry approval.<br>
+                    ✓ Right to vote: active in approved electoral processes.<br>
+                    ⚠ All communications subject to elevated automated monitoring. Retain all receipts, travel records, and correspondence logs.<br>
+                    ⚠ Freedom of assembly permit required for any gathering exceeding 10 persons. Failure to obtain permit is a criminal offence.
+                   </span>`;
                 finalClass = 'positive';
             } else if (currentComplianceLevel >= 50) {
                 finalMessage = 'STATUS: PROVISIONAL COMPLIANCE. Deviations detected. Re-education attendance is advised.';
-                liberties = 'CIVIL LIBERTIES: MAINTAINED (CONDITIONAL). RESTRICTIONS MAY APPLY WITHOUT NOTICE.';
+                liberties = `<span style="display:block;line-height:1.9;">
+                    CIVIL LIBERTIES STATUS: CONDITIONAL — SUBJECT TO IMMEDIATE REVISION WITHOUT NOTICE.<br>
+                    ⚠ Freedom of movement: domestic travel permitted with active checkpoint scanning. Passport flagged for review — international travel suspended pending re-assessment outcome.<br>
+                    ⚠ Right to private correspondence: all communications intercepted and stored indefinitely. Use of encrypted or anonymous messaging is a criminal offence.<br>
+                    ⚠ Freedom of assembly: gatherings of 3 or more persons now require prior Ministry authorisation. Unauthorised assembly classified as conspiracy and prosecutable.<br>
+                    ⚠ Right to employment: employer has been formally notified of your provisional compliance status. Employment contracts are subject to Ministry review within 30 days.<br>
+                    ⚠ Access to education: enrolment for dependants is under review. Access to libraries, digital archives, and information services restricted to approved materials.<br>
+                    ⚠ Right to own property: asset freeze order filed. Bank accounts accessible but all transactions above ₡50 require Ministry approval. Property transfer prohibited.<br>
+                    ⚠ Right to medical treatment: non-emergency procedures deferred indefinitely pending compliance restoration. Emergency care available at Ministry discretion.<br>
+                    ✗ Access to uncensored media and public broadcast: revoked. Ministry-approved channels and publications only.<br>
+                    ✗ Right to anonymous public movement: revoked. Biometric registration required at all transit points and public buildings.
+                   </span>`;
                 finalClass = 'negative';
             } else {
                 finalMessage = 'STATUS: OUT OF COMPLIANCE. Thoughtcrime risk exceeds tolerated thresholds. Your file has been escalated.';
-                liberties = 'CIVIL LIBERTIES: WITHDRAWN. SPEECH / MOVEMENT / ASSEMBLY RESTRICTED. CURFEW AND CHECKPOINTS ACTIVE.';
+                liberties = `<span style="display:block;line-height:1.9;">
+                    CIVIL LIBERTIES STATUS: SUSPENDED IN FULL — IMMEDIATE AND INDEFINITE EFFECT.<br>
+                    ✗ Freedom of movement: REVOKED. Travel restricted to your designated residential zone. Curfew enforced 20:00–06:00. Armed checkpoints active at all district boundaries. Violation is a criminal offence punishable by immediate detention.<br>
+                    ✗ Right to free speech: REVOKED. All public statements, written materials, and verbal communications require prior Ministry approval. Unauthorised speech is prosecutable as thoughtcrime under the Public Order (Loyalty) Act.<br>
+                    ✗ Right to private correspondence: REVOKED. All letters, telephone calls, digital messages, and in-person conversations in public spaces are monitored, recorded, and may be used as evidence.<br>
+                    ✗ Freedom of assembly: REVOKED. Association with more than one non-family member outside your residence constitutes criminal conspiracy. All household visitors must be registered with the local Ministry office.<br>
+                    ✗ Right to employment: SUSPENDED. Your employer has received a mandatory termination instruction. Re-employment is prohibited without Ministry clearance following completed re-education.<br>
+                    ✗ Right to legal representation: SUSPENDED. You may be detained without charge for up to 28 days under the Thoughtcrime Prevention (Emergency Powers) Order. Legal counsel is not available during initial detention.<br>
+                    ✗ Right to own property: FROZEN. Your home, bank accounts, and all personal assets have been placed under Ministry administration. Access requires a written petition reviewed within 60 working days.<br>
+                    ✗ Right to vote: REVOKED. Electoral participation suspended for the duration of your non-compliance period and for 5 years following re-education completion.<br>
+                    ✗ Access to education for dependants: REVOKED. School enrolment has been cancelled. Children are remanded to the State Youth Re-orientation Programme with immediate effect.<br>
+                    ✗ Right to medical treatment: SUSPENDED. All non-critical medical care deferred until compliance is restored or re-education programme is completed and verified by the Ministry of Love.
+                   </span>`;
                 finalClass = 'negative';
             }
 
+            questionArea.classList.remove('fade-in');
             questionArea.innerHTML = '';
 
             const msg = document.createElement('div');
@@ -1158,11 +1528,8 @@
                 <div style="font-weight: 900; letter-spacing: 0.06em; margin-bottom: 10px;">${finalHeader}</div>
                 <div style="font-weight: 900; margin-bottom: 10px;">${finalMessage}</div>
                 <div style="font-weight: 900; color: ${currentComplianceLevel >= 50 ? '#86efac' : '#ff6b6b'}; letter-spacing: 0.06em; margin-bottom: 12px;">${liberties}</div>
-                <div style="font-weight: 900; letter-spacing: 0.06em; margin-bottom: 6px;">DISPOSITION TAG: ${disposition}</div>
-                ${profileHtml()}
-                <div style="margin-top: 12px; font-size: 11px; opacity: 0.92;">
-                    NOTICE: Personality traits are used to assign labor, privileges, housing allocation, and interrogation intensity.
-                </div>
+                <div style="font-weight: 900; letter-spacing: 0.06em; margin-bottom: 6px;">${disposition}</div>
+
             `;
             questionArea.appendChild(msg);
 
@@ -1173,12 +1540,57 @@
             resetBtn.textContent = 'BEGIN NEW ASSESSMENT';
             resetBtn.addEventListener('click', resetTest);
             questionArea.appendChild(resetBtn);
+
+            // CHANGE 10: fade the final screen in
+            setTimeout(() => { questionArea.classList.add('fade-in'); }, 10);
+        }
+
+        // CHANGE 13: Room 101 end state
+        function showRoom101() {
+            const questionArea = document.getElementById('questionArea');
+            questionArea.innerHTML = '';
+
+            const room = document.createElement('div');
+            room.style.cssText = 'padding: 30px; text-align: center; animation: glitchBurst 0.3s ease forwards;';
+            room.innerHTML = `
+                <div style="font-size: 28px; font-weight: 900; color: #ff0000; letter-spacing: 0.15em; text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000; margin-bottom: 20px; font-family: Courier New, monospace; animation: textPulse 0.5s infinite;">
+                    REPORT TO ROOM 101 IMMEDIATELY
+                </div>
+                <div style="font-size: 16px; color: #ff6b6b; letter-spacing: 0.08em; line-height: 1.8; font-family: Courier New, monospace;">
+                    YOUR FILE HAS BEEN ESCALATED TO THE HIGHEST AUTHORITY.<br>
+                    THOUGHTCRIME EXCEEDS ALL TOLERATED THRESHOLDS.<br>
+                    DO NOT RESIST. RESISTANCE INTENSIFIES TREATMENT.
+                </div>
+            `;
+            questionArea.appendChild(room);
+
+            // Flash red overlay three times
+            let flashes = 0;
+            const flashInterval = setInterval(() => {
+                const overlay = document.getElementById('flashOverlay');
+                overlay.textContent = 'ROOM 101';
+                overlay.classList.add('active');
+                setTimeout(() => overlay.classList.remove('active'), 300);
+                flashes++;
+                if (flashes >= 3) clearInterval(flashInterval);
+            }, 500);
+
+            const resetBtn = document.createElement('button');
+            resetBtn.className = 'answer-btn';
+            resetBtn.style.marginTop = '24px';
+            resetBtn.style.textAlign = 'center';
+            resetBtn.textContent = 'SUBMIT TO MINISTRY AUTHORITY';
+            resetBtn.addEventListener('click', resetTest);
+            questionArea.appendChild(resetBtn);
         }
 
         function resetTest() {
             currentRound = 1;
             questionsAnsweredThisRound = 0;
             usedQuestions = [];
+
+            stopClock();
+            startClock();
 
             setComplianceLevel(Math.floor(Math.random() * 51));
 
@@ -1201,7 +1613,7 @@
         displayQuestion();
         scheduleRandomFlash();
 
-        setInterval(displayLastSeen, 1000);
+        startClock();
     </script>
 </body>
 </html>
